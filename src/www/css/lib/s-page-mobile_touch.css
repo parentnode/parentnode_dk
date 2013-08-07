@@ -1,0 +1,38 @@
+* {font-family: "proximanova_regular", arial, verdana, sans-serif; line-height: 30px; font-size: 16px; color: #465159; font-weight: normal;
+	-webkit-text-size-adjust: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+
+html {height: 100%;}
+body {background: #ffffff url(/img/gx_loader.gif) no-repeat center center; margin: 0; height: 100%;}
+
+
+/* BASE */
+h1, h2, h3, h4, h5, h6, p, ul, li, dl, dd, dt, address {padding: 0; margin: 0;}
+ul {list-style: none;}
+a {text-decoration: none; cursor: pointer;}
+a:hover {text-decoration: none; color: black;}
+img {border: 0; display: block;}
+form, fieldset, label, input, select, textarea {padding: 0; margin: 0; font-weight: normal;}
+fieldset {border: none;}
+input, select, textarea {font-size: 14px;}
+input, textarea {outline: none;
+	-webkit-appearance: none;
+}
+
+
+#page {position: relative; text-align: left; height: 100%; font-size: 0; overflow: hidden; background: #ffffff; z-index: 2; opacity: 0;
+	-webkit-transform: translate3d(0,0,0);
+}
+#content {opacity: 1; background: #cbebd5; position: relative; z-index: 5; overflow: hidden;
+	-webkit-transform: translate3d(0,0,0);
+}
+#content .scene {opacity: 0; position: absolute; top: 0; left: 0; width: 100%;
+	-webkit-transform: translate3d(0,0,0);
+}
+
+body.standalone {/*margin-top: 20px;*/}
+body.standalone #navigation {/*margin-top: 20px;*/}

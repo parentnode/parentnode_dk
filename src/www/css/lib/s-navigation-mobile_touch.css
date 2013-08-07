@@ -1,0 +1,17 @@
+#navigation {height: 100%; position: absolute; top: 0; left: 0; width: 100%; background: #535c67; z-index: 1; display: none;}
+
+#navigation h2 {font-size: 18px; line-height: 48px; color: #313941; text-shadow: 0px 2px 0px rgba(119,133,148,0.65); padding: 0 0 0 20px; text-transform: uppercase;}
+
+#navigation ul {font-size: 0; position: relative; position: static; padding: 0 0 0 20px;}
+#navigation ul li {height: 100%; display: block; height: 40px;}
+#navigation ul li a {font-size: 18px; line-height: 40px; font-weight: 600; color: #cbebd3;}
+
+
+#navigation ul.store li {padding-left: 34px; background: transparent url(/img/bg_icons.svg) no-repeat 0px -291px; background-size: 100px auto;}
+#navigation ul.store li.cart {background-position: 0px -393px;}
+
+
+#navigation h2.partners {line-height: 20px; padding: 13px 0 3px 20px;}
+#navigation ul.partners li {padding-left: 34px; background: transparent url(/img/bg_icons.svg) no-repeat 0px -291px; background-size: 100px auto;}
+#navigation ul.partners li.youritems {background-position: 0px -291px;}
+#navigation ul.partners li.additem {background-position: 0px -193px;}

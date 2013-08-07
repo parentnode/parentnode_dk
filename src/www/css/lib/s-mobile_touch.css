@@ -1,0 +1,25 @@
+@media all and (max-width: 401px) {
+
+	#content .scene.additem ul.uploads li:nth-child(2n+1) {border-left: none;}
+	#content .scene.additem ul.uploads li:nth-child(2n) {margin-left: -1px;}
+	#content .scene.additem ul.uploads li:nth-child(-n+2) {border-top: none;}
+
+	div.bookmark h1 {width: 150px; margin-left: -75px; height: 80px; margin-top: -135px; padding-top: 160px;}
+	div.bookmark h2 {width: 150px; margin-left: -75px; height: 50px; margin-top: 100px;}
+	div.bookmark p {width: 260px; margin-left: -150px; height: 40px;}
+
+}
+
+@media all and (min-width: 400px) {
+
+	#content .scene.additem ul.uploads li {width: 33.3%;}
+	#content .scene.additem ul.uploads li {margin-left: -1px;}
+	#content .scene.additem ul.uploads li:nth-child(3n+1) {border-left: none; margin-left: 0;}
+	#content .scene.additem ul.uploads li:nth-child(4) {display: none;}
+
+	div.bookmark h1 {width: 300px; margin-left: -150px; height: 35px; margin-top: -120px; padding-top: 130px; background-size: 122px;}
+	div.bookmark h2 {width: 150px; margin-left: -75px; height: 25px; margin-top: 40px;}
+	div.bookmark p {width: 400px; margin-left: -220px; height: 20px;}
+
+}
+

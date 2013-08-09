@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- (c) & (p) hvadhedderde.com 2009-2013 -->
-	<!-- Common Public Attribution License Version 1.0 (CPAL-1.0), http://hvadhedderde.com/legal -->
+	<!-- (c) & (p) parentNode ApS 2009-2013 -->
+	<!-- Common Public Attribution License Version 1.0 (CPAL-1.0), http://parentnode.dk/legal -->
 	<title><?= $page_title ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="" />
@@ -21,7 +21,7 @@
 	<? } ?>
 
 </head>
-<body class="i:validdevice <?= $body_class ?>">
+<body class="<?= $body_class ?>">
 
 <div id="page" class="i:page">
 

@@ -1,4 +1,4 @@
-* {font-family: "proximanova_regular", arial, verdana, sans-serif; line-height: 30px; font-size: 16px; color: #465159; font-weight: normal;
+* {font-family: arial, verdana, sans-serif; line-height: 30px; font-size: 16px; color: #465159; font-weight: normal;
 	-webkit-text-size-adjust: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
@@ -23,16 +23,6 @@ input, textarea {outline: none;
 	-webkit-appearance: none;
 }
 
-
-#page {position: relative; text-align: left; height: 100%; font-size: 0; overflow: hidden; background: #ffffff; z-index: 2; opacity: 0;
-	-webkit-transform: translate3d(0,0,0);
-}
-#content {opacity: 1; background: #cbebd5; position: relative; z-index: 5; overflow: hidden;
-	-webkit-transform: translate3d(0,0,0);
-}
-#content .scene {opacity: 0; position: absolute; top: 0; left: 0; width: 100%;
-	-webkit-transform: translate3d(0,0,0);
-}
-
-body.standalone {/*margin-top: 20px;*/}
-body.standalone #navigation {/*margin-top: 20px;*/}
+#header {display: none;}
+#content {padding: 100px 0 0; text-align: center;}
+#content h1 {font-size: 40px; line-height: 1.2em;}

@@ -1,14 +1,15 @@
 /*
-JES v0.7-full Copyright 2013 http://whattheframework.org/jes/license
-wtf-js-merged @ 2013-04-23 11:36:03
+JES v0.7.5-medium Copyright 2013 http://whattheframework.org/jes/license
+wtf-js-merged @ 2013-12-06 10:05:09
 */
 
 /*u.js*/
 if(!u || !Util) {
-	var u, Util = u = new function() {}
-	u.version = 0.7;
-	u.bug = function() {}
-	u.stats = new function() {this.pageView = function(){};this.event = function(){};this.customVar = function(){}}
+	var u, Util = u = new function() {};
+	u.version = 0.8;
+	u.bug = function() {};
+	u.nodeId = function() {};
+	u.stats = new function() {this.pageView = function(){};this.event = function(){};this.customVar = function(){};}
 }
 
 /*u-debug.js*/
@@ -19,7 +20,6 @@ Util.debugURL = function(url) {
 	return document.domain.match(/.local$/);
 }
 Util.nodeId = function(node, include_path) {
-	try {
 		if(!include_path) {
 			return node.id ? node.nodeName+"#"+node.id : (node.className ? node.nodeName+"."+node.className : (node.name ? node.nodeName + "["+node.name+"]" : node.nodeName));
 		}
@@ -31,10 +31,6 @@ Util.nodeId = function(node, include_path) {
 				return u.nodeId(node);
 			}
 		}
-	}
-	catch(exception) {
-		u.bug("Exception ("+exception+") in u.nodeId("+node+"), called from: "+arguments.callee.caller);
-	}
 	return "Unindentifiable node!";
 }
 Util.bug = function(message, corner, color) {
@@ -136,7 +132,7 @@ Util.Animation = u.a = new function() {
 		return this._variant;
 	}
 	this.transition = function(node, transition) {
-		try {
+		try {		
 			node.style[this.variant() + "Transition"] = transition;
 			if(this.variant() == "Moz") {
 				u.e.addEvent(node, "transitionend", this._transitioned);
@@ -150,16 +146,22 @@ Util.Animation = u.a = new function() {
 			}
 			else {
 				node.duration = false;
+				if(transition.match(/none/i)) {
+					node.transitioned = null;
+				}
 			}
 		}
 		catch(exception) {
-			u.bug("Exception ("+exception+") in u.a.transition(" + u.nodeId(node) + "), called from: "+arguments.callee.caller);
+			u.bug("Exception ("+exception+") in u.a.transition(" + node + "), called from: "+arguments.callee.caller);
 		}
 	}
 	this._transitioned = function(event) {
 		if(event.target == this && typeof(this.transitioned) == "function") {
 			this.transitioned(event);
 		}
+	}
+	this.removeTransform = function(node) {
+		node.style[this.variant() + "Transform"] = "none";
 	}
 	this.translate = function(node, x, y) {
 		if(this.support3d()) {
@@ -299,38 +301,6 @@ Util.cookieReference = function(node) {
 	}
 	return ref;
 }
-
-/*u-date.js*/
-Util.date = function(format, timestamp, months) {
-	var date = timestamp ? new Date(timestamp) : new Date();
-	if(isNaN(date.getTime())) {
-		if(!timestamp.match(/[A-Z]{3}\+[0-9]{4}/)) {
-			if(timestamp.match(/ \+[0-9]{4}/)) {
-				date = new Date(timestamp.replace(/ (\+[0-9]{4})/, " GMT$1"));
-			}
-		}
-		if(isNaN(date.getTime())) {
-			date = new Date();
-		}
-	}
-	var tokens = /d|j|m|n|F|Y|G|H|i|s/g;
-	var chars = new Object();
-	chars.j = date.getDate();
-	chars.d = (chars.j > 9 ? "" : "0") + chars.j;
-	chars.n = date.getMonth()+1;
-	chars.m = (chars.n > 9 ? "" : "0") + chars.n;
-	chars.F = months ? months[date.getMonth()] : "";
-	chars.Y = date.getFullYear();
-	chars.G = date.getHours();
-	chars.H = (chars.G > 9 ? "" : "0") + chars.G;
-	var i = date.getMinutes();
-	chars.i = (i > 9 ? "" : "0") + i;
-	var s = date.getSeconds();
-	chars.s = (s > 9 ? "" : "0") + s;
-	return format.replace(tokens, function (_) {
-		return _ in chars ? chars[_] : _.slice(1, _.length - 1);
-	});
-};
 
 /*u-dom.js*/
 Util.querySelector = u.qs = function(query, scope) {
@@ -704,6 +674,9 @@ Util.Events = u.e = new function() {
 				}
 			}
 			u.e.addMoveEvent(this, u.e._move);
+			if(u.e.event_pref == "touch") {
+				u.e.addMoveEvent(this, u.e._cancelClick);
+			}
 			u.e.addEndEvent(this, u.e._dblclicked);
 			if(u.e.event_pref == "mouse") {
 				u.e.addEvent(this, "mouseout", u.e._cancelClick);
@@ -822,447 +795,6 @@ u.e.addScrollEvent = function(node, action) {
 u.e.removeScrollEvent = function(node, action) {
 }
 
-/*u-events-movements.js*/
-u.e.resetDragEvents = function(node) {
-	this.removeEvent(node, "mousemove", this._pick);
-	this.removeEvent(node, "touchmove", this._pick);
-	this.removeEvent(node, "mousemove", this._drag);
-	this.removeEvent(node, "touchmove", this._drag);
-	this.removeEvent(node, "mouseup", this._drop);
-	this.removeEvent(node, "touchend", this._drop);
-	this.removeEvent(node, "mouseout", this._drop);
-	this.removeEvent(node, "mousemove", this._scrollStart);
-	this.removeEvent(node, "touchmove", this._scrollStart);
-	this.removeEvent(node, "mousemove", this._scrolling);
-	this.removeEvent(node, "touchmove", this._scrolling);
-	this.removeEvent(node, "mouseup", this._scrollEnd);
-	this.removeEvent(node, "touchend", this._scrollEnd);
-}
-u.e.overlap = function(node, boundaries, strict) {
-	if(boundaries.constructor.toString().match("Array")) {
-		var boundaries_start_x = Number(boundaries[0]);
-		var boundaries_start_y = Number(boundaries[1]);
-		var boundaries_end_x = Number(boundaries[2]);
-		var boundaries_end_y = Number(boundaries[3]);
-	}
-	else if(boundaries.constructor.toString().match("HTML")) {
-		var boundaries_start_x = u.absX(boundaries) - u.absX(node);
-		var boundaries_start_y =  u.absY(boundaries) - u.absY(node);
-		var boundaries_end_x = Number(boundaries_start_x + boundaries.offsetWidth);
-		var boundaries_end_y = Number(boundaries_start_y + boundaries.offsetHeight);
-	}
-	var node_start_x = Number(node._x);
-	var node_start_y = Number(node._y);
-	var node_end_x = Number(node_start_x + node.offsetWidth);
-	var node_end_y = Number(node_start_y + node.offsetHeight);
-	if(strict) {
-		if(node_start_x >= boundaries_start_x && node_start_y >= boundaries_start_y && node_end_x <= boundaries_end_x && node_end_y <= boundaries_end_y) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	} 
-	else if(node_end_x < boundaries_start_x || node_start_x > boundaries_end_x || node_end_y < boundaries_start_y || node_start_y > boundaries_end_y) {
-		return false;
-	}
-	return true;
-}
-u.e.drag = function(node, boundaries, settings) {
-	node.e_drag = true;
-	if(node.childNodes.length < 2 && node.innerHTML.trim() == "") {
-		node.innerHTML = "&nbsp;";
-	}
-	node.drag_strict = true;
-	node.drag_elastica = 0;
-	node.drag_dropout = true;
-	node.show_bounds = false;
-	if(typeof(settings) == "object") {
-		var argument;
-		for(argument in settings) {
-			switch(argument) {
-				case "strict"		: node.drag_strict		= settings[argument]; break;
-				case "elastica"		: node.drag_elastica	= Number(settings[argument]); break;
-				case "dropout"		: node.drag_dropout		= settings[argument]; break;
-				case "show_bounds"	: node.show_bounds		= settings[argument]; break; // NEEDS HELP
-			}
-		}
-	}
-	if((boundaries.constructor && boundaries.constructor.toString().match("Array")) || (boundaries.scopeName && boundaries.scopeName != "HTML")) {
-		node.start_drag_x = Number(boundaries[0]);
-		node.start_drag_y = Number(boundaries[1]);
-		node.end_drag_x = Number(boundaries[2]);
-		node.end_drag_y = Number(boundaries[3]);
-	}
-	else if((boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
-		node.start_drag_x = u.absX(boundaries) - u.absX(node);
-		node.start_drag_y = u.absY(boundaries) - u.absY(node);
-		node.end_drag_x = node.start_drag_x + boundaries.offsetWidth;
-		node.end_drag_y = node.start_drag_y + boundaries.offsetHeight;
-	}
-	if(node.show_bounds) {
-		var debug_bounds = u.ae(document.body, "div", {"class":"debug_bounds"})
-		debug_bounds.style.position = "absolute";
-		debug_bounds.style.background = "red"
-		debug_bounds.style.left = (u.absX(node) + node.start_drag_x - 1) + "px";
-		debug_bounds.style.top = (u.absY(node) + node.start_drag_y - 1) + "px";
-		debug_bounds.style.width = (node.end_drag_x - node.start_drag_x) + "px";
-		debug_bounds.style.height = (node.end_drag_y - node.start_drag_y) + "px";
-		debug_bounds.style.border = "1px solid white";
-		debug_bounds.style.zIndex = 9999;
-		debug_bounds.style.opacity = .5;
-		if(document.readyState && document.readyState == "interactive") {
-			debug_bounds.innerHTML = "WARNING - injected on DOMLoaded"; 
-		}
-		u.bug("node: "+u.nodeId(node)+" in (" + u.absX(node) + "," + u.absY(node) + "), (" + (u.absX(node)+node.offsetWidth) + "," + (u.absY(node)+node.offsetHeight) +")");
-		u.bug("boundaries: (" + node.start_drag_x + "," + node.start_drag_y + "), (" + node.end_drag_x + ", " + node.end_drag_y + ")");
-	}
-	node._x = node._x ? node._x : 0;
-	node._y = node._y ? node._y : 0;
-	node.locked = ((node.end_drag_x - node.start_drag_x == node.offsetWidth) && (node.end_drag_y - node.start_drag_y == node.offsetHeight));
-	node.only_vertical = (!node.locked && node.end_drag_x - node.start_drag_x == node.offsetWidth);
-	node.only_horisontal = (!node.locked && node.end_drag_y - node.start_drag_y == node.offsetHeight);
-	u.e.addStartEvent(node, this._inputStart);
-}
-u.e._pick = function(event) {
-	var init_speed_x = Math.abs(this.start_event_x - u.eventX(event));
-	var init_speed_y = Math.abs(this.start_event_y - u.eventY(event));
-	if(init_speed_x > init_speed_y && this.only_horisontal || 
-	   init_speed_x < init_speed_y && this.only_vertical ||
-	   !this.only_vertical && !this.only_horisontal) {
-		u.e.resetNestedEvents(this);
-	    u.e.kill(event);
-		this.move_timestamp = event.timeStamp;
-		this.move_last_x = this._x;
-		this.move_last_y = this._y;
-		if(u.hasFixedParent(this)) {
-			this.start_input_x = u.eventX(event) - this._x - u.scrollX(); 
-			this.start_input_y = u.eventY(event) - this._y - u.scrollY();
-		}
-		else {
-			this.start_input_x = u.eventX(event) - this._x; 
-			this.start_input_y = u.eventY(event) - this._y;
-		}
-		this.current_xps = 0;
-		this.current_yps = 0;
-		u.a.transition(this, "none");
-		if(typeof(this.picked) == "function") {
-			this.picked(event);
-		}
-		u.e.addMoveEvent(this, u.e._drag);
-		u.e.addEndEvent(this, u.e._drop);
-	}
-	if(this.drag_dropout && u.e.event_pref == "mouse") {
-		u.e.addEvent(this, "mouseout", u.e._drop);
-	}
-}
-u.e._drag = function(event) {
-	if(u.hasFixedParent(this)) {
-		this.current_x = u.eventX(event) - this.start_input_x - u.scrollX();
-		this.current_y = u.eventY(event) - this.start_input_y - u.scrollY();
-	}
-	else {
-		this.current_x = u.eventX(event) - this.start_input_x;
-		this.current_y = u.eventY(event) - this.start_input_y;
-	}
-	this.current_xps = Math.round(((this.current_x - this.move_last_x) / (event.timeStamp - this.move_timestamp)) * 1000);
-	this.current_yps = Math.round(((this.current_y - this.move_last_y) / (event.timeStamp - this.move_timestamp)) * 1000);
-	this.move_timestamp = event.timeStamp;
-	this.move_last_x = this.current_x;
-	this.move_last_y = this.current_y;
-	if(this.only_vertical) {
-		this._y = this.current_y;
-	}
-	else if(this.only_horisontal) {
-		this._x = this.current_x;
-	}
-	else if(!this.locked) {
-		this._x = this.current_x;
-		this._y = this.current_y;
-	}
-	if(this.e_swipe) {
-		if(this.current_xps && (Math.abs(this.current_xps) > Math.abs(this.current_yps) || this.only_horisontal)) {
-			if(this.current_xps < 0) {
-				this.swiped = "left";
-			}
-			else {
-				this.swiped = "right";
-			}
-		}
-		else if(this.current_yps && (Math.abs(this.current_xps) < Math.abs(this.current_yps) || this.only_vertical)) {
-			if(this.current_yps < 0) {
-				this.swiped = "up";
-			}
-			else {
-				this.swiped = "down";
-			}
-		}
-	}
-	if(!this.locked) {
-		if(u.e.overlap(this, [this.start_drag_x, this.start_drag_y, this.end_drag_x, this.end_drag_y], true)) {
-			u.a.translate(this, this._x, this._y);
-		}
-		else if(this.drag_elastica) {
-			this.swiped = false;
-			this.current_xps = 0;
-			this.current_yps = 0;
-			var offset = false;
-			if(!this.only_vertical && this._x < this.start_drag_x) {
-				offset = this._x < this.start_drag_x - this.drag_elastica ? - this.drag_elastica : this._x - this.start_drag_x;
-				this._x = this.start_drag_x;
-				this.current_x = this._x + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else if(!this.only_vertical && this._x + this.offsetWidth > this.end_drag_x) {
-				offset = this._x + this.offsetWidth > this.end_drag_x + this.drag_elastica ? this.drag_elastica : this._x + this.offsetWidth - this.end_drag_x;
-				this._x = this.end_drag_x - this.offsetWidth;
-				this.current_x = this._x + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else {
-				this.current_x = this._x;
-			}
-			if(!this.only_horisontal && this._y < this.start_drag_y) {
-				offset = this._y < this.start_drag_y - this.drag_elastica ? - this.drag_elastica : this._y - this.start_drag_y;
-				this._y = this.start_drag_y;
-				this.current_y = this._y + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else if(!this.horisontal && this._y + this.offsetHeight > this.end_drag_y) {
-				offset = (this._y + this.offsetHeight > this.end_drag_y + this.drag_elastica) ? this.drag_elastica : (this._y + this.offsetHeight - this.end_drag_y);
-				this._y = this.end_drag_y - this.offsetHeight;
-				this.current_y = this._y + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else {
-				this.current_y = this._y;
-			}
-			if(offset) {
-				u.a.translate(this, this.current_x, this.current_y);
-			}
-		}
-		else {
-			this.swiped = false;
-			this.current_xps = 0;
-			this.current_yps = 0;
-			if(this._x < this.start_drag_x) {
-				this._x = this.start_drag_x;
-			}
-			else if(this._x + this.offsetWidth > this.end_drag_x) {
-				this._x = this.end_drag_x - this.offsetWidth;
-			}
-			if(this._y < this.start_drag_y) {
-				this._y = this.start_drag_y;
-			}
-			else if(this._y + this.offsetHeight > this.end_drag_y) { 
-				this._y = this.end_drag_y - this.offsetHeight;
-			}
-			u.a.translate(this, this._x, this._y);
-		}
-	}
-	if(typeof(this.moved) == "function") {
-		this.moved(event);
-	}
-}
-u.e._drop = function(event) {
-	u.e.resetEvents(this);
-	if(this.e_swipe && this.swiped) {
-		if(this.swiped == "left" && typeof(this.swipedLeft) == "function") {
-			this.swipedLeft(event);
-		}
-		else if(this.swiped == "right" && typeof(this.swipedRight) == "function") {
-			this.swipedRight(event);
-		}
-		else if(this.swiped == "down" && typeof(this.swipedDown) == "function") {
-			this.swipedDown(event);
-		}
-		else if(this.swiped == "up" && typeof(this.swipedUp) == "function") {
-			this.swipedUp(event);
-		}
-	}
-	else if(!this.drag_strict && !this.locked) {
-		this.current_x = this._x + (this.current_xps/2);
-		this.current_y = this._y + (this.current_yps/2);
-		if(this.only_vertical || this.current_x < this.start_drag_x) {
-			this.current_x = this.start_drag_x;
-		}
-		else if(this.current_x + this.offsetWidth > this.end_drag_x) {
-			this.current_x = this.end_drag_x - this.offsetWidth;
-		}
-		if(this.only_horisontal || this.current_y < this.start_drag_y) {
-			this.current_y = this.start_drag_y;
-		}
-		else if(this.current_y + this.offsetHeight > this.end_drag_y) {
-			this.current_y = this.end_drag_y - this.offsetHeight;
-		}
-		this.transitioned = function() {
-			this.transitioned = null;
-			u.a.transition(this, "none");
-			if(typeof(this.projected) == "function") {
-				this.projected(event);
-			}
-		}
-		if(this.current_xps || this.current_yps) {
-			u.a.transition(this, "all 1s cubic-bezier(0,0,0.25,1)");
-		}
-		else {
-			u.a.transition(this, "none");
-		}
-		u.a.translate(this, this.current_x, this.current_y);
-	}
-	if(typeof(this.dropped) == "function") {
-		this.dropped(event);
-	}
-}
-u.e.swipe = function(node, boundaries, settings) {
-	node.e_swipe = true;
-	u.e.drag(node, boundaries, settings);
-}
-u.e.scroll = function(e) {
-	e.e_scroll = true;
-	e._x = e._x ? e._x : 0;
-	e._y = e._y ? e._y : 0;
-	u.e.addStartEvent(e, this._inputStart);
-}
-u.e._scrollStart = function(event) {
-	u.e.resetNestedEvents(this);
-	this.move_timestamp = new Date().getTime();
-	this.current_xps = 0;
-	this.current_yps = 0;
-	this.start_input_x = u.eventX(event) - this._x;
-	this.start_input_y = u.eventY(event) - this._y;
-	u.a.transition(this, "none");
-	if(typeof(this.picked) == "function") {
-		this.picked(event);
-	}
-	u.e.addMoveEvent(this, u.e._scrolling);
-	u.e.addEndEvent(this, u.e._scrollEnd);
-}
-u.e._scrolling = function(event) {
-	this.new_move_timestamp = new Date().getTime();
-	this.current_x = u.eventX(event) - this.start_input_x;
-	this.current_y = u.eventY(event) - this.start_input_y;
-	this.current_xps = Math.round(((this.current_x - this._x) / (this.new_move_timestamp - this.move_timestamp)) * 1000);
-	this.current_yps = Math.round(((this.current_y - this._y) / (this.new_move_timestamp - this.move_timestamp)) * 1000);
-	this.move_timestamp = this.new_move_timestamp;
-	if(u.scrollY() > 0 && -(this.current_y) + u.scrollY() > 0) {
-		u.e.kill(event);
-		window.scrollTo(0, -(this.current_y) + u.scrollY());
-	}
-	if(typeof(this.moved) == "function") {
-		this.moved(event);
-	}
-}
-u.e._scrollEnd = function(event) {
-	u.e.resetEvents(this);
-	if(typeof(this.dropped) == "function") {
-		this.dropped(event);
-	}
-}
-u.e.beforeScroll = function(node) {
-	node.e_beforescroll = true;
-	u.e.addStartEvent(node, this._inputStartDrag);
-}
-u.e._inputStartDrag = function() {
-	u.e.addMoveEvent(this, u.e._beforeScroll);
-}
-u.e._beforeScroll = function(event) {
-	u.e.removeMoveEvent(this, u.e._beforeScroll);
-	if(typeof(this.picked) == "function") {
-		this.picked(event);
-	}
-}
-
-/*u-flash.js*/
-Util.flashDetection = function(version) {
-	var flash_version = false;
-	var flash = false;
-	if(navigator.plugins && navigator.plugins["Shockwave Flash"] && navigator.plugins["Shockwave Flash"].description && navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) {
-		flash = true;
-		var Pversion = navigator.plugins["Shockwave Flash"].description.match(/\b([\d]+)\b/);
-		if(Pversion.length > 1 && !isNaN(Pversion[1])) {
-			flash_version = Pversion[1];
-		}
-	}
-	else if(window.ActiveXObject) {
-		try {
-			var AXflash, AXversion;
-			AXflash = new ActiveXObject("ShockwaveFlash.ShockwaveFlash");
-			if(AXflash) {
-				flash = true;
-				AXversion = AXflash.GetVariable("$version").match(/\b([\d]+)\b/);
-				if(AXversion.length > 1 && !isNaN(AXversion[1])) {
-					flash_version = AXversion[1];
-				}
-			}
-		}
-		catch(exception) {}
-	}
-	if(flash_version || (flash && !version)) {
-		if(!version) {
-			return true;
-		}
-		else {
-			if(!isNaN(version)) {
-				return flash_version == version;
-			}
-			else {
-				return eval(flash_version + version);
-			}
-		}
-	}
-	else {
-		return false;
-	}
-}
-Util.flash = function(node, url, settings) {
-	var width = "100%";
-	var height = "100%";
-	var background = "transparent";
-	var id = "flash_" + new Date().getHours() + "_" + new Date().getMinutes() + "_" + new Date().getMilliseconds();
-	var allowScriptAccess = "always";
-	var menu = "false";
-	var scale = "showall";
-	var wmode = "transparent";
-	if(typeof(settings) == "object") {
-		var argument;
-		for(argument in settings) {
-			switch(argument) {
-				case "id"					: id				= settings[argument]; break;
-				case "width"				: width				= Number(settings[argument]); break;
-				case "height"				: height			= Number(settings[argument]); break;
-				case "background"			: background		= settings[argument]; break;
-				case "allowScriptAccess"	: allowScriptAccess = settings[argument]; break;
-				case "menu"					: menu				= settings[argument]; break;
-				case "scale"				: scale				= settings[argument]; break;
-				case "wmode"				: wmode				= settings[argument]; break;
-			}
-		}
-	}
-	html = '<object';
-	html += ' id="'+id+'"';
-	html += ' width="'+width+'"';
-	html += ' height="'+height+'"';
-	if(u.browser("explorer")) {
-		html += ' classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"';
-	}
-	else {
-		html += ' type="application/x-shockwave-flash"';
-		html += ' data="'+url+'"';
-	}
-	html += '>';
-	html += '<param name="allowScriptAccess" value="'+allowScriptAccess+'" />';
-	html += '<param name="movie" value="'+url+'" />';
-	html += '<param name="quality" value="high" />';
-	html += '<param name="bgcolor" value="'+background+'" />';
-	html += '<param name="play" value="true" />';
-	html += '<param name="wmode" value="'+wmode+'" />';
-	html += '<param name="menu" value="'+menu+'" />';
-	html += '<param name="scale" value="'+scale+'" />';
-	html += '</object>';
-	var temp_node = document.createElement("div");
-	temp_node.innerHTML = html;
-	node.insertBefore(temp_node.firstChild, node.firstChild);
-	var flash_object = u.qs("#"+id, node);
-	return flash_object;
-}
-
 /*u-form.js*/
 Util.Form = u.f = new function() {
 	this.customInit = {};
@@ -1297,6 +829,7 @@ Util.Form = u.f = new function() {
 			if(error_message) {
 				u.ae(field, "div", {"class":"error", "html":error_message})
 			}
+			field._indicator = u.ae(field, "div", {"class":"indicator"});
 			field._label = u.qs("label", field);
 			field._hint = u.qs(".hint", field);
 			field._error = u.qs(".error", field);
@@ -1309,7 +842,7 @@ Util.Form = u.f = new function() {
 				}
 			}
 			if(not_initialized) {
-				if(u.hc(field, "string|email|tel|numeric|integer|password")) {
+				if(u.hc(field, "string|email|tel|number|integer|password")) {
 					field._input = u.qs("input", field);
 					field._input.field = field;
 					this.formIndex(form, field._input);
@@ -1336,14 +869,24 @@ Util.Form = u.f = new function() {
 						this.formIndex(form, input);
 					}
 				}
-				else if(u.hc(field, "date")) {
+				else if(u.hc(field, "date|datetime")) {
 					field._input = u.qsa("select,input", field);
 					for(j = 0; input = field._input[j]; j++) {
 						input.field = field;
 						this.formIndex(form, input);
 					}
 				}
-				else if(u.hc(field, "file")) {
+				else if(u.hc(field, "tags")) {
+					field._input = u.qs("input", field);
+					field._input.field = field;
+					this.formIndex(form, field._input);
+				}
+				else if(u.hc(field, "prices")) {
+					field._input = u.qs("input", field);
+					field._input.field = field;
+					this.formIndex(form, field._input);
+				}
+				else if(u.hc(field, "files")) {
 					field._input = u.qs("input", field);
 					field._input.field = field;
 					this.formIndex(form, field._input);
@@ -1372,17 +915,16 @@ Util.Form = u.f = new function() {
 					if(this.type && this.type.match(/submit/i)) {
 						this.form._submit_button = this;
 						this.form._submit_input = false;
-						this.form._submit(event);
+						this.form._submit(event, this);
 					}
 				}
 			}
 			this.buttonOnEnter(action._input);
 			this.activateButton(action._input);
-			if(action._input.name && action._input.name) {
-				form.actions[action._input.name] = action._input;
-			}
-			if(typeof(u.e.k) == "object" && u.hc(action._input, "key:[a-z0-9]+")) {
-				u.e.k.addShortcut(u.cv(action._input, "key"), action._input);
+			var action_name = action._input.name ? action._input.name : action.className;
+				form.actions[action_name] = action._input;
+			if(typeof(u.k) == "object" && u.hc(action._input, "key:[a-z0-9]+")) {
+				u.k.addKey(u.cv(action._input, "key"), action._input);
 			}
 		}
 	}
@@ -1460,7 +1002,7 @@ Util.Form = u.f = new function() {
 				u.e.kill(event);
 				this.form.submitInput = this;
 				this.form.submitButton = false;
-				this.form._submit(event);
+				this.form._submit(event, this);
 			}
 		}
 		u.e.addEvent(node, "keydown", node.keyPressed);
@@ -1476,30 +1018,37 @@ Util.Form = u.f = new function() {
 		}
 		u.e.addEvent(node, "keydown", node.keyPressed);
 	}
-	this.formIndex = function(form, node) {
-		node.tab_index = form.tab_order.length;
-		form.tab_order[node.tab_index] = node;
-		if(node.field && node.name) {
-			form.fields[node.name] = node;
-			if(node.nodeName.match(/input/i) && node.type && node.type.match(/text|email|number|password/)) {
-				node.val = this._value;
-				u.e.addEvent(node, "keyup", this._updated);
-				u.e.addEvent(node, "change", this._changed);
-				this.inputOnEnter(node);
+	this.formIndex = function(form, iN) {
+		iN.tab_index = form.tab_order.length;
+		form.tab_order[iN.tab_index] = iN;
+		if(iN.field && iN.name) {
+			form.fields[iN.name] = iN;
+			if(iN.nodeName.match(/input/i) && iN.type && iN.type.match(/text|email|tel|number|password|datetime|date/)) {
+				iN.val = this._value;
+				u.e.addEvent(iN, "keyup", this._updated);
+				u.e.addEvent(iN, "change", this._changed);
+				this.inputOnEnter(iN);
 			}
-			else if(node.nodeName.match(/textarea/i)) {
-				node.val = this._value;
-				u.e.addEvent(node, "keyup", this._updated);
-				u.e.addEvent(node, "change", this._changed);
-				if(u.hc(node.field, "autoexpand")) {
-					u.as(node, "overflow", "hidden");
-					node.autoexpand_offset = 0;
-					if(parseInt(u.gcs(node, "height")) != node.scrollHeight) {
-						node.autoexpand_offset = node.scrollHeight - parseInt(u.gcs(node, "height"));
+			else if(iN.nodeName.match(/textarea/i)) {
+				iN.val = this._value;
+				u.e.addEvent(iN, "keyup", this._updated);
+				u.e.addEvent(iN, "change", this._changed);
+				if(u.hc(iN.field, "autoexpand")) {
+					var current_height = parseInt(u.gcs(iN, "height"));
+					u.bug(current_height + "," + iN.scrollHeight);
+					var current_value = iN.val();
+					iN.val("");
+					u.bug(current_height + "," + iN.scrollHeight);
+					u.as(iN, "overflow", "hidden");
+					u.bug(current_height + "," + iN.scrollHeight);
+					iN.autoexpand_offset = 0;
+					if(parseInt(u.gcs(iN, "height")) != iN.scrollHeight) {
+						iN.autoexpand_offset = iN.scrollHeight - parseInt(u.gcs(iN, "height"));
 					}
-					node.setHeight = function() {
+					iN.val(current_value);
+					iN.setHeight = function() {
 						var textarea_height = parseInt(u.gcs(this, "height"));
-						if(this.value) {
+						if(this.val()) {
 							if(u.browser("webkit")) {
 								if(this.scrollHeight - this.autoexpand_offset > textarea_height) {
 									u.a.setHeight(this, this.scrollHeight);
@@ -1515,43 +1064,44 @@ Util.Form = u.f = new function() {
 							}
 						}
 					}
-					u.e.addEvent(node, "keyup", node.setHeight);
+					u.e.addEvent(iN, "keyup", iN.setHeight);
+					iN.setHeight();
 				}
 			}
-			else if(node.nodeName.match(/select/i)) {
-				node.val = this._value_select;
-				u.e.addEvent(node, "change", this._updated);
-				u.e.addEvent(node, "keyup", this._updated);
-				u.e.addEvent(node, "change", this._changed);
+			else if(iN.nodeName.match(/select/i)) {
+				iN.val = this._value_select;
+				u.e.addEvent(iN, "change", this._updated);
+				u.e.addEvent(iN, "keyup", this._updated);
+				u.e.addEvent(iN, "change", this._changed);
 			}
-			else if(node.type && node.type.match(/checkbox/)) {
-				node.val = this._value_checkbox;
+			else if(iN.type && iN.type.match(/checkbox/)) {
+				iN.val = this._value_checkbox;
 				if(u.browser("explorer", "<=8")) {
-					node.pre_state = node.checked;
-					node._changed = u.f._changed;
-					node._updated = u.f._updated;
-					node._clicked = function(event) {
+					iN.pre_state = iN.checked;
+					iN._changed = u.f._changed;
+					iN._updated = u.f._updated;
+					iN._clicked = function(event) {
 						if(this.checked != this.pre_state) {
 							this._changed(window.event);
 							this._updated(window.event);
 						}
 						this.pre_state = this.checked;
 					}
-					u.e.addEvent(node, "click", node._clicked);
+					u.e.addEvent(iN, "click", iN._clicked);
 				}
 				else {
-					u.e.addEvent(node, "change", this._updated);
-					u.e.addEvent(node, "change", this._changed);
+					u.e.addEvent(iN, "change", this._updated);
+					u.e.addEvent(iN, "change", this._changed);
 				}
-				this.inputOnEnter(node);
+				this.inputOnEnter(iN);
 			}
-			else if(node.type && node.type.match(/radio/)) {
-				node.val = this._value_radio;
+			else if(iN.type && iN.type.match(/radio/)) {
+				iN.val = this._value_radio;
 				if(u.browser("explorer", "<=8")) {
-					node.pre_state = node.checked;
-					node._changed = u.f._changed;
-					node._updated = u.f._updated;
-					node._clicked = function(event) {
+					iN.pre_state = iN.checked;
+					iN._changed = u.f._changed;
+					iN._updated = u.f._updated;
+					iN._clicked = function(event) {
 						var i, input;
 						if(this.checked != this.pre_state) {
 							this._changed(window.event);
@@ -1561,16 +1111,32 @@ Util.Form = u.f = new function() {
 							input.pre_state = input.checked;
 						}
 					}
-					u.e.addEvent(node, "click", node._clicked);
+					u.e.addEvent(iN, "click", iN._clicked);
 				}
 				else {
-					u.e.addEvent(node, "change", this._updated);
-					u.e.addEvent(node, "change", this._changed);
+					u.e.addEvent(iN, "change", this._updated);
+					u.e.addEvent(iN, "change", this._changed);
 				}
-				this.inputOnEnter(node);
+				this.inputOnEnter(iN);
 			}
-			this.activateField(node);
-			this.validate(node);
+			else if(iN.type && iN.type.match(/file/)) {
+				iN.val = function(value) {
+					if(value !== undefined) {
+						alert('adding values manually to input type="file" is not supported')
+					}
+					else {
+						var i, file, files = [];
+						for(i = 0; file = this.files[i]; i++) {
+							files.push(file);
+						}
+						return files.join(",");
+					}
+				}
+				u.e.addEvent(iN, "keyup", this._updated);
+				u.e.addEvent(iN, "change", this._changed);
+			}
+			this.activateField(iN);
+			this.validate(iN);
 		}
 	}
 	this._changed = function(event) {
@@ -1598,7 +1164,7 @@ Util.Form = u.f = new function() {
 	this._validate = function() {
 		u.f.validate(this);
 	}
-	this._submit = function(event, input) {
+	this._submit = function(event, iN) {
 		for(name in this.fields) {
 			if(this.fields[name].field) {
 				this.fields[name].used = true;
@@ -1612,199 +1178,321 @@ Util.Form = u.f = new function() {
 		}
 		else {
 			if(typeof(this.submitted) == "function") {
-				this.submitted(input);
+				this.submitted(iN);
 			}
 			else {
 				this.submit();
 			}
 		}
 	}
-	this.activateField = function(input) {
-		this._focus = function(event) {
-			this.field.focused = true;
-			u.ac(this.field, "focus");
-			u.ac(this, "focus");
-			if(typeof(this.focused) == "function") {
-				this.focused();
-			}
-			if(typeof(this.form.focused) == "function") {
-				this.form.focused(this);
+	this._focus = function(event) {
+		this.field.focused = true;
+		u.ac(this.field, "focus");
+		u.ac(this, "focus");
+		if(typeof(this.focused) == "function") {
+			this.focused();
+		}
+		if(typeof(this.form.focused) == "function") {
+			this.form.focused(this);
+		}
+	}
+	this._blur = function(event) {
+		this.field.focused = false;
+		u.rc(this.field, "focus");
+		u.rc(this, "focus");
+		this.used = true;
+		if(typeof(this.blurred) == "function") {
+			this.blurred();
+		}
+		if(typeof(this.form.blurred) == "function") {
+			this.form.blurred(this);
+		}
+	}
+	this._button_focus = function(event) {
+		u.ac(this, "focus");
+		if(typeof(this.focused) == "function") {
+			this.focused();
+		}
+		if(typeof(this.form.focused) == "function") {
+			this.form.focused(this);
+		}
+	}
+	this._button_blur = function(event) {
+		u.rc(this, "focus");
+		if(typeof(this.blurred) == "function") {
+			this.blurred();
+		}
+		if(typeof(this.form.blurred) == "function") {
+			this.form.blurred(this);
+		}
+	}
+	this._default_value_focus = function() {
+		u.rc(this, "default");
+		if(this.val() == this.default_value) {
+			this.val("");
+		}
+	}
+	this._default_value_blur = function() {
+		if(this.val() == "") {
+			u.ac(this, "default");
+			this.val(this.default_value);
+		}
+	}
+	this.activateField = function(iN) {
+		u.e.addEvent(iN, "focus", this._focus);
+		u.e.addEvent(iN, "blur", this._blur);
+		u.e.addEvent(iN, "blur", this._validate);
+		if(iN.form.labelstyle || u.hc(iN.form, "labelstyle:[a-z]+")) {
+			iN.form.labelstyle = iN.form.labelstyle ? iN.form.labelstyle : u.cv(iN.form, "labelstyle");
+			if(iN.form.labelstyle == "inject" && (!iN.type || !iN.type.match(/file|radio|checkbox/))) {
+				iN.default_value = iN.field._label.innerHTML;
+				u.e.addEvent(iN, "focus", this._default_value_focus);
+				u.e.addEvent(iN, "blur", this._default_value_blur);
+				if(iN.val() == "") {
+					iN.val(iN.default_value);
+					u.ac(iN, "default");
+				}
 			}
 		}
-		this._blur = function(event) {
-			this.field.focused = false;
-			u.rc(this.field, "focus");
-			u.rc(this, "focus");
-			this.used = true;
-			if(typeof(this.blurred) == "function") {
-				this.blurred();
-			}
-			if(typeof(this.form.blurred) == "function") {
-				this.form.blurred(this);
-			}
-		}
-		u.e.addEvent(input, "focus", this._focus);
-		u.e.addEvent(input, "blur", this._blur);
-		u.e.addEvent(input, "blur", this._validate);
 	}
 	this.activateButton = function(button) {
-		this._button_focus = function(event) {
-			u.ac(this, "focus");
-			if(typeof(this.focused) == "function") {
-				this.focused();
-			}
-			if(typeof(this.form.focused) == "function") {
-				this.form.focused(this);
-			}
-		}
-		this._button_blur = function(event) {
-			u.rc(this, "focus");
-			if(typeof(this.blurred) == "function") {
-				this.blurred();
-			}
-			if(typeof(this.form.blurred) == "function") {
-				this.form.blurred(this);
-			}
-		}
 		u.e.addEvent(button, "focus", this._button_focus);
 		u.e.addEvent(button, "blur", this._button_blur);
 	}
-	this.isDefault = function(input) {
-		if(input.field.default_value && input.val() == iN.field.default_value) {
+ 	this.isDefault = function(iN) {
+		if(iN.default_value && iN.val() == iN.default_value) {
 			return true;
 		}
 		return false;
 	}
-	this.fieldError = function(input) {
-		u.rc(input, "correct");
-		u.rc(input.field, "correct");
-		if(input.used || !this.isDefault(input) && input.val()) {
-			u.ac(input, "error");
-			u.ac(input.field, "error");
-			if(typeof(input.validationFailed) == "function") {
-				input.validationFailed();
+	this.fieldError = function(iN) {
+		u.rc(iN, "correct");
+		u.rc(iN.field, "correct");
+		if(iN.used || !this.isDefault(iN) && iN.val()) {
+			u.ac(iN, "error");
+			u.ac(iN.field, "error");
+			if(typeof(iN.validationFailed) == "function") {
+				iN.validationFailed();
 			}
 		}
 	}
-	this.fieldCorrect = function(input) {
-		if(!this.isDefault(input) && input.val()) {
-			u.ac(input, "correct");
-			u.ac(input.field, "correct");
-			u.rc(input, "error");
-			u.rc(input.field, "error");
+	this.fieldCorrect = function(iN) {
+		if(!this.isDefault(iN) && iN.val()) {
+			u.ac(iN, "correct");
+			u.ac(iN.field, "correct");
+			u.rc(iN, "error");
+			u.rc(iN.field, "error");
 		}
 		else {
-			u.rc(input, "correct");
-			u.rc(input.field, "correct");
-			u.rc(input, "error");
-			u.rc(input.field, "error");
+			u.rc(iN, "correct");
+			u.rc(iN.field, "correct");
+			u.rc(iN, "error");
+			u.rc(iN.field, "error");
 		}
 	}
-	this.validate = function(input) {
-		var min, max;
+	this.validate = function(iN) {
+		var min, max, pattern;
 		var not_validated = true;
+		if(!u.hc(iN.field, "required") && (iN.val() == "" || this.isDefault(iN))) {
+			this.fieldCorrect(iN);
+			return true;
+		}
+		else if(u.hc(iN.field, "required") && (iN.val() == "" || this.isDefault(iN))) {
+			this.fieldError(iN);
+			return false;
+		}
 		var custom_validate;
 		for(custom_validate in u.f.customValidate) {
-			if(u.hc(input.field, custom_validate)) {
-				u.f.customValidate[custom_validate](input);
+			if(u.hc(iN.field, custom_validate)) {
+				u.f.customValidate[custom_validate](iN);
 				not_validated = false;
 			}
 		}
 		if(not_validated) {
-			if(u.hc(input.field, "password")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			if(u.hc(iN.field, "password")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 8;
 				max = max ? max : 20;
-				if((input.value.length >= min && input.value.length <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				pattern = iN.getAttribute("pattern");
+				if(
+					iN.val().length >= min && 
+					iN.val().length <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "numeric")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			else if(u.hc(iN.field, "number")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 0;
 				max = max ? max : 99999999999999999999999999999;
-				if((input.value && !isNaN(input.value) && input.value >= min && input.value <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				pattern = iN.getAttribute("pattern");
+				if(
+					!isNaN(iN.val()) && 
+					iN.val() >= min && 
+					iN.val() <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "integer")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			else if(u.hc(iN.field, "integer")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 0;
 				max = max ? max : 99999999999999999999999999999;
-				if((input.value && !isNaN(input.value) && Math.round(input.value) == input.value && input.value >= min && input.value <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				pattern = iN.getAttribute("pattern");
+				if(
+					!isNaN(iN.val()) && 
+					Math.round(iN.val()) == iN.val() && 
+					iN.val() >= min && 
+					iN.val() <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "tel")) {
-				if((input.value.match(/^([\+0-9\-\.\s\(\)]){5,16}$/) && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+			else if(u.hc(iN.field, "tel")) {
+				pattern = iN.getAttribute("pattern");
+				if(
+					!pattern && iN.val().match(/^([\+0-9\-\.\s\(\)]){5,18}$/) ||
+					(pattern && iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "email")) {
-				if((input.value.match(/^([^<>\\\/%$])+\@([^<>\\\/%$])+\.([^<>\\\/%$]{2,20})$/) && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+			else if(u.hc(iN.field, "email")) {
+				if(
+					!pattern && iN.val().match(/^([^<>\\\/%$])+\@([^<>\\\/%$])+\.([^<>\\\/%$]{2,20})$/) ||
+					(pattern && iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "text")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			else if(u.hc(iN.field, "text")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 1;
 				max = max ? max : 10000000;
-				if((input.value.length >= min && input.value.length <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				pattern = iN.getAttribute("pattern");
+				if(
+					iN.val().length >= min && 
+					iN.val().length <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "select")) {
-				if(input.val() != "" || !u.hc(input.field, "required")) {
-					this.fieldCorrect(input);
+			else if(u.hc(iN.field, "select")) {
+				if(iN.val()) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "checkbox|boolean|radio|radio_buttons")) {
-				if(input.val() != "" || !u.hc(input.field, "required")) {
-					this.fieldCorrect(input);
+			else if(u.hc(iN.field, "checkbox|boolean|radio|radio_buttons")) {
+				if(iN.val()) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "string")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			else if(u.hc(iN.field, "string")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 1;
-				max = max ? max : 10000000;
-				if((input.value.length >= min && input.value.length <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				max = max ? max : 255;
+				pattern = iN.getAttribute("pattern");
+				if(
+					iN.val().length >= min &&
+					iN.val().length <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "date")) {
+				pattern = iN.getAttribute("pattern");
+				if(
+					!pattern && iN.val().match(/^([\d]{4}[\-\/\ ]{1}[\d]{2}[\-\/\ ][\d]{2})$/) ||
+					(pattern && iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "datetime")) {
+				pattern = iN.getAttribute("pattern");
+				if(
+					!pattern && iN.val().match(/^([\d]{4}[\-\/\ ]{1}[\d]{2}[\-\/\ ][\d]{2} [\d]{2}[\-\/\ \:]{1}[\d]{2}[\-\/\ \:]{0,1}[\d]{0,2})$/) ||
+					(pattern && iN.val().match(pattern))
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "tags")) {
+				if(
+					!pattern && iN.val().match(/\:/) ||
+					(pattern && iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "prices")) {
+				if(
+					!isNaN(iN.val())
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "files")) {
+				if(
+					1
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
 				}
 			}
 		}
-		if(u.hc(input.field, "error")) {
+		if(u.hc(iN.field, "error")) {
 			return false;
 		}
 		else {
@@ -1824,7 +1512,7 @@ Util.Form = u.f = new function() {
 			}
 		}
 		var i, input, select, textarea, param;
-		var params = new Object();
+			var params = new Object();
 		if(form._submit_button && form._submit_button.name) {
 			params[form._submit_button.name] = form._submit_button.value;
 		}
@@ -1834,21 +1522,34 @@ Util.Form = u.f = new function() {
 		for(i = 0; input = inputs[i]; i++) {
 			if(!u.hc(input, ignore_inputs)) {
 				if((input.type == "checkbox" || input.type == "radio") && input.checked) {
-					params[input.name] = input.value;
+					if(!this.isDefault(input)) {
+						params[input.name] = input.value;
+					}
 				}
-				else if(!input.type.match(/button|submit|reset|checkbox|radio/i)) {
-					params[input.name] = input.value;
+				else if(input.type == "file") {
+					if(!this.isDefault(input)) {
+						params[input.name] = input.value;
+					}
+				}
+				else if(!input.type.match(/button|submit|reset|file|checkbox|radio/i)) {
+					if(!this.isDefault(input)) {
+						params[input.name] = input.value;
+					}
 				}
 			}
 		}
 		for(i = 0; select = selects[i]; i++) {
 			if(!u.hc(select, ignore_inputs)) {
-				params[select.name] = select.options[select.selectedIndex].value;
+				if(!this.isDefault(select)) {
+					params[select.name] = select.options[select.selectedIndex].value;
+				}
 			}
 		}
 		for(i = 0; textarea = textareas[i]; i++) {
 			if(!u.hc(textarea, ignore_inputs)) {
-				params[textarea.name] = textarea.value;
+				if(!this.isDefault(textarea)) {
+					params[textarea.name] = textarea.value;
+				}
 			}
 		}
 		if(send_as && typeof(this.customSend[send_as]) == "function") {
@@ -1863,7 +1564,7 @@ Util.Form = u.f = new function() {
 		else {
 			var string = "";
 			for(param in params) {
-				string += (string ? "&" : "") + param + "=" + encodeURIComponent(params[param]);
+					string += (string ? "&" : "") + param + "=" + encodeURIComponent(params[param]);
 			}
 			return string;
 		}
@@ -1968,10 +1669,10 @@ Util.browserHeight = u.browserH = function() {
 	return document.documentElement.clientHeight;
 }
 Util.htmlWidth = u.htmlW = function() {
-	return document.body.offsetWidth + parseInt(u.gcs(document.body, "margin-left")) +  + parseInt(u.gcs(document.body, "margin-right"));
+	return document.body.offsetWidth + parseInt(u.gcs(document.body, "margin-left")) + parseInt(u.gcs(document.body, "margin-right"));
 }
 Util.htmlHeight = u.htmlH = function() {
-	return document.body.offsetHeight + parseInt(u.gcs(document.body, "margin-top")) +  + parseInt(u.gcs(document.body, "margin-bottom"));
+	return document.body.offsetHeight + parseInt(u.gcs(document.body, "margin-top")) + parseInt(u.gcs(document.body, "margin-bottom"));
 }
 Util.pageScrollX = u.scrollX = function() {
 	return window.pageXOffset;
@@ -1980,110 +1681,19 @@ Util.pageScrollY = u.scrollY = function() {
 	return window.pageYOffset;
 }
 
-/*u-hash.js*/
-Util.Hash = u.h = new function() {
-	this.catchEvent = function(callback, node) {
-		this.node = node;
-		this.node.callback = callback;
-		hashChanged = function(event) {
-			u.h.node.callback();
-		}
-		if("onhashchange" in window && !u.browser("explorer", "<=7")) {
-			window.onhashchange = hashChanged;
-		}
-		else {
-			u.current_hash = window.location.hash;
-			window.onhashchange = hashChanged;
-			setInterval(
-				function() {
-					if(window.location.hash !== u.current_hash) {
-						u.current_hash = window.location.hash;
-						window.onhashchange();
-					}
-				}, 200
-			);
-		}
-	}
-	this.cleanHash = function(string, levels) {
-		if(!levels) {
-			return string.replace(location.protocol+"//"+document.domain, "");
-		}
-		else {
-			var i, return_string = "";
-			var hash = string.replace(location.protocol+"//"+document.domain, "").split("/");
-			for(i = 1; i <= levels; i++) {
-				return_string += "/" + hash[i];
+/*u-init.js*/
+Util.Objects = u.o = new Object();
+Util.init = function(scope) {
+	var i, node, nodes, object;
+	scope = scope && scope.nodeName ? scope : document;
+	nodes = u.ges("i\:([_a-zA-Z0-9])+");
+	for(i = 0; node = nodes[i]; i++) {
+		while((object = u.cv(node, "i"))) {
+			u.rc(node, "i:"+object);
+			if(object && typeof(u.o[object]) == "object") {
+				u.o[object].init(node);
 			}
-			return return_string;
 		}
-	}
-	this.getCleanUrl = function(string, levels) {
-		string = string.split("#")[0].replace(location.protocol+"//"+document.domain, "");
-		if(!levels) {
-			return string;
-		}
-		else {
-			var i, return_string = "";
-			var hash = string.split("/");
-			levels = levels > hash.length-1 ? hash.length-1 : levels;
-			for(i = 1; i <= levels; i++) {
-				return_string += "/" + hash[i];
-			}
-			return return_string;
-		}
-	}
-	this.getCleanHash = function(string, levels) {
-		string = string.replace("#", "");
-		if(!levels) {
-			return string;
-		}
-		else {
-			var i, return_string = "";
-			var hash = string.split("/");
-			levels = levels > hash.length-1 ? hash.length-1 : levels;
-			for(i = 1; i <= levels; i++) {
-				return_string += "/" + hash[i];
-			}
-			return return_string;
-		}
-	}
-}
-
-/*u-image.js*/
-Util.Image = u.i = new function() {
-	this.load = function(node, src) {
-		var image = new Image();
-		image.node = node;
-		u.ac(node, "loading");
-	    u.e.addEvent(image, 'load', u.i._loaded);
-		u.e.addEvent(image, 'error', u.i._error);
-		image.src = src;
-	}
-	this._loaded = function(event) {
-		u.rc(this.node, "loading");
-		if(typeof(this.node.loaded) == "function") {
-			this.node.loaded(event);
-		}
-	}
-	this._error = function(event) {
-		u.rc(this.node, "loading");
-		u.ac(this.node, "error");
-		if(typeof(this.node.loaded) == "function" && typeof(this.node.failed) != "function") {
-			this.node.loaded(event);
-		}
-		else if(typeof(this.node.failed) == "function") {
-			this.node.failed(event);
-		}
-	}
-	this._progress = function(event) {
-		u.bug("progress")
-		if(typeof(this.node.progress) == "function") {
-			this.node.progress(event);
-		}
-	}
-	this._debug = function(event) {
-		u.bug("event:" + event.type);
-		u.xInObject(event);
 	}
 }
 
@@ -2097,83 +1707,12 @@ Util.numToHex = function(num) {
 Util.hexToNum = function(hex) {
 	return parseInt(hex,16);
 }
-/*u-period.js*/
-Util.period = function(format, time) {
-	var seconds = 0;
-	if(typeof(time) == "object") {
-		var argument;
-		for(argument in time) {
-			switch(argument) {
-				case "seconds"		: seconds = time[argument]; break;
-				case "milliseconds" : seconds = Number(time[argument])/1000; break;
-				case "minutes"		: seconds = Number(time[argument])*60; break;
-				case "hours"		: seconds = Number(time[argument])*60*60 ; break;
-				case "days"			: seconds = Number(time[argument])*60*60*24; break;
-				case "months"		: seconds = Number(time[argument])*60*60*24*(365/12); break;
-				case "years"		: seconds = Number(time[argument])*60*60*24*365; break;
-			}
-		}
-	}
-	var tokens = /y|n|o|O|w|W|c|d|e|D|g|h|H|l|m|M|r|s|S|t|T|u|U/g;
-	var chars = new Object();
-	chars.y = 0; // TODO
-	chars.n = 0; // TODO 
-	chars.o = (chars.n > 9 ? "" : "0") + chars.n; // TODO
-	chars.O = 0; // TODO
-	chars.w = 0; // TODO
-	chars.W = 0; // TODO
-	chars.c = 0; // TODO
-	chars.d = 0; // TODO
-	chars.e = 0; // TODO
-	chars.D = Math.floor(((seconds/60)/60)/24);
-	chars.g = Math.floor((seconds/60)/60)%24;
-	chars.h = (chars.g > 9 ? "" : "0") + chars.g;
-	chars.H = Math.floor((seconds/60)/60);
-	chars.l = Math.floor(seconds/60)%60;
-	chars.m = (chars.l > 9 ? "" : "0") + chars.l;
-	chars.M = Math.floor(seconds/60);
-	chars.r = Math.floor(seconds)%60;
-	chars.s = (chars.r > 9 ? "" : "0") + chars.r;
-	chars.S = Math.floor(seconds);
-	chars.t = Math.round((seconds%1)*10);
-	chars.T = Math.round((seconds%1)*100);
-	chars.T = (chars.T > 9 ? "": "0") + Math.round(chars.T);
-	chars.u = Math.round((seconds%1)*1000);
-	chars.u = (chars.u > 9 ? chars.u > 99 ? "" : "0" : "00") + Math.round(chars.u);
-	chars.U = Math.round(seconds*1000);
-	return format.replace(tokens, function (_) {
-		return _ in chars ? chars[_] : _.slice(1, _.length - 1);
-	});
-};
-
-/*u-popup.js*/
-Util.popup = function(url, settings) {
-	var width = "330";
-	var height = "150";
-	var name = "popup" + new Date().getHours() + "_" + new Date().getMinutes() + "_" + new Date().getMilliseconds();
-	var extra = "";
-	if(typeof(settings) == "object") {
-		var argument;
-		for(argument in settings) {
-			switch(argument) {
-				case "name"		: name		= settings[argument]; break;
-				case "width"	: width		= Number(settings[argument]); break;
-				case "height"	: height	= Number(settings[argument]); break;
-				case "extra"	: extra		= settings[argument]; break;
-			}
-		}
-	}
-	var p;
-	p = "width=" + width + ",height=" + height;
-	p += ",left=" + (screen.width-width)/2;
-	p += ",top=" + ((screen.height-height)-20)/2;
-	p += extra ? "," + extra : ",scrollbars";
-	document[name] = window.open(url, name, p);
-	return document[name];
+Util.round = function(number, decimals) {
+	var round_number = number*Math.pow(10, decimals);
+	return Math.round(round_number)/Math.pow(10, decimals);
 }
-
 /*u-request.js*/
-Util.createRequestObject = function() {
+Util.createRequestObject = u.createRequestObject = function() {
 	return new XMLHttpRequest();
 }
 Util.Request = u.request = function(node, url, settings) {
@@ -2182,14 +1721,16 @@ Util.Request = u.request = function(node, url, settings) {
 	node.request_async = true;
 	node.request_params = "";
 	node.request_headers = false;
+	node.response_callback = "response";
 	if(typeof(settings) == "object") {
 		var argument;
 		for(argument in settings) {
 			switch(argument) {
-				case "method"	: node.request_method	= settings[argument]; break;
-				case "params"	: node.request_params	= settings[argument]; break;
-				case "async"	: node.request_async	= settings[argument]; break;
-				case "headers"	: node.request_headers	= settings[argument]; break;
+				case "method"		: node.request_method		= settings[argument]; break;
+				case "params"		: node.request_params		= settings[argument]; break;
+				case "async"		: node.request_async		= settings[argument]; break;
+				case "headers"		: node.request_headers		= settings[argument]; break;
+				case "callback"		: node.response_callback	= settings[argument]; break;
 			}
 		}
 	}
@@ -2222,7 +1763,13 @@ Util.Request = u.request = function(node, url, settings) {
 				node.HTTPRequest.send("");
 			}
 			else if(node.request_method.match(/POST|PUT|PATCH/i)) {
-				var params = typeof(node.request_params) == "object" ? JSON.stringify(node.request_params) : node.request_params;
+				var params;
+				if(typeof(node.request_params) == "object" && !node.request_params.constructor.toString().match(/FormData/i)) {
+					params = JSON.stringify(node.request_params);
+				}
+				else {
+					params = node.request_params;
+				}
 				node.HTTPRequest.open(node.request_method, node.request_url, node.request_async);
 				node.HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				var csfr_field = u.qs('meta[name="csrf-token"]');
@@ -2349,11 +1896,8 @@ Util.validateResponse = function(response){
 		}
 	}
 	if(object) {
-		if(typeof(response.node.Response) == "function") {
-			response.node.Response(object);
-		}
-		if(typeof(response.node.response) == "function") {
-			response.node.response(object);
+		if(typeof(response.node[response.node.response_callback]) == "function") {
+			response.node[response.node.response_callback](object);
 		}
 	}
 	else {
@@ -2415,7 +1959,7 @@ Util.uuid = function() {
  	}
 	return uuid.join('');
 }
-Util.stringOr = function(value, replacement) {
+Util.stringOr = u.eitherOr = function(value, replacement) {
 	if(value !== undefined && value !== null) {
 		return value;
 	}
@@ -2477,6 +2021,22 @@ Util.browser = function(model, version) {
 	else {
 		return false;
 	}
+}
+Util.segment = function(segment) {
+	if(!u.current_segment) {
+		var scripts = document.getElementsByTagName("script");
+		var script, i, src;
+		for(i = 0; script = scripts[i]; i++) {
+			seg_src = script.src.match(/\/seg_([a-z_]+)/);
+			if(seg_src) {
+				u.current_segment = seg_src[1];
+			}
+		}
+	}
+	if(segment) {
+		return segment == u.current_segment;
+	}
+	return u.current_segment;
 }
 Util.system = function(os, version) {
 }
@@ -2553,15 +2113,372 @@ Util.Timer = u.t = new function() {
 	}
 }
 
-/*u-url.js*/
-Util.getVar = function(param, url) {
-	var string = url ? url.split("#")[0] : location.search;
-	var regexp = new RegExp("[\&\?\b]{1}"+param+"\=([^\&\b]+)");
-	var match = string.match(regexp);
-	if(match && match.length > 1) {
-		return match[1];
+/*u-animation-desktop_ie.js*/
+u.a.transition = function(node, transition) {
+	var duration = transition.match(/[0-9.]+[ms]+/g);
+	if(duration) {
+		node.duration = duration[0].match("ms") ? parseFloat(duration[0]) : (parseFloat(duration[0]) * 1000);
 	}
 	else {
-		return "";
+		node.duration = false;
+		if(transition.match(/none/i)) {
+			node.transitioned = null;
+		}
 	}
+	if(u.support(this.variant()+"Transition")) {
+		node.style[this.variant()+"Transition"] = "none";
+	}
+}
+u.a.translate = function(node, x, y) {
+	var update_frequency = 25;
+	node._x = node._x ? node._x : 0;
+	node._y = node._y ? node._y : 0;
+	if(node.duration && (node._x != x || node._y != y)) {
+		node.x_start = node._x;
+		node.y_start = node._y;
+		node.translate_transitions = node.duration/update_frequency;
+		node.translate_progress = 0;
+		node.x_change = (x - node.x_start) / node.translate_transitions;
+		node.y_change = (y - node.y_start) / node.translate_transitions;
+		node.translate_transitionTo = function(event) {
+			++this.translate_progress;
+			var new_x = (Number(this.x_start) + Number(this.translate_progress * this.x_change));
+			var new_y = (Number(this.y_start) + Number(this.translate_progress * this.y_change));
+			this.style["msTransform"] = "translate("+ new_x + "px, " + new_y +"px)";
+			this.offsetHeight;
+			if(this.translate_progress < this.translate_transitions) {
+				this.t_translate_transition = u.t.setTimer(this, this.translate_transitionTo, update_frequency);
+			}
+			else {
+				this.style["msTransform"] = "translate("+ this._x + "px, " + this._y +"px)";
+				if(typeof(this.transitioned) == "function") {
+					this.transitioned(event);
+				}
+			}
+		}
+		node.translate_transitionTo();
+	}
+	else {
+		node.style["msTransform"] = "translate("+ x + "px, " + y +"px)";
+	}
+	node._x = x;
+	node._y = y;
+	node.offsetHeight;
+}
+u.a.rotate = function(node, deg) {
+	var update_frequency = 25;
+	node._rotation = node._rotation ? node._rotation : 0;
+	if(node.duration && node._rotation != deg) {
+		node.rotate_start = node._rotation;
+		node.rotate_transitions = node.duration/update_frequency;
+		node.rotate_progress = 0;
+		node.rotate_change = (deg - node.rotate_start) / node.rotate_transitions;
+		node.rotate_transitionTo = function(event) {
+			++this.rotate_progress;
+			var new_deg = (Number(this.rotate_start) + Number(this.rotate_progress * this.rotate_change));
+			this.style["msTransform"] = "rotate("+ new_deg + "deg)";
+			this.offsetHeight;
+			if(this.rotate_progress < this.rotate_transitions) {
+				this.t_rotate_transition = u.t.setTimer(this, this.rotate_transitionTo, update_frequency);
+			}
+			else {
+				this.style["msTransform"] = "rotate("+ this._rotation + "deg)";
+				if(typeof(this.transitioned) == "function") {
+					this.transitioned(event);
+				}
+			}
+		}
+		node.rotate_transitionTo();
+	}
+	else {
+		node.style["msTransform"] = "rotate("+ deg + "deg)";
+	}
+	node._rotation = deg;
+	node.offsetHeight;
+}
+u.a.scale = function(node, scale) {
+	var update_frequency = 25;
+	node._scale = node._scale ? node._scale : 0;
+	if(node.duration && node._scale != scale) {
+		node.scale_start = node._scale;
+		node.scale_transitions = node.duration/update_frequency;
+		node.scale_progress = 0;
+		node.scale_change = (scale - node.scale_start) / node.scale_transitions;
+		node.scale_transitionTo = function(event) {
+			++this.scale_progress;
+			var new_scale = (Number(this.scale_start) + Number(this.scale_progress * this.scale_change));
+			this.style["msTransform"] = "scale("+ new_scale +")";
+			this.offsetHeight;
+			if(this.scale_progress < this.scale_transitions) {
+				this.t_scale_transition = u.t.setTimer(this, this.scale_transitionTo, update_frequency);
+			}
+			else {
+				this.style["msTransform"] = "scale("+ this._scale +")";
+				if(typeof(this.transitioned) == "function") {
+					this.transitioned(event);
+				}
+			}
+		}
+		node.scale_transitionTo();
+	}
+	else {
+		node.style["msTransform"] = "scale("+ scale +")";
+	}
+	node._scale = scale;
+	node.offsetHeight;
+}
+u.a.setOpacity = function(node, opacity) {
+	var update_frequency = 25;
+	node._opacity = node._opacity ? node._opacity : u.gcs(node, "opacity");
+	if(node.duration && node._opacity != opacity) {
+		node.opacity_start = node._opacity;
+		node.opacity_transitions = node.duration/update_frequency;
+		node.opacity_change = (opacity - node.opacity_start) / node.opacity_transitions;
+		node.opacity_progress = 0;
+		node.opacity_transitionTo = function(event) {
+			++this.opacity_progress;
+			var new_opacity = (Number(this.opacity_start) + Number(this.opacity_progress * this.opacity_change));
+			u.as(this, "opacity", new_opacity);
+			this.offsetHeight;
+			if(this.opacity_progress < this.opacity_transitions) {
+				this.t_opacity_transition = u.t.setTimer(this, this.opacity_transitionTo, update_frequency);
+			}
+			else {
+				this.style.opacity = this._opacity;
+				if(typeof(this.transitioned) == "function") {
+					this.transitioned(event);
+				}
+			}
+		}
+		node.opacity_transitionTo();
+	}
+	else {
+		node.style.opacity = opacity;
+	}
+	node._opacity = opacity;
+	node.offsetHeight;
+}
+u.a.setWidth = function(node, width) {
+	var update_frequency = 25;
+	node._width = node._width ? node._width : u.gcs(node, "width").match("px") ? u.gcs(node, "width").replace("px", "") : 0;
+	if(node.duration && node._width != width) {
+		node.width_start = node._width;
+		node.width_transitions = node.duration/update_frequency;
+		node.width_change = (width - node.width_start) / node.width_transitions;
+		node.width_progress = 0;
+		node.width_transitionTo = function(event) {
+			++this.width_progress;
+			var new_width = (Number(this.width_start) + Number(this.width_progress * this.width_change));
+			u.as(this, "width", new_width+"px");
+			this.offsetHeight;
+			if(this.width_progress < this.width_transitions) {
+				this.t_width_transition = u.t.setTimer(this, this.width_transitionTo, update_frequency);
+			}
+			else {
+				u.as(this, "width", this._width);
+				if(typeof(this.transitioned) == "function") {
+					this.transitioned(event);
+				}
+			}
+		}
+		node.width_transitionTo();
+	}
+	else {
+		var new_width = width.toString().match(/\%|auto/) ? width : width + "px";
+		u.as(node, "width", new_width);
+	}
+	node._width = width;
+	node.offsetHeight;
+}
+u.a.setHeight = function(node, height) {
+	var update_frequency = 25;
+	node._height = node._height ? node._height : u.gcs(node, "height").match("px") ? u.gcs(node, "height").replace("px", "") : 0;
+	if(node.duration && node._height != height) {
+		node.height_start = node._height;
+		node.height_transitions = node.duration/update_frequency;
+		node.height_change = (height - node.height_start) / node.height_transitions;
+		node.height_progress = 0;
+		node.height_transitionTo = function(event) {
+			++this.height_progress;
+			var new_height = (Number(this.height_start) + Number(this.height_progress * this.height_change));
+			u.as(this, "height", new_height+"px");
+			this.offsetHeight;
+			if(this.height_progress < this.height_transitions) {
+				this.t_height_transition = u.t.setTimer(this, this.height_transitionTo, update_frequency);
+			}
+			else {
+				u.as(this, "height", this._height);
+				if(typeof(this.transitioned) == "function") {
+					this.transitioned(event);
+				}
+			}
+		}
+		node.height_transitionTo();
+	}
+	else {
+		var new_height = height.toString().match(/\%|auto/) ? height : height + "px";
+		u.as(node, "height", new_height);
+	}
+	node._height = height;
+	node.offsetHeight;
+}
+u.a.setBgPos = function(node, x, y) {
+	var update_frequency = 25;
+	var current_bg_x = u.gcs(node, "background-position-x");
+	var current_bg_y = u.gcs(node, "background-position-y");
+	node._bg_x = node._bg_x ? node._bg_x : current_bg_x.match("px") ? current_bg_x.replace("px", "") : x;
+	node._bg_y = node._bg_y ? node._bg_y : current_bg_y.match("px") ? current_bg_y.replace("px", "") : y;
+	if(node.duration && (node._bg_x != x || node._bg_y != y)) {
+		node._bg_same_x = false;
+		node._bg_same_y = false;
+		node.bg_transitions = node.duration/update_frequency;
+		if(node._bg_x != x) {
+			node.bg_start_x = node._bg_x;
+			node.bg_change_x = (x - node.bg_start_x) / node.bg_transitions;
+		}
+		else {
+			node._bg_same_x = true;
+		}
+		if(node._bg_y != y) {
+			node.bg_start_y = node._bg_y;
+			node.bg_change_y = (y - node.bg_start_y) / node.bg_transitions;
+		}
+		else {
+			node._bg_same_y = true;
+		}
+		node.bg_progress = 0;
+		node.bg_transitionTo = function(event) {
+			++this.bg_progress;
+			var new_x, new_y;
+			if(!this._bg_same_x) {
+				new_x = Math.round((Number(this.bg_start_x) + Number(this.bg_progress * this.bg_change_x)));
+			}
+			else {
+				new_x = this._bg_x;
+			}
+			if(!this._bg_same_y) {
+				new_y = Math.round((Number(this.bg_start_y) + Number(this.bg_progress * this.bg_change_y)));
+			}
+			else {
+				new_y = this._bg_y;
+			}
+			var new_bg_x = new_x.toString().match(/\%|top|left|right|center|bottom/) ? new_x : (new_x + "px");
+			var new_bg_y = new_y.toString().match(/\%|top|left|right|center|bottom/) ? new_y : (new_y + "px");
+			u.as(this, "backgroundPosition", new_bg_x + " " + new_bg_y);
+			this.offsetHeight;
+			if(this.bg_progress < this.bg_transitions) {
+				this.t_bg_transition = u.t.setTimer(this, this.bg_transitionTo, update_frequency);
+			}
+			else {
+				var new_bg_x = x.toString().match(/\%|top|left|right|center|bottom/) ? this._bg_x : (this._bg_x + "px");
+				var new_bg_y = y.toString().match(/\%|top|left|right|center|bottom/) ? this._bg_y : (this._bg_y + "px");
+				u.as(this, "backgroundPosition", new_bg_x + " " + new_bg_y);
+				if(typeof(this.transitioned) == "function") {
+					this.transitioned(event);
+				}
+			}
+		}
+		node.bg_transitionTo();
+	}
+	else {
+		var new_bg_x = x.toString().match(/\%|top|left|right|center|bottom/) ? x : (x + "px");
+		var new_bg_y = y.toString().match(/\%|top|left|right|center|bottom/) ? y : (y + "px");
+		u.as(node, "backgroundPosition", new_bg_x + " " + new_bg_y);
+	}
+	node._bg_x = x;
+	node._bg_y = y;
+	node.offsetHeight;
+}
+u.a.setBgColor = function(node, color) {
+	var update_frequency = 100;
+	if(isNaN(node._bg_color_r) || isNaN(node._bg_color_g) || isNaN(node._bg_color_b)) {
+		var current_bg_color = u.gcs(node, "background-color");
+		var matches;
+		var current_bg_color_r, current_bg_color_g, current_bg_color_b;
+		var new_bg_color_r = false;
+		var new_bg_color_g = false;
+		var new_bg_color_b = false;
+		if(current_bg_color.match(/#[\da-fA-F]{3,6}/)) {
+			if(current_bg_color.length == 7) {
+				matches = current_bg_color.match(/#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/);
+			}
+			else {
+				matches = current_bg_color.match(/#([\da-fA-F]{1}),[ ]?([\da-fA-F]{1}),[ ]?([\da-fA-F]{1})/);
+			}
+			current_bg_color_r = u.hexToNum(matches[1]);
+			current_bg_color_g = u.hexToNum(matches[2]); 
+			current_bg_color_b = u.hexToNum(matches[3]);
+		}
+		else if(current_bg_color.match(/rgb\([\d]{1,3},[ ]?[\d]{1,3},[ ]?[\d]{1,3}\)/)) {
+			matches = current_bg_color.match(/rgb\(([\d]{1,3}),[ ]?([\d]{1,3}),[ ]?([\d]{1,3})\)/);
+			current_bg_color_r = matches[1];
+			current_bg_color_g = matches[2];
+			current_bg_color_b = matches[3];
+		}
+		else if(current_bg_color.match(/rgba\([\d]{1,3},[ ]?[\d]{1,3},[ ]?[\d]{1,3},[ ]?[\d\.]+\)/)) {
+			matches = current_bg_color.match(/rgba\(([\d]{1,3}),[ ]?([\d]{1,3}),[ ]?([\d]{1,3}),[ ]?([\d\.]+)\)/);
+			current_bg_color_r = matches[1];
+			current_bg_color_g = matches[2];
+			current_bg_color_b = matches[3];
+		}
+	}
+	if(color.match(/#[\da-fA-F]{3,6}/)) {
+		if(color.length == 7) {
+			matches = color.match(/#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/);
+		}
+		else {
+			matches = color.match(/#([\da-fA-F]{1}),[ ]?([\da-fA-F]{1}),[ ]?([\da-fA-F]{1})/);
+		}
+		new_bg_color_r = u.hexToNum(matches[1]);
+		new_bg_color_g = u.hexToNum(matches[2]);
+		new_bg_color_b = u.hexToNum(matches[3]);
+	}
+	node._bg_color_r = !isNaN(node._bg_color_r) ? node._bg_color_r : !isNaN(current_bg_color_r) ? current_bg_color_r : false;
+	node._bg_color_g = !isNaN(node._bg_color_g) ? node._bg_color_g : !isNaN(current_bg_color_g) ? current_bg_color_g : false;
+	node._bg_color_b = !isNaN(node._bg_color_b) ? node._bg_color_b : !isNaN(current_bg_color_b) ? current_bg_color_b : false;
+	if(node.duration && 
+	node._bg_color_r !== false && 
+	node._bg_color_g !== false && 
+	node._bg_color_b !== false && 
+	new_bg_color_r !== false && 
+	new_bg_color_g !== false && 
+	new_bg_color_b !== false &&
+	(new_bg_color_r != node._bg_color_r ||
+	new_bg_color_g != node._bg_color_g ||
+	new_bg_color_b != node._bg_color_b)) {
+		node.bg_color_r_start = node._bg_color_r;
+		node.bg_color_g_start = node._bg_color_g;
+		node.bg_color_b_start = node._bg_color_b;
+		node.bg_color_transitions = node.duration/update_frequency;
+		node.bg_color_r_change = (new_bg_color_r - node.bg_color_r_start) / node.bg_color_transitions;
+		node.bg_color_g_change = (new_bg_color_g - node.bg_color_g_start) / node.bg_color_transitions;
+		node.bg_color_b_change = (new_bg_color_b - node.bg_color_b_start) / node.bg_color_transitions;
+		node.bg_color_progress = 0;
+		node.bg_color_transitionTo = function(event) {
+			++this.bg_color_progress;
+			var new_bg_color_r = Math.round(Number(this.bg_color_r_start) + Number(this.bg_color_progress * this.bg_color_r_change));
+			var new_bg_color_g = Math.round(Number(this.bg_color_g_start) + Number(this.bg_color_progress * this.bg_color_g_change));
+			var new_bg_color_b = Math.round(Number(this.bg_color_b_start) + Number(this.bg_color_progress * this.bg_color_b_change));
+			var bg_hex_r = u.prefix(u.numToHex(new_bg_color_r), 2);
+			var bg_hex_g = u.prefix(u.numToHex(new_bg_color_g), 2);
+			var bg_hex_b = u.prefix(u.numToHex(new_bg_color_b), 2);
+			u.as(this, "backgroundColor", "#" + bg_hex_r + bg_hex_g + bg_hex_b);
+			this.offsetHeight;
+			if(this.bg_color_progress < this.bg_color_transitions) {
+				this.t_bg_color_transition = u.t.setTimer(this, this.bg_color_transitionTo, update_frequency);
+			}
+			else {
+				u.as(this, "backgroundColor", this._bg_color);
+				if(typeof(this.transitioned) == "function") {
+					this.transitioned(event);
+				}
+			}
+		}
+		node.bg_color_transitionTo();
+	}
+	else {
+		node.style.backgroundColor = color;
+	}
+	node._bg_color = color;
+	node.offsetHeight;
 }

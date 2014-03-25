@@ -1,13 +1,20 @@
-<?php $body_class = "front" ?>
-<?php $page_description = "parentNode ApS" ?>
-<?php $page_title = "parentNode ApS" ?>
-<?php include_once($_SERVER["LOCAL_PATH"]."/templates/shell.header.php") ?>
+<?php
+$access_item = false;
+if(isset($read_access) && $read_access) {
+	return;
+}
 
-<div class="scene">
+include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
-	<h1>parentNode ApS</h1>
-	<p><a href="mailto:martin@parentnode.dk">martin@parentnode.dk</a></p>
 
-</div>
+$action = $page->actions();
 
-<?php include_once($_SERVER["LOCAL_PATH"]."/templates/shell.footer.php") ?>
+
+$page->bodyClass("front");
+$page->pageTitle("Above it all");
+
+$page->header();
+$page->template("pages/front.php");
+$page->footer();
+
+?>

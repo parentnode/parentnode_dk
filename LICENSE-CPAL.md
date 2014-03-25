@@ -119,7 +119,7 @@ This License applies to code to which the Initial Developer has attached the not
 
 6.1	New Versions.
 
-Hvadhedderde ApS (“Hvadhedderde”) may publish revised and/or new versions of the License from time to time. Each version will be given a distinguishing version number.
+parentNode ApS (“parentNode”) may publish revised and/or new versions of the License from time to time. Each version will be given a distinguishing version number.
 
 6.2	Effect of New Versions.
 

@@ -1,0 +1,30 @@
+/* WISHLIST */
+#content .scene.wishlist {}
+#content .scene.wishlist ul.items > li {display: block; padding: 5px 0; font-size: 14px;}
+
+
+/* WISH */
+#content .scene.wishes {}
+#content .scene.wishes ul.items {}
+#content .scene.wishes ul.items > li {display: block; overflow: hidden; border-top: 1px solid #cccccc; padding: 20px 0 0;}
+#content .scene.wishes ul.items > li .image,
+#content .scene.wishes ul.items > li .text {display: inline-block; vertical-align: top;}
+#content .scene.wishes ul.items > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; margin-bottom: 20px;}
+#content .scene.wishes ul.items > li .text {margin-bottom: 10px;}
+#content .scene.wishes ul.items > li h3 {padding: 0 25px 10px;}
+#content .scene.wishes ul.items > li div.description {}
+#content .scene.wishes ul.items > li div.description p {padding: 0 25px 10px;}
+
+
+/* PRICE */
+#content .scene.wishes ul.items > li dl {padding: 0 25px 20px;}
+#content .scene.wishes ul.items > li dt {display: none;}
+#content .scene.wishes ul.items > li dd {font-size: 13px;}
+#content .scene.wishes ul.items > li dd:before {content: "DKK ";}
+
+
+/* RESERVE / UN-RESERVE */
+#content .scene.wishes ul.items > li ul.actions {padding: 0 25px 10px;}
+#content .scene.wishes ul.items > li ul.actions.reserved .reserve {display: none;}
+#content .scene.wishes ul.items > li ul.actions .unreserve {display: none;}
+#content .scene.wishes ul.items > li ul.actions.reserved .unreserve {display: inline-block;}

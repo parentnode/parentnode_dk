@@ -1,4 +1,4 @@
-#content {position: relative;}
+#content {position: relative; width: 600px; margin: 0 auto;}
 #content .scene {position: relative; padding: 50px 0;}
 
 
@@ -32,13 +32,12 @@
 
 /* DEFINITION LIST */
 #content .scene dl {padding: 0 50px 15px; overflow: hidden; width: 500px;}
-#content .scene dt {width: 100px; text-align: right; padding: 0 5px 0 0; color: #999999;} 
-#content .scene dt:after {content: ":";}
-#content .scene dd {padding: 0 0 12px; width: 395px;}
+#content .scene dt {padding: 0 0 5px 0; color: #999999;} 
+#content .scene dd {padding: 0 0 12px 20px;}
 #content .scene dt span {text-transform: none;}
-#content .scene dl dl {padding: 0 0 10px; margin-left: -30px; width: 425px;}
-#content .scene dl dl dt {width: 80px;}
-#content .scene dl dl dd {width: 340px;}
+#content .scene dl dl {padding: 0 0 10px 30px; width: 470px;}
+#content .scene dl dl dt {}
+#content .scene dl dl dd {}
 #content .scene dl h3,
 #content .scene dl h4,
 #content .scene dl h5,
@@ -54,7 +53,7 @@
 
 
 /* CODE AND TYPECASTING */
-#content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px; display: inline-block; white-space: pre-wrap;
+#content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px; display: block; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
 }
 #content .scene span.type,

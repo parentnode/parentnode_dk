@@ -1,7 +1,7 @@
 <div class="scene i:terms terms">
 	<h1>Cookies, privacy and terms of use</h1>
 	<p>
-		By using this website and the software it describes you accept the terms as specified below. If you cannot accept
+		By using this website and the method it describes you accept the terms as specified below. If you cannot accept
 		these terms, you cannot use the website or the method it describes.
 	</p>
 	<p>

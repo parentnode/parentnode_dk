@@ -10,11 +10,8 @@ Util.Objects["page"] = new function() {
 			page.hN.service = u.qs(".servicenavigation", page.hN);
 
 			// add logo to navigation
-			page.logo = u.ie(page.hN, "div", {"class":"logo", "html":"parentNode"});
-			u.ce(page.logo);
-			page.logo.clicked = function(event) {
-				location.href = '/';
-			}
+			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":"parentNode"});
+			page.logo.url = '/';
 
 			// content reference
 			page.cN = u.qs("#content", page);
@@ -28,6 +25,12 @@ Util.Objects["page"] = new function() {
 			page.fN = u.qs("#footer");
 			// move li to #header .servicenavigation
 			page.fN.service = u.qs(".servicenavigation", page.fN);
+
+			page.fN.slogan = u.qs("p", page.fN);
+			u.ce(page.fN.slogan);
+			page.fN.slogan.clicked = function(event) {
+				window.open("http://parentnode.dk");
+			}
 
 
 			// global resize handler 
@@ -91,101 +94,85 @@ Util.Objects["page"] = new function() {
 					this.initNavigation();
 
 					this.resized();
-				}
-			}
 
-			// close navigation
-			page.closeNav = function() {
+					// show terms notification
+					if(!u.getCookie("terms_v1")) {
+						var terms = u.ie(document.body, "div", {"class":"terms_notification"});
+						u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
+						var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+						bn_accept.terms = terms;
+						u.ce(bn_accept);
+						bn_accept.clicked = function() {
+							this.terms.parentNode.removeChild(this.terms);
+							u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+						}
 
-				u.t.resetTimer(page.t_nav);
-
-				var open_nodes = u.qsa(".open", page.hN);
-				if(open_nodes) {
-					var i, node;
-					for(i = 0; node = open_nodes[i]; i++) {
-
-						u.a.transition(node.submenu, "all 0.2s linear");
-						u.a.setOpacity(node.submenu, 0);
-						u.rc(node, "open");
+						if(!location.href.match(/\/terms/)) {
+							var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
+							bn_details.url = "/terms";
+							u.ce(bn_details, {"type":"link"});
+						}
 					}
 				}
-
-				u.a.transition(page.hN, "all 0.2s ease-out");
-				u.a.setHeight(page.hN, page.hN.org_height);
-
-				this.open_nav = false;
 			}
 
-			// open/close controller
-			page.navController = function(li) {
-//				u.bug("navcontroller:" + u.nodeId(li) + "; " + (this.open_nav ? u.nodeId(this.open_nav) : ''))
-
-				if(this.open_nav != li) {
-
-					if(this.open_nav) {
-						u.a.transition(this.open_nav.submenu, "all 0.2s linear");
-						u.a.setOpacity(this.open_nav.submenu, 0);
-						u.rc(this.open_nav, "open");
-					}
-
-					u.a.transition(page.hN, "all 0.3s ease-in-out");
-					u.a.setHeight(page.hN, li.submenu.offsetHeight + page.hN.org_height);
-
-					u.a.transition(li.submenu, "all 0.3s linear 0.3s");
-					u.a.setOpacity(li.submenu, 1);
-
-					u.ac(li, "open");
-					this.open_nav = li;
-				}
-				else {
-					this.closeNav();
-				}
-			}
 
 			// initialize navigation elements
 			page.initNavigation = function() {
 
-
-				this.hN.org_height = this.hN.offsetHeight;
-
 				var i, node;
 				// enable submenus where relevant
-				this.hN.nodes = u.qsa("h6", page.hN);
+				this.hN.nodes = u.qsa("#navigation li,.servicenavigation li,a.logo", page.hN);
 				for(i = 0; node = this.hN.nodes[i]; i++) {
 
-					var li = node.parentNode;
+					// build first living proof model of CEL clickableElementLink
+					u.ce(node, {"type":"link"});
 
-					// get submenu and position it correctly
-					li.submenu = u.qs("ul.subjects", li);
-					li.submenu.li = li;
+
+					node._mousedover = function() {
+
+						this.transitioned = function() {
+
+							this.transitioned = function() {
+								u.a.transition(this, "none");
+							}
+
+							u.a.transition(this, "all 0.1s ease-in-out");
+							u.a.scale(this, 1.15);
+						}
+
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1.22);
+					}
+
+					node._mousedout = function() {
+						this.transitioned = function() {
+
+							this.transitioned = function() {
+								u.a.transition(this, "none");
+							}
+
+							u.a.transition(this, "all 0.1s ease-in-out");
+							u.a.scale(this, 1);
+						}
+
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 0.9);
+					}
 
 					// enable mouseover if mouse events are available
 					if(u.e.event_pref == "mouse") {
-						li._mousedover = function() {
-//							u.bug("mouseover")
 
-							u.t.resetTimer(page.t_nav);
+						u.e.addEvent(node, "mouseover", node._mousedover);
+						u.e.addEvent(node, "mouseout", node._mousedout);
+					}
+					else {
 
-							if(!u.hc(this, "open")) {
-								page.navController(this);
-							}
-						}
-
-						li._mousedout = function() {
-//							u.bug("mouseout")
-							page.t_nav = u.t.setTimer(this, page.closeNav, 500);
-						}
-
-						u.e.addEvent(li, "mouseover", li._mousedover);
-						u.e.addEvent(li, "mouseout", li._mousedout);
+						u.e.addStartEvent(node, node._mousedover);
+						u.e.addEndEvent(node, node._mousedout);
 					}
 
-					u.e.click(li);
-					li.clicked = function() {
-						page.navController(this);
-					}
 				}
-
 
 			}
 

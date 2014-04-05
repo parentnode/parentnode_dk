@@ -1,5 +1,5 @@
 #header .logo:hover,
-#navigation ul li:hover {text-decoration: none;}
+#navigation ul li a:hover {text-decoration: underline;}
 
 #content .scene a:hover {text-decoration: underline;}
 

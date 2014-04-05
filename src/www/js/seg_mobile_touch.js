@@ -1,10 +1,13 @@
 
+/*seg_mobile_touch_include.js*/
+
 /*seg_mobile_touch.js*/
 if(!u || !Util) {
-	var u, Util = u = new function() {}
-	u.version = 0.7;
-	u.bug = function() {}
-	u.stats = new function() {this.pageView = function(){};this.event = function(){};this.customVar = function(){}}
+	var u, Util = u = new function() {};
+	u.version = 0.8;
+	u.bug = function() {};
+	u.nodeId = function() {};
+	u.stats = new function() {this.pageView = function(){};this.event = function(){};this.customVar = function(){};}
 }
 Util.debugURL = function(url) {
 	if(u.bug_force) {
@@ -13,7 +16,6 @@ Util.debugURL = function(url) {
 	return document.domain.match(/.local$/);
 }
 Util.nodeId = function(node, include_path) {
-	try {
 		if(!include_path) {
 			return node.id ? node.nodeName+"#"+node.id : (node.className ? node.nodeName+"."+node.className : (node.name ? node.nodeName + "["+node.name+"]" : node.nodeName));
 		}
@@ -25,10 +27,6 @@ Util.nodeId = function(node, include_path) {
 				return u.nodeId(node);
 			}
 		}
-	}
-	catch(exception) {
-		u.bug("Exception ("+exception+") in u.nodeId("+node+"), called from: "+arguments.callee.caller);
-	}
 	return "Unindentifiable node!";
 }
 Util.bug = function(message, corner, color) {
@@ -128,7 +126,7 @@ Util.Animation = u.a = new function() {
 		return this._variant;
 	}
 	this.transition = function(node, transition) {
-		try {
+		try {		
 			node.style[this.variant() + "Transition"] = transition;
 			if(this.variant() == "Moz") {
 				u.e.addEvent(node, "transitionend", this._transitioned);
@@ -142,16 +140,22 @@ Util.Animation = u.a = new function() {
 			}
 			else {
 				node.duration = false;
+				if(transition.match(/none/i)) {
+					node.transitioned = null;
+				}
 			}
 		}
 		catch(exception) {
-			u.bug("Exception ("+exception+") in u.a.transition(" + u.nodeId(node) + "), called from: "+arguments.callee.caller);
+			u.bug("Exception ("+exception+") in u.a.transition(" + node + "), called from: "+arguments.callee.caller);
 		}
 	}
 	this._transitioned = function(event) {
 		if(event.target == this && typeof(this.transitioned) == "function") {
 			this.transitioned(event);
 		}
+	}
+	this.removeTransform = function(node) {
+		node.style[this.variant() + "Transform"] = "none";
 	}
 	this.translate = function(node, x, y) {
 		if(this.support3d()) {
@@ -688,6 +692,9 @@ Util.Events = u.e = new function() {
 				}
 			}
 			u.e.addMoveEvent(this, u.e._move);
+			if(u.e.event_pref == "touch") {
+				u.e.addMoveEvent(this, u.e._cancelClick);
+			}
 			u.e.addEndEvent(this, u.e._dblclicked);
 			if(u.e.event_pref == "mouse") {
 				u.e.addEvent(this, "mouseout", u.e._cancelClick);
@@ -810,7 +817,7 @@ u.e.resetDragEvents = function(node) {
 	this.removeEvent(node, "touchmove", this._drag);
 	this.removeEvent(node, "mouseup", this._drop);
 	this.removeEvent(node, "touchend", this._drop);
-	this.removeEvent(node, "mouseout", this._drop);
+	this.removeEvent(node, "mouseout", this._drop_mouse);
 	this.removeEvent(node, "mousemove", this._scrollStart);
 	this.removeEvent(node, "touchmove", this._scrollStart);
 	this.removeEvent(node, "mousemove", this._scrolling);
@@ -857,14 +864,22 @@ u.e.drag = function(node, boundaries, settings) {
 	node.drag_elastica = 0;
 	node.drag_dropout = true;
 	node.show_bounds = false;
+	node.callback_picked = "picked";
+	node.callback_moved = "moved";
+	node.callback_dropped = "dropped";
 	if(typeof(settings) == "object") {
 		var argument;
 		for(argument in settings) {
 			switch(argument) {
-				case "strict"		: node.drag_strict		= settings[argument]; break;
-				case "elastica"		: node.drag_elastica	= Number(settings[argument]); break;
-				case "dropout"		: node.drag_dropout		= settings[argument]; break;
-				case "show_bounds"	: node.show_bounds		= settings[argument]; break; // NEEDS HELP
+				case "strict"			: node.drag_strict			= settings[argument]; break;
+				case "elastica"			: node.drag_elastica		= Number(settings[argument]); break;
+				case "dropout"			: node.drag_dropout			= settings[argument]; break;
+				case "show_bounds"		: node.show_bounds			= settings[argument]; break; 
+				case "vertical_lock"	: node.vertical_lock		= settings[argument]; break;
+				case "horizontal_lock"	: node.horizontal_lock		= settings[argument]; break;
+				case "callback_picked"	: node.callback_picked		= settings[argument]; break;
+				case "callback_moved"	: node.callback_moved		= settings[argument]; break;
+				case "callback_dropped"	: node.callback_dropped		= settings[argument]; break;
 			}
 		}
 	}
@@ -900,16 +915,16 @@ u.e.drag = function(node, boundaries, settings) {
 	node._x = node._x ? node._x : 0;
 	node._y = node._y ? node._y : 0;
 	node.locked = ((node.end_drag_x - node.start_drag_x == node.offsetWidth) && (node.end_drag_y - node.start_drag_y == node.offsetHeight));
-	node.only_vertical = (!node.locked && node.end_drag_x - node.start_drag_x == node.offsetWidth);
-	node.only_horisontal = (!node.locked && node.end_drag_y - node.start_drag_y == node.offsetHeight);
+	node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x == node.offsetWidth));
+	node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y == node.offsetHeight));
 	u.e.addStartEvent(node, this._inputStart);
 }
 u.e._pick = function(event) {
 	var init_speed_x = Math.abs(this.start_event_x - u.eventX(event));
 	var init_speed_y = Math.abs(this.start_event_y - u.eventY(event));
-	if(init_speed_x > init_speed_y && this.only_horisontal || 
-	   init_speed_x < init_speed_y && this.only_vertical ||
-	   !this.only_vertical && !this.only_horisontal) {
+	if((init_speed_x > init_speed_y && this.only_horizontal) || 
+	   (init_speed_x < init_speed_y && this.only_vertical) ||
+	   (!this.only_vertical && !this.only_horizontal)) {
 		u.e.resetNestedEvents(this);
 	    u.e.kill(event);
 		this.move_timestamp = event.timeStamp;
@@ -926,14 +941,14 @@ u.e._pick = function(event) {
 		this.current_xps = 0;
 		this.current_yps = 0;
 		u.a.transition(this, "none");
-		if(typeof(this.picked) == "function") {
-			this.picked(event);
-		}
 		u.e.addMoveEvent(this, u.e._drag);
 		u.e.addEndEvent(this, u.e._drop);
+		if(typeof(this[this.callback_picked]) == "function") {
+			this[this.callback_picked](event);
+		}
 	}
 	if(this.drag_dropout && u.e.event_pref == "mouse") {
-		u.e.addEvent(this, "mouseout", u.e._drop);
+		u.e.addEvent(this, "mouseout", u.e._drop_mouse);
 	}
 }
 u.e._drag = function(event) {
@@ -950,10 +965,10 @@ u.e._drag = function(event) {
 	this.move_timestamp = event.timeStamp;
 	this.move_last_x = this.current_x;
 	this.move_last_y = this.current_y;
-	if(this.only_vertical) {
+	if(!this.locked && this.only_vertical) {
 		this._y = this.current_y;
 	}
-	else if(this.only_horisontal) {
+	else if(!this.locked && this.only_horizontal) {
 		this._x = this.current_x;
 	}
 	else if(!this.locked) {
@@ -961,7 +976,7 @@ u.e._drag = function(event) {
 		this._y = this.current_y;
 	}
 	if(this.e_swipe) {
-		if(this.current_xps && (Math.abs(this.current_xps) > Math.abs(this.current_yps) || this.only_horisontal)) {
+		if(this.current_xps && (Math.abs(this.current_xps) > Math.abs(this.current_yps) || this.only_horizontal)) {
 			if(this.current_xps < 0) {
 				this.swiped = "left";
 			}
@@ -1000,12 +1015,12 @@ u.e._drag = function(event) {
 			else {
 				this.current_x = this._x;
 			}
-			if(!this.only_horisontal && this._y < this.start_drag_y) {
+			if(!this.only_horizontal && this._y < this.start_drag_y) {
 				offset = this._y < this.start_drag_y - this.drag_elastica ? - this.drag_elastica : this._y - this.start_drag_y;
 				this._y = this.start_drag_y;
 				this.current_y = this._y + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
 			}
-			else if(!this.horisontal && this._y + this.offsetHeight > this.end_drag_y) {
+			else if(!this.horizontal && this._y + this.offsetHeight > this.end_drag_y) {
 				offset = (this._y + this.offsetHeight > this.end_drag_y + this.drag_elastica) ? this.drag_elastica : (this._y + this.offsetHeight - this.end_drag_y);
 				this._y = this.end_drag_y - this.offsetHeight;
 				this.current_y = this._y + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
@@ -1036,8 +1051,8 @@ u.e._drag = function(event) {
 			u.a.translate(this, this._x, this._y);
 		}
 	}
-	if(typeof(this.moved) == "function") {
-		this.moved(event);
+	if(typeof(this[this.callback_moved]) == "function") {
+		this[this.callback_moved](event);
 	}
 }
 u.e._drop = function(event) {
@@ -1057,15 +1072,15 @@ u.e._drop = function(event) {
 		}
 	}
 	else if(!this.drag_strict && !this.locked) {
-		this.current_x = this._x + (this.current_xps/2);
-		this.current_y = this._y + (this.current_yps/2);
+		this.current_x = Math.round(this._x + (this.current_xps/2));
+		this.current_y = Math.round(this._y + (this.current_yps/2));
 		if(this.only_vertical || this.current_x < this.start_drag_x) {
 			this.current_x = this.start_drag_x;
 		}
 		else if(this.current_x + this.offsetWidth > this.end_drag_x) {
 			this.current_x = this.end_drag_x - this.offsetWidth;
 		}
-		if(this.only_horisontal || this.current_y < this.start_drag_y) {
+		if(this.only_horizontal || this.current_y < this.start_drag_y) {
 			this.current_y = this.start_drag_y;
 		}
 		else if(this.current_y + this.offsetHeight > this.end_drag_y) {
@@ -1082,12 +1097,18 @@ u.e._drop = function(event) {
 			u.a.transition(this, "all 1s cubic-bezier(0,0,0.25,1)");
 		}
 		else {
-			u.a.transition(this, "none");
+			u.a.transition(this, "all 0.2s cubic-bezier(0,0,0.25,1)");
 		}
 		u.a.translate(this, this.current_x, this.current_y);
 	}
-	if(typeof(this.dropped) == "function") {
-		this.dropped(event);
+	if(typeof(this[this.callback_dropped]) == "function") {
+		this[this.callback_dropped](event);
+	}
+}
+u.e._drop_mouse = function(event) {
+	if(event.target == this) {
+		this._drop = u.e._drop;
+		this._drop(event);
 	}
 }
 u.e.swipe = function(node, boundaries, settings) {
@@ -1273,6 +1294,7 @@ Util.Form = u.f = new function() {
 			if(error_message) {
 				u.ae(field, "div", {"class":"error", "html":error_message})
 			}
+			field._indicator = u.ae(field, "div", {"class":"indicator"});
 			field._label = u.qs("label", field);
 			field._hint = u.qs(".hint", field);
 			field._error = u.qs(".error", field);
@@ -1285,7 +1307,7 @@ Util.Form = u.f = new function() {
 				}
 			}
 			if(not_initialized) {
-				if(u.hc(field, "string|email|tel|numeric|integer|password")) {
+				if(u.hc(field, "string|email|tel|number|integer|password")) {
 					field._input = u.qs("input", field);
 					field._input.field = field;
 					this.formIndex(form, field._input);
@@ -1312,14 +1334,24 @@ Util.Form = u.f = new function() {
 						this.formIndex(form, input);
 					}
 				}
-				else if(u.hc(field, "date")) {
+				else if(u.hc(field, "date|datetime")) {
 					field._input = u.qsa("select,input", field);
 					for(j = 0; input = field._input[j]; j++) {
 						input.field = field;
 						this.formIndex(form, input);
 					}
 				}
-				else if(u.hc(field, "file")) {
+				else if(u.hc(field, "tags")) {
+					field._input = u.qs("input", field);
+					field._input.field = field;
+					this.formIndex(form, field._input);
+				}
+				else if(u.hc(field, "prices")) {
+					field._input = u.qs("input", field);
+					field._input.field = field;
+					this.formIndex(form, field._input);
+				}
+				else if(u.hc(field, "files")) {
 					field._input = u.qs("input", field);
 					field._input.field = field;
 					this.formIndex(form, field._input);
@@ -1348,17 +1380,16 @@ Util.Form = u.f = new function() {
 					if(this.type && this.type.match(/submit/i)) {
 						this.form._submit_button = this;
 						this.form._submit_input = false;
-						this.form._submit(event);
+						this.form._submit(event, this);
 					}
 				}
 			}
 			this.buttonOnEnter(action._input);
 			this.activateButton(action._input);
-			if(action._input.name && action._input.name) {
-				form.actions[action._input.name] = action._input;
-			}
-			if(typeof(u.e.k) == "object" && u.hc(action._input, "key:[a-z0-9]+")) {
-				u.e.k.addShortcut(u.cv(action._input, "key"), action._input);
+			var action_name = action._input.name ? action._input.name : action.className;
+				form.actions[action_name] = action._input;
+			if(typeof(u.k) == "object" && u.hc(action._input, "key:[a-z0-9]+")) {
+				u.k.addKey(u.cv(action._input, "key"), action._input);
 			}
 		}
 	}
@@ -1436,7 +1467,7 @@ Util.Form = u.f = new function() {
 				u.e.kill(event);
 				this.form.submitInput = this;
 				this.form.submitButton = false;
-				this.form._submit(event);
+				this.form._submit(event, this);
 			}
 		}
 		u.e.addEvent(node, "keydown", node.keyPressed);
@@ -1452,30 +1483,37 @@ Util.Form = u.f = new function() {
 		}
 		u.e.addEvent(node, "keydown", node.keyPressed);
 	}
-	this.formIndex = function(form, node) {
-		node.tab_index = form.tab_order.length;
-		form.tab_order[node.tab_index] = node;
-		if(node.field && node.name) {
-			form.fields[node.name] = node;
-			if(node.nodeName.match(/input/i) && node.type && node.type.match(/text|email|number|password/)) {
-				node.val = this._value;
-				u.e.addEvent(node, "keyup", this._updated);
-				u.e.addEvent(node, "change", this._changed);
-				this.inputOnEnter(node);
+	this.formIndex = function(form, iN) {
+		iN.tab_index = form.tab_order.length;
+		form.tab_order[iN.tab_index] = iN;
+		if(iN.field && iN.name) {
+			form.fields[iN.name] = iN;
+			if(iN.nodeName.match(/input/i) && iN.type && iN.type.match(/text|email|tel|number|password|datetime|date/)) {
+				iN.val = this._value;
+				u.e.addEvent(iN, "keyup", this._updated);
+				u.e.addEvent(iN, "change", this._changed);
+				this.inputOnEnter(iN);
 			}
-			else if(node.nodeName.match(/textarea/i)) {
-				node.val = this._value;
-				u.e.addEvent(node, "keyup", this._updated);
-				u.e.addEvent(node, "change", this._changed);
-				if(u.hc(node.field, "autoexpand")) {
-					u.as(node, "overflow", "hidden");
-					node.autoexpand_offset = 0;
-					if(parseInt(u.gcs(node, "height")) != node.scrollHeight) {
-						node.autoexpand_offset = node.scrollHeight - parseInt(u.gcs(node, "height"));
+			else if(iN.nodeName.match(/textarea/i)) {
+				iN.val = this._value;
+				u.e.addEvent(iN, "keyup", this._updated);
+				u.e.addEvent(iN, "change", this._changed);
+				if(u.hc(iN.field, "autoexpand")) {
+					var current_height = parseInt(u.gcs(iN, "height"));
+					u.bug(current_height + "," + iN.scrollHeight);
+					var current_value = iN.val();
+					iN.val("");
+					u.bug(current_height + "," + iN.scrollHeight);
+					u.as(iN, "overflow", "hidden");
+					u.bug(current_height + "," + iN.scrollHeight);
+					iN.autoexpand_offset = 0;
+					if(parseInt(u.gcs(iN, "height")) != iN.scrollHeight) {
+						iN.autoexpand_offset = iN.scrollHeight - parseInt(u.gcs(iN, "height"));
 					}
-					node.setHeight = function() {
+					iN.val(current_value);
+					iN.setHeight = function() {
 						var textarea_height = parseInt(u.gcs(this, "height"));
-						if(this.value) {
+						if(this.val()) {
 							if(u.browser("webkit")) {
 								if(this.scrollHeight - this.autoexpand_offset > textarea_height) {
 									u.a.setHeight(this, this.scrollHeight);
@@ -1491,43 +1529,44 @@ Util.Form = u.f = new function() {
 							}
 						}
 					}
-					u.e.addEvent(node, "keyup", node.setHeight);
+					u.e.addEvent(iN, "keyup", iN.setHeight);
+					iN.setHeight();
 				}
 			}
-			else if(node.nodeName.match(/select/i)) {
-				node.val = this._value_select;
-				u.e.addEvent(node, "change", this._updated);
-				u.e.addEvent(node, "keyup", this._updated);
-				u.e.addEvent(node, "change", this._changed);
+			else if(iN.nodeName.match(/select/i)) {
+				iN.val = this._value_select;
+				u.e.addEvent(iN, "change", this._updated);
+				u.e.addEvent(iN, "keyup", this._updated);
+				u.e.addEvent(iN, "change", this._changed);
 			}
-			else if(node.type && node.type.match(/checkbox/)) {
-				node.val = this._value_checkbox;
+			else if(iN.type && iN.type.match(/checkbox/)) {
+				iN.val = this._value_checkbox;
 				if(u.browser("explorer", "<=8")) {
-					node.pre_state = node.checked;
-					node._changed = u.f._changed;
-					node._updated = u.f._updated;
-					node._clicked = function(event) {
+					iN.pre_state = iN.checked;
+					iN._changed = u.f._changed;
+					iN._updated = u.f._updated;
+					iN._clicked = function(event) {
 						if(this.checked != this.pre_state) {
 							this._changed(window.event);
 							this._updated(window.event);
 						}
 						this.pre_state = this.checked;
 					}
-					u.e.addEvent(node, "click", node._clicked);
+					u.e.addEvent(iN, "click", iN._clicked);
 				}
 				else {
-					u.e.addEvent(node, "change", this._updated);
-					u.e.addEvent(node, "change", this._changed);
+					u.e.addEvent(iN, "change", this._updated);
+					u.e.addEvent(iN, "change", this._changed);
 				}
-				this.inputOnEnter(node);
+				this.inputOnEnter(iN);
 			}
-			else if(node.type && node.type.match(/radio/)) {
-				node.val = this._value_radio;
+			else if(iN.type && iN.type.match(/radio/)) {
+				iN.val = this._value_radio;
 				if(u.browser("explorer", "<=8")) {
-					node.pre_state = node.checked;
-					node._changed = u.f._changed;
-					node._updated = u.f._updated;
-					node._clicked = function(event) {
+					iN.pre_state = iN.checked;
+					iN._changed = u.f._changed;
+					iN._updated = u.f._updated;
+					iN._clicked = function(event) {
 						var i, input;
 						if(this.checked != this.pre_state) {
 							this._changed(window.event);
@@ -1537,16 +1576,32 @@ Util.Form = u.f = new function() {
 							input.pre_state = input.checked;
 						}
 					}
-					u.e.addEvent(node, "click", node._clicked);
+					u.e.addEvent(iN, "click", iN._clicked);
 				}
 				else {
-					u.e.addEvent(node, "change", this._updated);
-					u.e.addEvent(node, "change", this._changed);
+					u.e.addEvent(iN, "change", this._updated);
+					u.e.addEvent(iN, "change", this._changed);
 				}
-				this.inputOnEnter(node);
+				this.inputOnEnter(iN);
 			}
-			this.activateField(node);
-			this.validate(node);
+			else if(iN.type && iN.type.match(/file/)) {
+				iN.val = function(value) {
+					if(value !== undefined) {
+						alert('adding values manually to input type="file" is not supported')
+					}
+					else {
+						var i, file, files = [];
+						for(i = 0; file = this.files[i]; i++) {
+							files.push(file);
+						}
+						return files.join(",");
+					}
+				}
+				u.e.addEvent(iN, "keyup", this._updated);
+				u.e.addEvent(iN, "change", this._changed);
+			}
+			this.activateField(iN);
+			this.validate(iN);
 		}
 	}
 	this._changed = function(event) {
@@ -1574,7 +1629,7 @@ Util.Form = u.f = new function() {
 	this._validate = function() {
 		u.f.validate(this);
 	}
-	this._submit = function(event, input) {
+	this._submit = function(event, iN) {
 		for(name in this.fields) {
 			if(this.fields[name].field) {
 				this.fields[name].used = true;
@@ -1588,199 +1643,321 @@ Util.Form = u.f = new function() {
 		}
 		else {
 			if(typeof(this.submitted) == "function") {
-				this.submitted(input);
+				this.submitted(iN);
 			}
 			else {
 				this.submit();
 			}
 		}
 	}
-	this.activateField = function(input) {
-		this._focus = function(event) {
-			this.field.focused = true;
-			u.ac(this.field, "focus");
-			u.ac(this, "focus");
-			if(typeof(this.focused) == "function") {
-				this.focused();
-			}
-			if(typeof(this.form.focused) == "function") {
-				this.form.focused(this);
+	this._focus = function(event) {
+		this.field.focused = true;
+		u.ac(this.field, "focus");
+		u.ac(this, "focus");
+		if(typeof(this.focused) == "function") {
+			this.focused();
+		}
+		if(typeof(this.form.focused) == "function") {
+			this.form.focused(this);
+		}
+	}
+	this._blur = function(event) {
+		this.field.focused = false;
+		u.rc(this.field, "focus");
+		u.rc(this, "focus");
+		this.used = true;
+		if(typeof(this.blurred) == "function") {
+			this.blurred();
+		}
+		if(typeof(this.form.blurred) == "function") {
+			this.form.blurred(this);
+		}
+	}
+	this._button_focus = function(event) {
+		u.ac(this, "focus");
+		if(typeof(this.focused) == "function") {
+			this.focused();
+		}
+		if(typeof(this.form.focused) == "function") {
+			this.form.focused(this);
+		}
+	}
+	this._button_blur = function(event) {
+		u.rc(this, "focus");
+		if(typeof(this.blurred) == "function") {
+			this.blurred();
+		}
+		if(typeof(this.form.blurred) == "function") {
+			this.form.blurred(this);
+		}
+	}
+	this._default_value_focus = function() {
+		u.rc(this, "default");
+		if(this.val() == this.default_value) {
+			this.val("");
+		}
+	}
+	this._default_value_blur = function() {
+		if(this.val() == "") {
+			u.ac(this, "default");
+			this.val(this.default_value);
+		}
+	}
+	this.activateField = function(iN) {
+		u.e.addEvent(iN, "focus", this._focus);
+		u.e.addEvent(iN, "blur", this._blur);
+		u.e.addEvent(iN, "blur", this._validate);
+		if(iN.form.labelstyle || u.hc(iN.form, "labelstyle:[a-z]+")) {
+			iN.form.labelstyle = iN.form.labelstyle ? iN.form.labelstyle : u.cv(iN.form, "labelstyle");
+			if(iN.form.labelstyle == "inject" && (!iN.type || !iN.type.match(/file|radio|checkbox/))) {
+				iN.default_value = iN.field._label.innerHTML;
+				u.e.addEvent(iN, "focus", this._default_value_focus);
+				u.e.addEvent(iN, "blur", this._default_value_blur);
+				if(iN.val() == "") {
+					iN.val(iN.default_value);
+					u.ac(iN, "default");
+				}
 			}
 		}
-		this._blur = function(event) {
-			this.field.focused = false;
-			u.rc(this.field, "focus");
-			u.rc(this, "focus");
-			this.used = true;
-			if(typeof(this.blurred) == "function") {
-				this.blurred();
-			}
-			if(typeof(this.form.blurred) == "function") {
-				this.form.blurred(this);
-			}
-		}
-		u.e.addEvent(input, "focus", this._focus);
-		u.e.addEvent(input, "blur", this._blur);
-		u.e.addEvent(input, "blur", this._validate);
 	}
 	this.activateButton = function(button) {
-		this._button_focus = function(event) {
-			u.ac(this, "focus");
-			if(typeof(this.focused) == "function") {
-				this.focused();
-			}
-			if(typeof(this.form.focused) == "function") {
-				this.form.focused(this);
-			}
-		}
-		this._button_blur = function(event) {
-			u.rc(this, "focus");
-			if(typeof(this.blurred) == "function") {
-				this.blurred();
-			}
-			if(typeof(this.form.blurred) == "function") {
-				this.form.blurred(this);
-			}
-		}
 		u.e.addEvent(button, "focus", this._button_focus);
 		u.e.addEvent(button, "blur", this._button_blur);
 	}
-	this.isDefault = function(input) {
-		if(input.field.default_value && input.val() == iN.field.default_value) {
+ 	this.isDefault = function(iN) {
+		if(iN.default_value && iN.val() == iN.default_value) {
 			return true;
 		}
 		return false;
 	}
-	this.fieldError = function(input) {
-		u.rc(input, "correct");
-		u.rc(input.field, "correct");
-		if(input.used || !this.isDefault(input) && input.val()) {
-			u.ac(input, "error");
-			u.ac(input.field, "error");
-			if(typeof(input.validationFailed) == "function") {
-				input.validationFailed();
+	this.fieldError = function(iN) {
+		u.rc(iN, "correct");
+		u.rc(iN.field, "correct");
+		if(iN.used || !this.isDefault(iN) && iN.val()) {
+			u.ac(iN, "error");
+			u.ac(iN.field, "error");
+			if(typeof(iN.validationFailed) == "function") {
+				iN.validationFailed();
 			}
 		}
 	}
-	this.fieldCorrect = function(input) {
-		if(!this.isDefault(input) && input.val()) {
-			u.ac(input, "correct");
-			u.ac(input.field, "correct");
-			u.rc(input, "error");
-			u.rc(input.field, "error");
+	this.fieldCorrect = function(iN) {
+		if(!this.isDefault(iN) && iN.val()) {
+			u.ac(iN, "correct");
+			u.ac(iN.field, "correct");
+			u.rc(iN, "error");
+			u.rc(iN.field, "error");
 		}
 		else {
-			u.rc(input, "correct");
-			u.rc(input.field, "correct");
-			u.rc(input, "error");
-			u.rc(input.field, "error");
+			u.rc(iN, "correct");
+			u.rc(iN.field, "correct");
+			u.rc(iN, "error");
+			u.rc(iN.field, "error");
 		}
 	}
-	this.validate = function(input) {
-		var min, max;
+	this.validate = function(iN) {
+		var min, max, pattern;
 		var not_validated = true;
+		if(!u.hc(iN.field, "required") && (iN.val() == "" || this.isDefault(iN))) {
+			this.fieldCorrect(iN);
+			return true;
+		}
+		else if(u.hc(iN.field, "required") && (iN.val() == "" || this.isDefault(iN))) {
+			this.fieldError(iN);
+			return false;
+		}
 		var custom_validate;
 		for(custom_validate in u.f.customValidate) {
-			if(u.hc(input.field, custom_validate)) {
-				u.f.customValidate[custom_validate](input);
+			if(u.hc(iN.field, custom_validate)) {
+				u.f.customValidate[custom_validate](iN);
 				not_validated = false;
 			}
 		}
 		if(not_validated) {
-			if(u.hc(input.field, "password")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			if(u.hc(iN.field, "password")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 8;
 				max = max ? max : 20;
-				if((input.value.length >= min && input.value.length <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				pattern = iN.getAttribute("pattern");
+				if(
+					iN.val().length >= min && 
+					iN.val().length <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "numeric")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			else if(u.hc(iN.field, "number")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 0;
 				max = max ? max : 99999999999999999999999999999;
-				if((input.value && !isNaN(input.value) && input.value >= min && input.value <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				pattern = iN.getAttribute("pattern");
+				if(
+					!isNaN(iN.val()) && 
+					iN.val() >= min && 
+					iN.val() <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "integer")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			else if(u.hc(iN.field, "integer")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 0;
 				max = max ? max : 99999999999999999999999999999;
-				if((input.value && !isNaN(input.value) && Math.round(input.value) == input.value && input.value >= min && input.value <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				pattern = iN.getAttribute("pattern");
+				if(
+					!isNaN(iN.val()) && 
+					Math.round(iN.val()) == iN.val() && 
+					iN.val() >= min && 
+					iN.val() <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "tel")) {
-				if((input.value.match(/^([\+0-9\-\.\s\(\)]){5,16}$/) && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+			else if(u.hc(iN.field, "tel")) {
+				pattern = iN.getAttribute("pattern");
+				if(
+					!pattern && iN.val().match(/^([\+0-9\-\.\s\(\)]){5,18}$/) ||
+					(pattern && iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "email")) {
-				if((input.value.match(/^([^<>\\\/%$])+\@([^<>\\\/%$])+\.([^<>\\\/%$]{2,20})$/) && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+			else if(u.hc(iN.field, "email")) {
+				if(
+					!pattern && iN.val().match(/^([^<>\\\/%$])+\@([^<>\\\/%$])+\.([^<>\\\/%$]{2,20})$/) ||
+					(pattern && iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "text")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			else if(u.hc(iN.field, "text")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 1;
 				max = max ? max : 10000000;
-				if((input.value.length >= min && input.value.length <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				pattern = iN.getAttribute("pattern");
+				if(
+					iN.val().length >= min && 
+					iN.val().length <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "select")) {
-				if(input.val() != "" || !u.hc(input.field, "required")) {
-					this.fieldCorrect(input);
+			else if(u.hc(iN.field, "select")) {
+				if(iN.val()) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "checkbox|boolean|radio|radio_buttons")) {
-				if(input.val() != "" || !u.hc(input.field, "required")) {
-					this.fieldCorrect(input);
+			else if(u.hc(iN.field, "checkbox|boolean|radio|radio_buttons")) {
+				if(iN.val()) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
 				}
 			}
-			else if(u.hc(input.field, "string")) {
-				min = Number(u.cv(input.field, "min"));
-				max = Number(u.cv(input.field, "max"));
+			else if(u.hc(iN.field, "string")) {
+				min = Number(u.cv(iN.field, "min"));
+				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 1;
-				max = max ? max : 10000000;
-				if((input.value.length >= min && input.value.length <= max && !this.isDefault(input)) || (!u.hc(input.field, "required") && !input.value)) {
-					this.fieldCorrect(input);
+				max = max ? max : 255;
+				pattern = iN.getAttribute("pattern");
+				if(
+					iN.val().length >= min &&
+					iN.val().length <= max && 
+					(!pattern || iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
 				}
 				else {
-					this.fieldError(input);
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "date")) {
+				pattern = iN.getAttribute("pattern");
+				if(
+					!pattern && iN.val().match(/^([\d]{4}[\-\/\ ]{1}[\d]{2}[\-\/\ ][\d]{2})$/) ||
+					(pattern && iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "datetime")) {
+				pattern = iN.getAttribute("pattern");
+				if(
+					!pattern && iN.val().match(/^([\d]{4}[\-\/\ ]{1}[\d]{2}[\-\/\ ][\d]{2} [\d]{2}[\-\/\ \:]{1}[\d]{2}[\-\/\ \:]{0,1}[\d]{0,2})$/) ||
+					(pattern && iN.val().match(pattern))
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "tags")) {
+				if(
+					!pattern && iN.val().match(/\:/) ||
+					(pattern && iN.val().match("^"+pattern+"$"))
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "prices")) {
+				if(
+					!isNaN(iN.val())
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
+				}
+			}
+			else if(u.hc(iN.field, "files")) {
+				if(
+					1
+				) {
+					this.fieldCorrect(iN);
+				}
+				else {
+					this.fieldError(iN);
 				}
 			}
 		}
-		if(u.hc(input.field, "error")) {
+		if(u.hc(iN.field, "error")) {
 			return false;
 		}
 		else {
@@ -1800,7 +1977,7 @@ Util.Form = u.f = new function() {
 			}
 		}
 		var i, input, select, textarea, param;
-		var params = new Object();
+			var params = new Object();
 		if(form._submit_button && form._submit_button.name) {
 			params[form._submit_button.name] = form._submit_button.value;
 		}
@@ -1810,21 +1987,34 @@ Util.Form = u.f = new function() {
 		for(i = 0; input = inputs[i]; i++) {
 			if(!u.hc(input, ignore_inputs)) {
 				if((input.type == "checkbox" || input.type == "radio") && input.checked) {
-					params[input.name] = input.value;
+					if(!this.isDefault(input)) {
+						params[input.name] = input.value;
+					}
 				}
-				else if(!input.type.match(/button|submit|reset|checkbox|radio/i)) {
-					params[input.name] = input.value;
+				else if(input.type == "file") {
+					if(!this.isDefault(input)) {
+						params[input.name] = input.value;
+					}
+				}
+				else if(!input.type.match(/button|submit|reset|file|checkbox|radio/i)) {
+					if(!this.isDefault(input)) {
+						params[input.name] = input.value;
+					}
 				}
 			}
 		}
 		for(i = 0; select = selects[i]; i++) {
 			if(!u.hc(select, ignore_inputs)) {
-				params[select.name] = select.options[select.selectedIndex].value;
+				if(!this.isDefault(select)) {
+					params[select.name] = select.options[select.selectedIndex].value;
+				}
 			}
 		}
 		for(i = 0; textarea = textareas[i]; i++) {
 			if(!u.hc(textarea, ignore_inputs)) {
-				params[textarea.name] = textarea.value;
+				if(!this.isDefault(textarea)) {
+					params[textarea.name] = textarea.value;
+				}
 			}
 		}
 		if(send_as && typeof(this.customSend[send_as]) == "function") {
@@ -1839,7 +2029,7 @@ Util.Form = u.f = new function() {
 		else {
 			var string = "";
 			for(param in params) {
-				string += (string ? "&" : "") + param + "=" + encodeURIComponent(params[param]);
+					string += (string ? "&" : "") + param + "=" + encodeURIComponent(params[param]);
 			}
 			return string;
 		}
@@ -1943,10 +2133,10 @@ Util.browserHeight = u.browserH = function() {
 	return document.documentElement.clientHeight;
 }
 Util.htmlWidth = u.htmlW = function() {
-	return document.body.offsetWidth + parseInt(u.gcs(document.body, "margin-left")) +  + parseInt(u.gcs(document.body, "margin-right"));
+	return document.body.offsetWidth + parseInt(u.gcs(document.body, "margin-left")) + parseInt(u.gcs(document.body, "margin-right"));
 }
 Util.htmlHeight = u.htmlH = function() {
-	return document.body.offsetHeight + parseInt(u.gcs(document.body, "margin-top")) +  + parseInt(u.gcs(document.body, "margin-bottom"));
+	return document.body.offsetHeight + parseInt(u.gcs(document.body, "margin-top")) + parseInt(u.gcs(document.body, "margin-bottom"));
 }
 Util.pageScrollX = u.scrollX = function() {
 	return window.pageXOffset;
@@ -1991,7 +2181,7 @@ Util.Hash = u.h = new function() {
 		}
 	}
 	this.getCleanUrl = function(string, levels) {
-		string = string.split("#")[0].replace(location.protocol+"//"+document.domain, "");
+		string = string.replace(location.protocol+"//"+document.domain, "").match(/[^#$]+/)[0];
 		if(!levels) {
 			return string;
 		}
@@ -2021,40 +2211,18 @@ Util.Hash = u.h = new function() {
 		}
 	}
 }
-Util.Image = u.i = new function() {
-	this.load = function(node, src) {
-		var image = new Image();
-		image.node = node;
-		u.ac(node, "loading");
-	    u.e.addEvent(image, 'load', u.i._loaded);
-		u.e.addEvent(image, 'error', u.i._error);
-		image.src = src;
-	}
-	this._loaded = function(event) {
-		u.rc(this.node, "loading");
-		if(typeof(this.node.loaded) == "function") {
-			this.node.loaded(event);
+Util.Objects = u.o = new Object();
+Util.init = function(scope) {
+	var i, node, nodes, object;
+	scope = scope && scope.nodeName ? scope : document;
+	nodes = u.ges("i\:([_a-zA-Z0-9])+");
+	for(i = 0; node = nodes[i]; i++) {
+		while((object = u.cv(node, "i"))) {
+			u.rc(node, "i:"+object);
+			if(object && typeof(u.o[object]) == "object") {
+				u.o[object].init(node);
+			}
 		}
-	}
-	this._error = function(event) {
-		u.rc(this.node, "loading");
-		u.ac(this.node, "error");
-		if(typeof(this.node.loaded) == "function" && typeof(this.node.failed) != "function") {
-			this.node.loaded(event);
-		}
-		else if(typeof(this.node.failed) == "function") {
-			this.node.failed(event);
-		}
-	}
-	this._progress = function(event) {
-		u.bug("progress")
-		if(typeof(this.node.progress) == "function") {
-			this.node.progress(event);
-		}
-	}
-	this._debug = function(event) {
-		u.bug("event:" + event.type);
-		u.xInObject(event);
 	}
 }
 Util.random = function(min, max) {
@@ -2065,6 +2233,10 @@ Util.numToHex = function(num) {
 }
 Util.hexToNum = function(hex) {
 	return parseInt(hex,16);
+}
+Util.round = function(number, decimals) {
+	var round_number = number*Math.pow(10, decimals);
+	return Math.round(round_number)/Math.pow(10, decimals);
 }
 Util.period = function(format, time) {
 	var seconds = 0;
@@ -2084,15 +2256,15 @@ Util.period = function(format, time) {
 	}
 	var tokens = /y|n|o|O|w|W|c|d|e|D|g|h|H|l|m|M|r|s|S|t|T|u|U/g;
 	var chars = new Object();
-	chars.y = 0; // TODO
-	chars.n = 0; // TODO 
-	chars.o = (chars.n > 9 ? "" : "0") + chars.n; // TODO
-	chars.O = 0; // TODO
-	chars.w = 0; // TODO
-	chars.W = 0; // TODO
-	chars.c = 0; // TODO
-	chars.d = 0; // TODO
-	chars.e = 0; // TODO
+	chars.y = 0; 
+	chars.n = 0; 
+	chars.o = (chars.n > 9 ? "" : "0") + chars.n; 
+	chars.O = 0; 
+	chars.w = 0; 
+	chars.W = 0; 
+	chars.c = 0; 
+	chars.d = 0; 
+	chars.e = 0; 
 	chars.D = Math.floor(((seconds/60)/60)/24);
 	chars.g = Math.floor((seconds/60)/60)%24;
 	chars.h = (chars.g > 9 ? "" : "0") + chars.g;
@@ -2113,31 +2285,7 @@ Util.period = function(format, time) {
 		return _ in chars ? chars[_] : _.slice(1, _.length - 1);
 	});
 };
-Util.popup = function(url, settings) {
-	var width = "330";
-	var height = "150";
-	var name = "popup" + new Date().getHours() + "_" + new Date().getMinutes() + "_" + new Date().getMilliseconds();
-	var extra = "";
-	if(typeof(settings) == "object") {
-		var argument;
-		for(argument in settings) {
-			switch(argument) {
-				case "name"		: name		= settings[argument]; break;
-				case "width"	: width		= Number(settings[argument]); break;
-				case "height"	: height	= Number(settings[argument]); break;
-				case "extra"	: extra		= settings[argument]; break;
-			}
-		}
-	}
-	var p;
-	p = "width=" + width + ",height=" + height;
-	p += ",left=" + (screen.width-width)/2;
-	p += ",top=" + ((screen.height-height)-20)/2;
-	p += extra ? "," + extra : ",scrollbars";
-	document[name] = window.open(url, name, p);
-	return document[name];
-}
-Util.createRequestObject = function() {
+Util.createRequestObject = u.createRequestObject = function() {
 	return new XMLHttpRequest();
 }
 Util.Request = u.request = function(node, url, settings) {
@@ -2146,14 +2294,16 @@ Util.Request = u.request = function(node, url, settings) {
 	node.request_async = true;
 	node.request_params = "";
 	node.request_headers = false;
+	node.response_callback = "response";
 	if(typeof(settings) == "object") {
 		var argument;
 		for(argument in settings) {
 			switch(argument) {
-				case "method"	: node.request_method	= settings[argument]; break;
-				case "params"	: node.request_params	= settings[argument]; break;
-				case "async"	: node.request_async	= settings[argument]; break;
-				case "headers"	: node.request_headers	= settings[argument]; break;
+				case "method"		: node.request_method		= settings[argument]; break;
+				case "params"		: node.request_params		= settings[argument]; break;
+				case "async"		: node.request_async		= settings[argument]; break;
+				case "headers"		: node.request_headers		= settings[argument]; break;
+				case "callback"		: node.response_callback	= settings[argument]; break;
 			}
 		}
 	}
@@ -2186,7 +2336,13 @@ Util.Request = u.request = function(node, url, settings) {
 				node.HTTPRequest.send("");
 			}
 			else if(node.request_method.match(/POST|PUT|PATCH/i)) {
-				var params = typeof(node.request_params) == "object" ? JSON.stringify(node.request_params) : node.request_params;
+				var params;
+				if(typeof(node.request_params) == "object" && !node.request_params.constructor.toString().match(/FormData/i)) {
+					params = JSON.stringify(node.request_params);
+				}
+				else {
+					params = node.request_params;
+				}
 				node.HTTPRequest.open(node.request_method, node.request_url, node.request_async);
 				node.HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				var csfr_field = u.qs('meta[name="csrf-token"]');
@@ -2313,11 +2469,8 @@ Util.validateResponse = function(response){
 		}
 	}
 	if(object) {
-		if(typeof(response.node.Response) == "function") {
-			response.node.Response(object);
-		}
-		if(typeof(response.node.response) == "function") {
-			response.node.response(object);
+		if(typeof(response.node[response.node.response_callback]) == "function") {
+			response.node[response.node.response_callback](object);
 		}
 	}
 	else {
@@ -2377,7 +2530,7 @@ Util.uuid = function() {
  	}
 	return uuid.join('');
 }
-Util.stringOr = function(value, replacement) {
+Util.stringOr = u.eitherOr = function(value, replacement) {
 	if(value !== undefined && value !== null) {
 		return value;
 	}
@@ -2438,6 +2591,22 @@ Util.browser = function(model, version) {
 	else {
 		return false;
 	}
+}
+Util.segment = function(segment) {
+	if(!u.current_segment) {
+		var scripts = document.getElementsByTagName("script");
+		var script, i, src;
+		for(i = 0; script = scripts[i]; i++) {
+			seg_src = script.src.match(/\/seg_([a-z_]+)/);
+			if(seg_src) {
+				u.current_segment = seg_src[1];
+			}
+		}
+	}
+	if(segment) {
+		return segment == u.current_segment;
+	}
+	return u.current_segment;
 }
 Util.system = function(os, version) {
 }
@@ -2523,33 +2692,487 @@ Util.getVar = function(param, url) {
 	}
 }
 
-/*u-init.js*/
-Util.Objects = u.o = new Object();
-Util.init = function(scope) {
-	var i, node, nodes, object;
-	scope = scope && scope.nodeName ? scope : document;
-	nodes = u.ges("i\:([_a-zA-Z0-9])+");
-	for(i = 0; node = nodes[i]; i++) {
-		while((object = u.cv(node, "i"))) {
-			u.rc(node, "i:"+object);
-			if(object && typeof(u.o[object]) == "object") {
-				u.o[object].init(node);
+
+/*u-dom.js*/
+Util.querySelector = u.qs = function(query, scope) {
+	scope = scope ? scope : document;
+	return scope.querySelector(query);
+}
+Util.querySelectorAll = u.qsa = function(query, scope) {
+	scope = scope ? scope : document;
+	return scope.querySelectorAll(query);
+}
+Util.getElement = u.ge = function(identifier, scope) {
+	var node, i, regexp;
+	if(document.getElementById(identifier)) {
+		return document.getElementById(identifier);
+	}
+	scope = scope ? scope : document;
+	regexp = new RegExp("(^|\\s)" + identifier + "(\\s|$|\:)");
+	for(i = 0; node = scope.getElementsByTagName("*")[i]; i++) {
+		if(regexp.test(node.className)) {
+			return node;
+		}
+	}
+	return scope.getElementsByTagName(identifier).length ? scope.getElementsByTagName(identifier)[0] : false;
+}
+Util.getElements = u.ges = function(identifier, scope) {
+	var node, i, regexp;
+	var nodes = new Array();
+	scope = scope ? scope : document;
+	regexp = new RegExp("(^|\\s)" + identifier + "(\\s|$|\:)");
+	for(i = 0; node = scope.getElementsByTagName("*")[i]; i++) {
+		if(regexp.test(node.className)) {
+			nodes.push(node);
+		}
+	}
+	return nodes.length ? nodes : scope.getElementsByTagName(identifier);
+}
+Util.parentNode = u.pn = function(node, node_type) {
+	if(node_type) {
+		if(node.parentNode) {
+			var parent = node.parentNode;
+		}
+		while(parent.nodeName.toLowerCase() != node_type.toLowerCase()) {
+			if(parent.parentNode) {
+				parent = parent.parentNode;
+			}
+			else {
+				return false;
+			}
+		}
+		return parent;
+	}
+	else {
+		return node.parentNode;
+	}
+}
+Util.previousSibling = u.ps = function(node, exclude) {
+	node = node.previousSibling;
+	while(node && (node.nodeType == 3 || node.nodeType == 8 || exclude && (u.hc(node, exclude) || node.nodeName.toLowerCase().match(exclude)))) {
+		node = node.previousSibling;
+	}
+	return node;
+}
+Util.nextSibling = u.ns = function(node, exclude) {
+	node = node.nextSibling;
+	while(node && (node.nodeType == 3 || node.nodeType == 8 || exclude && (u.hc(node, exclude) || node.nodeName.toLowerCase().match(exclude)))) {
+		node = node.nextSibling;
+	}
+	return node;
+}
+Util.childNodes = u.cn = function(node, exclude) {
+	var i, child;
+	var children = new Array();
+	for(i = 0; child = node.childNodes[i]; i++) {
+		if(child && child.nodeType != 3 && child.nodeType != 8 && (!exclude || (!u.hc(child, exclude) && !child.nodeName.toLowerCase().match(exclude) ))) {
+			children.push(child);
+		}
+	}
+	return children;
+}
+Util.appendElement = u.ae = function(parent, node_type, attributes) {
+	try {
+		var node = (typeof(node_type) == "object") ? node_type : document.createElement(node_type);
+		node = parent.appendChild(node);
+		if(attributes) {
+			var attribute;
+			for(attribute in attributes) {
+				if(attribute == "html") {
+					node.innerHTML = attributes[attribute]
+				}
+				else {
+					node.setAttribute(attribute, attributes[attribute]);
+				}
+			}
+		}
+		return node;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.ae, called from: "+arguments.callee.caller.name);
+		u.bug("node:" + u.nodeId(parent, 1));
+		u.xInObject(attributes);
+	}
+	return false;
+}
+Util.insertElement = u.ie = function(parent, node_type, attributes) {
+	try {
+		var node = (typeof(node_type) == "object") ? node_type : document.createElement(node_type);
+		node = parent.insertBefore(node, parent.firstChild);
+		if(attributes) {
+			var attribute;
+			for(attribute in attributes) {
+				if(attribute == "html") {
+					node.innerHTML = attributes[attribute];
+				}
+				else {
+					node.setAttribute(attribute, attributes[attribute]);
+				}
+			}
+		}
+		return node;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.ie, called from: "+arguments.callee.caller);
+		u.bug("node:" + u.nodeId(parent, 1));
+		u.xInObject(attributes);
+	}
+	return false;
+}
+Util.wrapElement = u.we = function(node, node_type, attributes) {
+	try {
+		var wrapper_node = node.parentNode.insertBefore(document.createElement(node_type), node);
+		if(attributes) {
+			var attribute;
+			for(attribute in attributes) {
+				wrapper_node.setAttribute(attribute, attributes[attribute]);
+			}
+		}	
+		wrapper_node.appendChild(node);
+		return wrapper_node;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.we, called from: "+arguments.callee.caller);
+		u.bug("node:" + u.nodeId(node, 1));
+		u.xInObject(attributes);
+	}
+	return false;
+}
+Util.textContent = u.text = function(node) {
+	return node.textContent;
+}
+Util.clickableElement = u.ce = function(node, options) {
+	var a = (node.nodeName.toLowerCase() == "a" ? node : u.qs("a", node));
+	if(a) {
+		u.ac(node, "link");
+		if(a.getAttribute("href") !== null) {
+			node.url = a.href;
+			a.removeAttribute("href");
+		}
+	}
+	else {
+		u.ac(node, "clickable");
+	}
+	if(typeof(u.e.click) == "function") {
+		u.e.click(node);
+		if(typeof(options) == "object") {
+			var argument;
+			for(argument in options) {
+				switch(argument) {
+					case "type"			: node._click_type		= options[argument]; break;
+					case "method"		: node._click_method	= options[argument]; break;
+				}
+			}
+			if(node._click_type == "link") {
+				node.clicked = function(event) {
+					if(event.metaKey || event.ctrlKey) {
+						window.open(this.url);
+					}
+					else {
+						if(this._click_method == "hash") {
+							location.hash = this.url;
+						}
+						else {
+							location.href = this.url;
+						}
+					}
+				}
+			}
+		}
+	}
+	return node;
+}
+u.link = u.ce;
+Util.classVar = u.cv = function(node, var_name) {
+	try {
+		var regexp = new RegExp(var_name + ":[?=\\w/\\#~:.?+=?&%@!\\-]*");
+		if(node.className.match(regexp)) {
+			return node.className.match(regexp)[0].replace(var_name + ":", "");
+		}
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.cv, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+u.getIJ = u.cv;
+Util.setClass = u.sc = function(node, classname) {
+	try {
+		var old_class = node.className;
+		node.className = classname;
+		node.offsetTop;
+		return old_class;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.setClass, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.hasClass = u.hc = function(node, classname) {
+	try {
+		if(classname) {
+			var regexp = new RegExp("(^|\\s)(" + classname + ")(\\s|$)");
+			if(regexp.test(node.className)) {
+				return true;
+			}
+		}
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.hasClass("+u.nodeId(node)+"), called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.addClass = u.ac = function(node, classname, dom_update) {
+	try {
+		if(classname) {
+			var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+			if(!regexp.test(node.className)) {
+				node.className += node.className ? " " + classname : classname;
+				dom_update === false ? false : node.offsetTop;
+			}
+			return node.className;
+		}
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.addClass, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.removeClass = u.rc = function(node, classname, dom_update) {
+	try {
+		if(classname) {
+			var regexp = new RegExp("(\\b)" + classname + "(\\s|$)", "g");
+			node.className = node.className.replace(regexp, " ").trim().replace(/[\s]{2}/g, " ");
+			dom_update === false ? false : node.offsetTop;
+			return node.className;
+		}
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.removeClass, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.toggleClass = u.tc = function(node, classname, _classname, dom_update) {
+	try {
+		var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$|\:)");
+		if(regexp.test(node.className)) {
+			u.rc(node, classname, false);
+			if(_classname) {
+				u.ac(node, _classname, false);
+			}
+		}
+		else {
+			u.ac(node, classname, false);
+			if(_classname) {
+				u.rc(node, _classname, false);
+			}
+		}
+		dom_update === false ? false : node.offsetTop;
+		return node.className;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.toggleClass, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.applyStyle = u.as = function(node, property, value, dom_update) {
+	try {
+		node.style[property] = value;
+		dom_update === false ? false : node.offsetTop;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.applyStyle("+u.nodeId(node)+", "+property+", "+value+") called from: "+arguments.callee.caller);
+	}
+}
+Util.getComputedStyle = u.gcs = function(node, property) {
+	node.offsetHeight;
+	if(document.defaultView && document.defaultView.getComputedStyle) {
+		return document.defaultView.getComputedStyle(node, null).getPropertyValue(property);
+	}
+	return false;
+}
+Util.hasFixedParent = u.hfp = function(node) {
+	while(node.nodeName.toLowerCase() != "body") {
+		if(u.gcs(node.parentNode, "position").match("fixed")) {
+			return true;
+		}
+		node = node.parentNode;
+	}
+	return false;
+}
+
+
+/*i-page-mobile_touch.js*/
+u.bug_force = true;
+u.bug_console_only = true;
+Util.Objects["page"] = new function() {
+	this.init = function(page) {
+		page.hN = u.qs("#header");
+		page.hN.service = u.qs(".servicenavigation", page.hN);
+		u.e.drag(page.hN, page.hN);
+		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":"parentNode"});
+		page.logo.url = '/';
+		page.cN = u.qs("#content", page);
+		page.nN = u.qs("#navigation", page);
+		page.nN.list = u.qs("ul", page.nN);
+		page.nN = u.ie(page.hN, page.nN);
+		page.fN = u.qs("#footer");
+		page.fN.service = u.qs(".servicenavigation", page.fN);
+		page.fN.slogan = u.qs("p", page.fN);
+		u.ce(page.fN.slogan);
+		page.fN.slogan.clicked = function(event) {
+			window.open("http://parentnode.dk");
+		}
+		page.resized = function() {
+			this.calc_height = u.browserH();
+			this.calc_width = u.browserW();
+			this.available_height = this.calc_height - page.hN.offsetHeight - page.fN.offsetHeight;
+			u.as(page.cN, "height", "auto", false);
+			if(this.available_height >= page.cN.offsetHeight) {
+				u.as(page.cN, "height", this.available_height+"px", false);
+			}
+			if(this.calc_width > 1300) {
+				u.ac(page, "fixed");
+			}
+			else {
+				u.rc(page, "fixed");
+			}
+			if(page.cN && page.cN.scene) {
+				if(typeof(page.cN.scene.resized) == "function") {
+					page.cN.scene.resized();
+				}
+			}
+		}
+		page.scrolled = function() {
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
+				page.cN.scene.scrolled();
+			}
+		}
+		page.orientationchanged = function() {
+			if(u.hc(page.bn_nav, "open")) {
+				u.as(page.hN, "height", window.innerHeight + "px");
+			}
+		}
+		page.ready = function() {
+			if(!u.hc(this, "ready")) {
+				u.addClass(this, "ready");
+				u.e.addEvent(window, "resize", page.resized);
+				u.e.addEvent(window, "scroll", page.scrolled);
+				u.e.addEvent(window, "orientationchange", page.orientationchanged);
+				this.initNavigation();
+				this.resized();
+				if(!u.getCookie("terms_v1")) {
+					var terms = u.ie(page.cN, "div", {"class":"terms_notification"});
+					u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
+					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+					bn_accept.terms = terms;
+					u.ce(bn_accept);
+					bn_accept.clicked = function() {
+						this.terms.parentNode.removeChild(this.terms);
+						u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					}
+					if(!location.href.match(/\/terms/)) {
+						var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
+						bn_details.url = "/terms";
+						u.ce(bn_details, {"type":"link"});
+					}
+				}
+			}
+		}
+		page.initNavigation = function() {
+			this.bn_nav = u.qs(".servicenavigation li.navigation", this.hN);
+			u.ae(this.bn_nav, "div");
+			u.ae(this.bn_nav, "div");
+			u.ae(this.bn_nav, "div");
+			u.ce(this.bn_nav);
+			this.bn_nav.clicked = function(event) {
+				if(u.hc(this, "open")) {
+					u.rc(this, "open");
+					u.as(page.hN, "height", "60px");
+					u.as(page.nN, "display", "none");
+				}
+				else {
+					u.ac(this, "open");
+					u.as(page.hN, "height", window.innerHeight + "px");
+					u.as(page.nN, "display", "block");
+				}
+			}
+			var i, node;
+			this.hN.nodes = u.qsa("#navigation li,a.logo", page.hN);
+			for(i = 0; node = this.hN.nodes[i]; i++) {
+				u.ce(node, {"type":"link"});
+				node._mousedover = function() {
+					this.transitioned = function() {
+						this.transitioned = function() {
+							u.a.transition(this, "none");
+						}
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1.15);
+					}
+					u.a.transition(this, "all 0.1s ease-in-out");
+					u.a.scale(this, 1.22);
+				}
+				node._mousedout = function() {
+					this.transitioned = function() {
+						this.transitioned = function() {
+							u.a.transition(this, "none");
+						}
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1);
+					}
+					u.a.transition(this, "all 0.1s ease-in-out");
+					u.a.scale(this, 0.9);
+				}
+				if(u.e.event_pref == "mouse") {
+					u.e.addEvent(node, "mouseover", node._mousedover);
+					u.e.addEvent(node, "mouseout", node._mousedout);
+				}
+				else {
+					u.e.addEvent(node, "touchstart", node._mousedover);
+					u.e.addEvent(node, "touchend", node._mousedout);
+				}
+			}
+		}
+		page.ready();
+	}
+}
+u.e.addDOMReadyEvent(u.init);
+
+
+/*ga.js*/
+u.ga_account = 'UA-49720985-1';
+u.ga_domain = 'parentnode.dk';
+
+
+/*u-googleanalytics.js*/
+if(u.ga_account) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', u.ga_account, u.ga_domain);
+    ga('send', 'pageview');
+	u.stats = new function() {
+		this.pageView = function(url) {
+			ga('send', 'pageview', url);
+		}
+		this.event = function(node, action, label) {
+			ga('_trackEvent', location.href.replace(document.location.protocol + "//" + document.domain, ""), action, (label ? label : this.nodeSnippet(node)));
+		}
+		this.customVar = function(slot, name, value, scope) {
+			//       slot,		
+			//       name,		
+			//       value,	
+			//       scope		
+		}
+		this.nodeSnippet = function(e) {
+			if(e.textContent != undefined) {
+				return u.cutString(e.textContent.trim(), 20) + "(<"+e.nodeName+">)";
+			}
+			else {
+				return u.cutString(e.innerText.trim(), 20) + "(<"+e.nodeName+">)";
 			}
 		}
 	}
 }
 
-/*i-page.js*/
-u.bug_force = true;
-Util.Objects["page"] = new function() {
-	this.init = function(page) {
-		if(u.hc(page, "i:page")) {
-			u.rc(page, "i:page");
-			page.hN = u.qs("#header");
-			page.cN = u.qs("#content");
-			page.nN = u.qs("#navigation");
-			page.fN = u.qs("#footer");
-		}
-	}
-}
-u.e.addDOMReadyEvent(u.init);

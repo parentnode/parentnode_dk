@@ -13,10 +13,8 @@ body {background: #ffffff;}
 #footer p {color: #034769;}
 
 .front #header .logo,
-.segments #navigation ul li.segments a,
-.about #navigation ul li.about a,
-.apis #navigation ul li.apis a,
-.pricing #navigation ul li.pricing a {color: #034769;}
+.manifest #navigation ul li.manifest a,
+.about #navigation ul li.about a {color: #034769;}
 
 
 .terms_notification {background: #ffffff;}

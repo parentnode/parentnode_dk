@@ -79,7 +79,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 .c100 {width: 25%;}
 #page {position: relative; min-height: 100%; min-width: 600px;}
 #page.fixed {width: 1300px; margin: 0 auto;}
-.terms_notification {position: fixed; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border: 1px solid #888888;}
+.terms_notification {position: fixed; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border: 1px solid #888888; border-right: none;}
 .terms_notification h3 {padding: 0; font-size: 13px;}
 .terms_notification .accept,
 .terms_notification .details {padding: 0; font-size: 12px; display: inline-block; vertical-align: bottom; padding: 0 15px 0 0;}
@@ -262,7 +262,9 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 
 /*s-pages-desktop.css*/
 #content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 25px 0; display: block; font-size: 16px;} 
+#content .scene.manifest ul.manifest li {padding: 0 0 25px 25px; display: block; font-size: 16px;
+	font-family: "PT Serif", Times, serif;
+} 
 #content .scene div.vcard {padding: 25px 50px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,

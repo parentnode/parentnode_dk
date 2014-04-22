@@ -1,6 +1,8 @@
 
 #content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 25px 0; display: block; font-size: 16px;} 
+#content .scene.manifest ul.manifest li {padding: 0 0 25px 25px; display: block; font-size: 16px;
+	font-family: "PT Serif", Times, serif;
+} 
 
 #content .scene div.vcard {padding: 25px 50px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}

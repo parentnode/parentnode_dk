@@ -3,7 +3,11 @@
 #header .logo {font-size: 30px; padding: 20px 50px; color: #888888; cursor: pointer; display: inline-block;
 	font-family: "PT Serif", Times, serif;
 }
+
+/* SERVICENAVIGATION */
+#header .servicenavigation {position: absolute; top: 5px; right: 50px;}
 #header .servicenavigation li.navigation {display: none;}
+#header .servicenavigation li.user {display: none;}
 
 
 /* NAViGATION */

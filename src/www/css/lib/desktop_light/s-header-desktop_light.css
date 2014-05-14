@@ -1,6 +1,6 @@
 /* HEADER */
 #header {position: relative; height: 100px;}
-#header .logo {font-size: 30px; padding: 20px 50px 0; color: #888888; cursor: pointer; display: block; width: 200px;
+#header .logo {font-size: 30px; padding: 20px 50px 20px; color: #888888; cursor: pointer; display: block; width: 200px;
 	font-family: "PT Serif", Times, serif;
 }
 #header .servicenavigation li.navigation {display: none;}

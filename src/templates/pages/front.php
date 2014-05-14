@@ -11,18 +11,18 @@
 	</p>
 	<p>
 		Technology should make life easier. Webtechnology should be centered on enabling frontend development,
-		because that is where technology meets people, and at the end of the day - if not for us, the people,
+		because that is where technology meets people, and at the end of the day - if not for us, the users,
 		then for what?
 	</p>
 	<p>
 		A lot of things aren't exactly what they should be and some people use that as an excuse to
 		to accept pretty bad as good enough. They just continue down the same old path, blindly ignoring
-		all warnings in the comfort of old habit and minimal effort. But that is the problem.
+		all warnings in the comfort of old habits and minimal effort. But that is the problem.
 	</p>
 	<p>
 		We are here to shift that balance, by providing new webtechnologies, designed to perform and enable 
 		frontend developers go even further. parentNode is founded on an idealistic dedication to frontend 
-		centered technology. Because it is the only thing that makes sense when it comes to web
+		centered technology, because it is the only approach that makes sense when it comes to web
 		development.
 	</p>
 

@@ -53,7 +53,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 
 #page {position: relative; min-height: 100%;}
 
-.terms_notification {position: absolute; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border: 1px solid #888888;}
+.terms_notification {position: absolute; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border: 1px solid #888888; border-right: none;}
 .terms_notification h3 {padding: 0; font-size: 13px;}
 .terms_notification .accept,
 .terms_notification .details {padding: 0; font-size: 12px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0;}

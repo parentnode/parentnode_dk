@@ -91,13 +91,16 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #header .logo {font-size: 30px; padding: 20px 50px; color: #888888; cursor: pointer; display: inline-block;
 	font-family: "PT Serif", Times, serif;
 }
+#header .servicenavigation {position: absolute; top: 5px; right: 50px;}
 #header .servicenavigation li.navigation {display: none;}
+#header .servicenavigation li.user {display: none;}
 #navigation {position: absolute; right: 50px; top: 75px;}
 #navigation ul {}
 #navigation ul li {padding: 0 0 0 20px; font-size: 20px; color: #888888;
 	font-family: "PT Serif", Times, serif;
 }
 #navigation ul li.front {display: none;}
+
 
 /*s-footer-desktop.css*/
 #footer {text-align: center; border-top: 1px solid #888888; margin: 0 50px;}
@@ -262,7 +265,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 
 /*s-pages-desktop.css*/
 #content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 25px 25px; display: block; font-size: 16px;
+#content .scene.manifest ul.manifest li {padding: 0 0 15px; display: block; font-size: 16px;
 	font-family: "PT Serif", Times, serif;
 } 
 #content .scene div.vcard {padding: 25px 50px;}

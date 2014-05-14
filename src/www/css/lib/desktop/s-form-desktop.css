@@ -30,7 +30,7 @@
 #content .field.checkbox input,
 #content .field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 0 10px 0 3px; border: 0;}
 #content .field.checkbox label,
-#content .field.boolean label {width: auto; display: inline-block; vertical-align: top; display: inline-block; vertical-align: top; font-size: 13px; line-height: 1em;}
+#content .field.boolean label {width: auto; display: inline-block; vertical-align: top; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1em;}
 
 
 /* RADIO */

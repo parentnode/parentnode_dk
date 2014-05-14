@@ -65,15 +65,15 @@ h2 {padding: 0 50px 30px; font-size: 30px; line-height: 1.1em;
 	font-family: "PT Serif", Times, serif;
 }
 h3 {padding: 0 50px 10px; font-size: 20px; line-height: 1.25em;}
-h4 {padding: 0 50px 5px; font-size: 13px; line-height: 1em; font-weight: bold;}
-h5 {padding: 0 50px 2px; font-size: 13px; line-height: 1em; font-weight: bold;}
-h6 {padding: 0 50px 2px; font-size: 13px; line-height: 1em; font-weight: bold;}
-p {padding: 0 50px 20px; font-size: 13px; line-height: 1.38em;} 
+h4 {padding: 0 50px 5px; font-size: 14px; line-height: 1em; font-weight: bold;}
+h5 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
+h6 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
+p {padding: 0 50px 20px; font-size: 14px; line-height: 1.38em;} 
 ul {font-size: 0;}
-li {display: inline; vertical-align: top; font-size: 13px; line-height: 1.25em;}
+li {display: inline; vertical-align: top; font-size: 14px; line-height: 1.25em;}
 dl {font-size: 0;} 
 dt, 
-dd {display: block; font-size: 13px; line-height: 1.25em;}
+dd {display: block; font-size: 14px; line-height: 1.25em;}
 .c {clear: both; font-size: 0; overflow: hidden;}
 .c400, .c300, .c266, .c200, .c150, .c133, .c100, .c75, .c50 {float: left; min-height: 10px; vertical-align: top;}
 .c400 {width: 100%;}
@@ -84,9 +84,9 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 .c100 {width: 25%;}
 #page {position: relative; min-height: 100%;}
 .terms_notification {position: absolute; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border: 1px solid #888888; border-right: none;}
-.terms_notification h3 {padding: 0; font-size: 13px;}
+.terms_notification h3 {padding: 0; font-size: 14px;}
 .terms_notification .accept,
-.terms_notification .details {padding: 0; font-size: 12px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0;}
+.terms_notification .details {padding: 0; font-size: 13px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0;}
 
 
 /*s-header-desktop_light.css*/
@@ -143,7 +143,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
 #content .scene div.image {margin: 0 30px; max-width: 540px; padding: 0 0 30px; cursor: zoom-in;}
 #content .scene div.image img {width: 100%;}
-#content .scene div.image a {padding: 0 20px; font-size: 13px; font-style: italic; display: block; color: #cccccc;}
+#content .scene div.image a {padding: 0 20px; font-size: 14px; font-style: italic; display: block; color: #cccccc;}
 #content .scene div.image.fullsize {margin: 0; max-width: 100%; cursor: zoom-out;}
 #content .scene div.image.fullsize a {padding: 0 50px;}
 #content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px; display: block; white-space: pre-wrap;
@@ -173,7 +173,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene div.vcard {padding: 25px 50px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
-#content .scene div.vcard .email {font-size: 13px;}
+#content .scene div.vcard .email {font-size: 14px;}
 
 /*s-hovers-desktop_light.css*/
 #header .logo:hover,

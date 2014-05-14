@@ -60,15 +60,15 @@ h2 {padding: 0 50px 30px; font-size: 30px; line-height: 1.1em;
 	font-family: "PT Serif", Times, serif;
 }
 h3 {padding: 0 50px 10px; font-size: 20px; line-height: 1.25em;}
-h4 {padding: 0 50px 5px; font-size: 13px; line-height: 1em; font-weight: bold;}
-h5 {padding: 0 50px 2px; font-size: 13px; line-height: 1em; font-weight: bold;}
-h6 {padding: 0 50px 2px; font-size: 13px; line-height: 1em; font-weight: bold;}
-p {padding: 0 50px 20px; font-size: 13px; line-height: 1.38em;} 
+h4 {padding: 0 50px 5px; font-size: 14px; line-height: 1em; font-weight: bold;}
+h5 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
+h6 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
+p {padding: 0 50px 20px; font-size: 14px; line-height: 1.38em;} 
 ul {font-size: 0;}
-li {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
+li {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.25em;}
 dl {font-size: 0;} 
 dt, 
-dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
+dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.25em;}
 .c {clear: both; font-size: 0;}
 .c400, .c300, .c266, .c200, .c150, .c133, .c100, .c75, .c50 {display: inline-block; min-height: 10px; vertical-align: top;}
 .c400 {width: 100%;}
@@ -80,9 +80,9 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #page {position: relative; min-height: 100%; min-width: 600px;}
 #page.fixed {width: 1300px; margin: 0 auto;}
 .terms_notification {position: fixed; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border: 1px solid #888888; border-right: none;}
-.terms_notification h3 {padding: 0; font-size: 13px;}
+.terms_notification h3 {padding: 0; font-size: 14px;}
 .terms_notification .accept,
-.terms_notification .details {padding: 0; font-size: 12px; display: inline-block; vertical-align: bottom; padding: 0 15px 0 0;}
+.terms_notification .details {padding: 0; font-size: 13px; display: inline-block; vertical-align: bottom; padding: 0 15px 0 0;}
 .terms_notification .details {}
 
 
@@ -143,7 +143,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
 #content .scene div.image {margin: 0 30px; max-width: 540px; padding: 0 0 30px; cursor: zoom-in;}
 #content .scene div.image img {width: 100%;}
-#content .scene div.image a {padding: 0 20px; font-size: 13px; font-style: italic; display: block; color: #cccccc;}
+#content .scene div.image a {padding: 0 20px; font-size: 14px; font-style: italic; display: block; color: #cccccc;}
 #content .scene div.image.fullsize {margin: 0; max-width: 100%; cursor: zoom-out;}
 #content .scene div.image.fullsize a {padding: 0 50px;}
 #content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px; display: inline-block; white-space: pre-wrap;
@@ -186,7 +186,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .field.checkbox input,
 #content .field.boolean input {display: inline-block; vertical-align: top; width: auto; height: auto; padding: 0; margin: 0 10px 0 3px; border: 0;}
 #content .field.checkbox label,
-#content .field.boolean label {width: auto; display: inline-block; vertical-align: top; display: inline-block; vertical-align: top; font-size: 13px; line-height: 1em;}
+#content .field.boolean label {width: auto; display: inline-block; vertical-align: top; display: inline-block; vertical-align: top; font-size: 14px; line-height: 1em;}
 #content .field.radio_buttons {}
 #content .field.radio_buttons div.item {display: inline-block; vertical-align: top;}
 #content .field.radio_buttons div.item input {width: auto; height: auto; padding: 0; margin: 9px 10px 0 0; border: 0;}
@@ -271,7 +271,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene div.vcard {padding: 25px 50px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
-#content .scene div.vcard .email {font-size: 13px;}
+#content .scene div.vcard .email {font-size: 14px;}
 
 /*s-hovers-desktop.css*/
 #header .logo:hover,

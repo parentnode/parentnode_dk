@@ -2779,7 +2779,7 @@ Util.appendElement = u.ae = function(parent, node_type, attributes) {
 			var attribute;
 			for(attribute in attributes) {
 				if(attribute == "html") {
-					node.innerHTML = attributes[attribute]
+					node.innerHTML = attributes[attribute];
 				}
 				else {
 					node.setAttribute(attribute, attributes[attribute]);

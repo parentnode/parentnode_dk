@@ -10,7 +10,7 @@ Util.Objects["page"] = new function() {
 			page.hN.service = u.qs(".servicenavigation", page.hN);
 
 			// add logo to navigation
-			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":"parentNode"});
+			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
 			page.logo.url = '/';
 
 			// content reference
@@ -128,13 +128,17 @@ Util.Objects["page"] = new function() {
 					// build first living proof model of CEL clickableElementLink
 					u.ce(node, {"type":"link"});
 
-
 					node._mousedover = function() {
 
 						this.transitioned = function() {
 
 							this.transitioned = function() {
-								u.a.transition(this, "none");
+								this.transitioned = function() {
+									u.a.transition(this, "none");
+								}
+
+								u.a.transition(this, "all 0.1s ease-in-out");
+								u.a.scale(this, 1.2);
 							}
 
 							u.a.transition(this, "all 0.1s ease-in-out");
@@ -152,12 +156,12 @@ Util.Objects["page"] = new function() {
 								u.a.transition(this, "none");
 							}
 
-							u.a.transition(this, "all 0.1s ease-in-out");
+							u.a.transition(this, "all 0.1s ease-in");
 							u.a.scale(this, 1);
 						}
 
-						u.a.transition(this, "all 0.1s ease-in-out");
-						u.a.scale(this, 0.9);
+						u.a.transition(this, "all 0.1s ease-in");
+						u.a.scale(this, 0.8);
 					}
 
 					// enable mouseover if mouse events are available

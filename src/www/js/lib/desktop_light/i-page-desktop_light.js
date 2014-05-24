@@ -8,7 +8,7 @@ Util.Objects["page"] = new function() {
 		page.hN.service = u.qs(".servicenavigation", page.hN);
 
 		// add logo to navigation
-		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":"parentNode"});
+		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
 		u.ce(page.logo);
 		page.logo.clicked = function(event) {
 			location.href = '/';
@@ -42,7 +42,7 @@ Util.Objects["page"] = new function() {
 			if(!u.hc(this, "ready")) {
 
 				// page is ready
-				u.addClass(this, "ready");
+				u.ac(this, "ready");
 
 				// show terms notification
 				if(!u.getCookie("terms_v1")) {
@@ -57,11 +57,8 @@ Util.Objects["page"] = new function() {
 					}
 
 					if(!location.href.match(/\/terms/)) {
-						var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
+						var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
 						u.ce(bn_details, {"type":"link"});
-						bn_details.clicked = function() {
-							location.href = "/terms";
-						}
 					}
 				}
 			}

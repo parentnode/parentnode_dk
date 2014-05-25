@@ -10,7 +10,7 @@ Util.Objects["page"] = new function() {
 		u.e.drag(page.hN, page.hN);
 
 		// add logo to navigation
-		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":"parentNode"});
+		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
 		page.logo.url = '/';
 
 		// content reference
@@ -144,8 +144,13 @@ Util.Objects["page"] = new function() {
 					u.ac(this, "open");
 					u.as(page.hN, "height", window.innerHeight + "px");
 					u.as(page.nN, "display", "block");
+
+					page.nN.start_drag_y = (window.innerHeight - 100) - page.nN.offsetHeight;
+					page.nN.end_drag_y = page.nN.offsetHeight;
 				}
 			}
+
+			u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
 
 
 			var i, node;

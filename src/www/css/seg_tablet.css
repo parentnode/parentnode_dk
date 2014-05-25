@@ -129,7 +129,7 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene li h3,
 #content .scene li p,
 #content .scene li dl {padding-left: 0; padding-right: 0;}
-#content .scene dl {padding: 0 50px 15px; overflow: hidden; width: 500px;}
+#content .scene dl {padding: 0 50px 15px; width: 500px;}
 #content .scene dt {width: 100px; text-align: right; padding: 0 5px 0 0; color: #999999;} 
 #content .scene dt:after {content: ":";}
 #content .scene dd {padding: 0 0 12px; width: 395px;}
@@ -146,8 +146,12 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene div.image a {padding: 0 20px; font-size: 14px; font-style: italic; display: block; color: #cccccc;}
 #content .scene div.image.fullsize {margin: 0; max-width: 100%; cursor: zoom-out;}
 #content .scene div.image.fullsize a {padding: 0 50px;}
-#content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px; display: inline-block; white-space: pre-wrap;
+#content .scene code {padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px;
+	display: block; overflow: auto; white-space: pre;
 	font-family: "Monaco", "Courier New", "Courier";
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
 }
 #content .scene span.type,
 #content .scene span.var,
@@ -179,7 +183,8 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 }
 @media all and (-webkit-min-device-pixel-ratio:0) {#content .field.focus select {}}
 #content .field select option {padding: 5px 3px 2px 6px;}
-#content .field textarea {width: 372px; height: 100px; overflow: auto; padding: 6px 0 2px 6px; }
+#content .field textarea {width: 372px; height: 100px; overflow: auto; padding: 6px 0 2px 6px;}
+#content .field.short textarea {height: 50px;}
 #content .field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
 #content .field.checkbox,
 #content .field.boolean {}
@@ -192,6 +197,9 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .field.radio_buttons div.item input {width: auto; height: auto; padding: 0; margin: 9px 10px 0 0; border: 0;}
 #content .field.radio_buttons label {}
 #content .field.radio_buttons div.item label {text-align: left; width: auto; padding-right: 20px; padding-left: 0;}
+#content .field input[type="number"] {
+	-moz-appearance: textfield;
+}
 #content .field input[type="number"]::-webkit-inner-spin-button,
 #content .field input[type="number"]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
@@ -263,6 +271,12 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .field.focus div.hint {display: block;}
 
 
+/*s-active-tablet.css*/
+#header .logo:active,
+#navigation ul li:active {text-decoration: none;}
+#content .scene a:active {text-decoration: underline;}
+
+
 /*s-pages-desktop.css*/
 #content .scene.manifest ul.manifest {padding-top: 25px;}
 #content .scene.manifest ul.manifest li {padding: 0 0 15px; display: block; font-size: 16px;
@@ -272,12 +286,6 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
 #content .scene div.vcard .email {font-size: 14px;}
-
-/*s-active-tablet.css*/
-#header .logo:active,
-#navigation ul li:active {text-decoration: none;}
-#content .scene a:active {text-decoration: underline;}
-
 
 /*s-colorscheme-desktop.css*/
 * {color: #034769;}
@@ -296,4 +304,5 @@ body {background: #ffffff;}
 .terms_notification .accept,
 .terms_notification .details {color: #63add0;}
 .terms_notification {border-color: #034769;}
+
 

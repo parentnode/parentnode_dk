@@ -54,9 +54,7 @@
 
 
 /* CODE AND TYPECASTING */
-#content .scene code {padding: 10px 10px; margin: 0 20px 5px; position: relative; top: -13px; background-color: #ededed; font-size: 11px; display: block; 
-	overflow: hidden;
-	white-space: pre-wrap;
+#content .scene code {padding: 10px 10px; margin: 0 20px 5px; position: relative; top: -13px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
 }
 #content .scene span.type,

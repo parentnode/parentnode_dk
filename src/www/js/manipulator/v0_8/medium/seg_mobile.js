@@ -1,6 +1,6 @@
 /*
 Manipulator v0.8-medium Copyright 2014 http://manipulator.parentnode.dk
-wtf-js-merged @ 2014-05-20 01:37:31
+wtf-js-merged @ 2014-05-26 12:18:48
 */
 
 /*seg_mobile_include.js*/
@@ -666,7 +666,7 @@ Util.hasFixedParent = u.hfp = function(node) {
 
 /*u-events.js*/
 Util.Events = u.e = new function() {
-	this.event_pref = typeof(document.ontouchmove) == "undefined" ? "mouse" : "touch";
+	this.event_pref = typeof(document.ontouchmove) == "undefined" || navigator.maxTouchPoints > 1 ? "mouse" : "touch";
 	this.kill = function(event) {
 		if(event) {
 			event.preventDefault();
@@ -718,8 +718,9 @@ Util.Events = u.e = new function() {
 		u.t.resetTimer(node.t_clicked);
 		this.removeEvent(node, "mouseup", this._dblclicked);
 		this.removeEvent(node, "touchend", this._dblclicked);
-		this.removeEvent(node, "mousemove", this._clickCancel);
-		this.removeEvent(node, "touchmove", this._clickCancel);
+		this.removeEvent(node, "mousemove", this._cancelClick);
+		this.removeEvent(node, "touchmove", this._cancelClick);
+		this.removeEvent(node, "mouseout", this._cancelClick);
 		this.removeEvent(node, "mousemove", this._move);
 		this.removeEvent(node, "touchmove", this._move);
 	}
@@ -1950,8 +1951,10 @@ u.f.addAction = function(node, settings) {
 /*u-geometry.js*/
 Util.absoluteX = u.absX = function(node) {
 	if(node.offsetParent) {
+		u.bug("node.offsetParent, node.offsetLeft + u.absX(node.offsetParent):" + node.offsetLeft + ", " + u.nodeId(node.offsetParent))
 		return node.offsetLeft + u.absX(node.offsetParent);
 	}
+	u.bug("node.offsetLeft:" + node.offsetLeft)
 	return node.offsetLeft;
 }
 Util.absoluteY = u.absY = function(node) {
@@ -2305,8 +2308,11 @@ Util.stringOr = u.eitherOr = function(value, replacement) {
 Util.browser = function(model, version) {
 	var current_version = false;
 	if(model.match(/\bexplorer\b|\bie\b/i)) {
-		if(window.ActiveXObject) {
+		if(window.ActiveXObject && navigator.userAgent.match(/(MSIE )(\d+.\d)/i)) {
 			current_version = navigator.userAgent.match(/(MSIE )(\d+.\d)/i)[2];
+		}
+		else if(navigator.userAgent.match(/Trident\/[\d+]\.\d[^$]+rv:(\d+.\d)/i)) {
+			current_version = navigator.userAgent.match(/Trident\/[\d+]\.\d[^$]+rv:(\d+.\d)/i)[1];
 		}
 	}
 	else if(model.match(/\bfirefox\b|\bgecko\b/i)) {
@@ -2335,7 +2341,7 @@ Util.browser = function(model, version) {
 				current_version = navigator.userAgent.match(/(Version\/)(\d+)(.\d)/i)[2];
 			}
 			else {
-				current_version = navigator.userAgent.match(/(Opera\/)(\d+)(.\d)/i)[2];
+				current_version = navigator.userAgent.match(/(Opera[\/ ]{1})(\d+)(.\d)/i)[2];
 			}
 		}
 	}
@@ -4091,7 +4097,7 @@ if(document.all) {
 /*u-geometry-desktop_light.js*/
 Util.actualWidth = u.actualW = function(node) {
 	var width = parseInt(u.gcs(node, "width"));
-	if(isNaN(width)) {
+	if(isNaN(width) || u.browser("opera", "<=9")) {
 		return node.offsetWidth - parseInt(u.gcs(node, "padding-left")) - parseInt(u.gcs(node, "padding-right"));
 	}
 	else {
@@ -4100,7 +4106,7 @@ Util.actualWidth = u.actualW = function(node) {
 }
 Util.actualHeight = u.actualH = function(node) {
 	var height = parseInt(u.gcs(node, "height"));
-	if(isNaN(height)) {
+	if(isNaN(height) || u.browser("opera", "<=9")) {
 		return node.offsetHeight - parseInt(u.gcs(node, "padding-top")) - parseInt(u.gcs(node, "padding-bottom"));
 	}
 	else {
@@ -4136,8 +4142,8 @@ Util.eventY = function(event){
 	}
 }
 Util.pageScrollX = u.scrollX = function() {
-	if(window.pageYOffset != undefined) {
-		return window.pageYOffset;
+	if(window.pageXOffset != undefined) {
+		return window.pageXOffset;
 	}
 	else if(document.documentElement.scrollLeft != undefined) {
 		return document.documentElement.scrollLeft;

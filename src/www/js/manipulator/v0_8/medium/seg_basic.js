@@ -1,6 +1,6 @@
 /*
 Manipulator v0.8-medium Copyright 2014 http://manipulator.parentnode.dk
-wtf-js-merged @ 2014-05-20 01:37:31
+wtf-js-merged @ 2014-05-26 12:18:48
 */
 
 /*seg_basic_include.js*/

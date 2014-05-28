@@ -1,6 +1,6 @@
 /*
 Manipulator v0.8-medium Copyright 2014 http://manipulator.parentnode.dk
-wtf-js-merged @ 2014-05-26 12:18:48
+wtf-js-merged @ 2014-05-28 09:29:23
 */
 
 /*seg_mobile_light_include.js*/
@@ -1413,12 +1413,9 @@ Util.Form = u.f = new function() {
 	}
 	this.autoExpand = function(iN) {
 		var current_height = parseInt(u.gcs(iN, "height"));
-		u.bug("AE:" + current_height + "," + iN.scrollHeight);
 		var current_value = iN.val();
 		iN.val("");
-		u.bug(current_height + "," + iN.scrollHeight);
 		u.as(iN, "overflow", "hidden");
-		u.bug(current_height + "," + iN.scrollHeight);
 		iN.autoexpand_offset = 0;
 		if(parseInt(u.gcs(iN, "height")) != iN.scrollHeight) {
 			iN.autoexpand_offset = iN.scrollHeight - parseInt(u.gcs(iN, "height"));
@@ -1428,7 +1425,7 @@ Util.Form = u.f = new function() {
 			u.bug("iN.setHeight:" + u.nodeId(this));
 			var textarea_height = parseInt(u.gcs(this, "height"));
 			if(this.val()) {
-				if(u.browser("webkit")) {
+				if(u.browser("webkit") || u.browser("firefox", ">=29")) {
 					if(this.scrollHeight - this.autoexpand_offset > textarea_height) {
 						u.a.setHeight(this, this.scrollHeight);
 					}

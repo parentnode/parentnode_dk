@@ -29,28 +29,28 @@
 	<h2>Our current projects</h2>
 	<ul class="projects">
 		<li class="detector">
-			<h3><a href="http://detector.parentnode.dk">Detector</a></h3>
+			<h3><a href="http://detector.parentnode.dk" target="_blank">Detector</a></h3>
 			<p>
 				Detector is your one-stop solution to supporting all HTML capable devices on earth and 
 				lowering your development complexity at the same time. 
 			</p>
 		</li>
 		<li class="manipulator">
-			<h3><a href="http://manipulator.parentnode.dk">Manipulator</a></h3>
+			<h3><a href="http://manipulator.parentnode.dk" target="_blank">Manipulator</a></h3>
 			<p>
 				Manipulator is an extremely flexible, performance optimized JavaScript library with a 
 				slightly neurotic focus on details.
 			</p>
 		</li>
 		<li class="modulator">
-			<h3><a href="http://modulator.parentnode.dk">Modulator</a></h3>
+			<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
 			<p>
 				Modulator is a SEO optimized Markup model for web development, that allows for a complete seperation
 				of content, design and functionality.
 			</p>
 		</li>
 		<li class="janitor">
-			<h3><a href="http://janitor.parentnode.dk">Janitor</a></h3>
+			<h3><a href="http://janitor.parentnode.dk" target="_blank">Janitor</a></h3>
 			<p>
 				Janitor is a content management framework, designed to build custom content managements systems, 
 				not to be one on its own.

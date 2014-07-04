@@ -7,10 +7,10 @@
 	<p>
 		Without HTML and frontend development the Internet would be a lot less interesting. The visual user 
 		interface is the primary reason for webdevelopment, today more than ever. It is in the nature of the Internet to 
-		facilitate interaction bewteen clients and servers, businesses and customers or even nations and citizens.
+		facilitate interaction between clients and servers, businesses and customers or even nations and citizens.
 	</p>
 	<p>
-		Technology should make life easier. Webtechnology should be centered on enabling frontend development,
+		Technology should make life easier. Web technology should be centered on enabling frontend development,
 		because that is where technology meets people, and at the end of the day - if not for us, the users,
 		then for what?
 	</p>
@@ -20,7 +20,7 @@
 		all warnings in the comfort of old habits and minimal effort. But that is the problem.
 	</p>
 	<p>
-		We are here to shift that balance, by providing new webtechnologies, designed to perform and enable 
+		We are here to shift that balance, by providing new web technologies, designed to perform and enable 
 		frontend developers go even further. parentNode is founded on an idealistic dedication to frontend 
 		centered technology, because it is the only approach that makes sense when it comes to web
 		development.
@@ -45,7 +45,7 @@
 		<li class="modulator">
 			<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
 			<p>
-				Modulator is a SEO optimized Markup model for web development, that allows for a complete seperation
+				Modulator is a SEO optimized Markup model for web development, that allows for a complete separation
 				of content, design and functionality.
 			</p>
 		</li>

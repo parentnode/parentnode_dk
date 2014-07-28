@@ -25,6 +25,8 @@
 /* LISTS */
 #content .scene ul {padding: 0 50px 15px;}
 #content .scene li {display: block; padding: 0 0 5px;}
+#content .scene li h1,
+#content .scene li h2,
 #content .scene li h3,
 #content .scene li p,
 #content .scene li dl {padding-left: 0; padding-right: 0;}
@@ -45,11 +47,19 @@
 
 
 /* INLINE IMAGE */
-#content .scene div.image {margin: 0 30px; max-width: 540px; padding: 0 0 30px; cursor: zoom-in;}
-#content .scene div.image img {width: 100%;}
-#content .scene div.image a {padding: 0 20px; font-size: 14px; font-style: italic; display: block; color: #cccccc;}
-#content .scene div.image.fullsize {margin: 0; max-width: 100%; cursor: zoom-out;}
-#content .scene div.image.fullsize a {padding: 0 50px;}
+#content .scene div.image {display: none;}
+
+
+#content .scene .pagination {margin: 0 50px 30px; padding: 20px 0; border-top: 1px solid #dedede; border-bottom: 1px solid #dedede;}
+#content .scene .pagination ul {padding: 0; overflow: hidden;}
+#content .scene .pagination .next,
+#content .scene .pagination .previous {text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; background-color: #63ADD0; color: #ffffff; border: none; cursor: pointer; border-radius: 3px; font-size: 14px;}
+#content .scene .pagination .previous {float: left;}
+
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {color: #ffffff;}
+#content .scene .pagination .next:hover,
+#content .scene .pagination .previous:hover {background-color: #034769;}
 
 
 /* CODE AND TYPECASTING */

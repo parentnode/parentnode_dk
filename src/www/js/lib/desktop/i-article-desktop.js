@@ -1,6 +1,7 @@
 Util.Objects["articlelist"] = new function() {
 	this.init = function(list) {
 
+		list.popstate = ("onpopstate" in window);
 
 		list.items = u.qsa(".item", list);
 
@@ -8,6 +9,7 @@ Util.Objects["articlelist"] = new function() {
 
 			var scroll_y = u.scrollY()
 			var browser_h = u.browserH();
+			var screen_middle = browser_h/2;
 
 			var i, node, node_y, list_y;
 			list_y = u.absY(this);
@@ -31,6 +33,14 @@ Util.Objects["articlelist"] = new function() {
 //					u.bug("init node:" + u.nodeId(node));
 					u.o.article.init(node);
 					node._ready = true;
+				}
+				
+				if(this.popstate && node._ready && node.hardlink) {
+					if(node_y <= scroll_y + screen_middle && node_y + node.offsetHeight > scroll_y + screen_middle) {
+						history.replaceState({}, node.hardlink, node.hardlink);
+//						u.bug("current url: " + node.hardlink)
+					}
+					
 				}
 
 			}
@@ -126,6 +136,12 @@ Util.Objects["articlelist"] = new function() {
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
 //		u.bug("article init:" + u.nodeId(article))
+
+		// look for a hardlink for this article
+		var hardlink = u.qs("dd.hardlink a", article);
+		article.hardlink = hardlink ? hardlink.href : false;
+
+//		u.bug("article.hardlink:" + article.hardlink)
 
 		// INIT IMAGES
 		var i, image;

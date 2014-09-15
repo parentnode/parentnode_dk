@@ -122,10 +122,15 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene p.note {font-style: italic;}
 #content .scene p+h2,
 #content .scene ul+h2,
+#content .scene ul+.pagination+h2,
 #content .scene dl+h2,
 #content .scene code+h2 {padding-top: 20px;}
+#content .scene ul.tags+h2 {padding-top: 0;}
+#content .scene h4+code {top: 0;}
 #content .scene ul {padding: 0 50px 15px;}
 #content .scene li {display: block; padding: 0 0 5px;}
+#content .scene li h1,
+#content .scene li h2,
 #content .scene li h3,
 #content .scene li p,
 #content .scene li dl {padding-left: 0; padding-right: 0;}
@@ -141,13 +146,35 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene dl h4,
 #content .scene dl h5,
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
+#content .scene li ul.tags {padding-left: 0;}
+#content .scene li ul.tags li {font-size: 12px; display: inline-block;}
+#content .scene li ul.tags li:after {content: "\00a0|\00a0"; color: #dedede;}
+#content .scene li ul.tags li:last-child:after {content: "";}
+#content .scene dl.info {padding-bottom: 20px; display: inline-block; width: auto;}
+#content .scene dl.info dt {display: none;}
+#content .scene dl.info dd {padding-right: 0; width: auto; font-size: 12px; color: #999999;}
+#content .scene dl.info dd.author,
+#content .scene dl.info dd.hardlink {display: none;}
+#content .scene dl.geo {padding-bottom: 20px; display: inline-block; width: auto;}
+#content .scene dl.geo .location:before {content: "|\00a0"; color: #dedede;}
+#content .scene dl.geo dd {padding-right: 0; width: auto; font-size: 12px; color: #999999;}
+#content .scene li dl.geo dt {display: none;}
+#content .scene li dl.geo .latitude,
+#content .scene li dl.geo .longitude {display: none;}
+#content .scene li dl.geo.active {cursor: pointer;}
+#content .scene li div.geomap {height: 300px; width: 500px; margin-bottom: 20px;}
+#content .scene li div.geomap iframe {display: block; width: 100%; height: 100%; border: 1px solid #666666; background-color: #ffffff;}
 #content .scene div.image {margin: 0 30px; max-width: 540px; padding: 0 0 30px; cursor: zoom-in;}
 #content .scene div.image img {width: 100%;}
 #content .scene div.image a {padding: 0 20px; font-size: 14px; font-style: italic; display: block; color: #cccccc;}
 #content .scene div.image.fullsize {margin: 0; max-width: 100%; cursor: zoom-out;}
 #content .scene div.image.fullsize a {padding: 0 50px;}
-#content .scene code {padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px;
-	display: block; overflow: auto; white-space: pre;
+#content .scene li div.image {margin: 0; max-width: 500px; padding: 0 0 30px; cursor: zoom-in;}
+#content .scene li div.image.fullsize {margin: 0; max-width: 100%; cursor: zoom-out;}
+#content .scene .pagination {display: none;}
+#content .scene ul.postings {padding-bottom: 0;}
+#content .scene ul.postings li.post {padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
+#content .scene code {padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px; display: block; overflow: auto; white-space: pre;
 	font-family: "Monaco", "Courier New", "Courier";
 	-moz-tab-size: 4;
 	-o-tab-size: 4;
@@ -159,7 +186,7 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene span.file,
 #content .scene span.htmltag,
 #content .scene span.command {
-	font-family: "Monaco", "Courier New", "Courier"; font-size: 12px;
+	font-family: "Monaco", "Courier New", "Courier"; font-size: 0.8em;
 }
 #content .scene span.type {color: #a67800;}
 #content .scene span.var {color: #007633;}
@@ -287,6 +314,8 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
 #content .scene div.vcard .email {font-size: 14px;}
+#content .scene div.categories {padding-bottom: 20px;}
+
 
 /*s-colorscheme-desktop.css*/
 * {color: #034769;}
@@ -300,6 +329,7 @@ body {background: #ffffff;}
 #footer p {color: #034769;}
 .front #header .logo,
 .manifest #navigation ul li.manifest,
+.blog #navigation ul li.blog,
 .about #navigation ul li.about {color: #034769;}
 .terms_notification {background: #ffffff;}
 .terms_notification .accept,

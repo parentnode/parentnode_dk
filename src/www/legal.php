@@ -13,8 +13,11 @@ $action = $page->actions();
 $page->bodyClass("front");
 $page->pageTitle("Legal notice");
 
-$page->header();
-$page->template("pages/legal.php");
-$page->footer();
+
+$page->page(array(
+	"templates" => "pages/legal.php"
+	)
+);
+exit();
 
 ?>

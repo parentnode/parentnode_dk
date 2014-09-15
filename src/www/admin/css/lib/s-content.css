@@ -1,0 +1,23 @@
+
+/* WISHLIST */
+#content .wishList ul.items > li {min-height: 100px; padding-left: 160px;}
+#content .wishList ul.items > li dl {display: block; padding: 5px 30px;}
+#content .wishList ul.items > li dl dt.reserved {display: none;}
+#content .wishList ul.items > li dl dd.reserved {font-size: 14px;}
+
+
+/* LOG */
+#content .logList ul.items > li {min-height: 100px; padding-left: 160px;}
+
+/* POST */
+#content .postList ul.items > li {min-height: 100px; padding-left: 160px;}
+
+
+
+/* NAVIGATION */
+body.wish #navigation .wish a,
+body.wishlist #navigation .wishlist a,
+body.todo #navigation .todo a,
+body.todolist #navigation .todolist a,
+body.log #navigation .log a {padding-left: 35px; color: #ffffff;}
+

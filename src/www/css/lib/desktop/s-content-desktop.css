@@ -18,10 +18,13 @@
 /* ADDITIONAL H2 PADDING IN CERTAIN CASES */
 #content .scene p+h2,
 #content .scene ul+h2,
+#content .scene ul+.pagination+h2,
 #content .scene dl+h2,
 #content .scene code+h2 {padding-top: 20px;}
 
 #content .scene ul.tags+h2 {padding-top: 0;}
+
+#content .scene h4+code {top: 0;}
 
 
 /* LISTS */
@@ -59,13 +62,17 @@
 /* INFO */
 #content .scene dl.info {padding-bottom: 20px; display: inline-block; width: auto;}
 #content .scene dl.info dt {display: none;}
-#content .scene dl.info dd {padding-right: 0;}
-#content .scene dl.info dd.author {display: none;}
-#content .scene li dl.info {padding-bottom: 0;}
+#content .scene dl.info dd {padding-right: 0; width: auto; font-size: 12px; color: #999999;}
+#content .scene dl.info dd.author,
+#content .scene dl.info dd.hardlink {display: none;}
+
+
+/*#content .scene li dl.info {padding-bottom: 0;}*/
 
 /* GEOLOCATION */
 #content .scene dl.geo {padding-bottom: 20px; display: inline-block; width: auto;}
 #content .scene dl.geo .location:before {content: "|\00a0"; color: #dedede;}
+#content .scene dl.geo dd {padding-right: 0; width: auto; font-size: 12px; color: #999999;}
 #content .scene li dl.geo dt {display: none;}
 #content .scene li dl.geo .latitude,
 #content .scene li dl.geo .longitude {display: none;}
@@ -89,6 +96,12 @@
 
 /* PAGINATION */
 #content .scene .pagination {display: none;}
+
+
+/* POSTS */
+#content .scene ul.postings {padding-bottom: 0;}
+#content .scene ul.postings li.post {padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
+
 
 
 /* CODE AND TYPECASTING */

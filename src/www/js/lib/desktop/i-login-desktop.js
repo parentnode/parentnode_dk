@@ -33,5 +33,3 @@ Util.Objects["login"] = new function() {
 	}
 
 }
-
-u.e.addDOMReadyEvent(u.init);

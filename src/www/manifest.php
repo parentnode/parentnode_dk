@@ -13,9 +13,10 @@ $page->bodyClass("manifest");
 $page->pageTitle("Development manifest");
 
 
-$page->header();
-$page->template("pages/manifest.php");
-$page->footer();
+$page->page(array(
+	"templates" => "pages/manifest.php"
+	)
+);
 exit();
 
 ?>

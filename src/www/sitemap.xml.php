@@ -5,6 +5,7 @@ if(isset($read_access) && $read_access) {
 }
 
 include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
+
 print '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 
@@ -22,9 +23,15 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 		<priority>1</priority>
 	</url>
 	<url>
-		<loc>http://parentnode.dk/terms</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/terms.php")) ?></lastmod>
+		<loc>http://parentnode.dk/about</loc>
+		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/about.php")) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
+	</url>
+	<url>
+		<loc>http://parentnode.dk/terms</loc>
+		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/terms.php")) ?></lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>0.5</priority>
 	</url>
 </urlset>

@@ -11,10 +11,13 @@ $action = $page->actions();
 
 
 $page->bodyClass("front");
-$page->pageTitle("Above it all");
+$page->pageTitle("You have to start somewhere");
 
-$page->header();
-$page->template("pages/front.php");
-$page->footer();
+
+$page->page(array(
+	"templates" => "pages/front.php"
+	)
+);
+exit();
 
 ?>

@@ -22,6 +22,7 @@ body {background: #ffffff;}
 
 .front #header .logo,
 .manifest #navigation ul li.manifest,
+.blog #navigation ul li.blog,
 .about #navigation ul li.about {color: #034769;}
 
 

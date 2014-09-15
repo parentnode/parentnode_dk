@@ -35,7 +35,7 @@
 /* DEFINITION LIST */
 #content .scene dl {padding: 0 20px 15px; overflow: hidden;}
 #content .scene dt {padding: 0 0 2px 0; color: #999999;} 
-#content .scene dt:after {content: "=";}
+/*#content .scene dt:after {content: "=";}*/
 #content .scene dd {padding: 0 0 12px 20px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px;}

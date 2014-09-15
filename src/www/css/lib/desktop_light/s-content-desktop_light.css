@@ -50,6 +50,25 @@
 #content .scene div.image {display: none;}
 
 
+/* TAGS */
+#content .scene li ul.tags {padding-left: 0;}
+#content .scene li ul.tags li {font-size: 12px;}
+
+/* INFO */
+#content .scene dl.info {padding-bottom: 20px;}
+#content .scene dl.info dt {display: none;}
+#content .scene dl.info dd {padding-right: 0;}
+#content .scene dl.info dd.author {display: none;}
+#content .scene li dl.info {padding-bottom: 0;}
+
+/* GEOLOCATION */
+#content .scene dl.geo {padding-bottom: 20px;}
+#content .scene li dl.geo dt {display: none;}
+#content .scene li dl.geo .latitude,
+#content .scene li dl.geo .longitude {display: none;}
+
+
+
 #content .scene .pagination {margin: 0 50px 30px; padding: 20px 0; border-top: 1px solid #dedede; border-bottom: 1px solid #dedede;}
 #content .scene .pagination ul {padding: 0; overflow: hidden;}
 #content .scene .pagination .next,

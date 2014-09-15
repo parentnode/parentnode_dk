@@ -16,12 +16,12 @@
 	</p>
 	<p>
 		A lot of things aren't exactly what they should be and some people use that as an excuse to
-		to accept pretty bad as good enough. They just continue down the same old path, blindly ignoring
+		accept pretty bad as good enough. They just continue down the same old path, blindly ignoring
 		all warnings in the comfort of old habits and minimal effort. But that is the problem.
 	</p>
 	<p>
 		We are here to shift that balance, by providing new web technologies, designed to perform and enable 
-		frontend developers go even further. parentNode is founded on an idealistic dedication to frontend 
+		frontend developers to go even further. parentNode is founded on an idealistic dedication to frontend 
 		centered technology, because it is the only approach that makes sense when it comes to web
 		development.
 	</p>

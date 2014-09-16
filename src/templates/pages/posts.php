@@ -43,11 +43,12 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 	<ul class="postings i:articlelist">
 <?		foreach($pagination["range_items"] as $item):
 			$item = $IC->extendItem($item, array("tags" => true));
-			$hardlink = (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]."/blog/".$item["sindex"]; ?>
+			$hardlink = (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]."/blog/".$item["sindex"];
+			$media = $item["mediae"] ? array_shift($item["mediae"]) : false; ?>
 		<li class="item post id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
-<?			if($item["mediae"]): ?>
-			<div class="image image_id:<?= $item["item_id"] ?> format:<?= $item["mediae"][0]["format"] ?> variant:<?= $item["mediae"][0]["variant"] ?>"></div>
+<?			if($media): ?>
+			<div class="image image_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 <?			endif; ?>
 
 			<ul class="tags">

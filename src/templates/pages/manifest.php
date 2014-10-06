@@ -29,7 +29,7 @@
 			<li>Concentrate, focus and think outside your box</li>
 			<li>Get lost in details</li>
 			<li>Restructure, refine, reimplement</li>
-			<li>Gain experience through insane failures</li>
+			<li>Gain experience through insane experiments</li>
 			<li>Share everything</li>
 			<li>Feel free to curse</li>
 			<li>Do it anyway</li>

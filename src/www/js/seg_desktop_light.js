@@ -4337,6 +4337,44 @@ if(String.prototype.substr == undefined || "ABC".substr(-1,1) == "A") {
 }
 
 
+/*ga.js*/
+u.ga_account = 'UA-49720985-1';
+u.ga_domain = 'parentnode.dk';
+
+
+/*u-googleanalytics.js*/
+if(u.ga_account) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', u.ga_account, u.ga_domain);
+    ga('send', 'pageview');
+	u.stats = new function() {
+		this.pageView = function(url) {
+			ga('send', 'pageview', url);
+		}
+		this.event = function(node, action, label) {
+			ga('_trackEvent', location.href.replace(document.location.protocol + "//" + document.domain, ""), action, (label ? label : this.nodeSnippet(node)));
+		}
+		this.customVar = function(slot, name, value, scope) {
+			//       slot,		
+			//       name,		
+			//       value,	
+			//       scope		
+		}
+		this.nodeSnippet = function(e) {
+			if(e.textContent != undefined) {
+				return u.cutString(e.textContent.trim(), 20) + "(<"+e.nodeName+">)";
+			}
+			else {
+				return u.cutString(e.innerText.trim(), 20) + "(<"+e.nodeName+">)";
+			}
+		}
+	}
+}
+
+
 /*i-page-desktop_light.js*/
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
@@ -4383,42 +4421,4 @@ Util.Objects["page"] = new function() {
 	}
 }
 window.onload = u.init;
-
-
-/*ga.js*/
-u.ga_account = 'UA-49720985-1';
-u.ga_domain = 'parentnode.dk';
-
-
-/*u-googleanalytics.js*/
-if(u.ga_account) {
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', u.ga_account, u.ga_domain);
-    ga('send', 'pageview');
-	u.stats = new function() {
-		this.pageView = function(url) {
-			ga('send', 'pageview', url);
-		}
-		this.event = function(node, action, label) {
-			ga('_trackEvent', location.href.replace(document.location.protocol + "//" + document.domain, ""), action, (label ? label : this.nodeSnippet(node)));
-		}
-		this.customVar = function(slot, name, value, scope) {
-			//       slot,		
-			//       name,		
-			//       value,	
-			//       scope		
-		}
-		this.nodeSnippet = function(e) {
-			if(e.textContent != undefined) {
-				return u.cutString(e.textContent.trim(), 20) + "(<"+e.nodeName+">)";
-			}
-			else {
-				return u.cutString(e.innerText.trim(), 20) + "(<"+e.nodeName+">)";
-			}
-		}
-	}
-}
 

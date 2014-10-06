@@ -3153,6 +3153,122 @@ Util.getVar = function(param, url) {
 }
 
 
+/*u-settings.js*/
+u.site_name = "parentNode";
+u.facebook_app_id = "789445694430356";
+
+/*ga.js*/
+u.ga_account = 'UA-49720985-1';
+u.ga_domain = 'parentnode.dk';
+
+
+/*u-googleanalytics.js*/
+if(u.ga_account) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', u.ga_account, u.ga_domain);
+    ga('send', 'pageview');
+	u.stats = new function() {
+		this.pageView = function(url) {
+			ga('send', 'pageview', url);
+		}
+		this.event = function(node, action, label) {
+			ga('_trackEvent', location.href.replace(document.location.protocol + "//" + document.domain, ""), action, (label ? label : this.nodeSnippet(node)));
+		}
+		this.customVar = function(slot, name, value, scope) {
+			//       slot,		
+			//       name,		
+			//       value,	
+			//       scope		
+		}
+		this.nodeSnippet = function(e) {
+			if(e.textContent != undefined) {
+				return u.cutString(e.textContent.trim(), 20) + "(<"+e.nodeName+">)";
+			}
+			else {
+				return u.cutString(e.innerText.trim(), 20) + "(<"+e.nodeName+">)";
+			}
+		}
+	}
+}
+
+
+/*u-events-browser.js*/
+u.e.addDOMReadyEvent = function(action) {
+	if(document.readyState && document.addEventListener) {
+		if((document.readyState == "interactive" && !u.browser("ie")) || document.readyState == "complete" || document.readyState == "loaded") {
+			action();
+		}
+		else {
+			var id = u.randomString();
+			window["DOMReady_" + id] = action;
+			eval('window["_DOMReady_' + id + '"] = function() {window["DOMReady_'+id+'"](); u.e.removeEvent(document, "DOMContentLoaded", window["_DOMReady_' + id + '"])}');
+			u.e.addEvent(document, "DOMContentLoaded", window["_DOMReady_" + id]);
+		}
+	}
+	else {
+		u.e.addOnloadEvent(action);
+	}
+}
+u.e.addOnloadEvent = function(action) {
+	if(document.readyState && (document.readyState == "complete" || document.readyState == "loaded")) {
+		action();
+	}
+	else {
+		var id = u.randomString();
+		window["Onload_" + id] = action;
+		eval('window["_Onload_' + id + '"] = function() {window["Onload_'+id+'"](); u.e.removeEvent(window, "load", window["_Onload_' + id + '"])}');
+		u.e.addEvent(window, "load", window["_Onload_" + id]);
+	}
+}
+u.e.addWindowResizeEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onresize_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onresize_'+id+' = '+action+'; node._Onresize_'+id+'();}');
+	u.e.addEvent(window, "resize", window["_Onresize_" + id]);
+	return id;
+}
+u.e.removeWindowResizeEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEvent(window, "resize", window["_Onresize_" + id]);
+}
+u.e.addWindowScrollEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onscroll_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onscroll_'+id+' = '+action+'; node._Onscroll_'+id+'();}');
+	u.e.addEvent(window, "scroll", window["_Onscroll_" + id]);
+	return id;
+}
+u.e.removeWindowScrollEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEvent(window, "scroll", window["_Onscroll_" + id]);
+}
+u.e.addWindowMoveEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onmove_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onmove_'+id+' = '+action+'; node._Onmove_'+id+'(event);}');
+	u.e.addMoveEvent(window, window["_Onmove_" + id]);
+	return id;
+}
+u.e.removeWindowMoveEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeMoveEvent(window, window["_Onmove_" + id]);
+}
+u.e.addWindowEndEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onend_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onend_'+id+' = '+action+'; node._Onend_'+id+'(event);}');
+	u.e.addEndEvent(window, window["_Onend_" + id]);
+	return id;
+}
+u.e.removeWindowEndEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEndEvent(window, window["_Onend_" + id]);
+}
+
+
 /*i-page-mobile_touch.js*/
 u.bug_force = true;
 u.bug_console_only = true;
@@ -3293,38 +3409,144 @@ Util.Objects["page"] = new function() {
 u.e.addDOMReadyEvent(u.init);
 
 
-/*ga.js*/
-u.ga_account = 'UA-49720985-1';
-u.ga_domain = 'parentnode.dk';
-
-
-/*u-googleanalytics.js*/
-if(u.ga_account) {
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', u.ga_account, u.ga_domain);
-    ga('send', 'pageview');
-	u.stats = new function() {
-		this.pageView = function(url) {
-			ga('send', 'pageview', url);
-		}
-		this.event = function(node, action, label) {
-			ga('_trackEvent', location.href.replace(document.location.protocol + "//" + document.domain, ""), action, (label ? label : this.nodeSnippet(node)));
-		}
-		this.customVar = function(slot, name, value, scope) {
-			//       slot,		
-			//       name,		
-			//       value,	
-			//       scope		
-		}
-		this.nodeSnippet = function(e) {
-			if(e.textContent != undefined) {
-				return u.cutString(e.textContent.trim(), 20) + "(<"+e.nodeName+">)";
+/*i-article-mobile_touch.js*/
+Util.Objects["articlelist"] = new function() {
+	this.init = function(list) {
+		list.items = u.qsa(".item", list);
+		list.scrolled = function() {
+			var scroll_y = u.scrollY()
+			var browser_h = u.browserH();
+			var i, node, node_y, list_y;
+			list_y = u.absY(this);
+			if(this._prev && list_y + browser_h > scroll_y) {
+				this.loadPrev();
 			}
-			else {
-				return u.cutString(e.innerText.trim(), 20) + "(<"+e.nodeName+">)";
+			else if(this._next && list_y + this.offsetHeight < scroll_y + (browser_h*2)) {
+				this.loadNext();
+			}
+			for(i = 0; node = this.items[i]; i++) {
+				node_y = u.absY(node);
+				if(!node._ready && node_y - 200 < scroll_y+browser_h && node_y + 200 > scroll_y) {
+					u.o.article.init(node);
+					node._ready = true;
+				}
+			}
+		}
+		u.e.addWindowScrollEvent(list, list.scrolled);
+		var next_link = u.qs(".pagination li.next a", list.parentNode);
+		var prev_link = u.qs(".pagination li.previous a", list.parentNode);
+		list._prev = prev_link ? prev_link.href : false;
+		list._next = next_link ? next_link.href : false;
+		list.loadPrev = function() {
+			if(this._prev) {
+				u.bug("load prev function")
+				this.response = function(response) {
+					var items = u.qsa(".item", response);
+					var i, node;
+					for(i = items.length; i; i--) {
+						node = u.ie(this, items[i-1]);
+						u.bug("u.scrollY:" + u.scrollY())
+						window.scrollTo(0, u.scrollY()+node.offsetHeight);
+					}
+					var prev_link = u.qs(".pagination li.previous a", response);
+					this._prev = prev_link ? prev_link.href : false;
+					this.items = u.qsa(".item", this);
+				}
+				u.request(this, this._prev);
+				this._prev = false;
+			}
+		}
+		list.loadNext = function() {
+			if(this._next) {
+				this.response = function(response) {
+					var items = u.qsa(".item", response);
+					var i;
+					for(i = 0; i < items.length; i++) {
+						u.ae(this, items[i]);
+					}
+					var next_link = u.qs(".pagination li.next a", response);
+					this._next = next_link ? next_link.href : false;
+					this.items = u.qsa(".item", this);
+				}
+				u.request(this, this._next);
+				this._next = false;
+			}
+		}
+		if(list._prev) {
+			list.content_y = u.absY(u.qs("h1"));
+			list.start_y = u.absY(list.items[0]);
+			window.scrollTo(0, list.start_y-list.content_y);
+		}
+		else if(u.scrollY()) {
+			window.scrollTo(0, 0);
+		}
+		list.scrolled();
+	}
+}
+Util.Objects["article"] = new function() {
+	this.init = function(article) {
+		var i, image;
+		article._images = u.qsa("div.image", article);
+		for(i = 0; image = article._images[i]; i++) {
+			image._id = u.cv(image, "image_id");
+			image._format = u.cv(image, "format");
+			image._variant = u.cv(image, "variant");
+			if(image._id && image._format) {
+				image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "480x." + image._format;
+				image._image = u.ie(image, "img");
+				u.a.setOpacity(image, 0);
+				image.loaded = function(queue) {
+					if(u.absY(this) < u.scrollY()) {
+						window.scrollTo(0, u.scrollY()+queue[0].image.height)
+					}
+					this._image.src = queue[0].image.src;
+					u.a.transition(this, "all 0.5s ease-in-out");
+					u.a.setOpacity(this, 1);
+				}
+				u.preloader(image, [image._image_src]);
+			}
+		}
+		article.geolocation = u.qs("dl.geo", article);
+		if(article.geolocation) {
+			article.geolocation.article = article;
+			u.bug("article.geolocation:" + article.geolocation)
+			var dd_longitude = u.qs("dd.longitude", article.geolocation);
+			var dd_latitude = u.qs("dd.latitude", article.geolocation);
+			if(dd_longitude && dd_latitude) {
+				article.geo_longitude = parseFloat(dd_longitude.innerHTML);
+				article.geo_latitude = parseFloat(dd_latitude.innerHTML);
+				article.showMap = function() {
+					if(!this.geomap) {
+						this.geomap = u.ae(this, "div", {"class":"geomap"});
+						this.insertBefore(this.geomap, u.qs("dl.info", this));
+						var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
+						var html = '<html><head>';
+						html += '<style type="text/css">body {margin: 0;}#map {height: 100%;}</style>';
+						html += '<script type="text/javascript" src="'+maps_url+'"></script>';
+						html += '<script type="text/javascript">';
+						html += 'var map, marker;';
+						html += 'var initialize = function() {';
+						html += '	window._map_loaded = true;';
+						html += '	var mapOptions = {center: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'),zoom: 12, scrollwheel: false, draggable: false};';
+						html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
+						html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'), draggable:true});';
+						html += '	marker.setMap(map);';
+						html += '};';
+						html += 'google.maps.event.addDomListener(window, "load", initialize);';
+						html += '</script>';
+						html += '</head><body><div id="map"></div></body></html>';
+						this.mapsiframe = u.ae(this.geomap, "iframe");
+						this.mapsiframe.doc = this.mapsiframe.contentDocument? this.mapsiframe.contentDocument: this.mapsiframe.contentWindow.document;
+						this.mapsiframe.doc.open();
+						this.mapsiframe.doc.write(html);
+						this.mapsiframe.doc.close();
+					}
+				}
+				article.geolocation.clicked = function() {
+					this.article.showMap();
+				}
+				u.ce(article.geolocation);
+				u.ac(article.geolocation, "active");
 			}
 		}
 	}

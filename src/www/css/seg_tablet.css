@@ -68,7 +68,7 @@ ul {font-size: 0;}
 li {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.25em;}
 dl {font-size: 0;} 
 dt, 
-dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.25em;}
+dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 .c {clear: both; font-size: 0;}
 .c400, .c300, .c266, .c200, .c150, .c133, .c100, .c75, .c50 {display: inline-block; min-height: 10px; vertical-align: top;}
 .c400 {width: 100%;}
@@ -88,15 +88,16 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 
 /*s-header-desktop.css*/
 #header {position: relative; height: 100px;}
-#header .logo {font-size: 30px; padding: 20px 50px; color: #888888; cursor: pointer; display: inline-block;
+#header .logo {z-index: 10; position: absolute; top: 10px; left: 40px; font-size: 30px; padding: 10px; color: #888888; cursor: pointer;  background-color: rgba(255,255,255, 0.8); border-radius: 5px;
 	font-family: "PT Serif", Times, serif;
 }
+#header .logo {position: fixed;}
 #header .servicenavigation {position: absolute; top: 5px; right: 50px;}
 #header .servicenavigation li.navigation {display: none;}
 #header .servicenavigation li.user {display: none;}
-#navigation {position: absolute; right: 50px; top: 75px;}
+#navigation {z-index: 10; position: fixed; right: 40px; top: 65px; background-color: rgba(255,255,255, 0.8); border-radius: 5px;}
 #navigation ul {}
-#navigation ul li {padding: 0 0 0 20px; font-size: 20px; color: #888888;
+#navigation ul li {padding: 10px; font-size: 20px; color: #888888;
 	font-family: "PT Serif", Times, serif;
 }
 #navigation ul li.front {display: none;}
@@ -118,26 +119,36 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene h5,
 #content .scene h6,
 #content .scene p {max-width: 500px;}
-#content .scene hr {border: none; border-top: 1px solid #888888; margin: 15px 15px 20px; padding: 0;}
+#content .scene hr {border: none; border-top: 1px solid #888888; margin: 15px 15px 50px; padding: 0;}
 #content .scene p.note {font-style: italic;}
 #content .scene p+h2,
 #content .scene ul+h2,
 #content .scene ul+.pagination+h2,
 #content .scene dl+h2,
 #content .scene code+h2 {padding-top: 20px;}
-#content .scene ul.tags+h2 {padding-top: 0;}
-#content .scene h4+code {top: 0;}
+#content .scene ul.tags+h2,
+#content .scene dl.geo+h2,
+#content .scene dl.info+h2 {padding-top: 0;}
+#content .scene p+code {margin-top: -15px;}
+#content .scene dl.info+dl.geo {padding-left: 0;}
 #content .scene ul {padding: 0 50px 15px;}
 #content .scene li {display: block; padding: 0 0 5px;}
 #content .scene li h1,
 #content .scene li h2,
 #content .scene li h3,
+#content .scene li h4,
+#content .scene li h5,
+#content .scene li h6,
 #content .scene li p,
-#content .scene li dl {padding-left: 0; padding-right: 0;}
+#content .scene li dl,
+#content .scene li ul {padding-left: 0; padding-right: 0;}
+#content .scene li code {margin-left: 0; margin-right: 0;}
+#content .scene ul.items {padding-bottom: 0;}
+#content .scene ul li.item {padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
 #content .scene dl {padding: 0 50px 15px; width: 500px;}
 #content .scene dt {width: 100px; text-align: right; padding: 0 5px 0 0; color: #999999;} 
 #content .scene dt:after {content: ":";}
-#content .scene dd {padding: 0 0 12px; width: 394px;}
+#content .scene dd {padding: 0 0 6px; width: 394px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px; margin-left: -30px; width: 425px;}
 #content .scene dl dl dt {width: 80px;}
@@ -146,37 +157,40 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene dl h4,
 #content .scene dl h5,
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
-#content .scene li ul.tags {padding-left: 0;}
-#content .scene li ul.tags li {font-size: 12px; display: inline-block;}
-#content .scene li ul.tags li:after {content: "\00a0|\00a0"; color: #dedede;}
-#content .scene li ul.tags li:last-child:after {content: "";}
-#content .scene dl.info {padding-bottom: 20px; display: inline-block; width: auto;}
+#content .scene ul.tags li {font-size: 12px; display: inline-block; vertical-align: top;}
+#content .scene ul.tags li:after {content: "\00a0|\00a0"; color: #dedede;}
+#content .scene ul.tags li:last-child:after {content: "";}
+#content .scene dl.info {padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
 #content .scene dl.info dt {display: none;}
-#content .scene dl.info dd {padding-right: 0; width: auto; font-size: 12px; color: #999999;}
-#content .scene dl.info dd.author,
+#content .scene dl.info dd {width: auto; font-size: 12px; color: #999999;}
+#content .scene dl.info dd.author:before {content: "\00a0|\00a0"; color: #dedede;}
 #content .scene dl.info dd.hardlink {display: none;}
-#content .scene dl.geo {padding-bottom: 20px; display: inline-block; width: auto;}
+#content .scene dl.geo {padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
 #content .scene dl.geo .location:before {content: "|\00a0"; color: #dedede;}
 #content .scene dl.geo dd {padding-right: 0; width: auto; font-size: 12px; color: #999999;}
-#content .scene li dl.geo dt {display: none;}
-#content .scene li dl.geo .latitude,
-#content .scene li dl.geo .longitude {display: none;}
-#content .scene li dl.geo.active {cursor: pointer;}
-#content .scene li div.geomap {height: 300px; width: 500px; margin-bottom: 20px;}
-#content .scene li div.geomap iframe {display: block; width: 100%; height: 100%; border: 1px solid #666666; background-color: #ffffff;}
-#content .scene div.image {margin: 0 30px; max-width: 540px; padding: 0 0 30px; cursor: zoom-in;}
-#content .scene div.image img {width: 100%;}
-#content .scene div.image a {padding: 0 20px; font-size: 14px; font-style: italic; display: block; color: #cccccc;}
-#content .scene div.image.fullsize {margin: 0; max-width: 100%; cursor: zoom-out;}
+#content .scene dl.geo dt {display: none;}
+#content .scene dl.geo .latitude,
+#content .scene dl.geo .longitude {display: none;}
+#content .scene dl.geo.active {cursor: pointer;}
+#content .scene div.geomap {height: 300px; width: 540px; margin-bottom: 20px; padding: 0 30px;}
+#content .scene div.geomap iframe {display: block; width: 100%; height: 100%; border: 1px solid #666666; background-color: #ffffff;}
+#content .scene li div.geomap {padding-left: 0; padding-right: 0; width: 500px;}
+#content .scene div.image {}
+#content .scene div.image {margin: 0 30px 30px; max-width: 540px; padding: 0; cursor: zoom-in;}
+#content .scene div.image img {width: 100%; border-radius: 5px; overflow: hidden;}
+#content .scene div.image a {padding: 0 20px; font-size: 13px; display: block; color: #cccccc;
+	font-style: italic;
+}
+#content .scene div.image.fullsize {max-width: 100%; cursor: zoom-out;}
 #content .scene div.image.fullsize a {padding: 0 50px;}
-#content .scene li div.image {margin: 0; max-width: 500px; padding: 0 0 30px; cursor: zoom-in;}
-#content .scene li div.image.fullsize {margin: 0; max-width: 100%; cursor: zoom-out;}
+#content .scene li div.image {max-width: 500px; margin: 0 0 30px;}
+#content .scene li div.image a {padding: 0;}
 #content .scene .pagination {display: none;}
-#content .scene ul.postings {padding-bottom: 0;}
-#content .scene ul.postings li.post {padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
-#content .scene code {padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px; display: block; overflow: auto; white-space: pre;
+#content .scene code {padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
 	font-family: "Monaco", "Courier New", "Courier";
+	-webkit-tab-size: 4;
 	-moz-tab-size: 4;
+	-ms-tab-size: 4;
 	-o-tab-size: 4;
 	tab-size: 4;
 }
@@ -194,6 +208,20 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene span.file {color: #a62300;}
 #content .scene span.htmltag {text-transform: uppercase;}
 #content .scene span.command {color: #4b5cd7;}
+#content .scene div.vcard {padding: 25px 50px;}
+#content .scene div.vcard .name {padding: 0 0 15px;}
+#content .scene div.vcard .tel,
+#content .scene div.vcard .email {font-size: 14px;}
+#content .scene li ul.sharing {padding: 15px 0 0; }
+#content .scene li ul.sharing li {display: inline-block; width: 20px; height: 20px; padding: 0; margin-right: 10px; text-indent: -9999px; cursor: pointer;
+	background: transparent url("/img/bg_sharing.png") no-repeat top left;
+	background-size: auto 100%;
+	opacity: 0.1;
+}
+#content .scene li ul.sharing li.facebook {background-position: 0 0;}
+#content .scene li ul.sharing li.twitter {background-position: -25px 0;}
+#content .scene li ul.sharing li.email {background-position: -50px 0;}
+#content .scene li ul.sharing li:hover {opacity: 1;}
 
 
 /*s-form-desktop.css*/
@@ -309,10 +337,6 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 #content .scene.manifest ul.manifest li {padding: 0 0 15px; display: block; font-size: 16px;
 	font-family: "PT Serif", Times, serif;
 } 
-#content .scene div.vcard {padding: 25px 50px;}
-#content .scene div.vcard .name {padding: 0 0 15px;}
-#content .scene div.vcard .tel,
-#content .scene div.vcard .email {font-size: 14px;}
 #content .scene div.categories {padding-bottom: 20px;}
 
 
@@ -321,7 +345,8 @@ dd {display: inline-block; vertical-align: top; font-size: 14px; line-height: 1.
 body {background: #ffffff;}
 #header .logo {color: #63add0;}
 #navigation ul li {color: #63add0;}
-#content .scene a {color: #63add0;}
+#content .scene a,
+#content .scene dl.geo.active dd {color: #63add0;}
 #content .scene hr {border-color: #cccccc;}
 #content .scene code {color: #333333;}
 #footer {border-color: #cccccc;}

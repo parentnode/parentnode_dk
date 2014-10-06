@@ -3179,6 +3179,7 @@ Util.getVar = function(param, url) {
 
 /*u-settings.js*/
 u.site_name = "parentNode";
+u.facebook_app_id = "789445694430356";
 
 /*ga.js*/
 u.ga_account = 'UA-49720985-1';
@@ -5015,13 +5016,14 @@ u.e.removeWindowEndEvent = function(node, id) {
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
+			page.style_tag = document.createElement("style");
+			page.style_tag.setAttribute("media", "all")
+			page.style_tag.setAttribute("type", "text/css")
+			page.style_tag = u.ae(document.head, page.style_tag);
 			page.hN = u.qs("#header");
 			page.hN.service = u.qs(".servicenavigation", page.hN);
-			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
-			page.logo.url = '/';
 			page.cN = u.qs("#content", page);
 			page.nN = u.qs("#navigation", page);
-			page.nN.list = u.qs("ul", page.nN);
 			page.nN = u.ie(page.hN, page.nN);
 			page.fN = u.qs("#footer");
 			page.fN.service = u.qs(".servicenavigation", page.fN);
@@ -5030,6 +5032,13 @@ Util.Objects["page"] = new function() {
 			page.fN.slogan.clicked = function(event) {
 				window.open("http://parentnode.dk");
 			}
+			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
+			page.logo.url = '/';
+			page.logo.font_size = parseInt(u.gcs(page.logo, "font-size"));
+			page.logo.font_size_gap = page.logo.font_size-14;
+			page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
+			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
+			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
 			page.resized = function() {
 				this.calc_height = u.browserH();
 				this.calc_width = u.browserW();
@@ -5051,13 +5060,36 @@ Util.Objects["page"] = new function() {
 				}
 			}
 			page.scrolled = function() {
+				page.scrolled_y = u.scrollY();
+				if(page.scrolled_y < page.logo.top_offset) {
+					page.logo.is_reduced = false;
+					var reduce_font = (1-(page.logo.top_offset-page.scrolled_y)/page.logo.top_offset) * page.logo.font_size_gap;
+					page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-reduce_font)+"px", "important");
+				}
+				else if(!page.logo.is_reduced) {
+					page.logo.is_reduced = true;
+					page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-page.logo.font_size_gap)+"px", "important");
+				}
+				if(page.scrolled_y < page.nN.top_offset) {
+					page.nN.is_reduced = false;
+					var factor = (1-(page.nN.top_offset-page.scrolled_y)/page.nN.top_offset);
+					var reduce_font = factor * page.nN.font_size_gap;
+					page.nN.list.css_rule.style.setProperty("font-size", (page.nN.font_size-reduce_font)+"px", "important");
+					var reduce_top = factor * page.nN.top_offset_gap;
+					page.nN.css_rule.style.setProperty("top", (page.nN.top_offset-reduce_top)+"px", "important");
+				}
+				else if(!page.nN.is_reduced) {
+					page.nN.is_reduced = true;
+					page.nN.list.css_rule.style.setProperty("font-size", (page.nN.font_size-page.nN.font_size_gap)+"px", "important");
+					page.nN.css_rule.style.setProperty("top", (page.nN.top_offset-page.nN.top_offset_gap)+"px", "important");
+				}
 				if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
 					page.cN.scene.scrolled();
 				}
 			}
 			page.ready = function() {
-				if(!u.hc(this, "ready")) {
-					u.addClass(this, "ready");
+				if(!this.is_ready) {
+					this.is_ready = true;
 					u.e.addEvent(window, "resize", page.resized);
 					u.e.addEvent(window, "scroll", page.scrolled);
 					this.initNavigation();
@@ -5082,6 +5114,16 @@ Util.Objects["page"] = new function() {
 			}
 			page.initNavigation = function() {
 				var i, node;
+				page.nN.list = u.qs("ul", page.nN);
+				page.nN.list.nodes = u.qsa("li", page.nN);
+				page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
+				page.nN.font_size_gap = page.nN.font_size-14;
+				page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
+				page.nN.top_offset_gap = page.nN.top_offset-10;
+				page.style_tag.sheet.insertRule("#navigation {}", 0);
+				page.nN.css_rule = page.style_tag.sheet.cssRules[0];
+				page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
+				page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
 				this.hN.nodes = u.qsa("#navigation li,.servicenavigation li,a.logo", page.hN);
 				for(i = 0; node = this.hN.nodes[i]; i++) {
 					u.ce(node, {"type":"link"});
@@ -5125,6 +5167,25 @@ Util.Objects["page"] = new function() {
 	}
 }
 u.e.addDOMReadyEvent(u.init);
+
+
+/*i-login-desktop.js*/
+Util.Objects["login"] = new function() {
+	this.init = function(scene) {
+		u.bug("scene init:" + u.nodeId(scene))
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			page.cN.scene = this;
+			page.resized();
+		}
+		scene.ready();
+	}
+}
 
 
 /*i-article-desktop.js*/
@@ -5302,6 +5363,9 @@ Util.Objects["article"] = new function() {
 				u.ac(article.geolocation, "active");
 			}
 		}
+		// 	
+		// 	
+		// 	
 	}
 }
 

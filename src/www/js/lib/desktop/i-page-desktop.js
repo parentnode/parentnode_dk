@@ -5,21 +5,29 @@ Util.Objects["page"] = new function() {
 
 		//if(u.hc(page, "i:page")) {
 			//alert("wop");
+
+
+			// create a generel style rule
+			page.style_tag = document.createElement("style");
+			page.style_tag.setAttribute("media", "all")
+			page.style_tag.setAttribute("type", "text/css")
+			page.style_tag = u.ae(document.head, page.style_tag);
+
+
+
 			// header reference
 			page.hN = u.qs("#header");
 			page.hN.service = u.qs(".servicenavigation", page.hN);
 
-			// add logo to navigation
-			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
-			page.logo.url = '/';
 
 			// content reference
 			page.cN = u.qs("#content", page);
 
+
 			// navigation reference
 			page.nN = u.qs("#navigation", page);
-			page.nN.list = u.qs("ul", page.nN);
 			page.nN = u.ie(page.hN, page.nN);
+
 
 			// footer reference
 			page.fN = u.qs("#footer");
@@ -31,6 +39,20 @@ Util.Objects["page"] = new function() {
 			page.fN.slogan.clicked = function(event) {
 				window.open("http://parentnode.dk");
 			}
+
+
+			// LOGO
+			// add logo to navigation
+			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
+			page.logo.url = '/';
+			page.logo.font_size = parseInt(u.gcs(page.logo, "font-size"));
+			page.logo.font_size_gap = page.logo.font_size-14;
+			page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
+
+			// create rule for logo
+			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
+			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
+
 
 
 			// global resize handler 
@@ -53,6 +75,7 @@ Util.Objects["page"] = new function() {
 					u.rc(page, "fixed");
 				}
 
+
 				// forward resize event to current scene
 				if(page.cN && page.cN.scene) {
 
@@ -66,6 +89,49 @@ Util.Objects["page"] = new function() {
 
 			// global scroll handler 
 			page.scrolled = function() {
+
+
+				page.scrolled_y = u.scrollY();
+
+				// reduce logo
+				if(page.scrolled_y < page.logo.top_offset) {
+
+					page.logo.is_reduced = false;
+
+					var reduce_font = (1-(page.logo.top_offset-page.scrolled_y)/page.logo.top_offset) * page.logo.font_size_gap;
+					page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-reduce_font)+"px", "important");
+				}
+				// claim end state, once
+				else if(!page.logo.is_reduced) {
+
+					page.logo.is_reduced = true;
+					page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-page.logo.font_size_gap)+"px", "important");
+				}
+
+				// reduce navigation
+				if(page.scrolled_y < page.nN.top_offset) {
+
+					page.nN.is_reduced = false;
+
+					var factor = (1-(page.nN.top_offset-page.scrolled_y)/page.nN.top_offset);
+
+					var reduce_font = factor * page.nN.font_size_gap;
+					page.nN.list.css_rule.style.setProperty("font-size", (page.nN.font_size-reduce_font)+"px", "important");
+
+					var reduce_top = factor * page.nN.top_offset_gap;
+					page.nN.css_rule.style.setProperty("top", (page.nN.top_offset-reduce_top)+"px", "important");
+
+				}
+				// claim end state, once
+				else if(!page.nN.is_reduced) {
+
+					page.nN.is_reduced = true;
+
+					page.nN.list.css_rule.style.setProperty("font-size", (page.nN.font_size-page.nN.font_size_gap)+"px", "important");
+					page.nN.css_rule.style.setProperty("top", (page.nN.top_offset-page.nN.top_offset_gap)+"px", "important");
+				}
+
+
 
 				// forward scroll event to current scene
 				if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
@@ -81,10 +147,10 @@ Util.Objects["page"] = new function() {
 //				u.bug("page ready")
 
 				// page is ready to be shown - only initalize if not already shown
-				if(!u.hc(this, "ready")) {
+				if(!this.is_ready) {
 
 					// page is ready
-					u.addClass(this, "ready");
+					this.is_ready = true;
 
 					// set resize handler
 					u.e.addEvent(window, "resize", page.resized);
@@ -121,11 +187,30 @@ Util.Objects["page"] = new function() {
 			page.initNavigation = function() {
 
 				var i, node;
-				// enable submenus where relevant
+
+				page.nN.list = u.qs("ul", page.nN);
+				page.nN.list.nodes = u.qsa("li", page.nN);
+
+				// set reducing scope
+				page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
+				page.nN.font_size_gap = page.nN.font_size-14;
+				page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
+				page.nN.top_offset_gap = page.nN.top_offset-10;
+
+				// create rule for Navigation
+				page.style_tag.sheet.insertRule("#navigation {}", 0);
+				page.nN.css_rule = page.style_tag.sheet.cssRules[0];
+
+				// create rule for Navigation nodes
+				page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
+				page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
+	//			u.bug("cssText:" + page.nN.css_rule.cssText + ", " + u.nodeId(page.nN));
+
+
+				// enable navigation link animation where relevant
 				this.hN.nodes = u.qsa("#navigation li,.servicenavigation li,a.logo", page.hN);
 				for(i = 0; node = this.hN.nodes[i]; i++) {
 
-					// build first living proof model of CEL clickableElementLink
 					u.ce(node, {"type":"link"});
 
 					node._mousedover = function() {
@@ -170,6 +255,7 @@ Util.Objects["page"] = new function() {
 						u.e.addEvent(node, "mouseover", node._mousedover);
 						u.e.addEvent(node, "mouseout", node._mousedout);
 					}
+					// apply touchstart/end
 					else {
 
 						u.e.addStartEvent(node, node._mousedover);
@@ -179,6 +265,7 @@ Util.Objects["page"] = new function() {
 				}
 
 			}
+
 
 
 			// ready to start page builing process

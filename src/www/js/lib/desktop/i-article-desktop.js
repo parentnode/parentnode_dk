@@ -268,5 +268,49 @@ Util.Objects["article"] = new function() {
 
 		}
 
+
+		// INIT SHARING
+		// if(article.hardlink) {
+		// 	article.sharing = u.ae(article, "ul", {"class":"sharing"});
+		// 	article.headline = u.qs("h1,h2,h3,h4", article);
+		//
+		// 	// Facebook
+		// 	if(u.facebook_app_id) {
+		// 		article.share_facebook = u.ae(article.sharing, "li", {"class":"facebook", "html":"Facebook"});
+		// 		article.share_facebook.article = article;
+		// 		u.ce(article.share_facebook);
+		// 		article.share_facebook.clicked = function() {
+		// 			var url = "https://www.facebook.com/dialog/feed?app_id="+u.facebook_app_id+"&display=popup";
+		// 			url += "&link="+this.article.hardlink;
+		// 			url += "&name="+encodeURIComponent(u.text(this.article.headline));
+		// 			url += "&desc="+encodeURIComponent(u.text(u.qs(".description", this.article)).substring(0, 100));
+		// 			url += "&redirect_uri="+this.article.hardlink;
+		//
+		// 			var image = u.qs("div.image img", this.article);
+		// 			if(image) {
+		// 				url += "&picture="+image.src;
+		// 			}
+		// 			window.open(url);
+		// 		}
+		// 	}
+		//
+		// 	// Twitter
+		// 	article.share_twitter = u.ae(article.sharing, "li", {"class":"twitter", "html":"Twitter"});
+		// 	article.share_twitter.article = article;
+		// 	u.ce(article.share_twitter);
+		// 	article.share_twitter.clicked = function() {
+		// 		window.open("http://twitter.com/home?status=" + this.article.hardlink);
+		// 	}
+		//
+		// 	// Email
+		// 	article.share_email = u.ae(article.sharing, "li", {"class":"email", "html":"Email"});
+		// 	article.share_email.article = article;
+		// 	u.ce(article.share_email);
+		// 	article.share_email.clicked = function() {
+		// 		location.href = "mailto:?subject="+u.text(this.article.headline)+"&body=" + this.article.hardlink;
+		// 	}
+		//
+		// }
+
 	}
 }

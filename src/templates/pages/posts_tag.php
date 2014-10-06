@@ -28,7 +28,7 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 
 <?	if($pagination["range_items"]): ?>
 
-	<ul class="postings i:articlelist">
+	<ul class="items postings i:articlelist">
 <?		foreach($pagination["range_items"] as $item):
 			$item = $IC->extendItem($item, array("tags" => true));
 			$hardlink = (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]."/blog/tag/".$tag."/".$item["sindex"];
@@ -53,7 +53,7 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 
 			<dl class="info">
 				<dt class="published_at">Date published</dt>
-				<dd class="published_at" itemprop="datePublished" content="2015-07-27"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></dd>
+				<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></dd>
 				<dt class="author">Author</dt>
 				<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
 				<dt class="hardlink">Hardlink</dt>
@@ -64,7 +64,7 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 				<?= $item["html"] ?>
 			</div>
 
-<?			if(count($item["mediae"])):
+<?			if($item["mediae"]):
 				foreach($item["mediae"] as $media): ?>
 			<div class="image image_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 <? 				endforeach;

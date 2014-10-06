@@ -5,6 +5,8 @@
 			<?= $HTML->link("Posts", "/admin/post/list", array("wrapper" => "li.post")) ?>
 
 			<?= $HTML->link("Navigations", "/admin/navigation/list", array("wrapper" => "li.navigation")) ?>
+			<?= $HTML->link("Pages", "/admin/page/list", array("wrapper" => "li.page")) ?>
+
 			<?= $HTML->link("Users", "/admin/user/list", array("wrapper" => "li.user")) ?>
 			<?= $HTML->link("Tags", "/admin/tag/list", array("wrapper" => "li.tags")) ?>
 		</ul>

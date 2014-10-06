@@ -10,7 +10,8 @@ body {background: #ffffff;}
 #header .servicenavigation li.navigation div {background: #cccccc;}
 #header .servicenavigation li.navigation.open div {background: #034769;}
 
-#content .scene a {color: #63add0;}
+#content .scene a,
+#content .scene dl.geo.active dd {color: #63add0;}
 
 #content .scene hr {border-color: #cccccc;}
 #content .scene code {color: #333333;}

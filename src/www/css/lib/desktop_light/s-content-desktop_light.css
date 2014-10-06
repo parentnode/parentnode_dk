@@ -18,8 +18,15 @@
 /* ADDITIONAL H2 PADDING IN CERTAIN CASES */
 #content .scene p+h2,
 #content .scene ul+h2,
+#content .scene ul+.pagination+h2,
 #content .scene dl+h2,
 #content .scene code+h2 {padding-top: 20px;}
+
+#content .scene ul.tags+h2,
+#content .scene dl.geo+h2,
+#content .scene dl.info+h2 {padding-top: 0;}
+
+#content .scene p+code {margin-top: -15px;}
 
 
 /* LISTS */
@@ -28,8 +35,18 @@
 #content .scene li h1,
 #content .scene li h2,
 #content .scene li h3,
+#content .scene li h4,
+#content .scene li h5,
+#content .scene li h6,
 #content .scene li p,
-#content .scene li dl {padding-left: 0; padding-right: 0;}
+#content .scene li dl,
+#content .scene li ul {padding-left: 0; padding-right: 0;}
+#content .scene li code {margin-left: 0; margin-right: 0;}
+
+
+/* ITEMS */
+#content .scene ul.items {padding-bottom: 0;}
+#content .scene ul li.item {padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
 
 
 /* DEFINITION LIST */
@@ -46,29 +63,29 @@
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
 
 
+/* TAGS */
+#content .scene ul.tags li {font-size: 12px;}
+
+
+/* INFO */
+#content .scene dl.info dt {display: none;}
+#content .scene dl.info dd {padding-left: 0; padding-right: 0; padding-bottom: 3px; font-size: 12px; color: #999999;}
+#content .scene dl.info dd.hardlink {display: none;}
+
+
+/* GEOLOCATION */
+#content .scene dl.geo {margin-top: -15px;}
+#content .scene dl.geo dd {padding-left: 0; padding-right: 0; padding-bottom: 3px; font-size: 12px; color: #999999;}
+#content .scene dl.geo dt {display: none;}
+#content .scene dl.geo .latitude,
+#content .scene dl.geo .longitude {display: none;}
+
+
 /* INLINE IMAGE */
 #content .scene div.image {display: none;}
 
 
-/* TAGS */
-#content .scene li ul.tags {padding-left: 0;}
-#content .scene li ul.tags li {font-size: 12px;}
-
-/* INFO */
-#content .scene dl.info {padding-bottom: 20px;}
-#content .scene dl.info dt {display: none;}
-#content .scene dl.info dd {padding-right: 0;}
-#content .scene dl.info dd.author {display: none;}
-#content .scene li dl.info {padding-bottom: 0;}
-
-/* GEOLOCATION */
-#content .scene dl.geo {padding-bottom: 20px;}
-#content .scene li dl.geo dt {display: none;}
-#content .scene li dl.geo .latitude,
-#content .scene li dl.geo .longitude {display: none;}
-
-
-
+/* PAGINATION */
 #content .scene .pagination {margin: 0 50px 30px; padding: 20px 0; border-top: 1px solid #dedede; border-bottom: 1px solid #dedede;}
 #content .scene .pagination ul {padding: 0; overflow: hidden;}
 #content .scene .pagination .next,
@@ -82,10 +99,13 @@
 
 
 /* CODE AND TYPECASTING */
-#content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 5px; position: relative; top: -15px; background-color: #ededed; font-size: 12px; display: block;
-	white-space: pre; overflow: auto;
+#content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
 	font-family: "Monaco", "Courier New", "Courier";
-	/*white-space: pre-wrap;*/
+	-webkit-tab-size: 4;
+	-moz-tab-size: 4;
+	-ms-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
 }
 #content .scene span.type,
 #content .scene span.var,
@@ -103,4 +123,11 @@
 #content .scene span.command {color: #4b5cd7;}
 
 
+/* VCARD */
+#content .scene div.vcard {padding: 25px 50px;}
+#content .scene div.vcard .name {padding: 0 0 15px;}
+#content .scene div.vcard .tel,
+#content .scene div.vcard .email {font-size: 14px;}
 
+
+/* SHARING */

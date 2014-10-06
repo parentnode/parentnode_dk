@@ -2,8 +2,9 @@
 
 	<h1>About parentNode</h1>
 	<p>
-		parentNode ApS was founded in 2008 by <a href="http://kaestel.dk" target="_blank">Martin Kæstel Nielsen</a> to facilitate
-		investment in and support of new ideas and technology.
+		parentNode ApS was founded in 2008 by <a href="http://kaestel.dk" target="_blank">Martin Kæstel Nielsen</a> to 
+		enable investment of time into an idealistic approach to webdevelopment. parentNode is not meant to conform to 
+		standards or meet a budget. Exploration is Success.
 	</p>
 
 	<h2>Get in touch</h2>

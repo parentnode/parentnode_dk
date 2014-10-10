@@ -42,7 +42,7 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 <?	if($pagination["range_items"]): ?>
 	<ul class="items postings i:articlelist">
 <?		foreach($pagination["range_items"] as $item):
-			$item = $IC->extendItem($item, array("tags" => true));
+			$item = $IC->extendItem($item, array("tags" => true, "user" => true));
 			$hardlink = (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]."/blog/".$item["sindex"];
 			$media = $item["mediae"] ? array_shift($item["mediae"]) : false; ?>
 		<li class="item post id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
@@ -68,7 +68,7 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 				<dt class="published_at">Date published</dt>
 				<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></dd>
 				<dt class="author">Author</dt>
-				<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
+				<dd class="author" itemprop="author"><?= $item["user_nickname"] ?></dd>
 				<dt class="hardlink">Hardlink</dt>
 				<dd class="hardlink" itemprop="url"><a href="<?= $hardlink ?>" target="_blank"><?= $hardlink ?></a></dd>
 			</dl>

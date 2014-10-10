@@ -35,9 +35,11 @@ Util.Objects["page"] = new function() {
 			page.fN.service = u.qs(".servicenavigation", page.fN);
 
 			page.fN.slogan = u.qs("p", page.fN);
-			u.ce(page.fN.slogan);
-			page.fN.slogan.clicked = function(event) {
-				window.open("http://parentnode.dk");
+			if(page.fN.slogan) {
+				u.ce(page.fN.slogan);
+				page.fN.slogan.clicked = function(event) {
+					window.open("http://parentnode.dk");
+				}
 			}
 
 

@@ -115,6 +115,10 @@
 #content .scene .pagination {display: none;}
 
 
+/* CATEGORIES */
+#content .scene div.categories {padding-bottom: 20px;}
+
+
 /* CODE AND TYPECASTING */
 #content .scene code {padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
 	font-family: "Monaco", "Courier New", "Courier";

@@ -3318,6 +3318,7 @@ Util.Form = u.f = new function() {
 					field._input.field = field;
 					field._input._label = u.qs("label[for="+field._input.id+"]", field);
 					form.fields[field._input.name] = field._input;
+					u.bug("set value function:" + u.nodeId(field._input))
 					field._input.val = this._value_checkbox;
 					if(u.browser("explorer", "<=8")) {
 						field._input.pre_state = field._input.checked;
@@ -3446,7 +3447,7 @@ Util.Form = u.f = new function() {
 			var action_name = action._input.name ? action._input.name : action.className;
 				form.actions[action_name] = action._input;
 			if(typeof(u.k) == "object" && u.hc(action._input, "key:[a-z0-9]+")) {
-				u.k.addKey(u.cv(action._input, "key"), action._input);
+				u.k.addKey(action._input, u.cv(action._input, "key"));
 			}
 		}
 		if(!actions.length) {
@@ -3475,7 +3476,7 @@ Util.Form = u.f = new function() {
 					form.actions[input.name] = input;
 				}
 				if(typeof(u.k) == "object" && u.hc(input, "key:[a-z0-9]+")) {
-					u.k.addKey(u.cv(input, "key"), input);
+					u.k.addKey(input, u.cv(input, "key"));
 				}
 			}
 		}
@@ -3653,20 +3654,22 @@ Util.Form = u.f = new function() {
 		}
 	}
 	this.positionHint = function(field) {
-		var f_h =  field.offsetHeight;
-		var f_p_t = parseInt(u.gcs(field, "padding-top"));
-		var f_p_b = parseInt(u.gcs(field, "padding-bottom"));
-		var f_b_t = parseInt(u.gcs(field, "border-top-width"));
-		var f_b_b = parseInt(u.gcs(field, "border-bottom-width"));
-		var f_h_h = field._help.offsetHeight;
-		if(field._help && u.hc(field, "html")) {
-			var l_h = field._input._label.offsetHeight;
-			var help_top = (((f_h - (f_p_t + f_p_b + f_b_b + f_b_t)) / 2)) - (f_h_h / 2) + l_h;
-			u.as(field._help, "top", help_top + "px");
-		}
-		else if(field._help) {
-			var help_top = (((f_h - (f_p_t + f_p_b + f_b_b + f_b_t)) / 2) + 2) - (f_h_h / 2)
-			u.as(field._help, "top", help_top + "px");
+		if(field._help) {
+			var f_h =  field.offsetHeight;
+			var f_p_t = parseInt(u.gcs(field, "padding-top"));
+			var f_p_b = parseInt(u.gcs(field, "padding-bottom"));
+			var f_b_t = parseInt(u.gcs(field, "border-top-width"));
+			var f_b_b = parseInt(u.gcs(field, "border-bottom-width"));
+			var f_h_h = field._help.offsetHeight;
+			if(u.hc(field, "html")) {
+				var l_h = field._input._label.offsetHeight;
+				var help_top = (((f_h - (f_p_t + f_p_b + f_b_b + f_b_t)) / 2)) - (f_h_h / 2) + l_h;
+				u.as(field._help, "top", help_top + "px");
+			}
+			else {
+				var help_top = (((f_h - (f_p_t + f_p_b + f_b_b + f_b_t)) / 2) + 2) - (f_h_h / 2)
+				u.as(field._help, "top", help_top + "px");
+			}
 		}
 	}
 	this._mouseenter = function(event) {
@@ -5028,9 +5031,11 @@ Util.Objects["page"] = new function() {
 			page.fN = u.qs("#footer");
 			page.fN.service = u.qs(".servicenavigation", page.fN);
 			page.fN.slogan = u.qs("p", page.fN);
-			u.ce(page.fN.slogan);
-			page.fN.slogan.clicked = function(event) {
-				window.open("http://parentnode.dk");
+			if(page.fN.slogan) {
+				u.ce(page.fN.slogan);
+				page.fN.slogan.clicked = function(event) {
+					window.open("http://parentnode.dk");
+				}
 			}
 			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
 			page.logo.url = '/';

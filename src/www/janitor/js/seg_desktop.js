@@ -1,7 +1,9 @@
 
-/*seg_tablet_include.js*/
+/*seg_desktop_include.js*/
 
-/*seg_tablet.js*/
+/*seg_desktop_include.js*/
+
+/*seg_desktop.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
 	u.version = 0.8;
@@ -2617,6 +2619,30 @@ Util.period = function(format, time) {
 		return _ in chars ? chars[_] : _.slice(1, _.length - 1);
 	});
 };
+Util.popup = function(url, settings) {
+	var width = "330";
+	var height = "150";
+	var name = "popup" + new Date().getHours() + "_" + new Date().getMinutes() + "_" + new Date().getMilliseconds();
+	var extra = "";
+	if(typeof(settings) == "object") {
+		var argument;
+		for(argument in settings) {
+			switch(argument) {
+				case "name"		: name		= settings[argument]; break;
+				case "width"	: width		= Number(settings[argument]); break;
+				case "height"	: height	= Number(settings[argument]); break;
+				case "extra"	: extra		= settings[argument]; break;
+			}
+		}
+	}
+	var p;
+	p = "width=" + width + ",height=" + height;
+	p += ",left=" + (screen.width-width)/2;
+	p += ",top=" + ((screen.height-height)-20)/2;
+	p += extra ? "," + extra : ",scrollbars";
+	document[name] = window.open(url, name, p);
+	return document[name];
+}
 u.preloader = function(node, files, options) {
 	var callback, callback_min_delay
 	if(typeof(options) == "object") {
@@ -3153,45 +3179,158 @@ Util.getVar = function(param, url) {
 }
 
 
-/*u-settings.js*/
-u.site_name = "parentNode";
-u.facebook_app_id = "789445694430356";
-
-/*ga.js*/
-u.ga_account = 'UA-49720985-1';
-u.ga_domain = 'parentnode.dk';
-
-
-/*u-googleanalytics.js*/
-if(u.ga_account) {
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', u.ga_account, u.ga_domain);
-    ga('send', 'pageview');
-	u.stats = new function() {
-		this.pageView = function(url) {
-			ga('send', 'pageview', url);
+/*u-debug.js*/
+Util.debugURL = function(url) {
+	if(u.bug_force) {
+		return true;
+	}
+	return document.domain.match(/.local$/);
+}
+Util.nodeId = function(node, include_path) {
+		if(!include_path) {
+			return node.id ? node.nodeName+"#"+node.id : (node.className ? node.nodeName+"."+node.className : (node.name ? node.nodeName + "["+node.name+"]" : node.nodeName));
 		}
-		this.event = function(node, action, label) {
-			ga('_trackEvent', location.href.replace(document.location.protocol + "//" + document.domain, ""), action, (label ? label : this.nodeSnippet(node)));
-		}
-		this.customVar = function(slot, name, value, scope) {
-			//       slot,		
-			//       name,		
-			//       value,	
-			//       scope		
-		}
-		this.nodeSnippet = function(e) {
-			if(e.textContent != undefined) {
-				return u.cutString(e.textContent.trim(), 20) + "(<"+e.nodeName+">)";
+		else {
+			if(node.parentNode && node.parentNode.nodeName != "HTML") {
+				return u.nodeId(node.parentNode, include_path) + "->" + u.nodeId(node);
 			}
 			else {
-				return u.cutString(e.innerText.trim(), 20) + "(<"+e.nodeName+">)";
+				return u.nodeId(node);
 			}
 		}
+	return "Unindentifiable node!";
+}
+Util.bug = function(message, corner, color) {
+	if(u.debugURL()) {
+		if(!u.bug_console_only) {
+			var option, options = new Array([0, "auto", "auto", 0], [0, 0, "auto", "auto"], ["auto", 0, 0, "auto"], ["auto", "auto", 0, 0]);
+			if(isNaN(corner)) {
+				color = corner;
+				corner = 0;
+			}
+			if(typeof(color) != "string") {
+				color = "black";
+			}
+			option = options[corner];
+			if(!document.getElementById("debug_id_"+corner)) {
+				var d_target = u.ae(document.body, "div", {"class":"debug_"+corner, "id":"debug_id_"+corner});
+				d_target.style.position = u.bug_position ? u.bug_position : "absolute";
+				d_target.style.zIndex = 16000;
+				d_target.style.top = option[0];
+				d_target.style.right = option[1];
+				d_target.style.bottom = option[2];
+				d_target.style.left = option[3];
+				d_target.style.backgroundColor = u.bug_bg ? u.bug_bg : "#ffffff";
+				d_target.style.color = "#000000";
+				d_target.style.textAlign = "left";
+				if(d_target.style.maxWidth) {
+					d_target.style.maxWidth = u.bug_max_width ? u.bug_max_width+"px" : "auto";
+				}
+				d_target.style.padding = "3px";
+			}
+			if(typeof(message) != "string") {
+				message = message.toString();
+			}
+			var debug_div = document.getElementById("debug_id_"+corner);
+			message = message ? message.replace(/\>/g, "&gt;").replace(/\</g, "&lt;").replace(/&lt;br&gt;/g, "<br>") : "Util.bug with no message?";
+			u.ae(debug_div, "div", {"style":"color: " + color, "html": message});
+		}
+		if(typeof(console) == "object") {
+			console.log(message);
+		}
 	}
+}
+Util.xInObject = function(object) {
+	if(u.debugURL()) {
+		var x, s = "--- start object ---<br>\n";
+		for(x in object) {
+			if(object[x] && typeof(object[x]) == "object" && typeof(object[x].nodeName) == "string") {
+				s += x + "=" + object[x]+" -> " + u.nodeId(object[x], 1) + "<br>\n";
+			}
+			else if(object[x] && typeof(object[x]) == "function") {
+				s += x + "=function<br>\n";
+			}
+			else {
+				s += x + "=" + object[x]+"<br>\n";
+			}
+		}
+		s += "--- end object ---"
+		u.bug(s);
+	}
+}
+
+
+/*u-events-browser.js*/
+u.e.addDOMReadyEvent = function(action) {
+	if(document.readyState && document.addEventListener) {
+		if((document.readyState == "interactive" && !u.browser("ie")) || document.readyState == "complete" || document.readyState == "loaded") {
+			action();
+		}
+		else {
+			var id = u.randomString();
+			window["DOMReady_" + id] = action;
+			eval('window["_DOMReady_' + id + '"] = function() {window["DOMReady_'+id+'"](); u.e.removeEvent(document, "DOMContentLoaded", window["_DOMReady_' + id + '"])}');
+			u.e.addEvent(document, "DOMContentLoaded", window["_DOMReady_" + id]);
+		}
+	}
+	else {
+		u.e.addOnloadEvent(action);
+	}
+}
+u.e.addOnloadEvent = function(action) {
+	if(document.readyState && (document.readyState == "complete" || document.readyState == "loaded")) {
+		action();
+	}
+	else {
+		var id = u.randomString();
+		window["Onload_" + id] = action;
+		eval('window["_Onload_' + id + '"] = function() {window["Onload_'+id+'"](); u.e.removeEvent(window, "load", window["_Onload_' + id + '"])}');
+		u.e.addEvent(window, "load", window["_Onload_" + id]);
+	}
+}
+u.e.addWindowResizeEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onresize_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onresize_'+id+' = '+action+'; node._Onresize_'+id+'();}');
+	u.e.addEvent(window, "resize", window["_Onresize_" + id]);
+	return id;
+}
+u.e.removeWindowResizeEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEvent(window, "resize", window["_Onresize_" + id]);
+}
+u.e.addWindowScrollEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onscroll_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onscroll_'+id+' = '+action+'; node._Onscroll_'+id+'();}');
+	u.e.addEvent(window, "scroll", window["_Onscroll_" + id]);
+	return id;
+}
+u.e.removeWindowScrollEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEvent(window, "scroll", window["_Onscroll_" + id]);
+}
+u.e.addWindowMoveEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onmove_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onmove_'+id+' = '+action+'; node._Onmove_'+id+'(event);}');
+	u.e.addMoveEvent(window, window["_Onmove_" + id]);
+	return id;
+}
+u.e.removeWindowMoveEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeMoveEvent(window, window["_Onmove_" + id]);
+}
+u.e.addWindowEndEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onend_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onend_'+id+' = '+action+'; node._Onend_'+id+'(event);}');
+	u.e.addEndEvent(window, window["_Onend_" + id]);
+	return id;
+}
+u.e.removeWindowEndEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEndEvent(window, window["_Onend_" + id]);
 }
 
 
@@ -4917,243 +5056,1382 @@ u.f.addAction = function(node, settings) {
 }
 
 
-/*u-events-browser.js*/
-u.e.addDOMReadyEvent = function(action) {
-	if(document.readyState && document.addEventListener) {
-		if((document.readyState == "interactive" && !u.browser("ie")) || document.readyState == "complete" || document.readyState == "loaded") {
-			action();
+/*u-geometry.js*/
+Util.absoluteX = u.absX = function(node) {
+	if(node.offsetParent) {
+		return node.offsetLeft + u.absX(node.offsetParent);
+	}
+	return node.offsetLeft;
+}
+Util.absoluteY = u.absY = function(node) {
+	if(node.offsetParent) {
+		return node.offsetTop + u.absY(node.offsetParent);
+	}
+	return node.offsetTop;
+}
+Util.relativeX = u.relX = function(node) {
+	if(u.gcs(node, "position").match(/absolute/) == null && node.offsetParent && u.gcs(node.offsetParent, "position").match(/relative|absolute|fixed/) == null) {
+		return node.offsetLeft + u.relX(node.offsetParent);
+	}
+	return node.offsetLeft;
+}
+Util.relativeY = u.relY = function(node) {
+	if(u.gcs(node, "position").match(/absolute/) == null && node.offsetParent && u.gcs(node.offsetParent, "position").match(/relative|absolute|fixed/) == null) {
+		return node.offsetTop + u.relY(node.offsetParent);
+	}
+	return node.offsetTop;
+}
+Util.actualWidth = u.actualW = function(node) {
+	return parseInt(u.gcs(node, "width"));
+}
+Util.actualHeight = u.actualH = function(node) {
+	return parseInt(u.gcs(node, "height"));
+}
+Util.eventX = function(event){
+	return (event.targetTouches ? event.targetTouches[0].pageX : event.pageX);
+}
+Util.eventY = function(event){
+	return (event.targetTouches ? event.targetTouches[0].pageY : event.pageY);
+}
+Util.browserWidth = u.browserW = function() {
+	return document.documentElement.clientWidth;
+}
+Util.browserHeight = u.browserH = function() {
+	return document.documentElement.clientHeight;
+}
+Util.htmlWidth = u.htmlW = function() {
+	return document.body.offsetWidth + parseInt(u.gcs(document.body, "margin-left")) + parseInt(u.gcs(document.body, "margin-right"));
+}
+Util.htmlHeight = u.htmlH = function() {
+	return document.body.offsetHeight + parseInt(u.gcs(document.body, "margin-top")) + parseInt(u.gcs(document.body, "margin-bottom"));
+}
+Util.pageScrollX = u.scrollX = function() {
+	return window.pageXOffset;
+}
+Util.pageScrollY = u.scrollY = function() {
+	return window.pageYOffset;
+}
+
+
+/*u-dom.js*/
+Util.querySelector = u.qs = function(query, scope) {
+	scope = scope ? scope : document;
+	return scope.querySelector(query);
+}
+Util.querySelectorAll = u.qsa = function(query, scope) {
+	scope = scope ? scope : document;
+	return scope.querySelectorAll(query);
+}
+Util.getElement = u.ge = function(identifier, scope) {
+	var node, i, regexp;
+	if(document.getElementById(identifier)) {
+		return document.getElementById(identifier);
+	}
+	scope = scope ? scope : document;
+	regexp = new RegExp("(^|\\s)" + identifier + "(\\s|$|\:)");
+	for(i = 0; node = scope.getElementsByTagName("*")[i]; i++) {
+		if(regexp.test(node.className)) {
+			return node;
+		}
+	}
+	return scope.getElementsByTagName(identifier).length ? scope.getElementsByTagName(identifier)[0] : false;
+}
+Util.getElements = u.ges = function(identifier, scope) {
+	var node, i, regexp;
+	var nodes = new Array();
+	scope = scope ? scope : document;
+	regexp = new RegExp("(^|\\s)" + identifier + "(\\s|$|\:)");
+	for(i = 0; node = scope.getElementsByTagName("*")[i]; i++) {
+		if(regexp.test(node.className)) {
+			nodes.push(node);
+		}
+	}
+	return nodes.length ? nodes : scope.getElementsByTagName(identifier);
+}
+Util.parentNode = u.pn = function(node, node_type) {
+	if(node_type) {
+		if(node.parentNode) {
+			var parent = node.parentNode;
+		}
+		while(parent.nodeName.toLowerCase() != node_type.toLowerCase()) {
+			if(parent.parentNode) {
+				parent = parent.parentNode;
+			}
+			else {
+				return false;
+			}
+		}
+		return parent;
+	}
+	else {
+		return node.parentNode;
+	}
+}
+Util.previousSibling = u.ps = function(node, exclude) {
+	node = node.previousSibling;
+	while(node && (node.nodeType == 3 || node.nodeType == 8 || exclude && (u.hc(node, exclude) || node.nodeName.toLowerCase().match(exclude)))) {
+		node = node.previousSibling;
+	}
+	return node;
+}
+Util.nextSibling = u.ns = function(node, exclude) {
+	node = node.nextSibling;
+	while(node && (node.nodeType == 3 || node.nodeType == 8 || exclude && (u.hc(node, exclude) || node.nodeName.toLowerCase().match(exclude)))) {
+		node = node.nextSibling;
+	}
+	return node;
+}
+Util.childNodes = u.cn = function(node, exclude) {
+	var i, child;
+	var children = new Array();
+	for(i = 0; child = node.childNodes[i]; i++) {
+		if(child && child.nodeType != 3 && child.nodeType != 8 && (!exclude || (!u.hc(child, exclude) && !child.nodeName.toLowerCase().match(exclude) ))) {
+			children.push(child);
+		}
+	}
+	return children;
+}
+Util.appendElement = u.ae = function(parent, node_type, attributes) {
+	try {
+		var node = (typeof(node_type) == "object") ? node_type : document.createElement(node_type);
+		node = parent.appendChild(node);
+		if(attributes) {
+			var attribute;
+			for(attribute in attributes) {
+				if(attribute == "html") {
+					node.innerHTML = attributes[attribute];
+				}
+				else {
+					node.setAttribute(attribute, attributes[attribute]);
+				}
+			}
+		}
+		return node;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.ae, called from: "+arguments.callee.caller.name);
+		u.bug("node:" + u.nodeId(parent, 1));
+		u.xInObject(attributes);
+	}
+	return false;
+}
+Util.insertElement = u.ie = function(parent, node_type, attributes) {
+	try {
+		var node = (typeof(node_type) == "object") ? node_type : document.createElement(node_type);
+		node = parent.insertBefore(node, parent.firstChild);
+		if(attributes) {
+			var attribute;
+			for(attribute in attributes) {
+				if(attribute == "html") {
+					node.innerHTML = attributes[attribute];
+				}
+				else {
+					node.setAttribute(attribute, attributes[attribute]);
+				}
+			}
+		}
+		return node;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.ie, called from: "+arguments.callee.caller);
+		u.bug("node:" + u.nodeId(parent, 1));
+		u.xInObject(attributes);
+	}
+	return false;
+}
+Util.wrapElement = u.we = function(node, node_type, attributes) {
+	try {
+		var wrapper_node = node.parentNode.insertBefore(document.createElement(node_type), node);
+		if(attributes) {
+			var attribute;
+			for(attribute in attributes) {
+				wrapper_node.setAttribute(attribute, attributes[attribute]);
+			}
+		}	
+		wrapper_node.appendChild(node);
+		return wrapper_node;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.we, called from: "+arguments.callee.caller);
+		u.bug("node:" + u.nodeId(node, 1));
+		u.xInObject(attributes);
+	}
+	return false;
+}
+Util.wrapContent = u.wc = function(node, node_type, attributes) {
+	try {
+		var wrapper_node = document.createElement(node_type);
+		if(attributes) {
+			var attribute;
+			for(attribute in attributes) {
+				wrapper_node.setAttribute(attribute, attributes[attribute]);
+			}
+		}	
+		while(node.childNodes.length) {
+			wrapper_node.appendChild(node.childNodes[0]);
+		}
+		node.appendChild(wrapper_node);
+		return wrapper_node;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.wc, called from: "+arguments.callee.caller);
+		u.bug("node:" + u.nodeId(node, 1));
+		u.xInObject(attributes);
+	}
+	return false;
+}
+Util.textContent = u.text = function(node) {
+	return node.textContent;
+}
+Util.clickableElement = u.ce = function(node, options) {
+	var a = (node.nodeName.toLowerCase() == "a" ? node : u.qs("a", node));
+	if(a) {
+		u.ac(node, "link");
+		if(a.getAttribute("href") !== null) {
+			node.url = a.href;
+			a.removeAttribute("href");
+		}
+	}
+	else {
+		u.ac(node, "clickable");
+	}
+	if(typeof(u.e.click) == "function") {
+		u.e.click(node);
+		if(typeof(options) == "object") {
+			var argument;
+			for(argument in options) {
+				switch(argument) {
+					case "type"			: node._click_type		= options[argument]; break;
+					case "method"		: node._click_method	= options[argument]; break;
+				}
+			}
+			if(node._click_type == "link") {
+				node.clicked = function(event) {
+					if(event && (event.metaKey || event.ctrlKey)) {
+						window.open(this.url);
+					}
+					else {
+						if(typeof(page.navigate) == "function") {
+							page.navigate(this.url);
+						}
+						else {
+							location.href = this.url;
+						}
+					}
+				}
+			}
+		}
+	}
+	return node;
+}
+Util.classVar = u.cv = function(node, var_name) {
+	try {
+		var regexp = new RegExp(var_name + ":[?=\\w/\\#~:.,?+=?&%@!\\-]*");
+		if(node.className.match(regexp)) {
+			return node.className.match(regexp)[0].replace(var_name + ":", "");
+		}
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.cv, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+u.getIJ = u.cv;
+Util.setClass = u.sc = function(node, classname) {
+	try {
+		var old_class = node.className;
+		node.className = classname;
+		node.offsetTop;
+		return old_class;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.setClass, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.hasClass = u.hc = function(node, classname) {
+	try {
+		if(classname) {
+			var regexp = new RegExp("(^|\\s)(" + classname + ")(\\s|$)");
+			if(regexp.test(node.className)) {
+				return true;
+			}
+		}
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.hasClass("+u.nodeId(node)+"), called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.addClass = u.ac = function(node, classname, dom_update) {
+	try {
+		if(classname) {
+			var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+			if(!regexp.test(node.className)) {
+				node.className += node.className ? " " + classname : classname;
+				dom_update === false ? false : node.offsetTop;
+			}
+			return node.className;
+		}
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.addClass, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.removeClass = u.rc = function(node, classname, dom_update) {
+	try {
+		if(classname) {
+			var regexp = new RegExp("(\\b)" + classname + "(\\s|$)", "g");
+			node.className = node.className.replace(regexp, " ").trim().replace(/[\s]{2}/g, " ");
+			dom_update === false ? false : node.offsetTop;
+			return node.className;
+		}
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.removeClass, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.toggleClass = u.tc = function(node, classname, _classname, dom_update) {
+	try {
+		var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$|\:)");
+		if(regexp.test(node.className)) {
+			u.rc(node, classname, false);
+			if(_classname) {
+				u.ac(node, _classname, false);
+			}
 		}
 		else {
-			var id = u.randomString();
-			window["DOMReady_" + id] = action;
-			eval('window["_DOMReady_' + id + '"] = function() {window["DOMReady_'+id+'"](); u.e.removeEvent(document, "DOMContentLoaded", window["_DOMReady_' + id + '"])}');
-			u.e.addEvent(document, "DOMContentLoaded", window["_DOMReady_" + id]);
+			u.ac(node, classname, false);
+			if(_classname) {
+				u.rc(node, _classname, false);
+			}
+		}
+		dom_update === false ? false : node.offsetTop;
+		return node.className;
+	}
+	catch(exception) {
+		u.bug("Exception ("+exception+") in u.toggleClass, called from: "+arguments.callee.caller);
+	}
+	return false;
+}
+Util.applyStyle = u.as = function(node, property, value, dom_update) {
+	node.style[property] = value;
+	dom_update === false ? false : node.offsetTop;
+}
+Util.applyStyles = u.ass = function(node, styles, dom_update) {
+	if(styles) {
+		var style;
+		for(style in styles) {
+			node.style[style] = styles[style];
 		}
 	}
-	else {
-		u.e.addOnloadEvent(action);
+	dom_update === false ? false : node.offsetTop;
+}
+Util.getComputedStyle = u.gcs = function(node, property) {
+	node.offsetHeight;
+	if(document.defaultView && document.defaultView.getComputedStyle) {
+		return document.defaultView.getComputedStyle(node, null).getPropertyValue(property);
 	}
+	return false;
 }
-u.e.addOnloadEvent = function(action) {
-	if(document.readyState && (document.readyState == "complete" || document.readyState == "loaded")) {
-		action();
+Util.hasFixedParent = u.hfp = function(node) {
+	while(node.nodeName.toLowerCase() != "body") {
+		if(u.gcs(node.parentNode, "position").match("fixed")) {
+			return true;
+		}
+		node = node.parentNode;
 	}
-	else {
-		var id = u.randomString();
-		window["Onload_" + id] = action;
-		eval('window["_Onload_' + id + '"] = function() {window["Onload_'+id+'"](); u.e.removeEvent(window, "load", window["_Onload_' + id + '"])}');
-		u.e.addEvent(window, "load", window["_Onload_" + id]);
+	return false;
+}
+Util.inNodeList = function(node, list) {
+	var i, list_node;
+	for(i = 0; list_node = list[i]; i++) {
+		if(list_node = node) {
+			return true;
+		}
 	}
+	return false;
 }
-u.e.addWindowResizeEvent = function(node, action) {
-	var id = u.randomString();
-	u.ac(node, id);
-	eval('window["_Onresize_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onresize_'+id+' = '+action+'; node._Onresize_'+id+'();}');
-	u.e.addEvent(window, "resize", window["_Onresize_" + id]);
-	return id;
-}
-u.e.removeWindowResizeEvent = function(node, id) {
-	u.rc(node, id);
-	u.e.removeEvent(window, "resize", window["_Onresize_" + id]);
-}
-u.e.addWindowScrollEvent = function(node, action) {
-	var id = u.randomString();
-	u.ac(node, id);
-	eval('window["_Onscroll_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onscroll_'+id+' = '+action+'; node._Onscroll_'+id+'();}');
-	u.e.addEvent(window, "scroll", window["_Onscroll_" + id]);
-	return id;
-}
-u.e.removeWindowScrollEvent = function(node, id) {
-	u.rc(node, id);
-	u.e.removeEvent(window, "scroll", window["_Onscroll_" + id]);
-}
-u.e.addWindowMoveEvent = function(node, action) {
-	var id = u.randomString();
-	u.ac(node, id);
-	eval('window["_Onmove_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onmove_'+id+' = '+action+'; node._Onmove_'+id+'(event);}');
-	u.e.addMoveEvent(window, window["_Onmove_" + id]);
-	return id;
-}
-u.e.removeWindowMoveEvent = function(node, id) {
-	u.rc(node, id);
-	u.e.removeMoveEvent(window, window["_Onmove_" + id]);
-}
-u.e.addWindowEndEvent = function(node, action) {
-	var id = u.randomString();
-	u.ac(node, id);
-	eval('window["_Onend_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onend_'+id+' = '+action+'; node._Onend_'+id+'(event);}');
-	u.e.addEndEvent(window, window["_Onend_" + id]);
-	return id;
-}
-u.e.removeWindowEndEvent = function(node, id) {
-	u.rc(node, id);
-	u.e.removeEndEvent(window, window["_Onend_" + id]);
+Util.nodeWithin = u.nw = function(node, scope) {
+	var node_key = u.randomString(8);
+	var scope_key = u.randomString(8);
+	u.ac(node, node_key);
+	u.ac(scope, scope_key);
+	if(u.qs("."+scope_key+" ."+node_key)) {
+		u.rc(node, node_key);
+		u.rc(scope, scope_key);
+		return true;
+	}
+	u.rc(node, node_key);
+	u.rc(scope, scope_key);
+	return false;
 }
 
 
-/*i-page-desktop.js*/
+/*u-request.js*/
+Util.createRequestObject = u.createRequestObject = function() {
+	return new XMLHttpRequest();
+}
+Util.request = u.request = function(node, url, _options) {
+	var request_id = u.randomString(6);
+	node[request_id] = {};
+	node[request_id].request_url = url;
+	node[request_id].request_method = "GET";
+	node[request_id].request_async = true;
+	node[request_id].request_params = "";
+	node[request_id].request_headers = false;
+	node[request_id].callback_response = "response";
+	node[request_id].jsonp_callback = "callback";
+	if(typeof(_options) == "object") {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "method"				: node[request_id].request_method		= _options[argument]; break;
+				case "params"				: node[request_id].request_params		= _options[argument]; break;
+				case "async"				: node[request_id].request_async		= _options[argument]; break;
+				case "headers"				: node[request_id].request_headers		= _options[argument]; break;
+				case "callback"				: node[request_id].callback_response	= _options[argument]; break;
+				case "jsonp_callback"		: node[request_id].jsonp_callback		= _options[argument]; break;
+			}
+		}
+	}
+	if(node[request_id].request_method.match(/GET|POST|PUT|PATCH/i)) {
+		node[request_id].HTTPRequest = this.createRequestObject();
+		node[request_id].HTTPRequest.node = node;
+		node[request_id].HTTPRequest.request_id = request_id;
+		if(node[request_id].request_async) {
+			node[request_id].HTTPRequest.onreadystatechange = function() {
+				if(this.readyState == 4) {
+					u.validateResponse(this);
+				}
+			}
+		}
+		try {
+			if(node[request_id].request_method.match(/GET/i)) {
+				var params = u.JSONtoParams(node[request_id].request_params);
+				node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
+				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				var csfr_field = u.qs('meta[name="csrf-token"]');
+				if(csfr_field && csfr_field.content) {
+					node[request_id].HTTPRequest.setRequestHeader("X-CSRF-Token", csfr_field.content);
+				}
+				if(typeof(node[request_id].request_headers) == "object") {
+					var header;
+					for(header in node[request_id].request_headers) {
+						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
+					}
+				}
+				node[request_id].HTTPRequest.send("");
+			}
+			else if(node[request_id].request_method.match(/POST|PUT|PATCH/i)) {
+				var params;
+				if(typeof(node[request_id].request_params) == "object" && !node[request_id].request_params.constructor.toString().match(/FormData/i)) {
+					params = JSON.stringify(node[request_id].request_params);
+				}
+				else {
+					params = node[request_id].request_params;
+				}
+				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(!params.constructor.toString().match(/FormData/i)) {
+					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				}
+				var csfr_field = u.qs('meta[name="csrf-token"]');
+				if(csfr_field && csfr_field.content) {
+					node[request_id].HTTPRequest.setRequestHeader("X-CSRF-Token", csfr_field.content);
+				}
+				if(typeof(node[request_id].request_headers) == "object") {
+					var header;
+					for(header in node[request_id].request_headers) {
+						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
+					}
+				}
+				node[request_id].HTTPRequest.send(params);
+			}
+		}
+		catch(exception) {
+			node[request_id].HTTPRequest.exception = exception;
+			u.validateResponse(node[request_id].HTTPRequest);
+			return;
+		}
+		if(!node[request_id].request_async) {
+			u.validateResponse(node[request_id].HTTPRequest);
+		}
+	}
+	else if(node[request_id].request_method.match(/SCRIPT/i)) {
+		var key = u.randomString();
+		document[key] = new Object();
+		document[key].node = node;
+		document[key].request_id = request_id;
+		document[key].responder = function(response) {
+			var response_object = new Object();
+			response_object.node = this.node;
+			response_object.request_id = this.request_id;
+			response_object.responseText = response;
+			u.validateResponse(response_object);
+		}
+		var params = u.JSONtoParams(node[request_id].request_params);
+		node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
+		node[request_id].request_url += (!node[request_id].request_url.match(/\?/g) ? "?" : "&") + node[request_id].jsonp_callback + "=document."+key+".responder";
+		u.ae(u.qs("head"), "script", ({"type":"text/javascript", "src":node[request_id].request_url}));
+	}
+	return request_id;
+}
+Util.JSONtoParams = function(json) {
+	if(typeof(json) == "object") {
+		var params = "", param;
+		for(param in json) {
+			params += (params ? "&" : "") + param + "=" + json[param];
+		}
+		return params
+	}
+	var object = u.isStringJSON(json);
+	if(object) {
+		return u.JSONtoParams(object);
+	}
+	return json;
+}
+Util.isStringJSON = function(string) {
+	if(string.trim().substr(0, 1).match(/[\{\[]/i) && string.trim().substr(-1, 1).match(/[\}\]]/i)) {
+		try {
+			var test = JSON.parse(string);
+			if(typeof(test) == "object") {
+				test.isJSON = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
+}
+Util.isStringHTML = function(string) {
+	if(string.trim().substr(0, 1).match(/[\<]/i) && string.trim().substr(-1, 1).match(/[\>]/i)) {
+		try {
+			var test = document.createElement("div");
+			test.innerHTML = string;
+			if(test.childNodes.length) {
+				var body_class = string.match(/<body class="([a-z0-9A-Z_: ]+)"/);
+				test.body_class = body_class ? body_class[1] : "";
+				var head_title = string.match(/<title>([^$]+)<\/title>/);
+				test.head_title = head_title ? head_title[1] : "";
+				test.isHTML = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
+}
+Util.evaluateResponseText = function(responseText) {
+	var object;
+	if(typeof(responseText) == "object") {
+		responseText.isJSON = true;
+		return responseText;
+	}
+	else {
+		var response_string;
+		if(responseText.trim().substr(0, 1).match(/[\"\']/i) && responseText.trim().substr(-1, 1).match(/[\"\']/i)) {
+			response_string = responseText.trim().substr(1, responseText.trim().length-2);
+		}
+		else {
+			response_string = responseText;
+		}
+		var json = u.isStringJSON(response_string);
+		if(json) {
+			return json;
+		}
+		var html = u.isStringHTML(response_string);
+		if(html) {
+			return html;
+		}
+		return responseText;
+	}
+}
+Util.validateResponse = function(response){
+	var object = false;
+	if(response) {
+		try {
+			if(response.status && !response.status.toString().match(/403|404|500/)) {
+				object = u.evaluateResponseText(response.responseText);
+			}
+			else if(response.responseText) {
+				object = u.evaluateResponseText(response.responseText);
+			}
+		}
+		catch(exception) {
+			response.exception = exception;
+		}
+	}
+	if(object) {
+		if(typeof(response.node[response.node[response.request_id].callback_response]) == "function") {
+			response.node[response.node[response.request_id].callback_response](object, response.request_id);
+		}
+		// 
+	}
+	else {
+		if(typeof(response.node.ResponseError) == "function") {
+			response.node.ResponseError(response);
+		}
+		if(typeof(response.node.responseError) == "function") {
+			response.node.responseError(response);
+		}
+	}
+}
+
+
+/*beta-u-sortable.js*/
+u.sortable = function(scope, _options) {
+	scope.callback_picked = "picked";
+	scope.callback_moved = "moved";
+	scope.callback_dropped = "dropped";
+	scope.draggables;	
+	scope.targets;	
+	scope.layout;
+	scope.allow_nesting = false;
+	if(typeof(_options) == "object") {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "picked"				: scope.callback_picked		= _options[argument]; break;
+				case "moved"				: scope.callback_moved		= _options[argument]; break;
+				case "dropped"				: scope.callback_dropped	= _options[argument]; break;
+				case "draggables"			: scope.draggables			= _options[argument]; break;
+				case "targets"				: scope.targets				= _options[argument]; break;
+				case "layout"				: scope.layout				= _options[argument]; break;
+				case "allow_nesting"		: scope.allow_nesting		= _options[argument]; break;
+			}
+		}
+	}
+	scope._sortablepick = function(event) {
+		if(!this.d_node.scope._sorting_disabled) {
+			u.e.kill(event);
+			if(!this.d_node.scope._dragged) {
+				var d_node = this.d_node.scope._dragged = this.d_node;
+				d_node.start_opacity = u.gcs(d_node, "opacity");
+				d_node.start_position = u.gcs(d_node, "position");
+				d_node.start_width = u.gcs(d_node, "width");
+				d_node.start_height = u.gcs(d_node, "height");
+				if(!d_node.scope.tN) {
+					d_node.scope.tN = document.createElement(d_node.nodeName);
+				}
+				u.sc(d_node.scope.tN, "target " + d_node.className);
+				u.as(d_node.scope.tN, "height", u.actualHeight(d_node)+"px");
+				u.as(d_node.scope.tN, "width", u.actualWidth(d_node)+"px");
+				u.as(d_node.scope.tN, "opacity", d_node.start_opacity - 0.5);
+				d_node.scope.tN.innerHTML = d_node.innerHTML;
+				u.as(d_node, "width", u.actualWidth(d_node) + "px");
+				u.as(d_node, "opacity", d_node.start_opacity - 0.3);
+				d_node.mouse_ox = u.eventX(event) - u.absX(d_node);
+				d_node.mouse_oy = u.eventY(event) - u.absY(d_node);
+				u.as(d_node, "position", "absolute");
+				u.as(d_node, "left", (u.eventX(event) - d_node.rel_ox) - d_node.mouse_ox+"px");
+				u.as(d_node, "top", (u.eventY(event) - d_node.rel_oy) - d_node.mouse_oy+"px");
+				u.ac(d_node, "dragged");
+				d_node._event_move_id = u.e.addWindowMoveEvent(d_node, d_node.scope._sortabledrag);
+				d_node._event_end_id = u.e.addWindowEndEvent(d_node, d_node.scope._sortabledrop);
+				d_node.parentNode.insertBefore(d_node.scope.tN, d_node);
+				if(typeof(d_node.scope[d_node.scope.callback_picked]) == "function") {
+					d_node.scope[d_node.scope.callback_picked](event);
+				}
+			}
+		}
+	}
+	scope._sortabledrag = function(event) {
+		u.e.kill(event);
+		var i, node;
+		var event_x = u.eventX(event);
+		var event_y = u.eventY(event);
+		if(this.scope._dragged == this) {
+			this.d_left = event_x - this.mouse_ox;
+			this.d_top = event_y - this.mouse_oy;
+			// 	
+			// 		
+			// 		
+			// 
+			// 	
+			// 		
+			// 		
+			// 
+				u.as(this, "position", "absolute");
+				u.as(this, "left", this.d_left - this.rel_ox+"px");
+				u.as(this, "top", this.d_top - this.rel_oy+"px");
+				u.as(this, "bottom", "auto");
+				this.scope.detectAndInject(event_x, event_y);
+		}
+		if(typeof(this.scope[this.scope.callback_moved]) == "function") {
+			this.scope[this.scope.callback_moved](event);
+		}
+	}
+	scope._sortabledrop = function(event) {
+		u.e.kill(event);
+		u.e.removeWindowMoveEvent(this, this._event_move_id);
+		u.e.removeWindowEndEvent(this, this._event_end_id);
+		this.scope.tN = this.scope.tN.parentNode.replaceChild(this, this.scope.tN);
+		u.as(this, "position", this.start_position);
+		u.as(this, "opacity", this.start_opacity);
+		u.as(this, "left", "");
+		u.as(this, "top", "");
+		u.as(this, "bottom", "");
+		u.as(this, "width", "");
+		u.as(this.scope, "width", "");
+		u.as(this.scope, "height", "");
+		if(!this.scope.draggables) {
+			this.scope.draggable_nodes = u.qsa("li", this.scope);
+		}
+		else {
+			this.scope.draggable_nodes = u.qsa("."+this.scope.draggables, this.scope);
+		}
+		if(typeof(this.scope[this.scope.callback_dropped]) == "function") {
+			this.scope[this.scope.callback_dropped](event);
+		}
+		this.rel_ox = u.absX(this) - u.relX(this);
+		this.rel_oy = u.absY(this) - u.relY(this);
+		u.rc(this, "dragged");
+		this.scope._dragged = false;
+	}
+	scope.detectAndInject = function(event_x, event_y) {
+		for(i = this.draggable_nodes.length-1; node = this.draggable_nodes[i]; i--) {
+			if(node != this._dragged && node != this.tN && (!this.targets || u.hc(node.parentNode, this.targets))) {
+				if(this.layout == "vertical") {
+					var o_top = u.absY(node);
+					var o_height = this.draggable_node_height;
+				 	if(event_y > o_top && event_y < o_top + o_height) {
+						if(this.allow_nesting) {
+							var no_nesting_offset = o_height/3 > 7 ? 7 : o_height/3;
+							if(i === 0 && event_y > o_top && event_y < o_top + no_nesting_offset) {
+								node.parentNode.insertBefore(this.tN, node);
+							}
+							else
+							if(event_y > o_top && event_y > (o_top + o_height) - ((no_nesting_offset)*2)) {
+								var next = u.ns(node);
+								if(next) {
+									node.parentNode.insertBefore(this.tN, next);
+								}
+								else {
+									node.parentNode.appendChild(this.tN);
+								}
+							}
+							else {
+								var sub_nodes = u.qs("ul" + this.targets ? ("."+this.targets) : "", node);
+								if(!sub_nodes) {
+									sub_nodes = u.ae(node, "ul", {"class":this.targets});
+								}
+								sub_nodes.appendChild(this.tN);
+							}
+							break;
+						}
+						else {
+							if(event_y > o_top && event_y < o_top + o_height/2) {
+								node.parentNode.insertBefore(this.tN, node);
+							}
+							else {
+								var next = u.ns(node);
+								if(next) {
+									node.parentNode.insertBefore(this.tN, next);
+								}
+								else {
+									node.parentNode.appendChild(this.tN);
+								}
+							}
+							break;
+						}
+					}
+				}
+				else {
+					var o_left = u.absX(node);
+					var o_top = u.absY(node);
+					var o_width = node.offsetWidth;
+					var o_height = node.offsetHeight;
+				 	if(event_x > o_left && event_x < o_left + o_width && event_y > o_top && event_y < o_top + o_height) {
+						if(event_x > o_left && event_x < o_left + o_width/2) {
+							node.parentNode.insertBefore(this.tN, node);
+						}
+						else {
+							var next = u.ns(node);
+							if(next) {
+								node.parentNode.insertBefore(this.tN, next);
+							}
+							else {
+								node.parentNode.appendChild(this.tN);
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
+	scope.getStructure = function() {
+		if(!this.draggables) {
+			this.draggable_nodes = u.qsa("li", this);
+		}
+		else {
+			this.draggable_nodes = u.qsa("."+this.draggables, this);
+		}
+		var structure = [];
+		var i, node, id, relation, position;
+		for(i = 0; node = this.draggable_nodes[i]; i++) {
+			id = u.cv(node, "node_id");
+			relation = this.getRelation(node);
+			position = this.getPositionInList(node);
+			structure.push({"id":id, "relation":relation, "position":position});
+		}
+		return structure;
+	}
+	scope.getPositionInList = function(node) {
+		var pos = 1;
+		var test_node = node;
+		while(u.ps(test_node)) {
+			test_node = u.ps(test_node);
+			pos++;
+		}
+		return pos;
+	}
+	scope.getRelation = function(node) {
+		if(!node.parentNode.relation_id) {
+			var li_relation = u.pn(node, "li");
+			if(u.inNodeList(li_relation, this.draggable_nodes)) {
+				node.parentNode.relation_id = u.cv(li_relation, "id");
+			}
+			else {
+				node.parentNode.relation_id = 0;
+			}
+		}
+		return node.parentNode.relation_id;
+	}
+	scope.disableNodeDrag = function(node) {
+		u.bug("disableNodeDrag:" + u.nodeId(node))
+		u.e.removeStartEvent(node.drag, this._sortablepick);
+	}
+	var i, j, d_node;
+	if(!scope.draggables) {
+		scope.draggable_nodes = u.qsa("li", scope);
+	}
+	else {
+		scope.draggable_nodes = u.qsa("."+scope.draggables, scope);
+	}
+	if(!scope.draggable_nodes.length) {
+		return;
+	}
+	scope.draggable_node_height = scope.draggable_nodes[0].offsetHeight;
+	if(!scope.targets) {
+		scope.target_nodes = u.qsa("ul", scope);
+	}
+	else {
+		scope.target_nodes = u.qsa("."+scope.targets, scope);
+	}
+	if((!scope.targets || u.hc(scope, scope.targets))) {
+		if(scope.target_nodes.length) {
+			var temp_scope = scope.target_nodes;
+			scope.target_nodes = [scope];
+			var target_node;
+			for(i = 0; target_node = temp_scope[i]; i++) {
+				scope.target_nodes.push(target_node);
+			} 
+		}
+		else {
+			scope.target_nodes = [scope];
+		}
+	}
+	if(!scope.layout && scope.draggable_nodes.length) {
+		scope.layout = scope.offsetWidth < scope.draggable_nodes[0].offsetWidth*2 ? "vertical" : "horizontal";
+	}
+	for(i = 0; d_node = scope.draggable_nodes[i]; i++) {
+		d_node.scope = scope;
+		d_node.dragme = true;
+		d_node.rel_ox = u.absX(d_node) - u.relX(d_node);
+		d_node.rel_oy = u.absY(d_node) - u.relY(d_node);
+		d_node.drag = u.qs(".drag", d_node);
+		if(!d_node.drag) {
+			d_node.drag = d_node;
+		}
+		d_node.drag.d_node = d_node;
+		var drag_children = u.qsa("*", d_node.drag);
+		if(drag_children) {
+			for(j = 0; child = drag_children[j]; j++) {
+				child.d_node = d_node;
+			}
+		}
+		u.e.removeStartEvent(d_node.drag, scope._sortablepick);
+		u.e.addStartEvent(d_node.drag, scope._sortablepick);
+	}
+}
+
+
+/*u-keyboard.js*/
+Util.Keyboard = u.k = new function() {
+	this.shortcuts = {};
+	this.onkeydownCatcher = function(event) {
+		u.k.catchKey(event);
+	}
+	this.addKey = function(node, key, _options) {
+		node.callback_keyboard = "clicked";
+		node.metakey_required = true;
+		if(typeof(_options) == "object") {
+			var argument;
+			for(argument in _options) {
+				switch(argument) {
+					case "callback"		: node.callback_keyboard	= _options[argument]; break;
+					case "metakey"		: node.metakey_required		= _options[argument]; break;
+				}
+			}
+		}
+		if(!this.shortcuts.length) {
+			u.e.addEvent(document, "keydown", this.onkeydownCatcher);
+		}
+		if(!this.shortcuts[key.toString().toUpperCase()]) {
+			this.shortcuts[key.toString().toUpperCase()] = new Array();
+		}
+		this.shortcuts[key.toString().toUpperCase()].push(node);
+	}
+	this.catchKey = function(event) {
+		event = event ? event : window.event;
+		var key = String.fromCharCode(event.keyCode);
+		if(event.keyCode == 27) {
+			key = "ESC";
+		}
+		if(this.shortcuts[key]) {
+			var nodes, node, i;
+			nodes = this.shortcuts[key];
+			for(i = 0; node = nodes[i]; i++) {
+				if(u.nodeWithin(node, document.body)) {
+					if(node.offsetHeight && ((event.ctrlKey || event.metaKey) || (!node.metakey_required || key == "ESC"))) {
+						u.e.kill(event);
+						if(typeof(node[node.callback_keyboard]) == "function") {
+							node[node.callback_keyboard](event);
+						}
+					}
+				}
+				else {
+					this.shortcuts[key].splice(i, 1);
+					if(!this.shortcuts[key].length) {
+						delete this.shortcuts[key];
+						break;
+					}
+					else {
+						i--;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+/*beta-u-audio.js*/
+Util.audioPlayer = function(node) {
+	var player;
+	if(node) {
+		player = u.ae(node, "div", {"class":"audioplayer"});
+	}
+	else {
+		player = document.createElement("div");
+		u.ac(player, "audioplayer");
+	}
+	player.audio = u.ae(player, "audio");
+	player.audio.controls = false;
+	if(typeof(player.audio.play) == "function") {
+		player.load = function(src) {
+			if(this.playing) {
+				this.stop();
+			}
+			if(src) {
+				this.audio.src = this.correctSource(src);
+				this.audio.load();
+			}
+		}
+		player.play = function(position) {
+			this.playing = true;
+			position = position ? position : 0;
+			if(this.audio.src) {
+				this.audio.play();
+			}
+		}
+		player.loadAndPlay = function(src, position) {
+			this.load(src);
+			this.play(position);
+		}
+		player.pause = function() {
+			this.playing = false;
+			this.audio.pause();
+		}
+		player.stop = function() {
+			this.pause();
+		}
+		player._loadstart = function(event) {
+			u.removeClass(this.parentNode, "ready")
+			u.addClass(this.parentNode, "loading");
+		}
+		u.e.addEvent(player.audio, "loadstart", player._loadstart);
+		player._canplaythrough = function(event) {
+			u.removeClass(this.parentNode, "loading")
+			u.addClass(this.parentNode, "ready");
+		}
+		u.e.addEvent(player.audio, "canplaythrough", player._canplaythrough);
+		player._loadeddata = function(event) {
+			this.parentNode.videoLoaded = true;
+			if(typeof(this.parentNode.loadeddata) == "function") {
+				this.parentNode.loadeddata(event);
+			}
+		}
+		u.e.addEvent(player.audio, "loadeddata", player._loadeddata);
+		player._ended = function(event) {
+			u.rc(this, "playing|paused");
+			if(typeof(this.parentNode.ended) == "function") {
+				this.parentNode.ended(event);
+			}
+		}
+		u.e.addEvent(player.audio, "ended", player._ended);
+		player._loadedmetadata = function(event) {
+			u.bug("1", "loadedmetadata:duration:" + this.duration);
+			u.bug("1", "loadedmetadata:currentTime:" + this.currentTime);
+		}
+	}
+	else if(typeof(u.audioPlayerFallback) == "function") {
+		player.removeChild(player.video);
+		player = u.audioPlayerFallback(player);
+	}
+	else {
+		player.load = function() {}
+		player.play = function() {}
+		player.loadAndPlay = function() {}
+		player.pause = function() {}
+		player.stop = function() {}
+	}
+	player.correctSource = function(src) {
+		src = src.replace(/.mp3|.ogg|.wav/, "");
+		if(this.audio.canPlayType("audio/mpeg")) {
+			return src+".mp3";
+		}
+		else if(this.audio.canPlayType("audio/ogg")) {
+			return src+".ogg";
+		}
+		else {
+			return src+".wav";
+		}
+	}
+	return player;
+}
+
+/*beta-u-video.js*/
+Util.videoPlayer = function(_options) {
+	var player;
+	// 
+		player = document.createElement("div");
+		u.ac(player, "videoplayer");
+	player.ff_skip = 2;
+	player.rw_skip = 2;
+	player._default_playpause = false;
+	player._default_zoom = false;
+	player._default_volume = false;
+	player._default_search = false;
+	if(typeof(_options) == "object") {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "playpause"	: player._default_playpause		= _options[argument]; break;
+			}
+		}
+	}
+	player.flash = false;
+	player.video = u.ae(player, "video");
+	if(typeof(player.video.play) == "function") {
+		player.load = function(src, _options) {
+			player._controls_playpause = player._default_playpause;
+			player._controls_zoom = player._default_zoom;
+			player._controls_volume = player._default_volume;
+			player._controls_search = player._default_search;
+			if(typeof(_options) == "object") {
+				var argument;
+				for(argument in _options) {
+					switch(argument) {
+						case "playpause"	: player._controls_playpause	= _options[argument]; break;
+					}
+				}
+			}
+			this.setup();
+			if(this.className.match("/playing/")) {
+				this.stop();
+			}
+			if(src) {
+				this.video.src = this.correctSource(src);
+				this.video.load();
+				this.video.controls = false;
+			}
+		}
+		player.play = function(position) {
+			if(this.video.currentTime && position !== undefined) {
+				this.video.currentTime = position;
+			}
+			if(this.video.src) {
+				this.video.play();
+			}
+		}
+		player.loadAndPlay = function(src, _options) {
+			var position = 0;
+			if(typeof(_options) == "object") {
+				var argument;
+				for(argument in _options) {
+					switch(argument) {
+						case "position"		: position		= _options[argument]; break;
+					}
+				}
+			}
+			this.load(src, _options);
+			this.play(position);
+		}
+		player.pause = function() {
+			this.video.pause();
+		}
+		player.stop = function() {
+			this.video.pause();
+			if(this.video.currentTime) {
+				this.video.currentTime = 0;
+			}
+		}
+		player.ff = function() {
+			if(this.video.src && this.video.currentTime && this.videoLoaded) {
+				this.video.currentTime = (this.video.duration - this.video.currentTime >= this.ff_skip) ? (this.video.currentTime + this.ff_skip) : this.video.duration;
+				this.video._timeupdate();
+			}
+		}
+		player.rw = function() {
+			if(this.video.src && this.video.currentTime && this.videoLoaded) {
+				this.video.currentTime = (this.video.currentTime >= this.rw_skip) ? (this.video.currentTime - this.rw_skip) : 0;
+				this.video._timeupdate();
+			}
+		}
+		player.togglePlay = function() {
+			if(this.className.match(/playing/g)) {
+				this.pause();
+			}
+			else {
+				this.play();
+			}
+		}
+		player.setup = function() {
+			if(u.qs("video", this)) {
+				var video = this.removeChild(this.video);
+				delete video;
+			}
+			this.video = u.ie(this, "video");
+			this.video.player = this;
+			this.setControls();
+			this.currentTime = 0;
+			this.duration = 0;
+			this.videoLoaded = false;
+			this.metaLoaded = false;
+			this.video._loadstart = function(event) {
+				u.ac(this.player, "loading");
+				if(typeof(this.player.loading) == "function") {
+					this.player.loading(event);
+				}
+			}
+			u.e.addEvent(this.video, "loadstart", this._loadstart);
+			this.video._canplaythrough = function(event) {
+				u.rc(this.player, "loading");
+				if(typeof(this.player.canplaythrough) == "function") {
+					this.player.canplaythrough(event);
+				}
+			}
+			u.e.addEvent(this.video, "canplaythrough", this.video._canplaythrough);
+			this.video._playing = function(event) {
+				u.rc(this.player, "loading|paused");
+				u.ac(this.player, "playing");
+				if(typeof(this.player.playing) == "function") {
+					this.player.playing(event);
+				}
+			}
+			u.e.addEvent(this.video, "playing", this.video._playing);
+			this.video._paused = function(event) {
+				u.rc(this.player, "playing|loading");
+				u.ac(this.player, "paused");
+				if(typeof(this.player.paused) == "function") {
+					this.player.paused(event);
+				}
+			}
+			u.e.addEvent(this.video, "pause", this.video._paused);
+			this.video._stalled = function(event) {
+				u.rc(this.player, "playing|paused");
+				u.ac(this.player, "loading");
+				if(typeof(this.player.stalled) == "function") {
+					this.player.stalled(event);
+				}
+			}
+			u.e.addEvent(this.video, "stalled", this.video._paused);
+			this.video._ended = function(event) {
+				u.rc(this.player, "playing|paused");
+				if(typeof(this.player.ended) == "function") {
+					this.player.ended(event);
+				}
+			}
+			u.e.addEvent(this.video, "ended", this.video._ended);
+			this.video._loadedmetadata = function(event) {
+				this.player.duration = this.duration;
+				this.player.currentTime = this.currentTime;
+				this.player.metaLoaded = true;
+				if(typeof(this.player.loadedmetadata) == "function") {
+					this.player.loadedmetadata(event);
+				}
+			}
+			u.e.addEvent(this.video, "loadedmetadata", this.video._loadedmetadata);
+			this.video._loadeddata = function(event) {
+				this.player.videoLoaded = true;
+				if(typeof(this.player.loadeddata) == "function") {
+					this.player.loadeddata(event);
+				}
+			}
+			u.e.addEvent(this.video, "loadeddata", this.video._loadeddata);
+			this.video._timeupdate = function(event) {
+				this.player.currentTime = this.currentTime;
+				if(typeof(this.player.timeupdate) == "function") {
+					this.player.timeupdate(event);
+				}
+			}
+			u.e.addEvent(this.video, "timeupdate", this.video._timeupdate);
+		}
+	}
+	else if(typeof(u.videoPlayerFallback) == "function") {
+		player.removeChild(player.video);
+		player = u.videoPlayerFallback(player);
+	}
+	player.correctSource = function(src) {
+		src = src.replace(/\?[^$]+/, "");
+		src = src.replace(/\.m4v|\.mp4|\.webm|\.ogv|\.3gp|\.mov/, "");
+		if(this.flash) {
+			return src+".mp4";
+		}
+		else if(this.video.canPlayType("video/mp4")) {
+			return src+".mp4";
+		}
+		else if(this.video.canPlayType("video/ogg")) {
+			return src+".ogv";
+		}
+		else if(this.video.canPlayType("video/3gpp")) {
+			return src+".3gp";
+		}
+		else {
+			return src+".mov";
+		}
+	}
+	player.setControls = function() {
+		if(this.showControls) {
+			u.e.removeEvent(this, "mousemove", this.showControls);
+		}
+		if(this._controls_playpause || this._controls_zoom || this._controls_volume || this._controls_search) {
+			if(!this.controls) {
+				this.controls = u.ae(this, "div", {"class":"controls"});
+				this.hideControls = function() {
+					this.t_controls = u.t.resetTimer(this.t_controls);
+					u.a.transition(this.controls, "all 0.3s ease-out");
+					u.a.setOpacity(this.controls, 0);
+				}
+				this.showControls = function() {
+					if(this.t_controls) {
+						this.t_controls = u.t.resetTimer(this.t_controls);
+					}
+					else {
+						u.a.transition(this.controls, "all 0.5s ease-out");
+						u.a.setOpacity(this.controls, 1);
+					}
+					this.t_controls = u.t.setTimer(this, this.hideControls, 1500);
+				}
+			}
+			else {
+				u.as(this.controls, "display", "block");
+			}
+			if(this._controls_playpause) {
+				if(!this.controls.playpause) {
+					this.controls.playpause = u.ae(this.controls, "a", {"class":"playpause"});
+					this.controls.playpause.player = this;
+					u.e.click(this.controls.playpause);
+					this.controls.playpause.clicked = function(event) {
+						this.player.togglePlay();
+					}
+				}
+				else {
+					u.as(this.controls.playpause, "display", "block");
+				}
+			}
+			else if(this.controls.playpause) {
+				u.as(this.controls.playpause, "display", "none");
+			}
+			if(this._controls_zoom && !this.controls.zoom) {}
+			else if(this.controls.zoom) {}
+			if(this._controls_volume && !this.controls.volume) {}
+			else if(this.controls.volume) {}
+			if(this._controls_search && !this.controls.search) {}
+			else if(this.controls.search) {}
+			u.e.addEvent(this, "mousemove", this.showControls);
+		}
+		else if(this.controls) {
+			u.as(this.controls, "display", "none");
+		}
+	}
+	return player;
+}
+
+/*i-page.js*/
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
-			page.style_tag = document.createElement("style");
-			page.style_tag.setAttribute("media", "all")
-			page.style_tag.setAttribute("type", "text/css")
-			page.style_tag = u.ae(document.head, page.style_tag);
-			page.hN = u.qs("#header");
-			page.hN.service = u.qs(".servicenavigation", page.hN);
-			page.cN = u.qs("#content", page);
-			page.nN = u.qs("#navigation", page);
-			page.nN = u.ie(page.hN, page.nN);
-			page.fN = u.qs("#footer");
-			page.fN.service = u.qs(".servicenavigation", page.fN);
-			page.fN.slogan = u.qs("p", page.fN);
-			if(page.fN.slogan) {
-				u.ce(page.fN.slogan);
-				page.fN.slogan.clicked = function(event) {
-					window.open("http://parentnode.dk");
-				}
+		var i, node;
+		page.hN = u.qs("#header", page);
+		page.cN = u.qs("#content", page);
+		page.nN = u.qs("#navigation", page);
+		if(page.nN) {
+			page.nN = page.hN.appendChild(page.nN);
+		}
+		page.fN = u.qs("#footer", page);
+		page.resized = function() {
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
+				page.cN.scene.resized();
 			}
-			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
-			page.logo.url = '/';
-			page.logo.font_size = parseInt(u.gcs(page.logo, "font-size"));
-			page.logo.font_size_gap = page.logo.font_size-14;
-			page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
-			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
-			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
-			page.resized = function() {
-				this.calc_height = u.browserH();
-				this.calc_width = u.browserW();
-				this.available_height = this.calc_height - page.hN.offsetHeight - page.fN.offsetHeight;
-				u.as(page.cN, "height", "auto", false);
-				if(this.available_height >= page.cN.offsetHeight) {
-					u.as(page.cN, "height", this.available_height+"px", false);
-				}
-				if(this.calc_width > 1300) {
-					u.ac(page, "fixed");
-				}
-				else {
-					u.rc(page, "fixed");
-				}
-				if(page.cN && page.cN.scene) {
-					if(typeof(page.cN.scene.resized) == "function") {
-						page.cN.scene.resized();
-					}
-				}
+		}
+		page.scrolled = function() {
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
+				page.cN.scene.scrolled();
 			}
-			page.scrolled = function() {
-				page.scrolled_y = u.scrollY();
-				if(page.scrolled_y < page.logo.top_offset) {
-					page.logo.is_reduced = false;
-					var reduce_font = (1-(page.logo.top_offset-page.scrolled_y)/page.logo.top_offset) * page.logo.font_size_gap;
-					page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-reduce_font)+"px", "important");
-				}
-				else if(!page.logo.is_reduced) {
-					page.logo.is_reduced = true;
-					page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-page.logo.font_size_gap)+"px", "important");
-				}
-				if(page.scrolled_y < page.nN.top_offset) {
-					page.nN.is_reduced = false;
-					var factor = (1-(page.nN.top_offset-page.scrolled_y)/page.nN.top_offset);
-					var reduce_font = factor * page.nN.font_size_gap;
-					page.nN.list.css_rule.style.setProperty("font-size", (page.nN.font_size-reduce_font)+"px", "important");
-					var reduce_top = factor * page.nN.top_offset_gap;
-					page.nN.css_rule.style.setProperty("top", (page.nN.top_offset-reduce_top)+"px", "important");
-				}
-				else if(!page.nN.is_reduced) {
-					page.nN.is_reduced = true;
-					page.nN.list.css_rule.style.setProperty("font-size", (page.nN.font_size-page.nN.font_size_gap)+"px", "important");
-					page.nN.css_rule.style.setProperty("top", (page.nN.top_offset-page.nN.top_offset_gap)+"px", "important");
-				}
-				if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
-					page.cN.scene.scrolled();
-				}
+		}
+		page.ready = function() {
+			if(!this.is_ready) {
+				this.is_ready = true;
+				u.e.addEvent(window, "resize", page.resized);
+				u.e.addEvent(window, "scroll", page.scrolled);
+				u.notifier(page);
+				u.navigation(page);
 			}
-			page.ready = function() {
-				if(!this.is_ready) {
-					this.is_ready = true;
-					u.e.addEvent(window, "resize", page.resized);
-					u.e.addEvent(window, "scroll", page.scrolled);
-					this.initNavigation();
-					this.resized();
-					if(!u.getCookie("terms_v1")) {
-						var terms = u.ie(document.body, "div", {"class":"terms_notification"});
-						u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
-						var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
-						bn_accept.terms = terms;
-						u.ce(bn_accept);
-						bn_accept.clicked = function() {
-							this.terms.parentNode.removeChild(this.terms);
-							u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
-						}
-						if(!location.href.match(/\/terms/)) {
-							var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
-							bn_details.url = "/terms";
-							u.ce(bn_details, {"type":"link"});
-						}
-					}
-				}
+		}
+		page.svgIcon = function(icon) {
+			var path;
+			if(icon == "youtube") {
+				path = "";
 			}
-			page.initNavigation = function() {
-				var i, node;
-				page.nN.list = u.qs("ul", page.nN);
-				page.nN.list.nodes = u.qsa("li", page.nN);
-				page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
-				page.nN.font_size_gap = page.nN.font_size-14;
-				page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
-				page.nN.top_offset_gap = page.nN.top_offset-10;
-				page.style_tag.sheet.insertRule("#navigation {}", 0);
-				page.nN.css_rule = page.style_tag.sheet.cssRules[0];
-				page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
-				page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
-				this.hN.nodes = u.qsa("#navigation li,.servicenavigation li,a.logo", page.hN);
-				for(i = 0; node = this.hN.nodes[i]; i++) {
-					u.ce(node, {"type":"link"});
-					node._mousedover = function() {
-						this.transitioned = function() {
-							this.transitioned = function() {
-								this.transitioned = function() {
-									u.a.transition(this, "none");
-								}
-								u.a.transition(this, "all 0.1s ease-in-out");
-								u.a.scale(this, 1.2);
-							}
-							u.a.transition(this, "all 0.1s ease-in-out");
-							u.a.scale(this, 1.15);
-						}
-						u.a.transition(this, "all 0.1s ease-in-out");
-						u.a.scale(this, 1.22);
-					}
-					node._mousedout = function() {
-						this.transitioned = function() {
-							this.transitioned = function() {
-								u.a.transition(this, "none");
-							}
-							u.a.transition(this, "all 0.1s ease-in");
-							u.a.scale(this, 1);
-						}
-						u.a.transition(this, "all 0.1s ease-in");
-						u.a.scale(this, 0.8);
-					}
-					if(u.e.event_pref == "mouse") {
-						u.e.addEvent(node, "mouseover", node._mousedover);
-						u.e.addEvent(node, "mouseout", node._mousedout);
-					}
-					else {
-						u.e.addStartEvent(node, node._mousedover);
-						u.e.addEndEvent(node, node._mousedout);
-					}
-				}
-			}
-			page.ready();
+		}
+		page.ready();
 	}
 }
-u.e.addDOMReadyEvent(u.init);
+u.e.addDOMReadyEvent(u.init)
 
 
-/*i-login-desktop.js*/
+/*i-form.js*/
+Util.Objects["addPrices"] = new function() {
+	this.init = function(div) {
+		var form = u.qs("form", div);
+		u.f.init(form);
+		var i, field, actions;
+		form.submitted = function(event) {
+			this.response = function(response) {
+				page.notify(response);
+			}
+			u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+		}
+	}
+}
 Util.Objects["login"] = new function() {
 	this.init = function(scene) {
-		u.bug("scene init:" + u.nodeId(scene))
 		scene.resized = function() {
 		}
 		scene.scrolled = function() {
@@ -5169,184 +6447,1234 @@ Util.Objects["login"] = new function() {
 }
 
 
-/*i-article-desktop.js*/
-Util.Objects["articlelist"] = new function() {
-	this.init = function(list) {
-		list.popstate = ("onpopstate" in window);
-		list.items = u.qsa(".item", list);
-		list.scrolled = function() {
+/*i-defaultlist.js*/
+Util.Objects["defaultList"] = new function() {
+	this.init = function(div) {
+		var i, node;
+		div.list = u.qs("ul.items", div);
+		if(!div.list) {
+			div.list = u.ae(div, "ul", {"class":"items"});
+		}
+		div.list.div = div;
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.nodes = u.qsa("li.item", div);
+		div.scrolled = function() {
 			var scroll_y = u.scrollY()
 			var browser_h = u.browserH();
-			var screen_middle = browser_h/2;
-			var i, node, node_y, list_y;
-			list_y = u.absY(this);
-			if(this._prev && list_y + browser_h > scroll_y) {
-				this.loadPrev();
-			}
-			else if(this._next && list_y + this.offsetHeight < scroll_y + (browser_h*2)) {
-				this.loadNext();
-			}
-			for(i = 0; node = this.items[i]; i++) {
-				node_y = u.absY(node);
-				if(!node._ready && node_y - 200 < scroll_y+browser_h && node_y + 200 > scroll_y) {
-					u.o.article.init(node);
-					node._ready = true;
-				}
-				if(this.popstate && node._ready && node.hardlink) {
-					if(node_y <= scroll_y + screen_middle && node_y + node.offsetHeight > scroll_y + screen_middle) {
-						history.replaceState({}, node.hardlink, node.hardlink);
-					}
+			var i, node, abs_y;
+			for(i = 0; node = this.nodes[i]; i++) {
+				abs_y = u.absY(node);
+				if(!node._ready && abs_y - 200 < scroll_y+browser_h && abs_y + 200 > scroll_y) {
+					this.buildNode(node);
 				}
 			}
 		}
-		u.e.addWindowScrollEvent(list, list.scrolled);
-		var next_link = u.qs(".pagination li.next a", list.parentNode);
-		var prev_link = u.qs(".pagination li.previous a", list.parentNode);
-		list._prev = prev_link ? prev_link.href : false;
-		list._next = next_link ? next_link.href : false;
-		list.loadPrev = function() {
-			if(this._prev) {
-				u.bug("load prev function")
-				this.response = function(response) {
-					var items = u.qsa(".item", response);
-					var i, node;
-					for(i = items.length; i; i--) {
-						node = u.ie(this, items[i-1]);
-						u.bug("u.scrollY:" + u.scrollY())
-						window.scrollTo(0, u.scrollY()+node.offsetHeight);
-					}
-					var prev_link = u.qs(".pagination li.previous a", response);
-					this._prev = prev_link ? prev_link.href : false;
-					this.items = u.qsa(".item", this);
-				}
-				u.request(this, this._prev);
-				this._prev = false;
-			}
+		div._scrollHandler = function() {
+			u.t.resetTimer(this.t_scroll);
+			this.scrolled();
 		}
-		list.loadNext = function() {
-			if(this._next) {
-				this.response = function(response) {
-					var items = u.qsa(".item", response);
-					var i;
-					for(i = 0; i < items.length; i++) {
-						u.ae(this, items[i]);
-					}
-					var next_link = u.qs(".pagination li.next a", response);
-					this._next = next_link ? next_link.href : false;
-					this.items = u.qsa(".item", this);
-				}
-				u.request(this, this._next);
-				this._next = false;
-			}
-		}
-		if(list._prev) {
-			list.content_y = u.absY(u.qs("h1"));
-			list.start_y = u.absY(list.items[0]);
-			window.scrollTo(0, list.start_y-list.content_y);
-		}
-		else if(u.scrollY()) {
-			window.scrollTo(0, 0);
-		}
-		list.scrolled();
-	}
-}
-Util.Objects["article"] = new function() {
-	this.init = function(article) {
-		var hardlink = u.qs("dd.hardlink a", article);
-		article.hardlink = hardlink ? hardlink.href : false;
-		var i, image;
-		article._images = u.qsa("div.image", article);
-		for(i = 0; image = article._images[i]; i++) {
-			image._id = u.cv(image, "image_id");
-			image._format = u.cv(image, "format");
-			image._variant = u.cv(image, "variant");
-			if(image._id && image._format) {
-				image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + image.offsetWidth + "x." + image._format;
-				image._image = u.ie(image, "img");
-				u.a.setOpacity(image, 0);
-				image.loaded = function(queue) {
-					if(u.absY(this) < u.scrollY()) {
-						window.scrollTo(0, u.scrollY()+queue[0].image.height)
-					}
-					this._image.src = queue[0].image.src;
-					u.a.transition(this, "all 0.5s ease-in-out");
-					u.a.setOpacity(this, 1);
-				}
-				u.preloader(image, [image._image_src]);
-				u.ce(image);
-				image.clicked = function() {
-					if(u.hc(this, "fullsize")) {
-						u.rc(this, "fullsize");
-						this._image.src = this._image_src;
+		var event_id = u.e.addWindowScrollEvent(div, div._scrollHandler);
+		div.buildNode = function(node) {
+			node._item_id = u.cv(node, "item_id");
+			node._variant = u.cv(node, "variant");
+			node.div = this;
+			node._actions = u.qsa(".actions li", node);
+			var i, action, form, bn_detele, form_disable, form_enable;
+			for(i = 0; action = node._actions[i]; i++) {
+				if(u.hc(action, "status")) {
+					if(!action.childNodes.length) {
+						action.update_status_url = action.getAttribute("data-update-status");
+						if(action.update_status_url) {
+							form_disable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/0", "class":"disable"});
+							u.ae(form_disable, "input", {"type":"hidden","name":"csrf-token", "value":this.csrf_token});
+							u.f.addAction(form_disable, {"value":"Disable", "class":"button status"});
+							form_enable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/1", "class":"enable"});
+							u.ae(form_enable, "input", {"type":"hidden","name":"csrf-token", "value":this.csrf_token});
+							u.f.addAction(form_enable, {"value":"Enable", "class":"button status"});
+						}
 					}
 					else {
-						u.ac(this, "fullsize");
-						if(this._fullsize_src) {
-							this._image.src = this._fullsize_src;
+						form_disable = u.qs("form.disable", action);
+						form_enable = u.qs("form.enable", action);
+					}
+					if(form_disable && form_enable) {
+						u.f.init(form_disable);
+						form_disable.submitted = function() {
+							this.response = function(response) {
+								page.notify(response);
+								if(response.cms_status == "success") {
+									u.ac(this.parentNode, "disabled");
+									u.rc(this.parentNode, "enabled");
+								}
+							}
+							u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+						}
+						u.f.init(form_enable);
+						form_enable.submitted = function() {
+							this.response = function(response) {
+								page.notify(response);
+								if(response.cms_status == "success") {
+									u.rc(this.parentNode, "disabled");
+									u.ac(this.parentNode, "enabled");
+								}
+							}
+							u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+						}
+					}
+				}
+				else if(u.hc(action, "delete")) {
+					if(!action.childNodes.length) {
+						action.delete_item_url = action.getAttribute("data-delete-item");
+						if(action.delete_item_url) {
+							form = u.f.addForm(action, {"action":action.delete_item_url, "class":"delete"});
+							u.ae(form, "input", {"type":"hidden","name":"csrf-token", "value":this.csrf_token});
+							form.node = node;
+							bn_delete = u.f.addAction(form, {"value":"Delete", "class":"button delete", "name":"delete"});
+						}
+					}
+					else {
+						form = u.qs("form", action);
+						form.node = node;
+					}
+					if(form) {
+						u.f.init(form);
+						form.restore = function(event) {
+							this.actions["delete"].value = "Delete";
+							u.rc(this.actions["delete"], "confirm");
+						}
+						form.submitted = function() {
+							if(!u.hc(this.actions["delete"], "confirm")) {
+								u.ac(this.actions["delete"], "confirm");
+								this.actions["delete"].value = "Confirm";
+								this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+							}
+							else {
+								u.t.resetTimer(this.t_confirm);
+								this.response = function(response) {
+									page.notify(response);
+									if(response.cms_status == "success") {
+										if(response.cms_object && response.cms_object.constraint_error) {
+											this.value = "Delete";
+											u.ac(this, "disabled");
+										}
+										else {
+											this.node.parentNode.removeChild(this.node);
+											this.node.div.scrolled();
+											u.sortable(this.node.div.list, {"targets":"items", "draggables":"draggable"});
+										}
+									}
+								}
+								u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+							}
+						}
+					}
+				}
+			}
+			node._image = u.cv(node, "image");
+			node._width = u.cv(node, "width");
+			node._height = u.cv(node, "height");
+			if(node._image && node._width && node._height) {
+				u.ac(node, "image");
+				node._image_src = "/images/"+node._item_id+"/"+(node._variant ? node._variant+"/" : "")+node._width+"x"+node._height+"."+node._image;
+			}
+			else if(node._image && node._width) {
+				u.ac(node, "image");
+				node._image_src = "/images/"+node._item_id+"/"+(node._variant ? node._variant+"/" : "")+node._width+"x."+node._image;
+			}
+			else if(node._image && node._height) {
+				u.ac(node, "image");
+				node._image_src = "/images/"+node._item_id+"/"+(node._variant ? node._variant+"/" : "")+"x"+node._height+"."+node._image;
+			}
+			if(node._image_src) {
+				u.as(node, "backgroundImage", "url("+node._image_src+")");
+			}
+			node._audio = u.cv(node, "audio");
+			if(node._audio) {
+				u.ac(node, "audio");
+				if(!page.audioplayer) {
+					page.audioplayer = u.audioPlayer();
+				}
+				var audio = u.ie(node, "div", {"class":"audio"});
+				audio.scene = this;
+				audio.url = "/audios/"+node._item_id+"/128."+node._audio;
+				u.e.click(audio);
+				audio.clicked = function(event) {
+					if(!u.hc(this.parentNode, "playing")) {
+						var node, i;
+						for(i = 0; node = this.scene.nodes[i]; i++) {
+							u.rc(node, "playing");
+						}
+						page.audioplayer.loadAndPlay(this.url);
+						u.ac(this.parentNode, "playing");
+					}
+					else {
+						page.audioplayer.stop();
+						u.rc(this.parentNode, "playing");
+					}
+				}
+			}
+			node._video = u.cv(node, "video");
+			if(node._video) {
+			}
+			node._ready = true;
+		}
+		if(u.hc(div, "taggable")) {
+			u.bug("init taggable")
+			div.add_tag_url = div.getAttribute("data-add-tag");
+			div.delete_tag_url = div.getAttribute("data-delete-tag");
+			div.get_tags_url = div.getAttribute("data-get-tags");
+			if(div.get_tags_url && div.delete_tag_url && div.add_tag_url) {
+				div.tagsResponse = function(response) {
+					if(response.cms_status == "success" && response.cms_object) {
+						this.all_tags = response.cms_object;
+						var i, node, tag, j, bn_add, context, value;
+						for(i = 0; node = this.nodes[i]; i++) {
+							node._tags = u.qs("ul.tags", node);
+							if(!node._tags) {
+								node._tags = u.ae(node, "ul", {"class":"tags"});
+							}
+							node._bn_add = u.ae(node._tags, "li", {"class":"add","html":"+"});
+							node._bn_add.div = this;
+							node._bn_add.node = node;
+							u.e.click(node._bn_add);
+							node._bn_add.clicked = function() {
+								this.div.taggableNode(this.node);
+							}
+						}
+					}
+					else {
+						page.notify(response);
+					}
+				}
+				u.request(div, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "params":"csrf-token=" + div.csrf_token});
+				div.taggableNode = function(node) {
+					u.ac(node, "addtags");
+					node._bn_add.innerHTML = "-";
+					node._bn_add.clicked = function() {
+						this.innerHTML = "+";
+						u.rc(this.node, "addtags");
+						this.node._tag_options.parentNode.removeChild(this.node._tag_options);
+						this.clicked = function() {
+							this.div.taggableNode(this.node);
+						}
+					}
+					node._tag_options = u.ae(node, "div", {"class":"tagoptions"});
+					node._tag_options._field = u.ae(node._tag_options, "div", {"class":"field"});
+					node._tag_options._tagfilter = u.ae(node._tag_options._field, "input", {"class":"filter ignoreinput"});
+					node._tag_options._tagfilter.node = node;
+					node._tag_options._tagfilter.onkeyup = function() {
+						if(this.node._new_tags) {
+							var tags = u.qsa(".tag", this.node._new_tags);
+							var i, tag;
+							for(i = 0; tag = tags[i]; i++) {
+								if(tag.textContent.toLowerCase().match(this.value.toLowerCase())) {
+									u.as(tag, "display", "inline-block");
+								}
+								else {
+									u.as(tag, "display", "none");
+								}
+							}
+						}
+					}
+					node._new_tags = u.ae(node._tag_options, "ul", {"class":"tags"});
+					var itemTags = u.qsa("li:not(.add)", node._tags);
+					var usedTags = {};
+					for(j = 0; tag = itemTags[j]; j++) {
+						tag._context = u.qs(".context", tag).innerHTML;
+						tag._value = u.qs(".value", tag).innerHTML;
+						if(!usedTags[tag._context]) {
+							usedTags[tag._context] = {}
+						}
+						if(!usedTags[tag._context][tag._value]) {
+							usedTags[tag._context][tag._value] = tag;
+						}
+					}
+					for(tag in this.all_tags) {
+						context = this.all_tags[tag].context;
+						value = this.all_tags[tag].value.replace(/ & /, " &amp; ");
+						if(usedTags && usedTags[context] && usedTags[context][value]) {
+							tag_node = usedTags[context][value];
 						}
 						else {
-							this._fullsize_width = 1300;
-							this._fullsize_src = "/images/" + this._id + "/" + (this._variant ? this._variant+"/" : "") + this._fullsize_width + "x." + this._format;
-							this.response = function() {
-								this._image.src = this._fullsize_src;
+							tag_node = u.ae(node._new_tags, "li", {"class":"tag"});
+							tag_node._context = context;
+							tag_node._value = value;
+							u.ae(tag_node, "span", {"class":"context", "html":tag_node._context});
+							u.ae(tag_node, "span", {"class":"value", "html":tag_node._value});
+						}
+						tag_node.new_tags = this;
+						tag_node._id = this.all_tags[tag].id;
+						tag_node.node = node;
+						u.e.click(tag_node);
+						tag_node.clicked = function() {
+							if(u.hc(this.node, "addtags")) {
+								if(this.parentNode == this.node._tags) {
+									this.response = function(response) {
+										page.notify(response);
+										if(response.cms_status == "success") {
+											u.ae(this.node._new_tags, this);
+										}
+									}
+									u.request(this, this.node.div.delete_tag_url+"/"+this.node._item_id+"/" + this._id, {"method":"post", "params":"csrf-token=" + this.node.div.csrf_token});
+								}
+								else {
+									this.response = function(response) {
+										page.notify(response);
+										if(response.cms_status == "success") {
+											u.ie(this.node._tags, this);
+										}
+									}
+									u.request(this, this.node.div.add_tag_url+"/"+this.node._item_id, {"method":"post", "params":"tags="+this._id+"&csrf-token=" + this.node.div.csrf_token});
+								}
 							}
-							this.responseError = function() {
-								this._fullsize_width = this._fullsize_width-200;
-								this._fullsize_src = "/images/" + this._id + "/" + (this._variant ? this._variant+"/" : "") + this._fullsize_width + "x." + this._format;
-								u.request(this, this._fullsize_src);
-							}
-							u.request(this, this._fullsize_src);
 						}
 					}
 				}
 			}
-		}
-		article.geolocation = u.qs("dl.geo", article);
-		if(article.geolocation) {
-			article.geolocation.article = article;
-			u.bug("article.geolocation:" + article.geolocation)
-			var dd_longitude = u.qs("dd.longitude", article.geolocation);
-			var dd_latitude = u.qs("dd.latitude", article.geolocation);
-			if(dd_longitude && dd_latitude) {
-				article.geo_longitude = parseFloat(dd_longitude.innerHTML);
-				article.geo_latitude = parseFloat(dd_latitude.innerHTML);
-				article.showMap = function() {
-					if(!this.geomap) {
-						this.geomap = u.ae(this, "div", {"class":"geomap"});
-						this.insertBefore(this.geomap, u.qs("dl.info", this));
-						var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
-						var html = '<html><head>';
-						html += '<style type="text/css">body {margin: 0;}#map {height: 100%;}</style>';
-						html += '<script type="text/javascript" src="'+maps_url+'"></script>';
-						html += '<script type="text/javascript">';
-						html += 'var map, marker;';
-						html += 'var initialize = function() {';
-						html += '	window._map_loaded = true;';
-						html += '	var mapOptions = {center: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'),zoom: 12};';
-						html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
-						html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'), draggable:true});';
-						html += '	marker.setMap(map);';
-						html += '};';
-						html += 'google.maps.event.addDomListener(window, "load", initialize);';
-						html += '</script>';
-						html += '</head><body><div id="map"></div></body></html>';
-						this.mapsiframe = u.ae(this.geomap, "iframe");
-						this.mapsiframe.doc = this.mapsiframe.contentDocument? this.mapsiframe.contentDocument: this.mapsiframe.contentWindow.document;
-						this.mapsiframe.doc.open();
-						this.mapsiframe.doc.write(html);
-						this.mapsiframe.doc.close();
-					}
-				}
-				article.geolocation.clicked = function() {
-					this.article.showMap();
-				}
-				u.ce(article.geolocation);
-				u.ac(article.geolocation, "active");
+			else {
+				u.rc(div, "taggable");
 			}
 		}
-		// 	
-		// 	
-		// 	
+		if(u.hc(div, "filters")) {
+			div._filter = u.ie(div, "div", {"class":"filter"});
+			var i, node;
+			for(i = 0; node = div.nodes[i]; i++) {
+				node._c = node.textContent.toLowerCase();
+			}
+			div._filter._field = u.ae(div._filter, "div", {"class":"field"});
+			u.ae(div._filter._field, "label", {"html":"Filter"});
+			div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
+			div._filter._input._div = div;
+			div._filter._input.onkeydown = function() {
+				u.t.resetTimer(this._div.t_filter);
+			}
+			div._filter._input.onkeyup = function() {
+				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 500);
+				u.ac(this._div._filter, "filtering");
+			}
+			div.filter = function() {
+				var i, node;
+				if(this._current_filter != this._filter._input.value.toLowerCase()) {
+					this._current_filter = this._filter._input.value.toLowerCase();
+					for(i = 0; node = this.nodes[i]; i++) {
+						if(node._c.match(this._current_filter)) {
+							u.as(node, "display", "block", false);
+						}
+						else {
+							u.as(node, "display", "none", false);
+						}
+					}
+				}
+				u.rc(this._filter, "filtering");
+				this.scrolled();
+			}
+		}
+		if(u.hc(div, "sortable") && div.list) {
+			div.save_order_url = div.getAttribute("data-save-order");
+			if(div.save_order_url) {
+				u.sortable(div.list, {"targets":"items", "draggables":"draggable"});
+				div.list.picked = function() {}
+				div.list.dropped = function() {
+					var order = new Array();
+					this.nodes = u.qsa("li.item", this);
+					for(i = 0; node = this.nodes[i]; i++) {
+						order.push(u.cv(node, "id"));
+					}
+					this.orderResponse = function(response) {
+						page.notify(response);
+					}
+					u.request(this, this.div.save_order_url, {"callback":"orderResponse", "method":"post", "params":"csrf-token=" + this.div.csrf_token + "&order=" + order.join(",")});
+				}
+			}
+			else {
+				u.rc(div, "sortable");
+			}
+		}
+		div.scrolled();
+	}
+}
+
+
+/*i-defaultedit.js*/
+Util.Objects["defaultEdit"] = new function() {
+	this.init = function(div) {
+		div._item_id = u.cv(div, "item_id");
+		var form = u.qs("form", div);
+		u.f.init(form);
+		form.actions["cancel"].clicked = function(event) {
+			location.href = this.url;
+		}
+		form.submitted = function(iN) {
+			this.response = function(response) {
+				page.notify(response);
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+	}
+}
+
+/*i-defaultnew.js*/
+Util.Objects["defaultNew"] = new function() {
+	this.init = function(form) {
+		u.f.init(form);
+		form.actions["cancel"].clicked = function(event) {
+			location.href = this.url;
+		}
+		form.submitted = function(iN) {
+			this.response = function(response) {
+				if(response.cms_status == "success" && response.cms_object) {
+					location.href = this.actions["cancel"].url.replace("\/list", "/edit/"+response.cms_object.item_id);
+				}
+				else if(response.cms_message) {
+					page.notify(response);
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+	}
+}
+
+/*i-defaulteditstatus.js*/
+Util.Objects["defaultEditStatus"] = new function() {
+	this.init = function(node) {
+		node._item_id = u.cv(node, "item_id");
+		node.csrf_token = node.getAttribute("data-csrf-token");
+		var action = u.qs("li.status");
+		if(action) {
+			if(!action.childNodes.length) {
+				action.update_status_url = action.getAttribute("data-update-status");
+				if(action.update_status_url) {
+					form_disable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/0", "class":"disable"});
+					u.ae(form_disable, "input", {"type":"hidden","name":"csrf-token", "value":node.csrf_token});
+					u.f.addAction(form_disable, {"value":"Disable", "class":"button status"});
+					form_enable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/1", "class":"enable"});
+					u.ae(form_enable, "input", {"type":"hidden","name":"csrf-token", "value":node.csrf_token});
+					u.f.addAction(form_enable, {"value":"Enable", "class":"button status"});
+				}
+			}
+			else {
+				form_disable = u.qs("form.disable", action);
+				form_enable = u.qs("form.enable", action);
+			}
+			if(form_disable && form_enable) {
+				u.f.init(form_disable);
+				form_disable.submitted = function() {
+					this.response = function(response) {
+						page.notify(response);
+						if(response.cms_status == "success") {
+							u.ac(this.parentNode, "disabled");
+							u.rc(this.parentNode, "enabled");
+						}
+					}
+					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+				}
+				u.f.init(form_enable);
+				form_enable.submitted = function() {
+					this.response = function(response) {
+						page.notify(response);
+						if(response.cms_status == "success") {
+							u.rc(this.parentNode, "disabled");
+							u.ac(this.parentNode, "enabled");
+						}
+					}
+					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+				}
+			}
+		}
+	}
+}
+
+/*i-defaulteditactions.js*/
+Util.Objects["defaultEditActions"] = new function() {
+	this.init = function(node) {
+		node._item_id = u.cv(node, "item_id");
+		node.csrf_token = node.getAttribute("data-csrf-token");
+		var cancel = u.qs("li.cancel a");
+		var action = u.qs("li.delete");
+		if(action && cancel && cancel.href) {
+			if(!action.childNodes.length) {
+				action.delete_item_url = action.getAttribute("data-delete-item");
+				if(action.delete_item_url) {
+					form = u.f.addForm(action, {"action":action.delete_item_url, "class":"delete"});
+					u.ae(form, "input", {"type":"hidden","name":"csrf-token", "value":node.csrf_token});
+					form.node = node;
+					bn_delete = u.f.addAction(form, {"value":"Delete", "class":"button delete", "name":"delete"});
+				}
+			}
+			else {
+				form = u.qs("form", action);
+			}
+			if(form) {
+				u.f.init(form);
+				form.cancel_url = cancel.href;
+				form.restore = function(event) {
+					this.actions["delete"].value = "Delete";
+					u.rc(this.actions["delete"], "confirm");
+				}
+				form.submitted = function() {
+					if(!u.hc(this.actions["delete"], "confirm")) {
+						u.ac(this.actions["delete"], "confirm");
+						this.actions["delete"].value = "Confirm";
+						this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+					}
+					else {
+						u.t.resetTimer(this.t_confirm);
+						this.response = function(response) {
+							page.notify(response);
+							if(response.cms_status == "success") {
+								if(response.cms_object && response.cms_object.constraint_error) {
+									this.value = "Delete";
+									u.ac(this, "disabled");
+								}
+								else {
+									location.href = this.cancel_url;
+								}
+							}
+						}
+						u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+					}
+				}
+			}
+		}
+	}
+}
+
+/*i-defaulttags.js*/
+Util.Objects["defaultTags"] = new function() {
+	this.init = function(div) {
+		div.item_id = u.cv(div, "item_id");
+		div._tags_form = u.qs("form", div);
+		div._tags_form.div = div;
+		u.f.init(div._tags_form);
+		div.csrf_token = div._tags_form.fields["csrf-token"].value;
+		div.add_tag_url = div._tags_form.action;
+		div.delete_tag_url = div.getAttribute("data-delete-tag");
+		div.get_tags_url = div.getAttribute("data-get-tags");
+		div._tags_form.fields["tags"].focused = function() {
+			this.form.div.enableTagging();
+		}
+		div._tags_form.fields["tags"].updated = function() {
+			if(this.form.div._new_tags) {
+				var tags = u.qsa(".tag", this.form.div._new_tags);
+				var i, tag;
+				for(i = 0; tag = tags[i]; i++) {
+					if(tag.textContent.toLowerCase().match(this.value.toLowerCase())) {
+						u.as(tag, "display", "inline-block");
+					}
+					else {
+						u.as(tag, "display", "none");
+					}
+				}
+			}
+		}
+		div._tags_form.submitted = function(iN) {
+			this.response = function(response) {
+				page.notify(response);
+				if(response.cms_status == "success") {
+					var i, tag_node;
+					var new_tags = u.qsa("li", this.div._new_tags);
+					for(i = 0; tag_node = new_tags[i]; i++) {
+						if(tag_node._id == response.cms_object.tag_id) {
+							this.fields["tags"].val("");
+							this.fields["tags"].updated();
+							u.ae(this.div._tags, tag_node);
+							return;
+						}
+					}
+					this.div._tags._alltags.push({"id":response.cms_object.tag_id, "context":response.cms_object.context, "value":response.cms_object.value})
+					tag_node = u.ae(this.div._tags, "li", {"class":"tag"});
+					tag_node._context = response.cms_object.context;
+					tag_node._value = response.cms_object.value;
+					tag_node._id = response.cms_object.id;
+					u.ae(tag_node, "span", {"class":"context", "html":tag_node._context});
+					u.ae(tag_node, "span", {"class":"value", "html":tag_node._value});
+					tag_node.div = this.div;
+					div.activateTag(tag_node);
+					this.fields["tags"].val("");
+					this.fields["tags"].updated();
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+		div._tags = u.qs("ul.tags", div);
+		if(!div._tags) {
+			div._tags = u.ae(div._tags, "ul", {"class":"tags"});
+		}
+		div._tags.div = div;
+		div._tags.tagsResponse = function(response) {
+			if(response.cms_status == "success" && response.cms_object) {
+				this._alltags = response.cms_object;
+				var bn_add;
+				this._bn_add = u.ae(this, "li", {"class":"add","html":"+"});
+				this._bn_add.div = this.div;
+				u.e.click(this._bn_add);
+				this._bn_add.clicked = function() {
+					this.div.enableTagging();
+				}
+			}
+			else {
+				page.notify(response);
+			}
+		}
+		u.request(div._tags, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "params":"csrf-token=" + div.csrf_token});
+		div.enableTagging = function() {
+			u.bug("enable tagging")
+			if(!this._tag_options) {
+				this._tags._bn_add.innerHTML = "-";
+				this._tags._bn_add.clicked = function() {
+					this.innerHTML = "+";
+					u.rc(this.div, "addtags");
+					this.div._tag_options.parentNode.removeChild(this.div._tag_options);
+					this.div._tag_options = false;
+					this.clicked = function() {
+						this.div.enableTagging();
+					}
+				}
+				u.ac(this, "addtags");
+				this._tag_options = u.ae(this, "div", {"class":"tagoptions"});
+				this._new_tags = u.ae(this._tag_options, "ul", {"class":"tags"});
+				var usedtags = {};
+				var itemTags = u.qsa("li:not(.add)", this._tags);
+				var i, tag_node, tag, context, value;
+				for(i = 0; tag_node = itemTags[i]; i++) {
+					tag_node._context = u.qs(".context", tag_node).innerHTML;
+					tag_node._value = u.qs(".value", tag_node).innerHTML;
+					if(!usedtags[tag_node._context]) {
+						usedtags[tag_node._context] = {}
+					}
+					if(!usedtags[tag_node._context][tag_node._value]) {
+						usedtags[tag_node._context][tag_node._value] = tag_node;
+					}
+				}
+				for(tag in this._tags._alltags) {
+					context = this._tags._alltags[tag].context;
+					value = this._tags._alltags[tag].value.replace(/ & /, " &amp; ");
+					if(usedtags && usedtags[context] && usedtags[context][value]) {
+						tag_node = usedtags[context][value];
+					}
+					else {
+						tag_node = u.ae(this._new_tags, "li", {"class":"tag"});
+						tag_node._context = context;
+						tag_node._value = value;
+						u.ae(tag_node, "span", {"class":"context", "html":tag_node._context});
+						u.ae(tag_node, "span", {"class":"value", "html":tag_node._value});
+					}
+					tag_node._id = this._tags._alltags[tag].id;
+					tag_node.div = this;
+					div.activateTag(tag_node);
+				}
+			}
+		}
+		div.activateTag = function(tag_node) {
+			u.e.click(tag_node);
+			tag_node.clicked = function() {
+				if(u.hc(this.div, "addtags")) {
+					if(this.parentNode == this.div._tags) {
+						this.response = function(response) {
+							page.notify(response);
+							if(response.cms_status == "success") {
+								u.ae(this.div._new_tags, this);
+							}
+						}
+						u.request(this, this.div.delete_tag_url+"/"+this.div.item_id+"/" + this._id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+					}
+					else {
+						this.response = function(response) {
+							page.notify(response);
+							if(response.cms_status == "success") {
+								u.ie(this.div._tags, this)
+							}
+						}
+						u.request(this, this.div.add_tag_url, {"method":"post", "params":"tags="+this._id+"&csrf-token=" + this.div.csrf_token});
+					}
+				}
+			}
+		}
+	}
+}
+
+
+/*i-defaultmedia.js*/
+Util.Objects["addMedia"] = new function() {
+	this.init = function(div) {
+		div.form = u.qs("form.upload", div);
+		div.form.div = div;
+		div.media_list = u.qs("ul.mediae", div);
+		div.item_id = u.cv(div, "item_id");
+		u.f.init(div.form);
+		div.csrf_token = div.form.fields["csrf-token"].val();
+		div.delete_url = div.getAttribute("data-delete-media");
+		div.update_name_url = div.getAttribute("data-update-media-name");
+		div.save_order_url = div.getAttribute("data-save-order");
+		div.form.file_input = u.qs("input[type=file]", div.form);
+		div.form.file_input.div = div;
+		div.form.file_input.changed = function() {
+			this.form._submit();
+		}
+		div.form.submitted = function() {
+			u.ac(this.file_input.field, "loading");
+			u.rc(this.file_input.field, "focus");
+			var form_data = new FormData(this);
+			this.response = function(response) {
+				page.notify(response);
+				if(response.cms_status == "success" && response.cms_object) {
+					var i, media, li, image;
+					for(i = 0; media = response.cms_object[i]; i++) {
+						var li = u.ie(div.media_list, "li");
+						li.media_list = this.div.media_list;
+						u.ac(li, "media image");
+						u.ac(li, "variant:"+media.variant);
+						u.ac(li, "media_id:"+media.media_id);
+						var image = u.ae(li, "img");
+						image.src = "/images/"+media.item_id+"/"+media.variant+"/x"+li.offsetHeight+"."+media.format+"?"+u.randomString(4);
+						if(media.name) {
+							li.p_name = u.ae(li, "p", {"html":media.name});
+							var n_w = media.width/media.height * li.offsetHeight;
+							var p_p_l = parseInt(u.gcs(li.p_name, "padding-left"));
+							var p_p_r = parseInt(u.gcs(li.p_name, "padding-right"));
+							u.as(li.p_name, "width", (n_w - p_p_l - p_p_r)+"px");
+							if(this.div.update_name_url) {
+								this.div.addUpdateNameForm(li);
+							}
+						}
+						if(this.div.delete_url) {
+							this.div.addDeleteForm(li);
+						}
+					}
+					if(this.div.save_order_url) {
+						u.sortable(this.div.media_list);
+					}
+				}
+				u.rc(this.file_input.field, "loading");
+				this.file_input.val("");
+			}
+			u.request(this, this.action, {"method":"post", "params":form_data});
+		}
+		div.addDeleteForm = function(li) {
+			var delete_form = u.f.addForm(li, {"action":this.delete_url+"/"+this.item_id+"/"+u.cv(li, "variant"), "class":"delete"});
+			delete_form.li = li;
+			u.ae(delete_form, "input", {"type":"hidden", "name":"csrf-token", "value":this.csrf_token});
+			var bn_delete = u.f.addAction(delete_form, {"class":"button delete"});
+			delete_form.deleted = function() {
+				this.li.parentNode.removeChild(this.li);
+				u.sortable(div.media_list, {"targets":"mediae", "draggables":"media"});
+			}
+			u.o.deleteMedia.init(delete_form);
+		}
+		div.addUpdateNameForm = function(li) {
+			li.p_name.li = li;
+			u.ce(li.p_name);
+			li.p_name.inputStarted = function(event) {
+				u.e.kill(event);
+				this.li.media_list._sorting_disabled = true;
+			}
+			li.p_name.clicked = function(event) {
+				u.ac(this.li, "edit");
+				var input = this.li.update_name_form.fields["name"];
+				var field = input.field;
+				input.focus();
+				var f_w = field.offsetWidth;
+				var f_p_l = parseInt(u.gcs(field, "padding-left"));
+				var f_p_r = parseInt(u.gcs(field, "padding-right"));
+				var i_p_l = parseInt(u.gcs(input, "padding-left"));
+				var i_p_r = parseInt(u.gcs(input, "padding-right"));
+				var i_m_l = parseInt(u.gcs(input, "margin-left"));
+				var i_m_r = parseInt(u.gcs(input, "margin-right"));
+				var i_b_l = parseInt(u.gcs(input, "border-left-width"));
+				var i_b_r = parseInt(u.gcs(input, "border-right-width"));
+				u.as(input, "width", (f_w - f_p_l - f_p_r - i_p_l - i_p_r - i_m_l - i_m_r - i_b_l - i_b_r)+"px");
+			}
+			li.update_name_form = u.f.addForm(li, {"action":this.update_name_url+"/"+this.item_id+"/"+u.cv(li, "variant"), "class":"edit"});
+			li.update_name_form.li = li;
+			var field = u.ae(li.update_name_form, "input", {"type":"hidden", "name":"csrf-token", "value":this.csrf_token});
+			var field = u.f.addField(li.update_name_form, {"type":"string","name":"name", "value":li.p_name.innerHTML});
+			u.f.init(li.update_name_form);
+			li.update_name_form.fields["name"].blurred = function() {
+				u.bug("blurred")
+				this.form.updateName();
+			}
+			li.update_name_form.submitted = function() {}
+			li.update_name_form.updateName = function() {
+				u.rc(this.li, "edit");
+				this.li.media_list._sorting_disabled = false;
+				this.response = function(response) {
+					page.notify(response);
+					if(response.cms_status == "success" && response.cms_object) {
+						this.li.p_name.innerHTML = this.fields["name"].val();
+					}
+					else {
+						this.fields["name"].val(this.li.p_name.innerHTML);
+					}
+				}
+				u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+			}
+		}
+		if(!div.media_list) {
+			u.ae(div, "ul", {"class":"mediae"});
+		}
+		div.media_list.nodes = u.qsa("li.media", div.media_list);
+		div.media_list.div = div;
+		var i, node;
+		for(i = 0; node = div.media_list.nodes[i]; i++) {
+			node.media_list = div.media_list;
+			if(div.delete_url) {
+				div.addDeleteForm(node);
+			}
+			node.p_name = u.qs("p", node);
+			if(node.p_name) {
+				var n_w = node.offsetWidth;
+				var p_p_l = parseInt(u.gcs(node.p_name, "padding-left"));
+				var p_p_r = parseInt(u.gcs(node.p_name, "padding-right"));
+				u.as(node.p_name, "width", (n_w - p_p_l - p_p_r)+"px");
+				if(div.update_name_url) {
+					div.addUpdateNameForm(node);
+				}
+			}
+		}
+		if(u.hc(div, "sortable") && div.media_list && div.save_order_url) {
+			u.sortable(div.media_list, {"targets":"mediae", "draggables":"media"});
+			div.media_list.picked = function() {}
+			div.media_list.dropped = function() {
+				var order = new Array();
+				this.nodes = u.qsa("li.media", this);
+				for(i = 0; node = this.nodes[i]; i++) {
+					order.push(u.cv(node, "media_id"));
+				}
+				this.response = function(response) {
+					page.notify(response);
+				}
+				u.request(this, this.div.save_order_url, {"method":"post", "params":"csrf-token=" + this.div.csrf_token + "&order=" + order.join(",")});
+			}
+		}
+		else {
+			u.rc(div, "sortable");
+		}
+	}
+}
+Util.Objects["deleteMedia"] = new function() {
+	this.init = function(form) {
+		u.f.init(form);
+		var bn_delete = u.qs("input.delete", form);
+		if(bn_delete) {
+			bn_delete.org_value = bn_delete.value;
+			u.e.click(bn_delete);
+			bn_delete.restore = function(event) {
+				this.value = this.org_value;
+				u.rc(this, "confirm");
+			}
+			bn_delete.inputStarted = function(event) {
+				u.e.kill(event);
+			}
+			bn_delete.clicked = function(event) {
+				u.e.kill(event);
+				if(!u.hc(this, "confirm")) {
+					u.ac(this, "confirm");
+					this.value = "Confirm";
+					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+				}
+				else {
+					u.t.resetTimer(this.t_confirm);
+					this.response = function(response) {
+						page.notify(response);
+						if(response.cms_status == "success") {
+							if(response.cms_object && response.cms_object.constraint_error) {
+								this.value = this.org_value;
+								u.ac(this, "disabled");
+							}
+							else {
+								if(typeof(this.form.deleted) == "function") {
+									this.form.deleted();
+								}
+								else {
+									location.reload();
+								}
+							}
+						}
+						else {
+							this.restore();
+						}
+					}
+					u.request(this, this.form.action, {"method":"post", "params" : u.f.getParams(this.form)});
+				}
+			}
+		}
+	}
+}
+Util.Objects["addMediaSingle"] = new function() {
+	this.init = function(div) {
+		div.form = u.qs("form.upload", div);
+		div.form.div = div;
+		div.image = u.qs("img", div);
+		div.item_id = u.cv(div, "item_id");
+		div.media_variant = u.cv(div, "variant");
+		u.f.init(div.form);
+		div.csrf_token = div.form.fields["csrf-token"].val();
+		div.delete_url = div.getAttribute("data-delete-media");
+		div.form.file_input = u.qs("input[type=file]", div.form);
+		div.form.file_input.div = div;
+		div.form.file_input.changed = function() {
+			this.form._submit();
+		}
+		div.form.submitted = function() {
+			u.ac(this.file_input.field, "loading");
+			u.rc(this.file_input.field, "focus");
+			if(this.div.image) {
+				u.as(this.div.image, "display", "none");
+			}
+			var form_data = new FormData(this);
+			this.response = function(response) {
+				page.notify(response);
+				if(this.div.image) {
+					u.as(this.div.image, "display", "block");
+				}
+				if(response.cms_status == "success" && response.cms_object) {
+					if(!this.div.image) {
+						this.div.image = u.ae(this.div, "img");
+						this.div.addDeleteForm();
+					}
+					if(response.cms_object.format == "pdf") {
+						this.div.image.src = "/images/0/pdf/x"+this.div.image.offsetHeight+".png?"+u.randomString(4);
+					}
+					else if(response.cms_object.format == "zip") {
+						this.div.image.src = "/images/0/zip/x"+this.div.image.offsetHeight+".png?"+u.randomString(4);
+					}
+					else {
+						this.div.image.src = "/images/"+response.cms_object.item_id+"/"+response.cms_object.variant+"/x"+this.div.image.offsetHeight+"."+response.cms_object.format+"?"+u.randomString(4);
+					}
+				}
+				u.rc(this.file_input.field, "loading");
+				this.file_input.val("");
+			}
+			u.request(this, this.action, {"method":"post", "params":form_data});
+		}
+		div.addDeleteForm = function() {
+			this.delete_form = u.f.addForm(this, {"action":this.delete_url+"/"+this.item_id+"/"+this.media_variant, "class":"delete"});
+			this.delete_form.div = this;
+			u.ae(this.delete_form, "input", {"type":"hidden", "name":"csrf-token", "value":this.csrf_token});
+			this.bn_delete = u.f.addAction(this.delete_form, {"class":"button delete"});
+			this.delete_form.deleted = function() {
+				this.div.image.parentNode.removeChild(this.div.image);
+				this.div.image = false;
+				this.parentNode.removeChild(this);
+			}
+			u.o.deleteMedia.init(this.delete_form);
+		}
+		if(div.image) {
+			div.addDeleteForm();
+		}
+	}
+}
+
+/*i-navigations.js*/
+Util.Objects["navigationNodes"] = new function() {
+	this.init = function(div) {
+		div.list = u.qs("ul.nodes", div);
+		if(div.list) {
+			div.list.update_order_url = div.getAttribute("data-update-order");
+			div.list.csrf_token = div.getAttribute("data-csrf-token");
+			div.list.nodes = u.qsa("li.item", div.list);
+			var i, node;
+			for(i = 0; node = div.list.nodes[i]; i++) {
+				node.list = div.list;
+				var action = u.qs("li.delete", node);
+				if(action) {
+					form = u.qs("form", action);
+					form.node = node;
+					if(form) {
+						u.f.init(form);
+						if(u.qs("ul.nodes li.item", node)) {
+							u.ac(form.actions["delete"], "disabled");
+						}
+						form.restore = function(event) {
+							this.actions["delete"].value = "Delete";
+							u.rc(this.actions["delete"], "confirm");
+						}
+						form.submitted = function() {
+							if(!u.hc(this.actions["delete"], "confirm")) {
+								u.ac(this.actions["delete"], "confirm");
+								this.actions["delete"].value = "Confirm";
+								this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+							}
+							else {
+								u.t.resetTimer(this.t_confirm);
+								this.response = function(response) {
+									page.notify(response);
+									if(response.cms_status == "success") {
+										this.node.parentNode.removeChild(this.node);
+										this.node.list.updateNodeStructure();
+									}
+								}
+								u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+							}
+						}
+					}
+				}
+			}
+			div.list.dropped = function(event) {
+				this.updateNodeStructure();
+			}
+			div.list.updateNodeStructure = function() {
+				var structure = this.getStructure();
+				this.response = function(response) {
+					page.notify(response);
+				}
+				u.request(this, this.update_order_url, {"method":"post", "params":"csrf-token="+this.csrf_token+"&structure="+JSON.stringify(structure)});
+				var i, node;
+				this.nodes = u.qsa("li.item", this);
+				for(i = 0; node = this.nodes[i]; i++) {
+					var action = u.qs("li.delete", node);
+					if(action) {
+						form = u.qs("form", action);
+						if(form) {
+							if(u.qs("ul.nodes li.item", node)) {
+								u.ac(form.actions["delete"], "disabled");
+							}
+							else {
+								u.rc(form.actions["delete"], "disabled");
+							}
+						}
+					}
+				}
+			}
+			u.sortable(div.list, {"allow_nesting":true, "targets":"nodes", "draggables":"draggable"});
+		}
+	}
+}
+
+/*i-users.js*/
+Util.Objects["usernames"] = new function() {
+	this.init = function(div) {
+		u.bug("div usernames")
+		var form = u.qs("form", div);
+		u.f.init(form);
+		form.submitted = function(iN) {
+			this.response = function(response) {
+				page.notify(response);
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+	}
+}
+Util.Objects["password"] = new function() {
+	this.init = function(div) {
+		var password_state = u.qs("div.password_state", div);
+		var new_password = u.qs("div.new_password", div);
+		var a_create = u.qs(".password_missing a");
+		var a_change = u.qs(".password_set a");
+		a_create.new_password = new_password;
+		a_change.new_password = new_password;
+		a_create.password_state = password_state;
+		a_change.password_state = password_state;
+		u.ce(a_create);
+		u.ce(a_change);
+		a_create.clicked = a_change.clicked = function() {
+			u.as(this.password_state, "display", "none");
+			u.as(this.new_password, "display", "block");
+		}
+		var form = u.qs("form", div);
+		form.password_state = password_state;
+		form.new_password = new_password;
+		u.f.init(form);
+		form.submitted = function(iN) {
+			this.response = function(response) {
+				if(response.cms_status == "success") {
+					u.ac(this.password_state, "set");
+					u.as(this.password_state, "display", "block");
+					u.as(this.new_password, "display", "none");
+				}
+				page.notify(response);
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+			this.fields["password"].val("");
+		}
+	}
+}
+Util.Objects["formAddressNew"] = new function() {
+	this.init = function(form) {
+		u.f.init(form);
+		form.actions["cancel"].clicked = function(event) {
+			location.href = this.url;
+		}
+		form.submitted = function(iN) {
+			this.response = function(response) {
+				if(response.cms_status == "success" && response.cms_object) {
+					location.href = this.actions["cancel"].url.replace("\/list", "/edit/"+response.cms_object.item_id);
+				}
+				else if(response.cms_message) {
+					page.notify(response);
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+	}
+}
+Util.Objects["accessEdit"] = new function() {
+	this.init = function(div) {
+		div._item_id = u.cv(div, "item_id");
+		var form = u.qs("form", div);
+		u.f.init(form);
+		form.actions["cancel"].clicked = function(event) {
+			location.href = this.url;
+		}
+		form.submitted = function(iN) {
+			this.response = function(response) {
+				page.notify(response);
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+		var i, group;
+		var groups = u.qsa("li.action", form);
+		for(i = 0; group = groups[i]; i++) {
+			var h3 = u.qs("h3", group);
+			h3.group = group;
+			u.ce(h3)
+			h3.clicked = function() {
+				var i, input;
+				var inputs = u.qsa("input[type=checkbox]", this.group);
+				for(i = 0; input = inputs[i]; i++) {
+					input.val(1);
+				}
+			}
+		}
+	}
+}
+
+/*u-notifier.js*/
+u.notifier = function(node) {
+	var notifications = u.qs("div.notifications", node);
+	if(!notifications) {
+		node.notifications = u.ae(node, "div", {"id":"notifications"});
+	}
+	node.notifications.hide = function() {
+		this.transitioned = function() {
+			u.a.transition(this, "none");
+		}
+		u.a.transition(this, "all 0.5s ease-in-out");
+		u.a.translate(this, 0, -this.offsetHeight);
+	}
+	node.notify = function(response, _options) {
+		var class_name = "message";
+		if(typeof(_options) == "object") {
+			var argument;
+			for(argument in _options) {
+				switch(argument) {
+					case "class"	: class_name	= _options[argument]; break;
+				}
+			}
+		}
+		var output;
+		u.bug("message:" + typeof(response) + "; JSON: " + response.isJSON + "; HTML: " + response.isHTML);
+		if(typeof(response) == "object" && response.isJSON) {
+			var message = response.cms_message;
+			if(typeof(message) == "object") {
+				for(type in message) {
+					u.bug("typeof(message[type]:" + typeof(message[type]) + "; " + type);
+					if(typeof(message[type]) == "string") {
+						output = u.ae(this.notifications, "div", {"class":class_name, "html":message[type]});
+					}
+					else if(typeof(message[type]) == "object" && message[type].length) {
+						var node, i;
+						for(i = 0; _message = message[type][i]; i++) {
+							output = u.ae(this.notifications, "div", {"class":class_name, "html":_message});
+						}
+					}
+				}
+			}
+			else if(typeof(message) == "string") {
+				output = u.ae(this.notifications, "div", {"class":class_name, "html":message});
+			}
+		}
+		else if(typeof(response) == "object" && response.isHTML) {
+			var login = u.qs(".scene.login", response);
+			if(login) {
+				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
+				u.ae(overlay, login);
+				u.as(document.body, "overflow", "hidden");
+				var form = u.qs("form", overlay);
+				form.overlay = overlay;
+				u.ae(form, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
+				u.f.init(form);
+				form.submitted = function() {
+					this.response = function(response) {
+						if(response.isJSON && response.cms_status) {
+							var csrf_token = response.cms_object["csrf-token"];
+							u.bug("new token:" + csrf_token);
+							var data_vars = u.qsa("[data-csrf-token]", page);
+							var input_vars = u.qsa("[name=csrf-token]", page);
+							var dom_vars = u.qsa("*", page);
+							var i, node;
+							for(i = 0; node = data_vars[i]; i++) {
+								u.bug("data:" + u.nodeId(node) + ", " + node.getAttribute("data-csrf-token"));
+								node.setAttribute("data-csrf-token", csrf_token);
+							}
+							for(i = 0; node = input_vars[i]; i++) {
+								u.bug("input:" + u.nodeId(node) + ", " + node.value);
+								node.value = csrf_token;
+							}
+							for(i = 0; node = dom_vars[i]; i++) {
+								if(node.csrf_token) {
+									u.bug("dom:" + u.nodeId(node) + ", " + node.csrf_token);
+									node.csrf_token = csrf_token;
+								}
+							}
+							this.overlay.parentNode.removeChild(this.overlay);
+							u.as(document.body, "overflow", "auto");
+						}
+						else {
+							alert("login error")
+						}
+					}
+					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+				}
+			}
+		}
+		u.t.setTimer(this.notifications, this.notifications.hide, 3500);
+	}
+}
+
+
+
+/*ga.js*/
+u.ga_account = 'UA-49720985-1';
+u.ga_domain = 'parentnode.dk';
+
+
+/*u-googleanalytics.js*/
+if(u.ga_account) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', u.ga_account, u.ga_domain);
+    ga('send', 'pageview');
+	u.stats = new function() {
+		this.pageView = function(url) {
+			ga('send', 'pageview', url);
+		}
+		this.event = function(node, action, label) {
+			ga('_trackEvent', location.href.replace(document.location.protocol + "//" + document.domain, ""), action, (label ? label : this.nodeSnippet(node)));
+		}
+		this.customVar = function(slot, name, value, scope) {
+			//       slot,		
+			//       name,		
+			//       value,	
+			//       scope		
+		}
+		this.nodeSnippet = function(e) {
+			if(e.textContent != undefined) {
+				return u.cutString(e.textContent.trim(), 20) + "(<"+e.nodeName+">)";
+			}
+			else {
+				return u.cutString(e.innerText.trim(), 20) + "(<"+e.nodeName+">)";
+			}
+		}
+	}
+}
+
+
+/*i-form.js*/
+Util.Objects["generic"] = new function() {
+	this.init = function(div) {
 	}
 }
 

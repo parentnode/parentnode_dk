@@ -176,6 +176,7 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #content .scene .pagination .previous a {color: #ffffff;}
 #content .scene .pagination .next:hover,
 #content .scene .pagination .previous:hover {background-color: #034769;}
+#content .scene div.categories {padding-bottom: 20px;}
 #content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;

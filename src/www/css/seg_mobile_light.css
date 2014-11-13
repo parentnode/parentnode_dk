@@ -159,6 +159,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene dl.geo .longitude {display: none;}
 #content .scene div.image {display: none;}
 #content .scene .pagination {}
+#content .scene div.categories {padding-bottom: 10px;}
 #content .scene code {padding: 10px 10px; margin: 0 10px 15px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;

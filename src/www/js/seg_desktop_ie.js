@@ -3613,9 +3613,11 @@ Util.Objects["page"] = new function() {
 			page.fN = u.qs("#footer");
 			page.fN.service = u.qs(".servicenavigation", page.fN);
 			page.fN.slogan = u.qs("p", page.fN);
-			u.ce(page.fN.slogan);
-			page.fN.slogan.clicked = function(event) {
-				window.open("http://parentnode.dk");
+			if(page.fN.slogan) {
+				u.ce(page.fN.slogan);
+				page.fN.slogan.clicked = function(event) {
+					window.open("http://parentnode.dk");
+				}
 			}
 			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
 			page.logo.url = '/';

@@ -99,6 +99,7 @@ body.page #navigation .page a,
 body.post #navigation .post a,
 body.photocollection #navigation .photocollection a,
 body.todo #navigation .todo a,
+body.todolist #navigation .todolist a,
 body.navigation #navigation .navigation a,
 body.shop #navigation .shop a,
 body.tags #navigation .tags a,
@@ -595,15 +596,4 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 
 /*s-content.css*/
-#content .wishList ul.items > li {min-height: 100px; padding-left: 160px;}
-#content .wishList ul.items > li dl {display: block; padding: 5px 30px;}
-#content .wishList ul.items > li dl dt.reserved {display: none;}
-#content .wishList ul.items > li dl dd.reserved {font-size: 14px;}
-#content .logList ul.items > li {min-height: 100px; padding-left: 160px;}
-#content .postList ul.items > li {min-height: 100px; padding-left: 160px;}
-body.wish #navigation .wish a,
-body.wishlist #navigation .wishlist a,
-body.todo #navigation .todo a,
-body.todolist #navigation .todolist a,
-body.log #navigation .log a {padding-left: 35px; color: #ffffff;}
 

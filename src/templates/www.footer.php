@@ -14,14 +14,11 @@ if(!$navigation) {
 
 	<div id="navigation">
 		<ul class="navigation">
-<?			foreach($navigation["nodes"] as $node): ?>
+<?		if($navigation):
+			foreach($navigation["nodes"] as $node): ?>
 			<li<?= $HTML->attribute("class", $node["classname"]) ?>><a href="<?= ($node["link"] ? $node["link"] : ("/page/".$node["sindex"])) ?>"<?= strpos($node["link"], "http://") === 0 ? $HTML->attribute("target", "_blank") : "" ?>><?= $node["name"] ?></a></li>
-<?			endforeach; ?>
-
-			<!--li class="front"><a href="/">Frontpage</a></li>
-			<li class="blog"><a href="/blog">bLog</a></li>
-			<li class="manifest"><a href="/manifest">Manifest</a></li>
-			<li class="about"><a href="/about">About</a></li-->
+<?			endforeach;
+	 	endif; ?>
 		</ul>
 	</div>
 

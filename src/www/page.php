@@ -19,8 +19,7 @@ if(count($action)) {
 
 	$page->page(array(
 		"templates" => "pages/page.php"
-		)
-	);
+	));
 	exit();
 
 }
@@ -29,7 +28,6 @@ if(count($action)) {
 // 404
 $page->page(array(
 	"templates" => "pages/404.php"
-	)
-);
+));
 
 ?>

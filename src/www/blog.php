@@ -22,8 +22,7 @@ if(count($action) >= 2 && $action[0] == "tag") {
 
 	$page->page(array(
 		"templates" => "pages/posts_tag.php"
-		)
-	);
+	));
 	exit();
 
 }
@@ -31,8 +30,7 @@ if(count($action) >= 2 && $action[0] == "tag") {
 
 $page->page(array(
 	"templates" => "pages/posts.php"
-	)
-);
+));
 exit();
 
 

@@ -16,8 +16,7 @@ $page->pageTitle("Legal notice");
 
 $page->page(array(
 	"templates" => "pages/legal.php"
-	)
-);
+));
 exit();
 
 ?>

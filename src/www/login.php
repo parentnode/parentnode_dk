@@ -20,8 +20,7 @@ if(is_array($action) && count($action)) {
 
 		$page->page(array(
 			"templates" => "pages/signup.php"
-			)
-		);
+		));
 		exit();
 
 	}
@@ -29,8 +28,7 @@ if(is_array($action) && count($action)) {
 
 		$page->page(array(
 			"templates" => "pages/forgot_password.php"
-			)
-		);
+		));
 		exit();
 
 	}
@@ -39,7 +37,6 @@ if(is_array($action) && count($action)) {
 
 $page->page(array(
 	"templates" => "pages/login.php"
-	)
-);
+));
 
 ?>

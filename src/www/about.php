@@ -16,8 +16,7 @@ $page->pageTitle("About parentNode");
 
 $page->page(array(
 	"templates" => "pages/about.php"
-	)
-);
+));
 exit();
 
 ?>

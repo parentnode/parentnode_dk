@@ -15,8 +15,7 @@ $page->pageTitle("Terms");
 
 $page->page(array(
 	"templates" => "pages/terms.php"
-	)
-);
+));
 exit();
 
 ?>

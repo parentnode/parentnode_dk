@@ -15,8 +15,7 @@ $page->pageTitle("Development manifest");
 
 $page->page(array(
 	"templates" => "pages/manifest.php"
-	)
-);
+));
 exit();
 
 ?>

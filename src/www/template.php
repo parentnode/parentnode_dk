@@ -16,7 +16,6 @@ $page->pageTitle("Getting lost without loosing my way");
 
 $page->page(array(
 	"templates" => "pages/template.php"
-	)
-);
+));
 
 ?>

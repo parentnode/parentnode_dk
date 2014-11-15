@@ -16,8 +16,7 @@ $page->pageTitle("You have to start somewhere");
 
 $page->page(array(
 	"templates" => "pages/front.php"
-	)
-);
+));
 exit();
 
 ?>

@@ -68,6 +68,7 @@
 
 
 /* TAGS */
+#content .scene ul.tags {padding-bottom: 20px;}
 #content .scene ul.tags li {font-size: 12px; display: inline-block; vertical-align: top;}
 #content .scene ul.tags li:after {content: "\00a0|\00a0"; color: #dedede;}
 #content .scene ul.tags li:last-child:after {content: "";}
@@ -116,7 +117,11 @@
 
 
 /* CATEGORIES */
-#content .scene div.categories {padding-bottom: 20px;}
+#content .scene div.categories {padding-bottom: 20px; display: inline-block; vertical-align: top; width: 250px;}
+#content .scene div.categories ul {padding-right: 0;}
+#content .scene div.categories ul.tags li {display: block;}
+#content .scene div.categories ul.tags li:after {content: "";}
+
 
 
 /* CODE AND TYPECASTING */

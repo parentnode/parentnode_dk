@@ -7,6 +7,11 @@ function unsupported() {
 }
 window.onload = unsupported;
 
+/*ga.js*/
+u.ga_account = 'UA-49720985-1';
+u.ga_domain = 'parentnode.dk';
+
+
 /*u.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
@@ -15,11 +20,6 @@ if(!u || !Util) {
 	u.nodeId = function() {};
 	u.stats = new function() {this.pageView = function(){};this.event = function(){};this.customVar = function(){};}
 }
-
-
-/*ga.js*/
-u.ga_account = 'UA-49720985-1';
-u.ga_domain = 'parentnode.dk';
 
 
 /*u-googleanalytics.js*/

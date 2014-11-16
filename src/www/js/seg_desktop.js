@@ -1,6 +1,8 @@
 
 /*seg_desktop_include.js*/
 
+/*seg_desktop_include.js*/
+
 /*seg_desktop.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
@@ -3219,6 +3221,80 @@ if(u.ga_account) {
 }
 
 
+/*u-events-browser.js*/
+u.e.addDOMReadyEvent = function(action) {
+	if(document.readyState && document.addEventListener) {
+		if((document.readyState == "interactive" && !u.browser("ie")) || document.readyState == "complete" || document.readyState == "loaded") {
+			action();
+		}
+		else {
+			var id = u.randomString();
+			window["DOMReady_" + id] = action;
+			eval('window["_DOMReady_' + id + '"] = function() {window["DOMReady_'+id+'"](); u.e.removeEvent(document, "DOMContentLoaded", window["_DOMReady_' + id + '"])}');
+			u.e.addEvent(document, "DOMContentLoaded", window["_DOMReady_" + id]);
+		}
+	}
+	else {
+		u.e.addOnloadEvent(action);
+	}
+}
+u.e.addOnloadEvent = function(action) {
+	if(document.readyState && (document.readyState == "complete" || document.readyState == "loaded")) {
+		action();
+	}
+	else {
+		var id = u.randomString();
+		window["Onload_" + id] = action;
+		eval('window["_Onload_' + id + '"] = function() {window["Onload_'+id+'"](); u.e.removeEvent(window, "load", window["_Onload_' + id + '"])}');
+		u.e.addEvent(window, "load", window["_Onload_" + id]);
+	}
+}
+u.e.addWindowResizeEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onresize_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onresize_'+id+' = '+action+'; node._Onresize_'+id+'();}');
+	u.e.addEvent(window, "resize", window["_Onresize_" + id]);
+	return id;
+}
+u.e.removeWindowResizeEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEvent(window, "resize", window["_Onresize_" + id]);
+}
+u.e.addWindowScrollEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onscroll_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onscroll_'+id+' = '+action+'; node._Onscroll_'+id+'();}');
+	u.e.addEvent(window, "scroll", window["_Onscroll_" + id]);
+	return id;
+}
+u.e.removeWindowScrollEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEvent(window, "scroll", window["_Onscroll_" + id]);
+}
+u.e.addWindowMoveEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onmove_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onmove_'+id+' = '+action+'; node._Onmove_'+id+'(event);}');
+	u.e.addMoveEvent(window, window["_Onmove_" + id]);
+	return id;
+}
+u.e.removeWindowMoveEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeMoveEvent(window, window["_Onmove_" + id]);
+}
+u.e.addWindowEndEvent = function(node, action) {
+	var id = u.randomString();
+	u.ac(node, id);
+	eval('window["_Onend_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onend_'+id+' = '+action+'; node._Onend_'+id+'(event);}');
+	u.e.addEndEvent(window, window["_Onend_" + id]);
+	return id;
+}
+u.e.removeWindowEndEvent = function(node, id) {
+	u.rc(node, id);
+	u.e.removeEndEvent(window, window["_Onend_" + id]);
+}
+
+
 /*u-form.js*/
 Util.Form = u.f = new function() {
 	this.customInit = {};
@@ -4941,80 +5017,6 @@ u.f.addAction = function(node, settings) {
 }
 
 
-/*u-events-browser.js*/
-u.e.addDOMReadyEvent = function(action) {
-	if(document.readyState && document.addEventListener) {
-		if((document.readyState == "interactive" && !u.browser("ie")) || document.readyState == "complete" || document.readyState == "loaded") {
-			action();
-		}
-		else {
-			var id = u.randomString();
-			window["DOMReady_" + id] = action;
-			eval('window["_DOMReady_' + id + '"] = function() {window["DOMReady_'+id+'"](); u.e.removeEvent(document, "DOMContentLoaded", window["_DOMReady_' + id + '"])}');
-			u.e.addEvent(document, "DOMContentLoaded", window["_DOMReady_" + id]);
-		}
-	}
-	else {
-		u.e.addOnloadEvent(action);
-	}
-}
-u.e.addOnloadEvent = function(action) {
-	if(document.readyState && (document.readyState == "complete" || document.readyState == "loaded")) {
-		action();
-	}
-	else {
-		var id = u.randomString();
-		window["Onload_" + id] = action;
-		eval('window["_Onload_' + id + '"] = function() {window["Onload_'+id+'"](); u.e.removeEvent(window, "load", window["_Onload_' + id + '"])}');
-		u.e.addEvent(window, "load", window["_Onload_" + id]);
-	}
-}
-u.e.addWindowResizeEvent = function(node, action) {
-	var id = u.randomString();
-	u.ac(node, id);
-	eval('window["_Onresize_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onresize_'+id+' = '+action+'; node._Onresize_'+id+'();}');
-	u.e.addEvent(window, "resize", window["_Onresize_" + id]);
-	return id;
-}
-u.e.removeWindowResizeEvent = function(node, id) {
-	u.rc(node, id);
-	u.e.removeEvent(window, "resize", window["_Onresize_" + id]);
-}
-u.e.addWindowScrollEvent = function(node, action) {
-	var id = u.randomString();
-	u.ac(node, id);
-	eval('window["_Onscroll_' + id + '"] = function() {var node = u.qs(".'+id+'"); node._Onscroll_'+id+' = '+action+'; node._Onscroll_'+id+'();}');
-	u.e.addEvent(window, "scroll", window["_Onscroll_" + id]);
-	return id;
-}
-u.e.removeWindowScrollEvent = function(node, id) {
-	u.rc(node, id);
-	u.e.removeEvent(window, "scroll", window["_Onscroll_" + id]);
-}
-u.e.addWindowMoveEvent = function(node, action) {
-	var id = u.randomString();
-	u.ac(node, id);
-	eval('window["_Onmove_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onmove_'+id+' = '+action+'; node._Onmove_'+id+'(event);}');
-	u.e.addMoveEvent(window, window["_Onmove_" + id]);
-	return id;
-}
-u.e.removeWindowMoveEvent = function(node, id) {
-	u.rc(node, id);
-	u.e.removeMoveEvent(window, window["_Onmove_" + id]);
-}
-u.e.addWindowEndEvent = function(node, action) {
-	var id = u.randomString();
-	u.ac(node, id);
-	eval('window["_Onend_' + id + '"] = function(event) {var node = u.qs(".'+id+'"); node._Onend_'+id+' = '+action+'; node._Onend_'+id+'(event);}');
-	u.e.addEndEvent(window, window["_Onend_" + id]);
-	return id;
-}
-u.e.removeWindowEndEvent = function(node, id) {
-	u.rc(node, id);
-	u.e.removeEndEvent(window, window["_Onend_" + id]);
-}
-
-
 /*i-page-desktop.js*/
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
@@ -5373,4 +5375,5 @@ Util.Objects["article"] = new function() {
 		// 	
 	}
 }
+
 

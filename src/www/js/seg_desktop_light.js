@@ -4337,6 +4337,10 @@ if(String.prototype.substr == undefined || "ABC".substr(-1,1) == "A") {
 }
 
 
+/*u-settings.js*/
+u.site_name = "parentNode";
+u.facebook_app_id = "789445694430356";
+
 /*ga.js*/
 u.ga_account = 'UA-49720985-1';
 u.ga_domain = 'parentnode.dk';

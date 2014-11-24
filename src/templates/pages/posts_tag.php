@@ -2,16 +2,16 @@
 global $action;
 
 
-$IC = new Item();
+$IC = new Items();
 $itemtype = "post";
 $tag = urldecode($action[1]);
 
 // get tags for filters
-$post_tags = $IC->getTags(array("context" => $itemtype));
+$categories = $IC->getTags(array("context" => $itemtype));
 
 
 // get content pagination
-include_once("class/items/pagination.class.php");
+include_once("classes/items/pagination.class.php");
 $PC = new Pagination();
 
 $limit = stringOr(getVar("limit"), 6);
@@ -23,7 +23,7 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 
 ?>
 
-<div class="scene posts tag i:generic">
+<div class="scene posts tag i:scene">
 	<h1><?= $tag ?></h1>
 
 <?	if($pagination["range_items"]): ?>
@@ -86,10 +86,10 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 <? endif; ?>
 
 
-<?	if($post_tags): ?>
+<?	if($categories): ?>
 	<h2>Categories</h2>
 	<ul class="tags">
-<?		foreach($post_tags as $tag): ?>
+<?		foreach($categories as $tag): ?>
 		<li><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 <?		endforeach; ?>
 	</ul>

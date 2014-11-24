@@ -24,10 +24,4 @@ if(count($action)) {
 
 }
 
-
-// 404
-$page->page(array(
-	"templates" => "pages/404.php"
-));
-
 ?>

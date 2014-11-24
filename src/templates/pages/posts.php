@@ -1,38 +1,34 @@
 <?php
-global $IC;
 global $action;
-
-$IC = new Item();
+$IC = new Items();
 $itemtype = "post";
 
+
 // get post tags for listing
-$post_tags = $IC->getTags(array("context" => $itemtype));
+$categories = $IC->getTags(array("context" => $itemtype));
 
 
-// get content pagination
-include_once("class/items/pagination.class.php");
-$PC = new Pagination();
-
+// get paginated content
 $limit = stringOr(getVar("limit"), 6);
 $sindex = isset($action[0]) ? $action[0] : false;
 $direction = isset($action[1]) ? $action[1] : false; 
 
 $pattern = array("itemtype" => $itemtype, "status" => 1);
-$pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "limit" => $limit, "direction" => $direction));
+$pagination = $IC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "limit" => $limit, "direction" => $direction));
 
 ?>
 
-<div class="scene posts i:generic">
+<div class="scene posts i:scene">
 	<h1>bLog</h1>
 	<p>
 		Tech stuff all over. It's not really a Blog.
 	</p>
 
 	<div class="categories">
-<?	if($post_tags): ?>
+<?	if($categories): ?>
 		<h2>Categories</h2>
 		<ul class="tags">
-<?		foreach($post_tags as $tag): ?>
+<?		foreach($categories as $tag): ?>
 			<li><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 <?		endforeach; ?>
 		</ul>

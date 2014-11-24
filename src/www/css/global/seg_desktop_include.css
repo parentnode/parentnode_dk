@@ -1,9 +1,9 @@
-@import url(http://parentnode.local/css/lib/desktop/s-page-desktop.css);
-@import url(http://parentnode.local/css/lib/desktop/s-header-desktop.css);
-@import url(http://parentnode.local/css/lib/desktop/s-footer-desktop.css);
+@import url(http://parentnode.local/css/global/desktop/s-page-desktop.css);
+@import url(http://parentnode.local/css/global/desktop/s-header-desktop.css);
+@import url(http://parentnode.local/css/global/desktop/s-footer-desktop.css);
 
-@import url(http://parentnode.local/css/lib/desktop/s-content-desktop.css);
-@import url(http://parentnode.local/css/lib/desktop/s-form-desktop.css);
-@import url(http://parentnode.local/css/lib/desktop/s-todos-desktop.css);
+@import url(http://parentnode.local/css/global/desktop/s-content-desktop.css);
+@import url(http://parentnode.local/css/global/desktop/s-form-desktop.css);
+@import url(http://parentnode.local/css/global/desktop/s-itemtypes-desktop.css);
 
-@import url(http://parentnode.local/css/lib/desktop/s-hovers-desktop.css);
+@import url(http://parentnode.local/css/global/desktop/s-hovers-desktop.css);

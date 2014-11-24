@@ -1,3 +1,12 @@
+/* ARTICLE BODY */
+#content .scene .articlebody ul,
+#content .scene .articlebody ol {list-style-position: outside; margin-left: 15px; width: 485px;}
+#content .scene .articlebody ul {list-style-type: disc;}
+#content .scene .articlebody ol {list-style-type: decimal;}
+#content .scene .articlebody li {font-size: 14px; padding-bottom: 7px; padding-left: 3px;}
+#content .scene .articlebody ul,
+
+
 /* TODOLIST */
 #content .scene.todolist {}
 

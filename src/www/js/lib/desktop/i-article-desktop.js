@@ -177,6 +177,8 @@ Util.Objects["article"] = new function() {
 				image.clicked = function() {
 					// go back to normal size
 					if(u.hc(this, "fullsize")) {
+
+						u.a.transition(this._image, "all 0.3s ease-in-out");
 						u.rc(this, "fullsize");
 						this._image.src = this._image_src;
 					}
@@ -185,6 +187,7 @@ Util.Objects["article"] = new function() {
 						// full size image, might exceed autoconversion limit
 						// test server response
 
+						u.a.transition(this._image, "all 0.3s ease-in-out");
 						u.ac(this, "fullsize");
 
 						// fullsize already defined and tested

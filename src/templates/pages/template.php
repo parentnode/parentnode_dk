@@ -1,15 +1,15 @@
-<div class="scene front i:generic">
+<div class="scene template i:scene">
 
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<ul class="tags">
-			<li><a href="/geek/posts">Tags</a></li>
-			<li><a href="/geek/posts/tag/Attempted+peotry" itemprop="articleSection">Attempted peotry</a></li>
+			<li><a href="#">Tags</a></li>
+			<li><a href="#" itemprop="articleSection">Before H1</a></li>
 		</ul>
 
 		<h1 itemprop="name">Primary headline followed by paragraph</h1>
 
-		<div class="description" itemprop="articleBody">
+		<div class="articlebody" itemprop="articleBody">
 			<p>
 				Paragraph after primary headline ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
 				incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
@@ -20,14 +20,28 @@
 
 	</div>
 
+
 	<hr />
+
 
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
-		<h1>Primary headline followed by h2</h1>
+		<ul class="tags">
+			<li><a href="/geek/posts">Tags</a></li>
+			<li><a href="/geek/posts/tag/Attempted+peotry" itemprop="articleSection">Attempted peotry</a></li>
+		</ul>
 
-		<div class="description" itemprop="articleBody">
-			<h2>Secondary headline after primary headline</h2>
+		<h1 itemprop="name">Primary headline followed by info</h1>
+
+		<dl class="info">
+			<dt class="published_at">Date published</dt>
+			<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
+			<dt class="author">Author</dt>
+			<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
+		</dl>
+
+		<div class="articlebody" itemprop="articleBody">
+			<h2>Secondary headline after info</h2>
 			<p>
 				Paragraph after Secondary headline consectetur adipisicing elit, sed do eiusmod tempor
 				incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
@@ -36,18 +50,48 @@
 
 	</div>
 
+
 	<hr />
+
 
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
-		<div class="image image_id:0 variant:missing format:png"><a href="/images/0/missing/500x.png">Image after paragraph</a></div>
+		<h1 itemprop="name">Primary headline followed by h2</h1>
+
+		<h2 itemprop="alternateName">Secondary headline after primary headline</h2>
+
+		<dl class="info">
+			<dt class="published_at">Date published</dt>
+			<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
+			<dt class="author">Author</dt>
+			<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
+		</dl>
+
+		<div class="articlebody" itemprop="articleBody">
+			<p>
+				Paragraph after info consectetur adipisicing elit, sed do eiusmod tempor
+				incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
+			</p>
+		</div>
+
+	</div>
+
+
+	<hr />
+
+
+	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
+
+		<div class="image image_id:0 variant:missing format:png">
+			<p>Image: <a href="/images/0/missing/500x.png">Image in top of article</a>
+		</div>
 
 		<ul class="tags">
 			<li><a href="/geek/posts">Tags</a></li>
 			<li><a href="/geek/posts/tag/Attempted+peotry" itemprop="articleSection">Attempted peotry</a></li>
 		</ul>
 
-		<h1>Primary headline followed by info and geolocation</h1>
+		<h1 itemprop="name">Primary headline followed by info and geolocation</h1>
 
 		<dl class="info">
 			<dt class="published_at">Date published</dt>
@@ -65,18 +109,21 @@
 			<dd class="longitude" itemprop="longitude">12°</dd>
 		</dl>
 
-		<p>
-			Paragraph after info adipisicing elit, sed do eiusmod tempor
-			incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
-		</p>
-
+		<div class="articlebody" itemprop="articleBody">
+			<p>
+				Paragraph after info adipisicing elit, sed do eiusmod tempor
+				incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
+			</p>
+		</div>
 	</div>
 
+
 	<hr />
+
 
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
-		<h1>Primary headline followed by info and geolocation</h1>
+		<h1 itemprop="name">Primary headline followed by info and geolocation</h1>
 
 		<dl class="info">
 			<dt class="published_at">Date published</dt>
@@ -94,154 +141,23 @@
 			<dd class="longitude" itemprop="longitude">12°</dd>
 		</dl>
 
-		<h2>H2 after info</h2>
-		<p>
-			Paragraph before h2 adipisicing elit, sed do eiusmod tempor
-			incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
-		</p>
-
-		<h2>H2 after paragraph</h2>
-		<h3>One heading 3 after a heading 2</h3>
-		<p>
-			Paragraph after Heading 3 ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-			irure dolor in reprehenderit in voluptate velit esse cillum.
-		</p>
-		<p class="note">
-			Note: This guide does not consider security whatsoever. Read the details 
-			of squid.conf to setup your own security.
-		</p>
-		<p>
-			Several paragraphs in a row excepteur sint occaecat cupidatat non proident, sunt in culpa 
-			qui officia deserunt mollit anim id est laborum.
-		</p>
-
-		<h4>h4 Nostrud exercitation ullamco laboris nisi ut aliquip</h4>
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
-		</p>
-		<h5>h5 Ullamco laboris nisi ut aliquip ex ea commodo </h5>
-		<p>
-			Ut enim ad minim veniam, 
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-		</p>
-		<h6>H6 Ullamco laboris nisi ut aliquip ex ea commodo </h6>
-		<p>
-			Ut enim ad minim veniam, 
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-		</p>
-
-		<h3>H3 after paragraph and before code</h3>
-		<code>$ code after heading 3 and testing word wrap on really long snippets of code. It has to be really, really long to explify wrapping issues</code>
-
-		<h2>This is H2 after and before code</h2>
-		<code>$ code after h2</code>
-
-		<h3>H3 after code</h3>
-		<p>Paragraph before code element</p>
-		<code>$ code after paragraph</code>
-
-		<p>
-			Paragraph after code and before image excepteur sint occaecat cupidatat non proident, sunt in culpa 
-			qui officia deserunt mollit anim id est laborum.
-		</p>
-
-		<div class="image image_id:0 variant:missing format:png"><a href="/images/0/missing/500x.png">Image after paragraph</a></div>
-
-		<h2>H2 after image</h2>
-
-		<div class="image image_id:0 variant:missing format:png"><a href="/images/0/missing/500x.png">Image after h2</a></div>
-
-		<h3>H3 after image</h3>
-
-		<div class="image image_id:0 variant:missing format:png"><a href="/images/0/missing/500x.png">Image after h3</a></div>
-
-		<p>
-			Paragraph after image excepteur sint occaecat cupidatat non proident, sunt in culpa 
-			qui officia deserunt mollit anim id est laborum.
-		</p>
-
-		<ul>
-			<li>Unordered list</li>
-			<li>Terminal</li>
-			<li>MacPorts</li>
-		</ul>
-
-		<h2>Heading 2 after Unordered list</h2>
-
-		<ul>
-			<li>Unordered list after h2</li>
-			<li>Terminal</li>
-			<li>MacPorts</li>
-		</ul>
-
-		<h3>Heading 3 after Unordered list</h3>
-
-		<ul>
-			<li>Unordered list after h3</li>
-			<li>Terminal</li>
-			<li>MacPorts</li>
-		</ul>
-
-		<p>
-			Paragraph after Unordered list ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-			irure dolor in reprehenderit in voluptate velit esse cillum.
-		</p>
-
-		<dl>
-			<dt>Definition list</dt>
-			<dd>The local IP of the computer running Squid</dd>
-			<dt>Term</dt>
-			<dd>Description</dd>
-		</dl>
-
-		<p>
-			Paragraph after Definition list ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-			irure dolor in reprehenderit in voluptate velit esse cillum.
-		</p>
-
-	</div>
-
-	<hr />
-
-
-	<h1>List of articles</h1>
-	<ul class="items i:articlelist">
-		<li class="item">
-
-			<ul class="tags">
-				<li><a href="/geek/posts">Tags</a></li>
-				<li><a href="/geek/posts/tag/Attempted+peotry" itemprop="articleSection">Attempted peotry</a></li>
-			</ul>
-
-			<h2>iOS wyebde gvelo</h2>
-			<dl class="info">
-				<dt class="published_at">Date published</dt>
-				<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
-				<dt class="author">Author</dt>
-				<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
-			</dl>
-
-			<dl class="geo" itemprop="contentLocation" itemscope itemtype="http://schema.org/GeoCoordinates">
-				<dt class="location">location</dt>
-				<dd class="location" itemprop="name">San Francisco</dd>
-				<dt class="latitude">&phi;</dt>
-				<dd class="latitude" itemprop="latitude">12°</dd>
-				<dt class="longitude">&lambda;</dt>
-				<dd class="longitude" itemprop="longitude">12°</dd>
-			</dl>
-
+		<div class="articlebody" itemprop="articleBody">
+			<h2>H2 after info</h2>
 			<p>
-				Paragraph before h3 adipisicing elit, sed do eiusmod tempor
+				Paragraph before h2 adipisicing elit, sed do eiusmod tempor
 				incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
 			</p>
 
-			<h3>Heading 3 after Paragraph</h3>
-			<code>$ code after heading 3</code>
+			<h2>H2 after paragraph</h2>
+			<h3>One heading 3 after a heading 2</h3>
 			<p>
 				Paragraph after Heading 3 ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
 				irure dolor in reprehenderit in voluptate velit esse cillum.
 			</p>
-			<code>$ code after heading 3</code>
+			<p class="note">
+				Note: This guide does not consider security whatsoever. Read the details 
+				of squid.conf to setup your own security.
+			</p>
 			<p>
 				Several paragraphs in a row excepteur sint occaecat cupidatat non proident, sunt in culpa 
 				qui officia deserunt mollit anim id est laborum.
@@ -262,13 +178,63 @@
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
 			</p>
 
-			<div class="image image_id:0 variant:missing format:png"><a href="/images/0/missing/500x.png">Image after paragraph</a></div>
+			<h3>H3 after paragraph and before code</h3>
+			<code>$ code after heading 3 and testing word wrap on really long snippets of code. It has to be really, really long to explify wrapping issues</code>
+
+			<h2>This is H2 after and before code</h2>
+			<code>$ code after h2</code>
+
+			<h3>H3 after code</h3>
+			<p>Paragraph before code element</p>
+			<code>$ code after paragraph</code>
+
+			<p>
+				Paragraph after code and before image excepteur sint occaecat cupidatat non proident, sunt in culpa 
+				qui officia deserunt mollit anim id est laborum.
+			</p>
+
+			<div class="image image_id:0 variant:missing format:png">
+				<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a></p>
+			</div>
+
+			<h2>H2 after image</h2>
+
+			<div class="image image_id:0 variant:missing format:png">
+				<p>Image: <a href="/images/0/missing/500x.png">Image after h2</a></p>
+			</div>
+
+			<h3>H3 after image</h3>
+
+			<div class="image image_id:0 variant:missing format:png">
+				<p>Image: <a href="/images/0/missing/500x.png">Image after h3</a></p>
+			</div>
+
+			<p>
+				Paragraph after image excepteur sint occaecat cupidatat non proident, sunt in culpa 
+				qui officia deserunt mollit anim id est laborum.
+			</p>
 
 			<ul>
-				<li>Unordered list after h2</li>
+				<li>Unordered list</li>
 				<li>Terminal</li>
 				<li>MacPorts</li>
 			</ul>
+
+			<h2>Heading 2 after Unordered list</h2>
+
+			<ul>
+				<li>Unordered list after h2</li>
+				<li>Terminal irure dolor in reprehenderit in voluptate velit esse cillum irure dolor in reprehenderit in voluptate velit esse cillum</li>
+				<li>MacPorts</li>
+			</ul>
+
+			<h3>Heading 3 after Unordered list</h3>
+
+			<ol>
+				<li>Ordered list after h3</li>
+				<li>Terminal irure dolor in reprehenderit in voluptate velit esse cillum irure dolor in reprehenderit in voluptate velit esse cillum</li>
+				<li>MacPorts</li>
+			</ol>
 
 			<p>
 				Paragraph after Unordered list ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
@@ -282,46 +248,165 @@
 				<dd>Description</dd>
 			</dl>
 
-		</li>
-		<li class="item">
-
-			<h2>iOS wyebde gvelo</h2>
 			<p>
-				Paragraph before h3 adipisicing elit, sed do eiusmod tempor
-				incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
+				Paragraph after Definition list ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+				irure dolor in reprehenderit in voluptate velit esse cillum.
 			</p>
+		</div>
+	</div>
 
-			<div class="image image_id:0 variant:missing format:png"><a href="/images/0/missing/500x.png">Image after paragraph</a></div>
 
-		</li>
-		<li class="item">
 
-			<div class="image image_id:0 variant:missing format:png"><a href="/images/0/missing/500x.png">Image after paragraph</a></div>
+	<hr />
 
-			<h2>iOS wyebde gvelo</h2>
-			<dl class="info">
-				<dt class="published_at">Date published</dt>
-				<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
-				<dt class="author">Author</dt>
-				<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
-			</dl>
 
-			<dl class="geo" itemprop="contentLocation" itemscope itemtype="http://schema.org/GeoCoordinates">
-				<dt class="location">location</dt>
-				<dd class="location" itemprop="name">San Francisco</dd>
-				<dt class="latitude">&phi;</dt>
-				<dd class="latitude" itemprop="latitude">12°</dd>
-				<dt class="longitude">&lambda;</dt>
-				<dd class="longitude" itemprop="longitude">12°</dd>
-			</dl>
+	<h1>List of articles</h1>
 
-			<p>
-				Paragraph before h3 adipisicing elit, sed do eiusmod tempor
-				incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
-			</p>
+	<div class="fake_article_scope">
+		<ul class="items i:articlelist">
+			<li class="item article" itemscope itemtype="http://schema.org/Article">
 
-		</li>
-	</ul>
+				<ul class="tags">
+					<li><a href="/geek/posts">Tags</a></li>
+					<li><a href="/geek/posts/tag/Attempted+peotry" itemprop="articleSection">Attempted peotry</a></li>
+				</ul>
+
+				<h2 itemprop="name">Complex list item</h2>
+				<dl class="info">
+					<dt class="published_at">Date published</dt>
+					<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
+					<dt class="author">Author</dt>
+					<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
+				</dl>
+
+				<dl class="geo" itemprop="contentLocation" itemscope itemtype="http://schema.org/GeoCoordinates">
+					<dt class="location">location</dt>
+					<dd class="location" itemprop="name">San Francisco</dd>
+					<dt class="latitude">&phi;</dt>
+					<dd class="latitude" itemprop="latitude">12°</dd>
+					<dt class="longitude">&lambda;</dt>
+					<dd class="longitude" itemprop="longitude">12°</dd>
+				</dl>
+
+				<div class="articlebody" itemprop="articleBody">
+					<p>
+						Paragraph before h3 adipisicing elit, sed do eiusmod tempor
+						incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
+					</p>
+
+					<h3>Heading 3 after Paragraph</h3>
+					<code>$ code after heading 3</code>
+					<p>
+						Paragraph after Heading 3 ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+						irure dolor in reprehenderit in voluptate velit esse cillum.
+					</p>
+					<code>$ code after heading 3</code>
+					<p>
+						Several paragraphs in a row excepteur sint occaecat cupidatat non proident, sunt in culpa 
+						qui officia deserunt mollit anim id est laborum.
+					</p>
+
+					<h4>h4 Nostrud exercitation ullamco laboris nisi ut aliquip</h4>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+					</p>
+					<h5>h5 Ullamco laboris nisi ut aliquip ex ea commodo </h5>
+					<p>
+						Ut enim ad minim veniam, 
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+					</p>
+					<h6>H6 Ullamco laboris nisi ut aliquip ex ea commodo </h6>
+					<p>
+						Ut enim ad minim veniam, 
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+					</p>
+
+					<div class="image image_id:0 variant:missing format:png">
+						<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a>
+					</div>
+					<!-- no caption -->
+					<div class="image image_id:0 variant:missing format:png"></div>
+					<div class="image image_id:0 variant:missing format:png">
+						<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a>
+					</div>
+
+					<ul>
+						<li>Unordered list after h2</li>
+						<li>Terminal irure dolor in reprehenderit in voluptate velit esse cillum irure dolor in reprehenderit in voluptate velit esse cillum</li>
+						<li>MacPorts</li>
+					</ul>
+
+					<p>
+						Paragraph after Unordered list ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+						irure dolor in reprehenderit in voluptate velit esse cillum.
+					</p>
+
+					<dl>
+						<dt>Definition list</dt>
+						<dd>The local IP of the computer running Squid</dd>
+						<dt>Term</dt>
+						<dd>Description</dd>
+					</dl>
+				</div>
+			</li>
+			<li class="item article" itemscope itemtype="http://schema.org/Article">
+
+				<h2 itemprop="name">Simple list item</h2>
+				<div class="articlebody" itemprop="articleBody">
+					<p>
+						Paragraph before h3 adipisicing elit, sed do eiusmod tempor
+						incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
+					</p>
+
+					<div class="image image_id:0 variant:missing format:png">
+						<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a></p>
+					</div>
+				</div>
+			</li>
+			<li class="item article" itemscope itemtype="http://schema.org/Article">
+
+				<div class="image image_id:0 variant:missing format:png"></div>
+				<h2 itemprop="name">Simple list item</h2>
+
+				<div class="articlebody" itemprop="articleBody">
+					<p>
+						Paragraph before h3 adipisicing elit, sed do eiusmod tempor
+						incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
+					</p>
+				</div>
+			</li>
+			<li class="item article" itemscope itemtype="http://schema.org/Article">
+
+				<div class="image image_id:0 variant:missing format:png">
+					<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a></p>
+				</div>
+
+				<h2 itemprop="name">iOS wyebde gvelo</h2>
+				<dl class="info">
+					<dt class="published_at">Date published</dt>
+					<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
+					<dt class="author">Author</dt>
+					<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
+				</dl>
+
+				<dl class="geo" itemprop="contentLocation" itemscope itemtype="http://schema.org/GeoCoordinates">
+					<dt class="location">location</dt>
+					<dd class="location" itemprop="name">San Francisco</dd>
+					<dt class="latitude">&phi;</dt>
+					<dd class="latitude" itemprop="latitude">12°</dd>
+					<dt class="longitude">&lambda;</dt>
+					<dd class="longitude" itemprop="longitude">12°</dd>
+				</dl>
+
+				<div class="articlebody" itemprop="articleBody">
+					<p>
+						Paragraph before h3 adipisicing elit, sed do eiusmod tempor
+						incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
+					</p>
+				</div>
+			</li>
+		</ul>
+	</div>
 
 	<div class="pagination">
 		<ul class="actions">

@@ -11,8 +11,8 @@
 #content .scene h4,
 #content .scene h5,
 #content .scene h6,
-#content .scene p {max-width: 500px;}
-#content .scene hr {border: none; border-top: 1px solid #888888; margin: 15px 15px 50px; padding: 0;}
+#content .scene p {width: 500px;}
+#content .scene hr {border: none; border-top: 1px solid #888888; margin: 30px 0 50px; padding: 0;}
 #content .scene p.note {font-style: italic;}
 
 /* ADDITIONAL H2 PADDING IN CERTAIN CASES */
@@ -31,23 +31,30 @@
 
 
 /* LISTS */
-#content .scene ul {padding: 0 50px 15px;}
-#content .scene li {display: block; padding: 0 0 5px;}
-#content .scene li h1,
-#content .scene li h2,
-#content .scene li h3,
-#content .scene li h4,
-#content .scene li h5,
-#content .scene li h6,
-#content .scene li p,
-#content .scene li dl,
-#content .scene li ul {padding-left: 0; padding-right: 0;}
-#content .scene li code {margin-left: 0; margin-right: 0;}
+#content .scene ul,
+#content .scene ol {padding: 0 50px 15px;}
 
+/* ITEM LIST */
+#content .scene ul.items {padding: 0;}
+#content .scene li.item {display: block; /*padding: 0 0 5px;*/}
+/*
+#content .scene li.item h1,
+#content .scene li.item h2,
+#content .scene li.item h3,
+#content .scene li.item h4,
+#content .scene li.item h5,
+#content .scene li.item h6,
+#content .scene li.item p,
+#content .scene li.item dl,
+#content .scene li.item ul {padding-left: 50px; padding-right: 20px;}
+*/
+/*
+#content .scene li.item code {margin-left: 0; margin-right: 0;}
+*/
 
 /* ITEMS */
 #content .scene ul.items {padding-bottom: 0;}
-#content .scene ul li.item {padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
+#content .scene ul.items li.item {padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede;}
 
 
 /* DEFINITION LIST */
@@ -72,7 +79,7 @@
 #content .scene ul.tags li {font-size: 12px; display: inline-block; vertical-align: top;}
 #content .scene ul.tags li:after {content: "\00a0|\00a0"; color: #dedede;}
 #content .scene ul.tags li:last-child:after {content: "";}
-
+#content .scene li.item ul.tags {}
 
 /* INFO */
 #content .scene dl.info {padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
@@ -101,15 +108,12 @@
 
 /* IMAGE */
 #content .scene div.image {}
-#content .scene div.image {margin: 0 30px 30px; max-width: 540px; padding: 0; cursor: zoom-in;}
-#content .scene div.image img {width: 100%; border-radius: 5px; overflow: hidden;}
-#content .scene div.image a {padding: 0 20px; font-size: 13px; display: block; color: #cccccc;
-	font-style: italic;
-}
-#content .scene div.image.fullsize {max-width: 100%; cursor: zoom-out;}
-#content .scene div.image.fullsize a {padding: 0 50px;}
-#content .scene li div.image {max-width: 500px; margin: 0 0 30px;}
-#content .scene li div.image a {padding: 0;}
+#content .scene div.image {cursor: zoom-in;}
+#content .scene div.image img {margin: 0 30px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
+#content .scene div.image p {margin-top: -20px; padding: 0 50px 30px; font-size: 0;}
+#content .scene div.image p a {font-style: italic; font-size: 13px; display: block; color: #cccccc;}
+#content .scene div.image.fullsize {cursor: zoom-out;}
+#content .scene div.image.fullsize img {width: 100%; margin: 0; border-radius: 0;}
 
 
 /* PAGINATION */
@@ -169,4 +173,8 @@
 #content .scene li ul.sharing li:hover {opacity: 1;}
 
 
+/* LOGIN */
+#content .scene.login form {padding-bottom: 20px;}
 
+/* ERROR MESSAGES */
+#content .errormessage {color: #df0000;}

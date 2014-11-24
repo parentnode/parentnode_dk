@@ -31,8 +31,8 @@ Util.Objects["page"] = new function() {
 
 			// footer reference
 			page.fN = u.qs("#footer");
-			// move li to #header .servicenavigation
 			page.fN.service = u.qs(".servicenavigation", page.fN);
+
 
 			page.fN.slogan = u.qs("p", page.fN);
 			if(page.fN.slogan) {
@@ -165,21 +165,21 @@ Util.Objects["page"] = new function() {
 
 					// show terms notification
 					if(!u.getCookie("terms_v1")) {
-						var terms = u.ie(document.body, "div", {"class":"terms_notification"});
-						u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
-						var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
-						bn_accept.terms = terms;
-						u.ce(bn_accept);
-						bn_accept.clicked = function() {
-							this.terms.parentNode.removeChild(this.terms);
-							u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
-						}
-
-						if(!location.href.match(/\/terms/)) {
-							var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
-							bn_details.url = "/terms";
-							u.ce(bn_details, {"type":"link"});
-						}
+						// var terms = u.ie(document.body, "div", {"class":"terms_notification"});
+						// u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
+						// var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+						// bn_accept.terms = terms;
+						// u.ce(bn_accept);
+						// bn_accept.clicked = function() {
+						// 	this.terms.parentNode.removeChild(this.terms);
+						// 	u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+						// }
+						//
+						// if(!location.href.match(/\/terms/)) {
+						// 	var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
+						// 	bn_details.url = "/terms";
+						// 	u.ce(bn_details, {"type":"link"});
+						// }
 					}
 				}
 			}

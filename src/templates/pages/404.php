@@ -1,6 +1,6 @@
 <? $this->bodyClass("page_missing"); ?>
 
-<div class="scene i:scene page_missing">
+<div class="scene page_missing i:scene">
 	<h1>404</h1>
 	<h2>Page missing</h2>
 	<p>

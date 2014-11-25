@@ -57,4 +57,5 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 .terms_notification h3 {padding: 0; font-size: 14px;}
 .terms_notification .accept,
 .terms_notification .details {padding: 0; font-size: 13px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0;}
-
+.terms_notification .accept:hover,
+.terms_notification .details:hover {text-decoration: underline;}

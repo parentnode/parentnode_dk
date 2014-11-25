@@ -15,6 +15,7 @@
 #content .scene hr {border: none; border-top: 1px solid #888888; margin: 30px 0 50px; padding: 0;}
 #content .scene p.note {font-style: italic;}
 
+
 /* ADDITIONAL H2 PADDING IN CERTAIN CASES */
 #content .scene p+h2,
 #content .scene ul+h2,
@@ -34,23 +35,11 @@
 #content .scene ul,
 #content .scene ol {padding: 0 50px 15px;}
 
+
 /* ITEM LIST */
 #content .scene ul.items {padding: 0;}
-#content .scene li.item {display: block; /*padding: 0 0 5px;*/}
-/*
-#content .scene li.item h1,
-#content .scene li.item h2,
-#content .scene li.item h3,
-#content .scene li.item h4,
-#content .scene li.item h5,
-#content .scene li.item h6,
-#content .scene li.item p,
-#content .scene li.item dl,
-#content .scene li.item ul {padding-left: 50px; padding-right: 20px;}
-*/
-/*
-#content .scene li.item code {margin-left: 0; margin-right: 0;}
-*/
+#content .scene li.item {display: block;}
+
 
 /* ITEMS */
 #content .scene ul.items {padding-bottom: 0;}
@@ -74,12 +63,17 @@
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
 
 
+/* SCENE ACTIONS */
+#content .scene > ul.actions {border-top: 1px solid #dedede; margin: 0 0 20px; padding: 15px 50px;}
+
+
 /* TAGS */
 #content .scene ul.tags {padding-bottom: 20px;}
 #content .scene ul.tags li {font-size: 12px; display: inline-block; vertical-align: top;}
 #content .scene ul.tags li:after {content: "\00a0|\00a0"; color: #dedede;}
 #content .scene ul.tags li:last-child:after {content: "";}
 #content .scene li.item ul.tags {}
+
 
 /* INFO */
 #content .scene dl.info {padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
@@ -99,6 +93,7 @@
 #content .scene dl.geo .latitude,
 #content .scene dl.geo .longitude {display: none;}
 #content .scene dl.geo.active {cursor: pointer;}
+
 
 /* MAP */
 #content .scene div.geomap {height: 300px; width: 540px; margin-bottom: 20px; padding: 0 30px;}
@@ -123,9 +118,10 @@
 /* CATEGORIES */
 #content .scene div.categories {padding-bottom: 20px; display: inline-block; vertical-align: top; width: 250px;}
 #content .scene div.categories ul {padding-right: 0;}
-#content .scene div.categories ul.tags li {display: block;}
+#content .scene div.categories ul.tags li {font-size: 14px; padding-bottom: 5px; display: block;}
 #content .scene div.categories ul.tags li:after {content: "";}
-
+#content .scene div.categories ul.actions {padding-bottom: 0;}
+#content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
 
 
 /* CODE AND TYPECASTING */

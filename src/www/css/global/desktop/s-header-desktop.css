@@ -5,14 +5,12 @@
 }
 #header .logo {position: fixed;}
 
+
 /* SERVICENAVIGATION */
 #header .servicenavigation {position: absolute; top: 5px; right: 50px;}
 #header .servicenavigation li {padding-left: 10px; display: inline-block; vertical-align: top;}
-
 #header .servicenavigation li.navigation {display: none;}
-/*
-#header .servicenavigation li.user {display: none;}
-*/
+
 
 /* NAViGATION */
 #navigation {z-index: 10; position: fixed; right: 40px; top: 65px; background-color: rgba(255,255,255, 0.8); border-radius: 5px;}

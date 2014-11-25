@@ -1,6 +1,8 @@
-@import url(http://parentnode.local/css/lib/mobile/s-page-mobile.css);
-@import url(http://parentnode.local/css/lib/mobile/s-header-mobile.css);
-@import url(http://parentnode.local/css/lib/mobile/s-footer-mobile.css);
+@import url(http://parentnode.local/css/global/mobile/s-page-mobile.css);
+@import url(http://parentnode.local/css/global/mobile/s-header-mobile.css);
+@import url(http://parentnode.local/css/global/mobile/s-footer-mobile.css);
 
-@import url(http://parentnode.local/css/lib/mobile/s-content-mobile.css);
-@import url(http://parentnode.local/css/lib/mobile/s-form-mobile.css);
+@import url(http://parentnode.local/css/global/mobile/s-content-mobile.css);
+@import url(http://parentnode.local/css/global/mobile/s-form-mobile.css);
+
+@import url(http://parentnode.local/css/global/mobile/s-itemtypes-mobile.css);

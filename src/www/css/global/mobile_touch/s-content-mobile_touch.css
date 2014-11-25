@@ -5,6 +5,8 @@
 /* BASIC CONTENT */
 #content .scene .link {cursor: pointer;}
 #content .scene a {color: #888888;}
+#content .scene a:active {text-decoration: underline;}
+
 #content .scene h1,
 #content .scene h2,
 #content .scene h3,

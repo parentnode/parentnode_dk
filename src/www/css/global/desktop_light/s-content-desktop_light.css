@@ -1,12 +1,13 @@
 #content {position: relative; width: 600px; margin: 0 auto;}
 #content .scene {position: relative; padding: 50px 0;}
 
-#content .scene a:hover {text-decoration: underline;}
 
 
 /* BASIC CONTENT */
 #content .scene .link {cursor: pointer;}
 #content .scene a {color: #888888;}
+#content .scene a:hover {text-decoration: underline;}
+
 #content .scene h1,
 #content .scene h2,
 #content .scene h3,

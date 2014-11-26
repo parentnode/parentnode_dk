@@ -34,12 +34,13 @@ h6 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
 p {padding: 0 50px 20px; font-size: 14px; line-height: 1.38em;} 
 
 
-ul {font-size: 0;}
-li {display: inline; vertical-align: top; font-size: 14px; line-height: 1.25em;}
+ul,
+ol {font-size: 0;}
+li {display: inline; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 
 dl {font-size: 0;} 
 dt, 
-dd {display: block; font-size: 14px; line-height: 1.25em;}
+dd {display: block; font-size: 13px; line-height: 1.25em;}
 
 .c {clear: both; font-size: 0; overflow: hidden;}
 .c400, .c300, .c266, .c200, .c150, .c133, .c100, .c75, .c50 {float: left; min-height: 10px; vertical-align: top;}

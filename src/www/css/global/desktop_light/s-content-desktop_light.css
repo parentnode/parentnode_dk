@@ -21,8 +21,10 @@
 /* ADDITIONAL H2 PADDING IN CERTAIN CASES */
 #content .scene p+h2,
 #content .scene ul+h2,
+#content .scene ol+h2,
 #content .scene ul+.pagination+h2,
 #content .scene dl+h2,
+#content .scene div.article+h2,
 #content .scene code+h2 {padding-top: 20px;}
 
 #content .scene ul.tags+h2,
@@ -33,7 +35,8 @@
 
 
 /* LISTS */
-#content .scene ul {padding: 0 50px 15px;}
+#content .scene ul,
+#content .scene ol {padding: 0 50px 15px;}
 #content .scene li {display: block; padding: 0 0 5px;}
 #content .scene li h1,
 #content .scene li h2,
@@ -89,7 +92,7 @@
 
 
 /* PAGINATION */
-#content .scene .pagination {margin: 0 50px 30px; padding: 20px 0; border-top: 1px solid #dedede; border-bottom: 1px solid #dedede;}
+#content .scene .pagination {margin: 0 50px 30px; padding: 20px 0;}
 #content .scene .pagination ul {padding: 0; overflow: hidden;}
 #content .scene .pagination .next,
 #content .scene .pagination .previous {text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; background-color: #63ADD0; color: #ffffff; border: none; cursor: pointer; border-radius: 3px; font-size: 14px;}
@@ -131,10 +134,15 @@
 
 
 /* VCARD */
-#content .scene div.vcard {padding: 25px 50px;}
+#content .scene div.vcard {padding: 0 50px 25px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
 #content .scene div.vcard .email {font-size: 14px;}
 
 
-/* SHARING */
+
+/* LOGIN */
+#content .scene.login form {padding-bottom: 20px;}
+
+/* ERROR MESSAGES */
+#content .errormessage {color: #df0000;}

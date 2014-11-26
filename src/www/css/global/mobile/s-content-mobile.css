@@ -12,40 +12,41 @@
 #content .scene h5,
 #content .scene h6,
 #content .scene p {}
-#content .scene hr {border: none; border-top: 1px solid #888888; margin: 15px 10px 20px; padding: 0;}
+#content .scene hr {border: none; border-top: 1px solid #888888; margin: 15px 0 20px; padding: 0;}
 #content .scene p.note {font-style: italic;}
 
 /* ADDITIONAL H2 PADDING IN CERTAIN CASES */
 #content .scene p+h2,
 #content .scene ul+h2,
+#content .scene ol+h2,
+#content .scene ul+.pagination+h2,
 #content .scene dl+h2,
+#content .scene div.article+h2,
 #content .scene code+h2 {padding-top: 10px;}
+
+#content .scene ul.tags+h2,
+#content .scene dl.geo+h2,
+#content .scene dl.info+h2 {padding-top: 0;}
+
+#content .scene p+code {margin-top: -15px;}
+#content .scene dl.info+dl.geo {padding-left: 0;}
 
 
 /* LISTS */
-#content .scene ul {padding: 0 10px 15px;}
+#content .scene ul,
+#content .scene ol {padding: 0 10px 15px;}
 #content .scene li {display: block; padding: 0 0 5px;}
-#content .scene li h1,
-#content .scene li h2,
-#content .scene li h3,
-#content .scene li h4,
-#content .scene li h5,
-#content .scene li h6,
-#content .scene li p,
-#content .scene li dl,
-#content .scene li ul {padding-left: 0; padding-right: 0;}
-#content .scene li code {margin-left: 0; margin-right: 0;}
 
 
 /* ITEMS */
-#content .scene ul.items {padding-bottom: 0;}
-#content .scene ul li.item {padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #dedede;}
+#content .scene ul.items {padding: 0;}
+#content .scene ul.items li.item {padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #dedede;}
 
 
 /* DEFINITION LIST */
 #content .scene dl {padding: 0 10px 15px; overflow: hidden;}
 #content .scene dt {padding: 0 0 2px 0; color: #999999;} 
-#content .scene dd {padding: 0 0 12px 20px;}
+#content .scene dd {padding: 0 0 12px 10px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px;}
 #content .scene dl dl dt {}
@@ -68,7 +69,7 @@
 
 /* GEO */
 #content .scene dl.geo {margin-top: -15px;}
-#content .scene dl.geo dd {padding-left: 0; padding-right: 0; padding-bottom: 3px; font-size: 12px; color: #999999;}
+#content .scene dl.geo dd {padding-bottom: 3px; font-size: 12px; color: #999999;}
 #content .scene dl.geo dt {display: none;}
 #content .scene dl.geo .latitude,
 #content .scene dl.geo .longitude {display: none;}
@@ -112,7 +113,7 @@
 
 
 /* VCARD */
-#content .scene div.vcard {padding: 25px 10px;}
+#content .scene div.vcard {padding: 0 10px 15px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
 #content .scene div.vcard .email {font-size: 13px;}

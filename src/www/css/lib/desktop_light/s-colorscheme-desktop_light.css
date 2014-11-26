@@ -13,13 +13,16 @@ body {background: #ffffff;}
 #content .scene a {color: #63add0;}
 #content .scene hr {border-color: #cccccc;}
 #content .scene code {color: #333333;}
-#content ul.actions input.button.primary,
-#content ul.actions a.button.primary {background-color: #63add0;}
-#content ul.actions input.button.primary:hover,
-#content ul.actions a.button.primary:hover {background-color: #034769;}
+#content ul.actions input.primary,
+#content ul.actions a.primary,
+#content .scene .pagination .next,
+#content .scene .pagination .previous {background-color: #63add0;}
+#content ul.actions input.primary:hover,
+#content ul.actions a.primary:hover,
+#content .scene .pagination .next:hover,
+#content .scene .pagination .previous:hover {background-color: #034769;}
 
 #footer {border-color: #cccccc;}
-#footer p {color: #034769;}
 
 .terms_notification {background: #ffffff;}
 .terms_notification .accept,

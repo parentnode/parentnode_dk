@@ -12,7 +12,7 @@ error_reporting(E_ALL);
 */
 define("SITE_UID", "PARE");
 define("SITE_NAME", "parentnode.dk");
-define("SITE_URL", $_SERVER["SERVER_NAME"]);
+define("SITE_URL", (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]);
 define("SITE_EMAIL", "info@parentnode.dk");
 
 /**

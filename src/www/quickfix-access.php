@@ -8,7 +8,7 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 $db = SITE_DB;
 
-$IC = new Item();
+$IC = new Items();
 $query = new Query();
 $fs = new FileSystem();
 

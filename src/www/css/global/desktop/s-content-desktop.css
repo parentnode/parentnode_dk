@@ -19,8 +19,10 @@
 /* ADDITIONAL H2 PADDING IN CERTAIN CASES */
 #content .scene p+h2,
 #content .scene ul+h2,
+#content .scene ol+h2,
 #content .scene ul+.pagination+h2,
 #content .scene dl+h2,
+#content .scene div.article+h2,
 #content .scene code+h2 {padding-top: 20px;}
 
 #content .scene ul.tags+h2,
@@ -36,14 +38,9 @@
 #content .scene ol {padding: 0 50px 15px;}
 
 
-/* ITEM LIST */
-#content .scene ul.items {padding: 0;}
-#content .scene li.item {display: block;}
-
-
 /* ITEMS */
-#content .scene ul.items {padding-bottom: 0;}
-#content .scene ul.items li.item {padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede;}
+#content .scene ul.items {padding: 0}
+#content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede;}
 
 
 /* DEFINITION LIST */
@@ -79,7 +76,6 @@
 #content .scene dl.info {padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
 #content .scene dl.info dt {display: none;}
 #content .scene dl.info dd {width: auto; font-size: 12px; color: #999999;}
-
 #content .scene dl.info dd.author:before {content: "\00a0|\00a0"; color: #dedede;}
 #content .scene dl.info dd.hardlink {display: none;}
 
@@ -150,10 +146,12 @@
 
 
 /* VCARD */
-#content .scene div.vcard {padding: 25px 50px;}
+#content .scene div.vcard {padding: 0 50px 25px;}
+#content .scene div.vcard ul {padding: 0;}
+#content .scene div.vcard h3 {font-size: 18px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
-#content .scene div.vcard .email {font-size: 14px;}
+#content .scene div.vcard .email {font-size: 13px; padding: 0 0 3px;}
 
 
 /* SHARING */

@@ -16,7 +16,7 @@
 #header .servicenavigation li.navigation.open div {background: #cccccc;}
 #header .servicenavigation li.navigation a {display: none;}
 
-#header .servicenavigation li.user {display: none;}
+#header .servicenavigation li,
 #header .servicenavigation li.admin {display: none;}
 
 /* NAViGATION */
@@ -26,7 +26,3 @@
 	font-family: "PT Serif", Times, serif;
 }
 #navigation ul li:active {text-decoration: none;}
-
-/*
-#navigation ul li.front {display: none;}
-*/

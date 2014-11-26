@@ -18,7 +18,7 @@ $limit = stringOr(getVar("limit"), 6);
 $sindex = isset($action[2]) ? $action[2] : false;
 $direction = isset($action[3]) ? $action[3] : false; 
 
-$pattern = array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($tag), "order" => "published_at DESC");
+$pattern = array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($tag), "order" => "published_at DESC", "extend" => array("tags" => true, "user" => true));
 $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "limit" => $limit, "direction" => $direction));
 
 ?>
@@ -30,9 +30,8 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 
 	<ul class="items postings i:articlelist">
 <?		foreach($pagination["range_items"] as $item):
-			$item = $IC->extendItem($item, array("tags" => true, "user" => true));
 			$hardlink = (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]."/blog/tag/".$tag."/".$item["sindex"];
-			$media = $item["mediae"] ? array_shift($item["mediae"]) : false; ?>
+			$media = $IC->sliceMedia($item); ?>
 		<li class="item post id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 <?			if($media): ?>

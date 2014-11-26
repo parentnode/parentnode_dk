@@ -1,6 +1,8 @@
 
 /*seg_mobile_touch_include.js*/
 
+/*seg_mobile_touch_include.js*/
+
 /*seg_mobile_touch.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
@@ -3551,4 +3553,5 @@ Util.Objects["article"] = new function() {
 		}
 	}
 }
+
 

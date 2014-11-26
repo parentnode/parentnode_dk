@@ -1,48 +1,7 @@
 
 /*seg_desktop_light_include.css*/
 
-/*s-fonts-desktop_light.css*/
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-regular-webfont.eot');
-	src: url('/css/fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-regular-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-bold-webfont.eot');
-	src: url('/css/fonts/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-bold-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
-	font-weight: bold;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-italic-webfont.eot');
-	src: url('/css/fonts/opensans-italic-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-italic-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
-	font-weight: normal;
-	font-style: italic;
-}
-@font-face {
-	font-family: 'PT Serif';
-	src: url('/css/fonts/pt_serif-regular-webfont.eot');
-	src: url('/css/fonts/pt_serif-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/pt_serif-regular-webfont.woff') format('woff'),
-		 url('/css/fonts/pt_serif-regular-webfont.ttf') format('truetype'),
-		 url('/css/fonts/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
+/*seg_desktop_light_include.css*/
 
 /*s-page-desktop_light.css*/
 * {font-family: "OpenSans", Verdana, Arial, sans-serif; color: #cccccc;}
@@ -55,7 +14,7 @@ a {text-decoration: none; cursor: pointer;}
 img {border: 0; display: block;}
 form, fieldset, label, input, select, textarea {padding: 0; margin: 0; font-weight: normal;}
 fieldset {border: none;}
-input, select, textarea {font-size: 14px;}
+input, select, textarea {font-size: 14px; color: #333333;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 h1 {padding: 0 50px 30px; font-size: 48px; line-height: 1.05em;
@@ -69,11 +28,12 @@ h4 {padding: 0 50px 5px; font-size: 14px; line-height: 1em; font-weight: bold;}
 h5 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
 h6 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
 p {padding: 0 50px 20px; font-size: 14px; line-height: 1.38em;} 
-ul {font-size: 0;}
-li {display: inline; vertical-align: top; font-size: 14px; line-height: 1.25em;}
+ul,
+ol {font-size: 0;}
+li {display: inline; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 dl {font-size: 0;} 
 dt, 
-dd {display: block; font-size: 14px; line-height: 1.25em;}
+dd {display: block; font-size: 13px; line-height: 1.25em;}
 .c {clear: both; font-size: 0; overflow: hidden;}
 .c400, .c300, .c266, .c200, .c150, .c133, .c100, .c75, .c50 {float: left; min-height: 10px; vertical-align: top;}
 .c400 {width: 100%;}
@@ -87,6 +47,8 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 .terms_notification h3 {padding: 0; font-size: 14px;}
 .terms_notification .accept,
 .terms_notification .details {padding: 0; font-size: 13px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0;}
+.terms_notification .accept:hover,
+.terms_notification .details:hover {text-decoration: underline;}
 
 
 /*s-header-desktop_light.css*/
@@ -94,8 +56,10 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #header .logo {font-size: 30px; padding: 20px 50px 20px; color: #888888; cursor: pointer; display: block; width: 200px;
 	font-family: "PT Serif", Times, serif;
 }
+#header .logo:hover {text-decoration: underline;}
 #header .servicenavigation {position: absolute; top: 5px; right: 50px;}
-#header .servicenavigation li.navigation {display: none;}
+#header .servicenavigation li.navigation,
+#header .servicenavigation li.admin,
 #header .servicenavigation li.user {display: none;}
 #navigation {position: absolute; right: 50px; top: 75px;}
 #navigation ul {}
@@ -103,7 +67,9 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #navigation ul li a {
 	font-family: "PT Serif", Times, serif;
 }
+#navigation ul li a:hover {text-decoration: underline;}
 #navigation ul li.front {display: none;}
+
 
 /*s-footer-desktop_light.css*/
 #footer {text-align: center; border-top: 1px solid #888888; margin: 0 50px;}
@@ -114,6 +80,7 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #content .scene {position: relative; padding: 50px 0;}
 #content .scene .link {cursor: pointer;}
 #content .scene a {color: #888888;}
+#content .scene a:hover {text-decoration: underline;}
 #content .scene h1,
 #content .scene h2,
 #content .scene h3,
@@ -125,14 +92,17 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #content .scene p.note {font-style: italic;}
 #content .scene p+h2,
 #content .scene ul+h2,
+#content .scene ol+h2,
 #content .scene ul+.pagination+h2,
 #content .scene dl+h2,
+#content .scene div.article+h2,
 #content .scene code+h2 {padding-top: 20px;}
 #content .scene ul.tags+h2,
 #content .scene dl.geo+h2,
 #content .scene dl.info+h2 {padding-top: 0;}
 #content .scene p+code {margin-top: -15px;}
-#content .scene ul {padding: 0 50px 15px;}
+#content .scene ul,
+#content .scene ol {padding: 0 50px 15px;}
 #content .scene li {display: block; padding: 0 0 5px;}
 #content .scene li h1,
 #content .scene li h2,
@@ -167,7 +137,7 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #content .scene dl.geo .latitude,
 #content .scene dl.geo .longitude {display: none;}
 #content .scene div.image {display: none;}
-#content .scene .pagination {margin: 0 50px 30px; padding: 20px 0; border-top: 1px solid #dedede; border-bottom: 1px solid #dedede;}
+#content .scene .pagination {margin: 0 50px 30px; padding: 20px 0;}
 #content .scene .pagination ul {padding: 0; overflow: hidden;}
 #content .scene .pagination .next,
 #content .scene .pagination .previous {text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; background-color: #63ADD0; color: #ffffff; border: none; cursor: pointer; border-radius: 3px; font-size: 14px;}
@@ -199,10 +169,12 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #content .scene span.file {color: #a62300;}
 #content .scene span.htmltag {text-transform: uppercase;}
 #content .scene span.command {color: #4b5cd7;}
-#content .scene div.vcard {padding: 25px 50px;}
+#content .scene div.vcard {padding: 0 50px 25px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
 #content .scene div.vcard .email {font-size: 14px;}
+#content .scene.login form {padding-bottom: 20px;}
+#content .errormessage {color: #df0000;}
 
 
 /*s-form-desktop_light.css*/
@@ -241,7 +213,9 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #content .field input.default,
 #content .field select.default,
 #content .field textarea.default {color: #aaaaaa;}
-#content .field.required .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px; background: transparent url(/janitor/img/bg_icons.png) no-repeat 0 -292px;}
+#content .field.required .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px; 
+	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 0 -292px;
+}
 #content .field.text.required .indicator {background-position: 0 -296px;}
 #content .field.radio_buttons.required input,
 #content .field.checkbox.required input,
@@ -293,12 +267,57 @@ dd {display: block; font-size: 14px; line-height: 1.25em;}
 #content .field.focus div.hint {display: block;}
 
 
-/*s-hovers-desktop_light.css*/
-#header .logo:hover,
-#navigation ul li a:hover {text-decoration: underline;}
-#content .scene a:hover {text-decoration: underline;}
-.terms_notification .accept:hover,
-.terms_notification .details:hover {text-decoration: underline;}
+/*s-itemtypes-desktop_light.css*/
+#content .scene .articlebody ul,
+#content .scene .articlebody ol {list-style-position: outside; margin-left: 15px; width: 485px;}
+#content .scene .articlebody ul {list-style-type: disc;}
+#content .scene .articlebody ol {list-style-type: decimal;}
+#content .scene .articlebody li {font-size: 14px; padding-bottom: 7px; padding-left: 3px; display: list-item;}
+
+
+
+/*s-fonts-desktop_light.css*/
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/css/fonts/opensans-regular-webfont.eot');
+	src: url('/css/fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('/css/fonts/opensans-regular-webfont.woff') format('woff'),
+		 url('/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
+		 url('/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/css/fonts/opensans-bold-webfont.eot');
+	src: url('/css/fonts/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('/css/fonts/opensans-bold-webfont.woff') format('woff'),
+		 url('/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
+		 url('/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'OpenSans';
+	src: url('/css/fonts/opensans-italic-webfont.eot');
+	src: url('/css/fonts/opensans-italic-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('/css/fonts/opensans-italic-webfont.woff') format('woff'),
+		 url('/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
+		 url('/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'PT Serif';
+	src: url('/css/fonts/pt_serif-regular-webfont.eot');
+	src: url('/css/fonts/pt_serif-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('/css/fonts/pt_serif-regular-webfont.woff') format('woff'),
+		 url('/css/fonts/pt_serif-regular-webfont.ttf') format('truetype'),
+		 url('/css/fonts/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 
 /*s-pages-desktop_light.css*/
 #content .scene.manifest ul.manifest {padding-top: 25px;}
@@ -315,16 +334,20 @@ body {background: #ffffff;}
 #content .scene a {color: #63add0;}
 #content .scene hr {border-color: #cccccc;}
 #content .scene code {color: #333333;}
+#content ul.actions input.primary,
+#content ul.actions a.primary,
+#content .scene .pagination .next,
+#content .scene .pagination .previous {background-color: #63add0;}
+#content ul.actions input.primary:hover,
+#content ul.actions a.primary:hover,
+#content .scene .pagination .next:hover,
+#content .scene .pagination .previous:hover {background-color: #034769;}
 #footer {border-color: #cccccc;}
-#footer p {color: #034769;}
-.front #header .logo,
-.manifest #navigation ul li.manifest a,
-.about #navigation ul li.about a {color: #034769;}
 .terms_notification {background: #ffffff;}
 .terms_notification .accept,
 .terms_notification .details {color: #63add0;}
 .terms_notification {border-color: #034769;}
+.front #header .logo,
+.manifest #navigation ul li.manifest a,
+.about #navigation ul li.about a {color: #034769;}
 
-
-/*s-pages-hovers-desktop_light.css*/
-#content .scene.docsindex .search .results .function:hover {background: #ededed;}

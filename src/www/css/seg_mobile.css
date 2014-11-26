@@ -1,51 +1,10 @@
 
 /*seg_mobile_include.css*/
 
-/*s-fonts-desktop_light.css*/
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-regular-webfont.eot');
-	src: url('/css/fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-regular-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-bold-webfont.eot');
-	src: url('/css/fonts/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-bold-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
-	font-weight: bold;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'OpenSans';
-	src: url('/css/fonts/opensans-italic-webfont.eot');
-	src: url('/css/fonts/opensans-italic-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/opensans-italic-webfont.woff') format('woff'),
-		 url('/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
-		 url('/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
-	font-weight: normal;
-	font-style: italic;
-}
-@font-face {
-	font-family: 'PT Serif';
-	src: url('/css/fonts/pt_serif-regular-webfont.eot');
-	src: url('/css/fonts/pt_serif-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('/css/fonts/pt_serif-regular-webfont.woff') format('woff'),
-		 url('/css/fonts/pt_serif-regular-webfont.ttf') format('truetype'),
-		 url('/css/fonts/pt_serif-regular-webfont.svg#pt_serifregular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
+/*seg_mobile_include.css*/
 
 /*s-page-mobile.css*/
-* {font-family: "OpenSans", Verdana, Arial, sans-serif; color: #cccccc;}
+* {font-family: Verdana, Arial, sans-serif; color: #cccccc;}
 html {}
 body {background: #333333; margin: 0;}
 h1, h2, h3, h4, h5, h6, p, ul, li, dl, dd, dt {padding: 0; margin: 0;}
@@ -59,10 +18,10 @@ input, select, textarea {font-size: 14px;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 h1 {padding: 0 10px 20px; font-size: 24px; line-height: 1.05em;
-	font-family: "PT Serif", Times, serif;
+	font-family: Times, serif;
 }
 h2 {padding: 0 10px 20px; font-size: 20px; line-height: 1.1em;
-	font-family: "PT Serif", Times, serif;
+	font-family: Times, serif;
 }
 h3 {padding: 0 10px 10px; font-size: 16px; line-height: 1.25em;}
 h4 {padding: 0 10px 5px; font-size: 13px; line-height: 1em; font-weight: bold;}
@@ -88,7 +47,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 /*s-header-mobile.css*/
 #header {padding: 10px;}
 #header .logo {font-size: 30px; padding: 10px 20px; color: #888888; cursor: pointer; display: inline-block;
-	font-family: "PT Serif", Times, serif;
+	font-family: Times, serif;
 }
 #header .servicenavigation li.navigation {}
 #header .servicenavigation li.navigation a {}
@@ -97,7 +56,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #navigation {}
 #navigation ul {border-top: 1px solid #888888;}
 #navigation ul li {padding: 10px; font-size: 18px; color: #888888; display: block; text-align: center;
-	font-family: "PT Serif", Times, serif;
+	font-family: Times, serif;
 }
 
 
@@ -117,29 +76,28 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene h5,
 #content .scene h6,
 #content .scene p {}
-#content .scene hr {border: none; border-top: 1px solid #888888; margin: 15px 10px 20px; padding: 0;}
+#content .scene hr {border: none; border-top: 1px solid #888888; margin: 15px 0 20px; padding: 0;}
 #content .scene p.note {font-style: italic;}
 #content .scene p+h2,
 #content .scene ul+h2,
+#content .scene ol+h2,
+#content .scene ul+.pagination+h2,
 #content .scene dl+h2,
+#content .scene div.article+h2,
 #content .scene code+h2 {padding-top: 10px;}
-#content .scene ul {padding: 0 10px 15px;}
+#content .scene ul.tags+h2,
+#content .scene dl.geo+h2,
+#content .scene dl.info+h2 {padding-top: 0;}
+#content .scene p+code {margin-top: -15px;}
+#content .scene dl.info+dl.geo {padding-left: 0;}
+#content .scene ul,
+#content .scene ol {padding: 0 10px 15px;}
 #content .scene li {display: block; padding: 0 0 5px;}
-#content .scene li h1,
-#content .scene li h2,
-#content .scene li h3,
-#content .scene li h4,
-#content .scene li h5,
-#content .scene li h6,
-#content .scene li p,
-#content .scene li dl,
-#content .scene li ul {padding-left: 0; padding-right: 0;}
-#content .scene li code {margin-left: 0; margin-right: 0;}
-#content .scene ul.items {padding-bottom: 0;}
-#content .scene ul li.item {padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #dedede;}
+#content .scene ul.items {padding: 0;}
+#content .scene ul.items li.item {padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #dedede;}
 #content .scene dl {padding: 0 10px 15px; overflow: hidden;}
 #content .scene dt {padding: 0 0 2px 0; color: #999999;} 
-#content .scene dd {padding: 0 0 12px 20px;}
+#content .scene dd {padding: 0 0 12px 10px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px;}
 #content .scene dl dl dt {}
@@ -153,7 +111,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene dl.info dt {display: none;}
 #content .scene dl.info dd.hardlink {display: none;}
 #content .scene dl.geo {margin-top: -15px;}
-#content .scene dl.geo dd {padding-left: 0; padding-right: 0; padding-bottom: 3px; font-size: 12px; color: #999999;}
+#content .scene dl.geo dd {padding-bottom: 3px; font-size: 12px; color: #999999;}
 #content .scene dl.geo dt {display: none;}
 #content .scene dl.geo .latitude,
 #content .scene dl.geo .longitude {display: none;}
@@ -182,7 +140,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene span.file {color: #a62300;}
 #content .scene span.htmltag {text-transform: uppercase;}
 #content .scene span.command {color: #4b5cd7;}
-#content .scene div.vcard {padding: 25px 10px;}
+#content .scene div.vcard {padding: 0 10px 15px;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
 #content .scene div.vcard .email {font-size: 13px;}
@@ -236,7 +194,9 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .field input.default,
 #content .field select.default,
 #content .field textarea.default {color: #aaaaaa;}
-#content .field.required .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px; background: transparent url(/janitor/img/bg_icons.png) no-repeat 0 -292px;}
+#content .field.required .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px; 
+	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 0 -292px;
+}
 #content .field.text.required .indicator {background-position: 0 -296px;}
 #content .field.radio_buttons.required input,
 #content .field.checkbox.required input,
@@ -289,10 +249,21 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .field.focus div.hint {display: block;}
 
 
+/*s-itemtypes-mobile.css*/
+#content .scene .articlebody ul,
+#content .scene .articlebody ol {list-style-position: outside; margin-left: 15px;}
+#content .scene .articlebody ul {list-style-type: disc;}
+#content .scene .articlebody ol {list-style-type: decimal;}
+#content .scene .articlebody li {padding-bottom: 7px; padding-left: 3px; display: list-item;}
+#content .scene.todolist {}
+#content .scene.todolist ul.todos > li ul.actions {display: none;}
+
+
+
 /*s-pages-mobile.css*/
 #content .scene.manifest ul.manifest {padding-top: 25px;}
 #content .scene.manifest ul.manifest li {padding: 0 0 15px; display: block; font-size: 16px;
-	font-family: "PT Serif", Times, serif;
+	font-family: Times, serif;
 } 
 
 

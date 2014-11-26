@@ -1,6 +1,8 @@
 
 /*seg_tv_include.js*/
 
+/*seg_tv_include.js*/
+
 /*seg_tv.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
@@ -4421,4 +4423,5 @@ Util.Objects["page"] = new function() {
 	}
 }
 window.onload = u.init;
+
 

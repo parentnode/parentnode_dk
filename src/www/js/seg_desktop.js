@@ -3398,10 +3398,12 @@ Util.Form = u.f = new function() {
 						field._input.pre_state = field._input.checked;
 						field._input._changed = this._changed;
 						field._input._updated = this._updated;
+						field._input._update_checkbox_field = this._update_checkbox_field;
 						field._input._clicked = function(event) {
 							if(this.checked != this.pre_state) {
 								this._changed(window.event);
 								this._updated(window.event);
+								this._update_checkbox_field(window.event);
 							}
 							this.pre_state = this.checked;
 						}
@@ -3410,6 +3412,7 @@ Util.Form = u.f = new function() {
 					else {
 						u.e.addEvent(field._input, "change", this._changed);
 						u.e.addEvent(field._input, "change", this._updated);
+						u.e.addEvent(field._input, "change", this._update_checkbox_field);
 					}
 					this.inputOnEnter(field._input);
 					this.activateInput(field._input);
@@ -3581,9 +3584,11 @@ Util.Form = u.f = new function() {
 		if(value !== undefined) {
 			if(value) {
 				this.checked = true
+				u.ac(this.field, "checked");
 			}
 			else {
 				this.checked = false;
+				u.rc(this.field, "checked");
 			}
 			u.f.validate(this);
 		}
@@ -3673,6 +3678,14 @@ Util.Form = u.f = new function() {
 			if(typeof(this.form.updated) == "function") {
 				this.form.updated(this);
 			}
+		}
+	}
+	this._update_checkbox_field = function(event) {
+		if(this.checked) {
+			u.ac(this.field, "checked");
+		}
+		else {
+			u.rc(this.field, "checked");
 		}
 	}
 	this._validate = function(event) {
@@ -5175,7 +5188,6 @@ Util.Form = u.f = new function() {
 				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 1;
 				max = max ? max : 10000000;
-				u.bug("uploaded:" + u.hc(iN, "uploaded"))
 				if(
 					u.hc(iN, "uploaded") ||
 					(iN.val().length >= min && 
@@ -5209,7 +5221,7 @@ u.f.getParams = function(form, _options) {
 		}
 	}
 	var i, input, select, textarea, param, params;
-	if(send_as == "formdata" && typeof(window.FormData) == "function") {
+	if(send_as == "formdata" && (typeof(window.FormData) == "function" || typeof(window.FormData) == "object")) {
 		params = new FormData();
 	}
 	else {

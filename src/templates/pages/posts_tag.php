@@ -18,7 +18,7 @@ $limit = stringOr(getVar("limit"), 6);
 $sindex = isset($action[2]) ? $action[2] : false;
 $direction = isset($action[3]) ? $action[3] : false; 
 
-$pattern = array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($tag), "order" => "published_at DESC", "extend" => array("tags" => true, "user" => true));
+$pattern = array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($tag), "order" => "published_at DESC", "extend" => array("tags" => true, "user" => true, "mediae" => true));
 $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "limit" => $limit, "direction" => $direction));
 
 ?>
@@ -30,7 +30,6 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 
 	<ul class="items postings i:articlelist">
 <?		foreach($pagination["range_items"] as $item):
-			$hardlink = (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]."/blog/tag/".$tag."/".$item["sindex"];
 			$media = $IC->sliceMedia($item); ?>
 		<li class="item post id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
@@ -56,7 +55,7 @@ $pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "l
 				<dt class="author">Author</dt>
 				<dd class="author" itemprop="author"><?= $item["user_nickname"] ?></dd>
 				<dt class="hardlink">Hardlink</dt>
-				<dd class="hardlink" itemprop="url"><a href="<?= $hardlink ?>" target="_blank"><?= $hardlink ?></a></dd>
+				<dd class="hardlink" itemprop="url"><a href="<?= SITE_URL."/blog/tag/".$tag."/".$item["sindex"]; ?>" target="_blank"><?= SITE_URL."/blog/tag/".$tag."/".$item["sindex"]; ?></a></dd>
 			</dl>
 
 			<div class="description" itemprop="articleBody">

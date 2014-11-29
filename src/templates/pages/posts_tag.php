@@ -11,15 +11,12 @@ $categories = $IC->getTags(array("context" => $itemtype));
 
 
 // get content pagination
-include_once("classes/items/pagination.class.php");
-$PC = new Pagination();
-
 $limit = stringOr(getVar("limit"), 6);
 $sindex = isset($action[2]) ? $action[2] : false;
 $direction = isset($action[3]) ? $action[3] : false; 
 
 $pattern = array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($tag), "order" => "published_at DESC", "extend" => array("tags" => true, "user" => true, "mediae" => true));
-$pagination = $PC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "limit" => $limit, "direction" => $direction));
+$pagination = $IC->paginate(array("pattern" => $pattern, "sindex" => $sindex, "limit" => $limit, "direction" => $direction));
 
 ?>
 

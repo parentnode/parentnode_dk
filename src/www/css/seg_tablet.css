@@ -480,8 +480,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 
 /*s-pages-desktop.css*/
+#content .scene.front ul.projects {padding-left: 0; padding-right: 0; margin: 0; list-style: none;}
 #content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 15px; display: block; font-size: 16px;
+#content .scene.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;
 	font-family: "PT Serif", Times, serif;
 } 
 

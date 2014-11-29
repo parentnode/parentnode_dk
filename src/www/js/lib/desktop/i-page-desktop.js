@@ -92,7 +92,6 @@ Util.Objects["page"] = new function() {
 			// global scroll handler 
 			page.scrolled = function() {
 
-
 				page.scrolled_y = u.scrollY();
 
 				// reduce logo
@@ -111,7 +110,7 @@ Util.Objects["page"] = new function() {
 				}
 
 				// reduce navigation
-				if(page.scrolled_y < page.nN.top_offset) {
+				if(page.nN.top_offset && page.scrolled_y < page.nN.top_offset) {
 
 					page.nN.is_reduced = false;
 
@@ -125,7 +124,7 @@ Util.Objects["page"] = new function() {
 
 				}
 				// claim end state, once
-				else if(!page.nN.is_reduced) {
+				else if(page.nN.top_offset && !page.nN.is_reduced) {
 
 					page.nN.is_reduced = true;
 
@@ -193,81 +192,81 @@ Util.Objects["page"] = new function() {
 				page.nN.list = u.qs("ul", page.nN);
 				page.nN.list.nodes = u.qsa("li", page.nN);
 
-				// set reducing scope
-				page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
-				page.nN.font_size_gap = page.nN.font_size-14;
-				page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
-				page.nN.top_offset_gap = page.nN.top_offset-10;
+				if(page.nN.list.nodes.length) {
+					// set reducing scope
+					page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
+					page.nN.font_size_gap = page.nN.font_size-14;
+					page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
+					page.nN.top_offset_gap = page.nN.top_offset-10;
 
-				// create rule for Navigation
-				page.style_tag.sheet.insertRule("#navigation {}", 0);
-				page.nN.css_rule = page.style_tag.sheet.cssRules[0];
+					// create rule for Navigation
+					page.style_tag.sheet.insertRule("#navigation {}", 0);
+					page.nN.css_rule = page.style_tag.sheet.cssRules[0];
 
-				// create rule for Navigation nodes
-				page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
-				page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
-	//			u.bug("cssText:" + page.nN.css_rule.cssText + ", " + u.nodeId(page.nN));
+					// create rule for Navigation nodes
+					page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
+					page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
+		//			u.bug("cssText:" + page.nN.css_rule.cssText + ", " + u.nodeId(page.nN));
 
 
-				// enable navigation link animation where relevant
-				this.hN.nodes = u.qsa("#navigation li,.servicenavigation li,a.logo", page.hN);
-				for(i = 0; node = this.hN.nodes[i]; i++) {
+					// enable navigation link animation where relevant
+					this.hN.nodes = u.qsa("#navigation li,.servicenavigation li,a.logo", page.hN);
+					for(i = 0; node = this.hN.nodes[i]; i++) {
 
-					u.ce(node, {"type":"link"});
+						u.ce(node, {"type":"link"});
 
-					node._mousedover = function() {
-
-						this.transitioned = function() {
+						node._mousedover = function() {
 
 							this.transitioned = function() {
+
+								this.transitioned = function() {
+									this.transitioned = function() {
+										u.a.transition(this, "none");
+									}
+
+									u.a.transition(this, "all 0.1s ease-in-out");
+									u.a.scale(this, 1.2);
+								}
+
+								u.a.transition(this, "all 0.1s ease-in-out");
+								u.a.scale(this, 1.15);
+							}
+
+							u.a.transition(this, "all 0.1s ease-in-out");
+							u.a.scale(this, 1.22);
+						}
+
+						node._mousedout = function() {
+							this.transitioned = function() {
+
 								this.transitioned = function() {
 									u.a.transition(this, "none");
 								}
 
-								u.a.transition(this, "all 0.1s ease-in-out");
-								u.a.scale(this, 1.2);
-							}
-
-							u.a.transition(this, "all 0.1s ease-in-out");
-							u.a.scale(this, 1.15);
-						}
-
-						u.a.transition(this, "all 0.1s ease-in-out");
-						u.a.scale(this, 1.22);
-					}
-
-					node._mousedout = function() {
-						this.transitioned = function() {
-
-							this.transitioned = function() {
-								u.a.transition(this, "none");
+								u.a.transition(this, "all 0.1s ease-in");
+								u.a.scale(this, 1);
 							}
 
 							u.a.transition(this, "all 0.1s ease-in");
-							u.a.scale(this, 1);
+							u.a.scale(this, 0.8);
 						}
 
-						u.a.transition(this, "all 0.1s ease-in");
-						u.a.scale(this, 0.8);
+						// enable mouseover if mouse events are available
+						if(u.e.event_pref == "mouse") {
+
+							u.e.addEvent(node, "mouseover", node._mousedover);
+							u.e.addEvent(node, "mouseout", node._mousedout);
+						}
+						// apply touchstart/end
+						else {
+
+							u.e.addStartEvent(node, node._mousedover);
+							u.e.addEndEvent(node, node._mousedout);
+						}
 					}
-
-					// enable mouseover if mouse events are available
-					if(u.e.event_pref == "mouse") {
-
-						u.e.addEvent(node, "mouseover", node._mousedover);
-						u.e.addEvent(node, "mouseout", node._mousedout);
-					}
-					// apply touchstart/end
-					else {
-
-						u.e.addStartEvent(node, node._mousedover);
-						u.e.addEndEvent(node, node._mousedout);
-					}
-
 				}
 
 			}
-
 
 
 			// ready to start page builing process

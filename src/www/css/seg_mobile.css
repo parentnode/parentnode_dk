@@ -261,8 +261,9 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 
 
 /*s-pages-mobile.css*/
+#content .scene.front ul.projects {padding-left: 0; padding-right: 0; margin: 0; list-style: none;}
 #content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 15px; display: block; font-size: 16px;
+#content .scene.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;
 	font-family: Times, serif;
 } 
 

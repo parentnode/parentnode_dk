@@ -16,7 +16,7 @@
 #header .servicenavigation li.navigation.open div {background: #cccccc;}
 #header .servicenavigation li.navigation a {display: none;}
 
-#header .servicenavigation li,
+#header .servicenavigation li.user,
 #header .servicenavigation li.admin {display: none;}
 
 /* NAViGATION */

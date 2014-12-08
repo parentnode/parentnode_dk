@@ -4240,12 +4240,15 @@ Util.Form = u.f = new function() {
 				this.value = value;
 			}
 			else {
-				if(this.files.length) {
+				if(this.value && this.files && this.files.length) {
 					var i, file, files = [];
 					for(i = 0; file = this.files[i]; i++) {
 						files.push(file);
 					}
 					return files;
+				}
+				else if(this.value) {
+					return this.value;
 				}
 				else if(u.hc(this, "uploaded")){
 					return true;
@@ -5205,13 +5208,24 @@ Util.Form = u.f = new function() {
 						}
 					}
 				}
+				else if(u.hc(node, "file")) {
+					field.addFileTag(node);
+				}
+				else if(node.nodeName.toLowerCase().match(/dl|ul|ol/)) {
+					var children = u.cn(node);
+					for(j = 0; child = children[j]; j++) {
+						value = child.innerHTML.replace(/\n\r|\n|\r/g, "");
+						tag = field.addTextTag(field.text_allowed[0], value);
+						field.activateInlineFormatting(tag._input);
+					}
+				}
+				else if(node.nodeName.toLowerCase().match(/h1|h2|h3|h4|h5|code/)) {
+					value = node.innerHTML.replace(/\n\r|\n|\r/g, "");
+					tag = field.addTextTag(field.text_allowed[0], value);
+					field.activateInlineFormatting(tag._input);
+				}
 				else {
-					if(u.hc(node, "file")) {
-						field.addFileTag(node);
-					}
-					else {
-						alert("HTML contains unautorized node:" + node.nodeName + "\nIt has been altered to conform with SEO and design.");
-					}
+					alert("HTML contains unautorized node:" + node.nodeName + "\nIt has been altered to conform with SEO and design.");
 				}
 			}
 		}

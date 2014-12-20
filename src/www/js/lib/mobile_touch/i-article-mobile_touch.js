@@ -179,7 +179,7 @@ Util.Objects["article"] = new function() {
 					if(!this.geomap) {
 						
 						this.geomap = u.ae(this, "div", {"class":"geomap"});
-						this.insertBefore(this.geomap, u.qs("dl.info", this));
+						this.insertBefore(this.geomap, u.qs("div.description", this));
 
 						var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
 						var html = '<html><head>';

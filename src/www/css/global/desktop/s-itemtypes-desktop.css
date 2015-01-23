@@ -1,4 +1,6 @@
 /* ARTICLE BODY */
+
+#content .scene .articlebody {position: relative; z-index: 1;}
 #content .scene .articlebody ul,
 #content .scene .articlebody ol {list-style-position: outside; margin-left: 15px; width: 485px;}
 #content .scene .articlebody ul {list-style-type: disc;}

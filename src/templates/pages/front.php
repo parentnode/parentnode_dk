@@ -60,7 +60,7 @@
 				<li class="janitor">
 					<h3><a href="http://janitor.parentnode.dk" target="_blank">Janitor</a></h3>
 					<p>
-						Janitor is a PHP content management framework, designed to build custom content managements systems, 
+						Janitor is a PHP content management developer toolkit, designed to build custom content managements systems, 
 						not to be one on its own.
 					</p>
 				</li>

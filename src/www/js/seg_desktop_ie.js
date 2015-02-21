@@ -8836,7 +8836,6 @@ Util.Objects["articlelist"] = new function() {
 				return false;
 			}
 			list.correctScroll = function(article_node, new_node, additional_offset) {
-				u.bug("correctScroll:" + (this.current_node ? u.qs("h2", this.current_node).innerHTML : "no current"))
 				if(this.current_node) {
 					additional_offset = additional_offset ? additional_offset : 0;
 					var a_node_y = u.absY(article_node);
@@ -8894,17 +8893,14 @@ Util.Objects["articlelist"] = new function() {
 				}
 			}
 			list.initial_scroll = u.scrollY();
-			u.bug("list.initial_scroll:" + list.initial_scroll)
 			list.current_node = false;
 			var hardlink = u.qs("dd.hardlink a", list.items[0]);
 			if(hardlink) {
 				if(location.href == hardlink.href) {
 					list.current_node = list.items[0];
-					u.bug("list.current_node:" + u.qs("h2", list.current_node).innerHTML )
 				}
 			}
 			if(list.current_node && (!list._prev_url || list.initial_scroll)) {
-				u.bug("one of those:" + u.absY(list.current_node))
 				window.scrollTo(0, u.absY(list.current_node)-100);
 				list.initial_scroll = false;
 			}

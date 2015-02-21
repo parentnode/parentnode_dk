@@ -181,7 +181,7 @@ Util.Objects["articlelist"] = new function() {
 			// new_node is the inject node we need to compensate for
 			// additional_offset is an optional compensation for margin etc.
 			list.correctScroll = function(article_node, new_node, additional_offset) {
-				u.bug("correctScroll:" + (this.current_node ? u.qs("h2", this.current_node).innerHTML : "no current"))
+//				u.bug("correctScroll:" + (this.current_node ? u.qs("h2", this.current_node).innerHTML : "no current"))
 
 				// only do anything if current_node is set
 				if(this.current_node) {
@@ -306,7 +306,7 @@ Util.Objects["articlelist"] = new function() {
 			// if initial scroll exists this indicates a page refresh
 			list.initial_scroll = u.scrollY();
 
-			u.bug("list.initial_scroll:" + list.initial_scroll)
+//			u.bug("list.initial_scroll:" + list.initial_scroll)
 
 			// find hardlinks to check for specific load
 			list.current_node = false;
@@ -315,7 +315,7 @@ Util.Objects["articlelist"] = new function() {
 				if(location.href == hardlink.href) {
 					list.current_node = list.items[0];
 
-					u.bug("list.current_node:" + u.qs("h2", list.current_node).innerHTML )
+//					u.bug("list.current_node:" + u.qs("h2", list.current_node).innerHTML )
 				}
 			}
 
@@ -328,7 +328,7 @@ Util.Objects["articlelist"] = new function() {
 			// which will cause the scroll-offset to be updated automatically)
 			if(list.current_node && (!list._prev_url || list.initial_scroll)) {
 
-				u.bug("one of those:" + u.absY(list.current_node))
+//				u.bug("one of those:" + u.absY(list.current_node))
 				window.scrollTo(0, u.absY(list.current_node)-100);
 
 				// correct initial scroll value to match

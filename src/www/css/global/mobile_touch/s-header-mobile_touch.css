@@ -1,5 +1,5 @@
 /* HEADER */
-#header {position: fixed; height: 60px; width: 100%; top: 0; left: 0;
+#header {position: fixed; height: 60px; width: 100%; top: 0; left: 0; background: #ffffff; z-index: 100;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
@@ -10,7 +10,7 @@
 }
 #header .logo:active {text-decoration: none;}
 
-#header .servicenavigation {position: absolute; top: 0; left: 0; z-index: 9; width: 100%; height: 60px;}
+#header .servicenavigation {position: absolute; top: 0; left: 0; z-index: 9; width: 100%; height: 60px; background: #ffffff;}
 #header .servicenavigation li.navigation {position: absolute; right: 0; top: 0; width: 30px; height: 39px; padding: 21px 15px 0;}
 #header .servicenavigation li.navigation div {border-radius: 1px; height: 3px; margin: 0 0 5px; background: #888888;}
 #header .servicenavigation li.navigation.open div {background: #cccccc;}

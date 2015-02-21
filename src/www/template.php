@@ -11,7 +11,7 @@ $action = $page->actions();
 
 
 $page->bodyClass("story");
-$page->pageTitle("Getting lost without loosing my way");
+$page->pageTitle("Getting lost without losing my way");
 
 $page->header();
 ?>
@@ -19,6 +19,9 @@ $page->header();
 <div class="scene template i:scene">
 
 	<h1>Template</h1>
+	<p>
+		This template is used to develop the parentNode CSS theme across segments.
+	</p>
 	<p>
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 		incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
@@ -143,7 +146,7 @@ $page->header();
 
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
-		<div class="image image_id:0 variant:missing format:png">
+		<div class="image item_id:0 variant:missing format:png">
 			<p>Image: <a href="/images/0/missing/500x.png">Image in top of article</a>
 		</div>
 
@@ -254,19 +257,19 @@ $page->header();
 				qui officia deserunt mollit anim id est laborum.
 			</p>
 
-			<div class="image image_id:0 variant:missing format:png">
+			<div class="image item_id:0 variant:missing format:png">
 				<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a></p>
 			</div>
 
 			<h2>H2 after image</h2>
 
-			<div class="image image_id:0 variant:missing format:png">
+			<div class="image item_id:0 variant:missing format:png">
 				<p>Image: <a href="/images/0/missing/500x.png">Image after h2</a></p>
 			</div>
 
 			<h3>H3 after image</h3>
 
-			<div class="image image_id:0 variant:missing format:png">
+			<div class="image item_id:0 variant:missing format:png">
 				<p>Image: <a href="/images/0/missing/500x.png">Image after h3</a></p>
 			</div>
 
@@ -382,12 +385,12 @@ $page->header();
 						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
 					</p>
 
-					<div class="image image_id:0 variant:missing format:png">
+					<div class="image item_id:0 variant:missing format:png">
 						<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a>
 					</div>
 					<!-- no caption -->
-					<div class="image image_id:0 variant:missing format:png"></div>
-					<div class="image image_id:0 variant:missing format:png">
+					<div class="image item_id:0 variant:missing format:png"></div>
+					<div class="image item_id:0 variant:missing format:png">
 						<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a>
 					</div>
 
@@ -419,14 +422,14 @@ $page->header();
 						incididunt <span class="file">/etc/hosts</span> ut labore et dolore magna aliqua. 
 					</p>
 
-					<div class="image image_id:0 variant:missing format:png">
+					<div class="image item_id:0 variant:missing format:png">
 						<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a></p>
 					</div>
 				</div>
 			</li>
 			<li class="item article" itemscope itemtype="http://schema.org/Article">
 
-				<div class="image image_id:0 variant:missing format:png"></div>
+				<div class="image item_id:0 variant:missing format:png"></div>
 				<h2 itemprop="name">Simple list item</h2>
 
 				<div class="articlebody" itemprop="articleBody">
@@ -438,7 +441,7 @@ $page->header();
 			</li>
 			<li class="item article" itemscope itemtype="http://schema.org/Article">
 
-				<div class="image image_id:0 variant:missing format:png">
+				<div class="image item_id:0 variant:missing format:png">
 					<p>Image: <a href="/images/0/missing/500x.png">Image after paragraph</a></p>
 				</div>
 
@@ -479,6 +482,7 @@ $page->header();
 
 	<hr />
 
+
 	<h2>Vcard</h2>
 	<div itemtype="http://schema.org/Person" itemscope="" class="vcard company">
 		<div itemprop="name" class="name fn org">Martin Kæstel Nielsen</div>
@@ -491,49 +495,32 @@ $page->header();
 
 
 	<h1>TODOs</h1>
-	<p>Input for action.</p>
-
-	<ul class="actions">
-		<li><a href="/todolist/view/janitor" class="button primary">Janitor</a></li>
-		<li><a href="/todolist/view/detector" class="button primary">Detector</a></li>
-	</ul>
-
 
 	<ul class="items todos">
 		<li class="item item_id:62">
 			<h3>Finish and test new improments to Device identification</h3>
 
 			<dl class="info">
-				<dt>Deadline</dt>
-				<dd>2014-03-16</dd>
-				<dt>Priority</dt>
-				<dd>Medium</dd>
+				<dt class="priority">Priority</dt>
+				<dd class="priority">Medium</dd>
+				<dt class="deadline">Deadline</dt>
+				<dd class="deadline">2014-03-14</dd>
 			</dl>
 
-			<ul class="actions ">
+			<ul class="actions">
 				<li class="close">
-					<form action="/todolist/close/62" method="post" class="labelstyle:inject">
+					<form action="#/close/62" method="post" class="labelstyle:inject">
 						<input type="hidden" name="csrf-token" value="57048480-7c6f-4035-b94e-b4291be84ba3" />
 						<input value="Close" type="submit" class="button primary" />
 					</form>
 				</li>
 				<li class="open">
-					<form action="/todolist/open/62" method="post" class="labelstyle:inject">
+					<form action="#/open/62" method="post" class="labelstyle:inject">
 						<input type="hidden" name="csrf-token" value="57048480-7c6f-4035-b94e-b4291be84ba3" />
 						<input value="Open" type="submit" class="button primary" />
 					</form>
 				</li>
 			</ul>
-		</li>
-		<li class="item item_id:59">
-			<h3>Update all templates to use global IC, model and itemtype</h3>
-
-			<dl class="info">
-				<dt>Deadline</dt>
-				<dd>2014-03-14</dd>
-				<dt>Priority</dt>
-				<dd>Medium</dd>
-			</dl>
 
 			<div class="description">
 				<p>
@@ -542,7 +529,18 @@ $page->header();
 				</p>
 			</div>
 
-			<ul class="actions ">
+		</li>
+		<li class="item item_id:59">
+			<h3>Update all templates to use global IC, model and itemtype</h3>
+
+			<dl class="info">
+				<dt class="priority">Priority</dt>
+				<dd class="priority">Medium</dd>
+				<dt class="deadline">Deadline</dt>
+				<dd class="deadline">2014-03-14</dd>
+			</dl>
+
+			<ul class="actions closed">
 				<li class="close">
 					<form action="/todolist/close/59" method="post" class="labelstyle:inject">
 						<input type="hidden" name="csrf-token" value="57048480-7c6f-4035-b94e-b4291be84ba3" />
@@ -556,6 +554,14 @@ $page->header();
 					</form>
 				</li>
 			</ul>
+
+			<div class="description">
+				<p>
+					Update all templates to use global IC, model and itemtype instead of creating new objects
+					Look at todo's for reference
+				</p>
+			</div>
+
 		</li>
 	</ul>
 
@@ -565,133 +571,420 @@ $page->header();
 
 	<h1>Documentation</h1>
 
-	<dl class="definition">
-		<dt class="name">Name</dt>
-		<dd class="name">Util.date</dd>
-		<dt class="shorthand">Shorthand</dt>
-		<dd class="shorthand">u.date</dd>
-		<dt class="syntax">Syntax</dt>
-		<dd class="syntax">
-			<span class="type">String</span> = Util.date(
-			<span class="type">String</span> <span class="var">format</span> 
-			[, <span class="type">Mixed</span> <span class="var">timestamp</span> 
-			[, <span class="type">Array</span> <span class="var">months</span>]
-			]);
-		</dd>
-	</dl>
+	<div class="section functions">
+		<div class="header">
+			<h2>Functions</h2>
+		</div>
+		<div class="body">
 
-	<p>
-		Ut enim ad minim veniam, 
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-		lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
-		tempor incididunt ut labore et dolore magna aliqua.
-	</p>
+			<div class="function" id="Util.audioPlayer">
+				<div class="header">
+					<h3>Util.audioPlayer</h3>
+				</div>
+				<div class="body">
+					<div class="definition">
+						<h4>Definition</h4>
+						<dl class="definition">
+							<dt class="name">Name</dt>
+							<dd class="name">Util.audioPlayer</dd>
+							<dt class="syntax">Syntax</dt>
+							<dd class="syntax"><span class="type">Node audioPlayer</span> = 
+								Util.audioPlayer(
+									[<span class="type">JSON</span> <span class="var">_options</span> ]
+								);
+							</dd>
+						</dl>
+					</div>
 
-	<dl class="parameters">
-		<dt><span class="var">format</span></dt>
-		<dd>
-			<div class="summary">
-				<span class="type">String</span> date/time format
+					<div class="description">
+						<h4>Description</h4>
+						<p>Return audio player node, extended with controller methods and event callbacks.</p>
+					</div>
+
+					<div class="parameters">
+						<h4>Parameters</h4>
+
+						<dl class="parameters">
+							<dt><span class="var">_options</span></dt>
+							<dd>
+								<div class="summary">
+									<span class="type">JSON</span> Optional, JSON object with options for click handling.
+								</div>
+								<!-- optional details -->
+								<div class="details">
+									<h5>Options</h5>
+									<dl class="options">
+										<dt><span class="value">autoplay</span></dt>
+										<dd>Set initial autoplay state - default false</dd>
+
+										<dt><span class="value">controls</span></dt>
+										<dd>Set native controls state - default false</dd>
+
+										<dt><span class="value">playpause</span></dt>
+										<dd>Inject custom controls div with Play/Pause button</dd>
+
+										<dt><span class="value">search</span></dt>
+										<dd>Inject custom controls div with FF/RW buttons</dd>
+
+										<dt><span class="value">ff_skip</span></dt>
+										<dd>Time in seconds to skip ahead for Fast Forward</dd>
+
+										<dt><span class="value">rw_skip</span></dt>
+										<dd>Time in seconds to jump back for Rewind</dd>
+
+										<!--dt><span class="value">zoom</span></dt>
+										<dd>Inject custom controls div with Zoom/Fullscreen button</dd-->
+
+										<!--dt><span class="value">volume</span></dt>
+										<dd>Inject custom controls div with volume button</dd-->
+									</dl>
+								</div>
+							</dd>
+						</dl>
+					</div>
+
+					<div class="return">
+						<h4>Returns</h4>
+						<p>
+							<span class="type">node</span> <span class="htmltag">DIV.audioplayer</span> (audioPlayer) containing 
+							<span class="htmltag">audio</span> or <span class="htmltag">object</span> with fallback
+							flash player.
+						</p>
+					</div>
+
+					<div class="callbacks">
+						<h4>Callbacks</h4>
+						<dl>
+							<dt>audioPlayer.loading(event)</dt>
+							<dd>when data is loading</dd>
+							<dt>audioPlayer.canplaythrough(event)</dt>
+							<dd>when enough data is loaded to perform uninterrupted playback</dd>
+							<dt>audioPlayer.playing(event)</dt>
+							<dd>when playback is begun</dd>
+							<dt>audioPlayer.paused(event)</dt>
+							<dd>when playback is paused</dd>
+							<dt>audioPlayer.stalled(event)</dt>
+							<dd>when playback is stalling</dd>
+
+							<dt>audioPlayer.ended(event)</dt>
+							<dd>when playback has ended</dd>
+							<dt>audioPlayer.loadedmetadata(event)</dt>
+							<dd>when metadata is loaded (duration, title, etc.)</dd>
+							<dt>audioPlayer.loadeddata(event)</dt>
+							<dd>when entire source is loaded</dd>
+							<dt>audioPlayer.timeupdate(event)</dt>
+							<dd>when position is updated</dd>	
+						</dl>
+					</div>
+
+					<div class="examples">
+						<h4>Examples</h4>
+
+						<div class="example">
+							<code>var player = u.audioPlayer();</code>
+							<p>Returns simple <span class="htmltag">div.audioplayer</span></p>
+						</div>
+
+						<div class="example">
+							<code>var player = u.audioPlayer({"playpause":true});</code>
+							<p>Return <span class="htmltag">div.audioplayer</span> with Play/Pause button</p>
+						</div>
+					</div>
+
+					<div class="uses">
+						<h4>Uses</h4>
+
+						<div class="javascript">
+							<h5>JavaScript</h5>
+							<ul>
+								<li>document.removeChild</li>
+								<li>String.match</li>
+								<li>String.replace</li>
+								<li>switch ... case</li>
+								<li>typeof</li>
+								<li>for ... in</li>
+							</ul>
+						</div>
+
+						<div class="manipulator">
+							<h5>Manipulator</h5>
+							<ul>
+								<li>Util.addClass</li>
+								<li>Util.removeClass</li>
+								<li>Util.hasClass</li>
+								<li>Util.appendElement</li>
+								<li>Util.Events.addEvent</li>
+								<li>Util.Events.removeEvent</li>
+								<li>Util.randomString</li>
+							</ul>
+						</div>
+
+					</div>
+
+				</div>
+
 			</div>
-			<div class="details">
 
-				<h5>Options</h5>
-				<dl class="options">
-					<dt><span class="value">d</span></dt>
-					<dd>Day of the month, 2 digits with leading zeros: 01 to 31</dd>
+			<div class="function" id="audioPlayer.load">
+				<div class="header">
+					<h3>audioPlayer.load</h3>
+				</div>
+				<div class="body">
+					<div class="definition">
+						<h4>Definition</h4>
+						<dl class="definition">
+							<dt class="name">Name</dt>
+							<dd class="name">audioPlayer.load</dd>
+							<dt class="syntax">Syntax</dt>
+							<dd class="syntax"><span class="type">Void</span> = 
+								audioPlayer.load(
+									<span class="type">String</span> <span class="var">src</span> 
+									[, <span class="type">JSON</span> <span class="var">_options</span> ]
+								);
+							</dd>
+						</dl>
+					</div>
 
-					<dt><span class="value">j</span></dt>
-					<dd>Day of the month without leading zeros: 1 to 31</dd>
+					<div class="description">
+						<h4>Description</h4>
+						<p>Load src into audio player. Source is automatically changed to format supported by browser.</p>
+					</div>
 
-					<dt><span class="value">m</span></dt>
-					<dd>Numeric representation of a month, with leading zeros: 01 through 12</dd>
+					<div class="parameters">
+						<h4>Parameters</h4>
 
-					<dt><span class="value">n</span></dt>
-					<dd>Numeric representation of a month, without leading zeros: 1 through 12</dd>
+						<dl class="parameters">
+							<dt><span class="var">src</span></dt>
+							<dd>
+								<div class="summary">
+									<span class="type">String</span> audio src to load
+								</div>
+							</dd>
+							<dt><span class="var">options</span></dt>
+							<dd>
+								<div class="summary">
+									<span class="type">JSON</span> Optional, JSON object with options for click handling.
+								</div>
+								<!-- optional details -->
+								<div class="details">
+									<h5>Options</h5>
+									<dl class="options">
+										<dt><span class="value">autoplay</span></dt>
+										<dd>Set initial autoplay state - default false</dd>
 
-					<dt><span class="value">F</span></dt>
-					<dd>Full month string, given as array</dd>
+										<dt><span class="value">controls</span></dt>
+										<dd>Set native controls state - default false</dd>
 
-					<dt><span class="value">Y</span></dt>
-					<dd>Full numeric representation of a year, 4 digits</dd>
+										<dt><span class="value">playpause</span></dt>
+										<dd>Inject custom controls div with Play/Pause button</dd>
 
-					<dt><span class="value">G</span></dt>
-					<dd>24-hour format of an hour without leading zeros: 0 through 23</dd>
+										<dt><span class="value">search</span></dt>
+										<dd>Inject custom controls div with FF/RW buttons</dd>
 
-					<dt><span class="value">H</span></dt>
-					<dd>24-hour format of an hour with leading zeros 00 through 23</dd>
+										<dt><span class="value">ff_skip</span></dt>
+										<dd>Time in seconds to skip ahead for Fast Forward</dd>
 
-					<dt><span class="value">i</span></dt>
-					<dd>Minutes with leading zeros 00 to 59</dd>
+										<dt><span class="value">rw_skip</span></dt>
+										<dd>Time in seconds to jump back for Rewind</dd>
 
-					<dt><span class="value">s</span></dt>
-					<dd>Seconds, with leading zeros	00 through 59</dd>
-				</dl>
+										<!--dt><span class="value">zoom</span></dt>
+										<dd>Inject custom controls div with Zoom/Fullscreen button</dd-->
+
+										<!--dt><span class="value">volume</span></dt>
+										<dd>Inject custom controls div with volume button</dd-->
+									</dl>
+								</div>
+							</dd>
+						</dl>
+					</div>
+
+					<div class="return">
+						<h4>Returns</h4>
+						<p><span class="type">Void</span></p>
+					</div>
+
+					<div class="examples">
+						<h4>Examples</h4>
+
+						<div class="example">
+							<code>var player = u.audioPlayer();
+var scene = u.qs(".scene");
+u.ae(scene, player);
+player.load("/media/audio/audio_1.mp3");</code>
+							<p>Injects audio into <span class="htmltag">div.scene</span> and loads "/media/audio/audio_1.mp3", without beginning playback.</p>
+						</div>
+					</div>
+
+					<div class="uses">
+						<h4>Uses</h4>
+
+						<div class="javascript">
+							<h5>JavaScript</h5>
+							<ul>
+								<li>switch ... case</li>
+								<li>typeof</li>
+								<li>for ... in</li>
+							</ul>
+						</div>
+
+						<div class="manipulator">
+							<h5>Manipulator</h5>
+							<ul>
+								<li>Util.hasClass</li>
+							</ul>
+						</div>
+
+					</div>
+
+				</div>
 			</div>
-		</dd>
 
-		<dt><span class="var">timestamp</span></dt>
-		<dd>
-			<div class="summary">
-				<span class="type">String/Number</span> Optional, unix timestamp in milliseconds since 1970 or valid Date-string. If <span class="var">timestamp</span> is omitted, current time is used.
-			</div>
-		</dd>
-		<dt><span class="var">months</span></dt>
-		<dd>
-			<div class="summary">
-				<span class="type">Array</span> Optional, Array with months. If <span class="var">months</span> is omitted, the &quot;F&quot;-character cannot be used.
-			</div>
-		</dd>
-	</dl>
+		</div>
+	</div>
 
-	<p><span class="type">type</span> <span class="var">var</span> <span class="file">file</span> <span class="value">value</span> <span class="htmltag">tag</span> <span class="command">command</span></p>
+	<h2>Color syntax</h2>
+	<ul>
+		<li><span class="type">type</span></li>
+		<li><span class="var">var</span></li>
+		<li><span class="file">file</span></li>
+		<li><span class="value">value</span></li>
+		<li><span class="htmltag">tag</span></li>
+		<li><span class="command">command</span></li>
+	</ul>
 
-		<?php
-			$model = new Model();
-		?>
 
-	<form action="" method="" class="i:standardForm labelstyle:inject">
+	<hr />
 
-		<h3>Form elements</h3>
-		<p>Some description to what the form does.</p>
+
+	<h1>Form</h1>
+
+	<? $model = new Model() ?>
+
+	<script type="text/javascript">
+
+		// Standard form initializer
+		u.o.standardForm = new function() {
+			this.init = function(form) {
+				u.f.init(form);
+
+				// while testing form - scroll to form onload
+				u.scrollTo(window, {"node":form});
+			}
+		}
+
+	</script>
+
+	<?= $model->formStart("#/1", array("class" => "labelstyle:inject i:standardForm")) ?>
+
+		<h2>Form elements</h2>
+		<p>
+			This is a general form layout, containing most common input/text combinations. 
+			This is not used to test anything but parentNode CSS!
+		</p>
+		<p>
+			To perform tests on JavaScript layer, use:<br />
+			<a href="http://manipulator.parentnode.dk/tests/u-form">http://manipulator.parentnode.dk/tests/u-form</a>.
+		</p>
+		<p>
+			To perform tests on Janitor layer, use:<br />
+			<a href="http://janitor.parentnode.dk/tests/form">http://janitor.parentnode.dk/tests/form</a>.
+		</p>
+
 		<fieldset>
-			<?= $model->input("string", array("type" => "string", "label" => "String", "hint_message" => "hint message", "error_message" => "error message")) ?>
-			<?= $model->input("string_required", array("type" => "string", "label" => "String required", "required" => true, "hint_message" => "hint message", "error_message" => "error message")) ?>
+			<h3>String and text</h3>
 
-			<?= $model->input("text", array("type" => "text", "label" => "Test", "hint_message" => "hint message", "error_message" => "error message")) ?>
-			<?= $model->input("text_required", array("type" => "text", "label" => "Test required", "required" => true, "hint_message" => "hint message", "error_message" => "error message")) ?>
+			<?= $model->input("string", array("type" => "string", "label" => "String", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("string_required", array("type" => "string", "label" => "String required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("text", array("type" => "text", "class" => "autoexpand", "label" => "Text", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("text_required", array("type" => "text", "class" => "autoexpand", "label" => "Text required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+		</fieldset>
+
+		<h3>Buttons</h3>
+		<ul class="actions">
+			<?= $model->submit("Primary submit", array("class" => "primary", "wrapper" => "li.save")) ?>
+			<?= $model->link("Primary a", "/template", array("class" => "button primary", "wrapper" => "li.button")) ?>
+
+			<?= $model->link("Secondary a", "/template", array("class" => "button secondary", "wrapper" => "li.cancel")) ?>
+			<?= $model->button("Secondary button", array("class" => "secondary", "wrapper" => "li.button")) ?>
+
+			<?= $model->link("Default a", "/template", array("class" => "button", "wrapper" => "li.cancel")) ?>
+			<?= $model->button("Default button", array("type" => "button", "wrapper" => "li.button")) ?>
+		</ul>
+
+
+		<fieldset>
+			<h3>Select, Checkbox and Radio buttons</h3>
+
+			<?= $model->input("select", array("type" => "select", "label" => "Select", "options" => array(0 => "test"), "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("select_required", array("type" => "select", "label" => "Select required", "options" => array(0 => "test"), "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("checkbox", array("type" => "checkbox", "label" => "Checkbox", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("checkbox_required", array("type" => "checkbox", "label" => "Checkbox required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("radiobuttons", array("type" => "radiobuttons", "label" => "Radiobuttons", "options" => array("test1" => "Test A", "test2" => "Test B"), "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("radiobuttons_required", array("type" => "radiobuttons", "label" => "Radiobuttons required", "options" => array("test1" => "Test A", "test2" => "Test B"), "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
 		</fieldset>
 
 		<ul class="actions">
-			<li class="save"><input type="submit" value="Submit" class="button primary" /></li>
-			<li class="cancel"><a href="#" class="button">Cancel</a></li>
+			<?= $model->link("Cancel", "/template", array("class" => "button key:esc", "wrapper" => "li.cancel")) ?>
+			<?= $model->submit("Submit", array("class" => "primary key:s", "wrapper" => "li.save")) ?>
 		</ul>
 
-		<fieldset>
-			<?= $model->input("select", array("type" => "select", "label" => "Select", "options" => array(0 => "test"), "hint_message" => "hint message", "error_message" => "error message")) ?>
-			<?= $model->input("select_required", array("type" => "select", "label" => "Select required", "options" => array(0 => "test"), "required" => true, "hint_message" => "hint message", "error_message" => "error message")) ?>
 
-			<?= $model->input("checkbox", array("type" => "checkbox", "label" => "Checkbox", "hint_message" => "hint message", "error_message" => "error message")) ?>
-			<?= $model->input("checkbox_required", array("type" => "checkbox", "label" => "Checkbox required", "required" => true, "hint_message" => "hint message", "error_message" => "error message")) ?>
+		<fieldset>
+			<h3>Special input types</h3>
+
+			<?= $model->input("email", array("type" => "email", "label" => "Email", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("email_required", array("type" => "email", "label" => "Email required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("tel", array("type" => "tel", "label" => "Phone", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("tel_required", array("type" => "tel", "label" => "Phone required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("password", array("type" => "password", "label" => "Password", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("password_required", array("type" => "password", "label" => "Password required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("number", array("type" => "number", "label" => "Number", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("number_required", array("type" => "number", "label" => "Number required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("integer", array("type" => "integer", "label" => "Integer", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("integer_required", array("type" => "integer", "label" => "Integer required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("date", array("type" => "date", "label" => "Date", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("date_required", array("type" => "date", "label" => "Date required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("datetime", array("type" => "datetime", "label" => "Datetime", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("datetime_required", array("type" => "datetime", "label" => "Datetime required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->input("files", array("type" => "files", "label" => "Files", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("files_required", array("type" => "files", "label" => "Files required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
 		</fieldset>
 
 		<ul class="actions">
-			<li class="save"><input type="submit" value="Submit" class="button primary" /></li>
-			<li class="cancel"><a href="#" class="button">Cancel</a></li>
+			<?= $model->link("Cancel", "/template", array("class" => "button key:esc", "wrapper" => "li.cancel")) ?>
+			<?= $model->submit("Submit", array("class" => "primary key:s", "wrapper" => "li.save")) ?>
 		</ul>
 
+
 		<fieldset>
-			<h3>TODO: radiobuttons
-			<?//= $model->input("radio_buttons", array("type" => "checkbox", "label" => "Checkbox", "hint_message" => "hint message", "error_message" => "error message")) ?>
-			<?//= $model->input("radio_buttons", array("type" => "checkbox", "label" => "Checkbox required", "required" => true, "hint_message" => "hint message", "error_message" => "error message")) ?>
+			<h3>Custom input types</h3>
+
+			<?= $model->inputLocation("location", "latitude", "longitude", array("type" => "location", "label_loc" => "Location", "label_lat" => "Latitude", "label_lon" => "Longitude", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->inputLocation("location_required", "latitude_required", "longitude_required", array("type" => "location", "label_loc" => "Location required", "label_lat" => "Latitude required", "label_lon" => "Longitude required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
+			<?= $model->inputHTML("html", array("type" => "html", "allowed_tags" => "p,h2,h3,h4,ul,ol,code,download,jpg,png", "label" => "HTML", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->inputHTML("html_required", array("type" => "html", "allowed_tags" => "p,h2,h3,h4,ul,ol,code,download,jpg,png", "label" => "HTML required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+
 		</fieldset>
 
 		<ul class="actions">
-			<li class="save"><input type="submit" value="Submit" class="button primary" /></li>
-			<li class="cancel"><a href="#" class="button">Cancel</a></li>
+			<?= $model->link("Cancel", "/template", array("class" => "button key:esc", "wrapper" => "li.cancel")) ?>
+			<?= $model->submit("Submit", array("class" => "primary key:s", "wrapper" => "li.save")) ?>
 		</ul>
 
-	</form>
+
+
+	<?= $model->formEnd() ?>
 
 </div>
 

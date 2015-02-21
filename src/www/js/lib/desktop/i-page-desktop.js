@@ -61,16 +61,16 @@ Util.Objects["page"] = new function() {
 			page.resized = function() {
 
 				// adjust content height
-				this.calc_height = u.browserH();
-				this.calc_width = u.browserW();
-				this.available_height = this.calc_height - page.hN.offsetHeight - page.fN.offsetHeight;
+				page.browser_h = u.browserH();
+				page.browser_w = u.browserW();
+				page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
 
 				u.as(page.cN, "min-height", "auto", false);
-				if(this.available_height >= page.cN.offsetHeight) {
-					u.as(page.cN, "minHeight", this.available_height+"px", false);
+				if(page.available_height >= page.cN.offsetHeight) {
+					u.as(page.cN, "minHeight", page.available_height+"px", false);
 				}
 
-				if(this.calc_width > 1300) {
+				if(page.browser_w > 1300) {
 					u.ac(page, "fixed");
 				}
 				else {

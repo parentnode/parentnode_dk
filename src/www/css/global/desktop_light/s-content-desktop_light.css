@@ -37,7 +37,7 @@
 /* LISTS */
 #content .scene ul,
 #content .scene ol {padding: 0 50px 15px;}
-#content .scene li {display: block; padding: 0 0 5px;}
+#content .scene li {padding: 0 0 5px;}
 #content .scene li h1,
 #content .scene li h2,
 #content .scene li h3,
@@ -52,7 +52,7 @@
 
 /* ITEMS */
 #content .scene ul.items {padding-bottom: 0;}
-#content .scene ul li.item {padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
+#content .scene ul li.item {display: block; padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
 
 
 /* DEFINITION LIST */
@@ -70,7 +70,9 @@
 
 
 /* TAGS */
-#content .scene ul.tags li {font-size: 12px;}
+#content .scene ul.tags li {font-size: 12px; display: block;}
+
+#content .scene ul.tags li.editing {background: #666666; border-radius: 5px; color: #ffffff; margin: -2px 10px 8px -4px; padding: 2px 10px; display: inline-block; vertical-align: top;}
 
 
 /* INFO */
@@ -88,20 +90,21 @@
 
 
 /* INLINE IMAGE */
-#content .scene div.image {display: none;}
+#content .scene div.image,
+#content .scene div.media {display: none;}
 
 
 /* PAGINATION */
 #content .scene .pagination {margin: 0 50px 30px; padding: 20px 0;}
 #content .scene .pagination ul {padding: 0; overflow: hidden;}
 #content .scene .pagination .next,
-#content .scene .pagination .previous {text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; background-color: #63ADD0; color: #ffffff; border: none; cursor: pointer; border-radius: 3px; font-size: 14px;}
+#content .scene .pagination .previous {background-color: #8c9399; text-decoration: none; height: 14px; padding: 6px 12px 10px; display: inline; float: right; color: #ffffff; border: none; cursor: pointer; font-size: 14px;}
 #content .scene .pagination .previous {float: left;}
 
 #content .scene .pagination .next a,
 #content .scene .pagination .previous a {color: #ffffff;}
 #content .scene .pagination .next:hover,
-#content .scene .pagination .previous:hover {background-color: #034769;}
+#content .scene .pagination .previous:hover {background-color: #313942;}
 
 
 /* CATEGORIES */
@@ -109,7 +112,7 @@
 
 
 /* CODE AND TYPECASTING */
-#content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
+#content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
 	-moz-tab-size: 4;

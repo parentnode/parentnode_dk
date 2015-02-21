@@ -7,3 +7,18 @@
 
 .terms_notification .accept:hover,
 .terms_notification .details:hover {text-decoration: underline;}
+
+
+#content ul.actions input.button:hover,
+#content ul.actions a.button:hover {background-color: #bebebe;}
+#content ul.actions input.button.primary:hover,
+#content ul.actions a.button.primary:hover {background-color: #313942;}
+#content ul.actions input.button.secondary:hover,
+#content ul.actions a.button.secondary:hover {background-color: #313942;}
+#content .field.html ul.options li:hover {background-color: #64ad8e;}
+#content .field.html .editor div.tag:hover .drag {display: block;}
+#content .field.html .editor div.tag:hover .remove {display: block;}
+body #selection_options ul.actions input.button:hover,
+body #selection_options ul.actions a.button:hover {background-color: #313942;}
+
+#content .scene.docsindex .search .results .function:hover {background: #ededed;}

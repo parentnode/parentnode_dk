@@ -1,7 +1,7 @@
-* {font-family: Verdana, Arial, sans-serif; color: #cccccc;}
+* {font-family: Verdana, Arial, sans-serif; color: #000000;}
 
 html {}
-body {background: #333333; margin: 0;}
+body {background: #ffffff; margin: 0;}
 
 
 /* BASE */
@@ -35,7 +35,7 @@ p {padding: 0 10px 15px; font-size: 13px; line-height: 1.38em;}
 
 
 ul {font-size: 0;}
-li {display: inline; vertical-align: top; font-size: 13px; line-height: 1.25em;}
+li {font-size: 13px; line-height: 1.25em;}
 
 dl {font-size: 0;} 
 dt, 

@@ -129,10 +129,10 @@ Util.Objects["article"] = new function() {
 
 		// INIT IMAGES
 		var i, image;
-		article._images = u.qsa("div.image", article);
+		article._images = u.qsa("div.image,div.media", article);
 		for(i = 0; image = article._images[i]; i++) {
 
-			image._id = u.cv(image, "image_id");
+			image._id = u.cv(image, "item_id");
 			image._format = u.cv(image, "format");
 			image._variant = u.cv(image, "variant");
 
@@ -165,7 +165,7 @@ Util.Objects["article"] = new function() {
 		article.geolocation = u.qs("dl.geo", article);
 		if(article.geolocation) {
 			article.geolocation.article = article;
-			u.bug("article.geolocation:" + article.geolocation)
+//			u.bug("article.geolocation:" + article.geolocation)
 
 			var dd_longitude = u.qs("dd.longitude", article.geolocation);
 			var dd_latitude = u.qs("dd.latitude", article.geolocation);
@@ -177,9 +177,15 @@ Util.Objects["article"] = new function() {
 				article.showMap = function() {
 
 					if(!this.geomap) {
-						
+
+						var injection_point = u.ns(this.geolocation);
 						this.geomap = u.ae(this, "div", {"class":"geomap"});
-						this.insertBefore(this.geomap, u.qs("div.description", this));
+						if(injection_point) {
+							this.insertBefore(this.geomap, injection_point);
+						}
+						else {
+							this.appendChild(this.geomap);
+						}
 
 						var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
 						var html = '<html><head>';

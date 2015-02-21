@@ -6,6 +6,7 @@
 #header .logo:hover {text-decoration: underline;}
 
 #header .servicenavigation {position: absolute; top: 5px; right: 50px;}
+#header .servicenavigation li {display: inline; vertical-align: top;}
 #header .servicenavigation li.navigation,
 #header .servicenavigation li.admin,
 #header .servicenavigation li.user {display: none;}
@@ -14,7 +15,7 @@
 /* NAViGATION */
 #navigation {position: absolute; right: 50px; top: 75px;}
 #navigation ul {}
-#navigation ul li {padding: 0 0 0 20px; font-size: 20px; color: #888888;}
+#navigation ul li {display: inline; vertical-align: top; padding: 0 0 0 20px; font-size: 20px; color: #888888;}
 #navigation ul li a {
 	font-family: "PT Serif", Times, serif;
 }

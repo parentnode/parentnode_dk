@@ -46,8 +46,8 @@
 				<li class="manipulator">
 					<h3><a href="http://manipulator.parentnode.dk" target="_blank">Manipulator</a></h3>
 					<p>
-						Manipulator is an extremely flexible, performance optimized JavaScript library with a 
-						slightly neurotic focus on details.
+						Manipulator is an extremely flexible, performance optimized JavaScript library 
+						and framework with a slightly neurotic focus on details.
 					</p>
 				</li>
 				<li class="modulator">

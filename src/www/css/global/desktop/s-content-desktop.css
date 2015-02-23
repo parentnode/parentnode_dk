@@ -104,23 +104,23 @@
 
 /* IMAGE */
 #content .scene div.image {position: relative; z-index: 1;}
-#content .scene div.image {cursor: zoom-in;}
-#content .scene div.image img {margin: 0 30px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
+#content .scene div.image {}
+#content .scene div.image img {cursor: zoom-in; margin: 0 30px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
 #content .scene div.image p {margin-top: -20px; padding: 0 50px 30px; font-size: 0;}
 #content .scene div.image p a {font-style: italic; font-size: 13px; display: block; color: #cccccc; display: none;}
 #content .scene div.image.loaded p a {display: block;}
-#content .scene div.image.fullsize {cursor: zoom-out;}
-#content .scene div.image.fullsize img {width: 100%; margin: 0 0 30px; border-radius: 0;}
+#content .scene div.image.fullsize {}
+#content .scene div.image.fullsize img {cursor: zoom-out; width: 100%; margin: 0 0 30px; border-radius: 0;}
 
 /* MEDIA - FROM HTML EDITOR*/
 #content .scene div.media {position: relative; z-index: 1;}
-#content .scene div.media {cursor: zoom-in;}
-#content .scene div.media img {margin: 0 30px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
+#content .scene div.media {}
+#content .scene div.media img {cursor: zoom-in;margin: 0 30px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
 #content .scene div.media p {margin-top: -20px; padding: 0 50px 30px; font-size: 0;}
 #content .scene div.media p a {font-style: italic; font-size: 13px; display: block; color: #cccccc; display: none;}
 #content .scene div.media.loaded p a {display: block;}
-#content .scene div.media.fullsize {cursor: zoom-out;}
-#content .scene div.media.fullsize img {width: 100%; margin: 0 0 30px; border-radius: 0;}
+#content .scene div.media.fullsize {}
+#content .scene div.media.fullsize img {cursor: zoom-out; width: 100%; margin: 0 0 30px; border-radius: 0;}
 
 
 /* PAGINATION */

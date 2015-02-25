@@ -177,7 +177,7 @@
 #content .scene li div.sharing.hover {z-index: 2;}
 #content .scene li div.sharing.hover h3,
 #content .scene li div.sharing.hover p {display: block;}
-#content .scene li div.sharing svg {z-index: 0; margin-left: 50px; position: relative; width: 500px; height: 300px; top: -130px;}
+#content .scene li div.sharing svg {z-index: 0; margin-left: 50px; position: absolute; width: 500px; height: 300px; top: -130px;}
 #content .scene li div.sharing svg rect {cursor: pointer;}
 #content .scene li div.sharing svg circle.primary {stroke: #666666; fill: #ffffff;}
 #content .scene li div.sharing svg circle {fill: #ededed; stroke: #999999; stroke-width: 1px;}

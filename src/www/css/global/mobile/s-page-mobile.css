@@ -1,4 +1,4 @@
-* {font-family: Verdana, Arial, sans-serif; color: #000000;}
+* {font-family: "OpenSans", Verdana, Arial, sans-serif; color: #000000;}
 
 html {}
 body {background: #ffffff; margin: 0;}
@@ -21,10 +21,10 @@ input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 
 h1 {padding: 0 10px 20px; font-size: 24px; line-height: 1.05em;
-	font-family: Times, serif;
+	font-family: "PT Serif", Times, serif;
 }
 h2 {padding: 0 10px 20px; font-size: 20px; line-height: 1.1em;
-	font-family: Times, serif;
+	font-family: "PT Serif", Times, serif;
 }
 h3 {padding: 0 10px 10px; font-size: 16px; line-height: 1.25em;}
 h4 {padding: 0 10px 5px; font-size: 13px; line-height: 1em; font-weight: bold;}

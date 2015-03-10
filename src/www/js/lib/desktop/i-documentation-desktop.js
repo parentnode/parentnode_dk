@@ -236,100 +236,106 @@ Util.Objects["docpage"] = new function() {
 
 		// FILES
 		scene._files = u.qs("div.includefiles", scene);
+		if(scene._files) {
 
-		scene._files._header = u.qs("div.header", scene._files);
-		scene._files._header._files = scene._files;
+			scene._files._header = u.qs("div.header", scene._files);
+			scene._files._header._files = scene._files;
 
-		scene._files._body = u.qs("div.body", scene._files);
-		u.as(scene._files._body, "display", "none");
-		scene._files._body._files = scene._files;
+			scene._files._body = u.qs("div.body", scene._files);
+			u.as(scene._files._body, "display", "none");
+			scene._files._body._files = scene._files;
 
-		u.svg({
-			"node":scene._files._header,
-			"width": "15px",
-			"height": "12px",
-			"shapes":[
-				{
-					"type":"line",
-					"x1":1,
-					"y1":0,
-					"x2":7,
-					"y2":12
-				},
-				{
-					"type":"line",
-					"x1":6,
-					"y1":12,
-					"x2":12,
-					"y2":0
+			u.svg({
+				"node":scene._files._header,
+				"width": "15px",
+				"height": "12px",
+				"shapes":[
+					{
+						"type":"line",
+						"x1":1,
+						"y1":0,
+						"x2":7,
+						"y2":12
+					},
+					{
+						"type":"line",
+						"x1":6,
+						"y1":12,
+						"x2":12,
+						"y2":0
+					}
+				]
+			});
+
+			u.e.click(scene._files._header);
+			scene._files._header.clicked = function(event) {
+
+				if(u.hc(this._files, "open")) {
+
+				u.as(this._files._body, "display", "none");
+					u.rc(this._files, "open");
 				}
-			]
-		});
+				else {
 
-		u.e.click(scene._files._header);
-		scene._files._header.clicked = function(event) {
-
-			if(u.hc(this._files, "open")) {
-
-			u.as(this._files._body, "display", "none");
-				u.rc(this._files, "open");
+					u.as(this._files._body, "display", "block");
+					u.ac(this._files, "open");
+				}
 			}
-			else {
 
-				u.as(this._files._body, "display", "block");
-				u.ac(this._files, "open");
-			}
 		}
-
 
 
 		// SEGMENTS
 		scene._segments = u.qs("div.segmentsupport", scene);
+		if(scene._segments) {
 
-		scene._segments._header = u.qs("div.header", scene._segments);
-		scene._segments._header._segments = scene._segments;
+			scene._segments._header = u.qs("div.header", scene._segments);
+			scene._segments._header._segments = scene._segments;
 
-		scene._segments._body = u.qs("div.body", scene._segments);
-		u.as(scene._segments._body, "display", "none");
-		scene._segments._body._segments = scene._segments;
+			scene._segments._body = u.qs("div.body", scene._segments);
+			u.as(scene._segments._body, "display", "none");
+			scene._segments._body._segments = scene._segments;
 
-		u.svg({
-			"node":scene._segments._header,
-			"width": "15px",
-			"height": "12px",
-			"shapes":[
-				{
-					"type":"line",
-					"x1":1,
-					"y1":0,
-					"x2":7,
-					"y2":12
-				},
-				{
-					"type":"line",
-					"x1":6,
-					"y1":12,
-					"x2":12,
-					"y2":0
+			u.svg({
+				"node":scene._segments._header,
+				"width": "15px",
+				"height": "12px",
+				"shapes":[
+					{
+						"type":"line",
+						"x1":1,
+						"y1":0,
+						"x2":7,
+						"y2":12
+					},
+					{
+						"type":"line",
+						"x1":6,
+						"y1":12,
+						"x2":12,
+						"y2":0
+					}
+				]
+			});
+
+			u.e.click(scene._segments._header);
+			scene._segments._header.clicked = function(event) {
+
+				if(u.hc(this._segments, "open")) {
+
+				u.as(this._segments._body, "display", "none");
+					u.rc(this._segments, "open");
 				}
-			]
-		});
+				else {
 
-		u.e.click(scene._segments._header);
-		scene._segments._header.clicked = function(event) {
-
-			if(u.hc(this._segments, "open")) {
-
-			u.as(this._segments._body, "display", "none");
-				u.rc(this._segments, "open");
+					u.as(this._segments._body, "display", "block");
+					u.ac(this._segments, "open");
+				}
 			}
-			else {
 
-				u.as(this._segments._body, "display", "block");
-				u.ac(this._segments, "open");
-			}
 		}
-		
+
+
 
 	}
 }

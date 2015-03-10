@@ -59,6 +59,7 @@ Util.Objects["page"] = new function() {
 
 			// global resize handler 
 			page.resized = function() {
+				u.bug("page resized")
 
 				// adjust content height
 				page.browser_h = u.browserH();
@@ -210,7 +211,7 @@ Util.Objects["page"] = new function() {
 				}
 
 				// enable navigation link animation where relevant
-				this.hN.nodes = u.qsa("#navigation li,.servicenavigation li,a.logo", page.hN);
+				this.hN.nodes = u.qsa("#navigation li,a.logo", page.hN);
 				for(i = 0; node = this.hN.nodes[i]; i++) {
 
 				u.ce(node, {"type":"link"});

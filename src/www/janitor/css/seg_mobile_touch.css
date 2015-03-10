@@ -596,13 +596,21 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultList.userContentList .views li {padding: 15px 30px; border-right: 1px solid #dedede;}
 #content .defaultList.userContentList .views li a {text-decoration: none;}
 #content .defaultList.userContentList .views li.selected {background-color: #f5f7f8; color: #aaaaaa;}
+#content .defaultList.userContentList div.comments ul.items > li {}
+#content .defaultList.userContentList div.comments ul.items > li ul.info {padding: 0 30px 5px;}
+#content .defaultList.userContentList div.comments ul.items > li ul.info li {display: inline-block; vertical-align: top;}
+#content .defaultList.userContentList div.comments ul.items > li ul.info li.user:after {content: ",\00a0";}
+#content .defaultList.userContentList div.comments ul.items > li p.comment {color: #313942; padding-bottom: 15px;}
 #content .scene.profileEdit h1,
 #content .scene.profileContentList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
 
 
 /*s-navigations.css*/
 #content .defaultList.navigationsList ul.items > li h3 {padding-bottom: 16px;}
-#content .defaultEdit.navigationEdit div.item p {padding-bottom: 10px; margin-top: -10px; font-size: 16px;}
+#content .defaultEdit.navigationNodeEdit form > fieldset,
+#content .defaultNew.navigationNodeNew form > fieldset {padding-bottom: 15px;}
+#content .defaultNew.navigationNodeNew fieldset h3,
+#content .defaultEdit.navigationNodeEdit fieldset h3 {border-top: 1px solid #aaaaaa; font-size: 0.8em; margin: 5px 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase;}
 #content .defaultEdit.navigationEdit div.nodes ul.nodes {
 	border-top: 1px solid #dedede; 
 	margin-bottom: -1px;
@@ -612,7 +620,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultEdit.navigationEdit div.nodes > ul.nodes > li {}
 #content .defaultEdit.navigationEdit ul.nodes > li {padding: 0; display: block; position: relative; z-index: 1; border-bottom: 1px solid #dedede;}
 #content .defaultEdit.navigationEdit ul.nodes > li div.drag {width: 30px; height: 30px; position: absolute; top: 1px; left: 20px; background: transparent url(/janitor/admin/img//bg_icons2.png) no-repeat 10px -440px; cursor: move;}
-#content .defaultEdit.navigationEdit ul.nodes > li h3 {padding: 10px 0; display: inline-block; vertical-align: bottom; font-size: 14px;}
+#content .defaultEdit.navigationEdit ul.nodes > li h3 {padding: 10px 20px 10px 0; display: inline-block; vertical-align: bottom; font-size: 14px;}
 #content .defaultEdit.navigationEdit ul.nodes > li h3 {margin-left: 60px;}
 #content .defaultEdit.navigationEdit ul.nodes > li li h3 {margin-left: 60px; padding-left: 30px;}
 #content .defaultEdit.navigationEdit ul.nodes > li li li h3 {margin-left: 90px;}
@@ -625,8 +633,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 	background-color: transparent;
 	background-repeat: no-repeat;
 }
-#content .defaultEdit.navigationEdit ul.nodes > li span.link,
-#content .defaultEdit.navigationEdit ul.nodes > li span.page {padding: 10px 0 10px 20px; display: inline-block; vertical-align: bottom;}
+#content .defaultEdit.navigationEdit ul.nodes > li span {padding: 10px 10px 10px 0; display: inline-block; vertical-align: bottom;}
 #content .defaultEdit.navigationEdit ul.nodes > li {
 }
 #content .defaultEdit.navigationEdit ul.nodes > li.hover {background: red !important;}
@@ -644,6 +651,10 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 /*s-itemtypes.css*/
 #content .todolistList ul.items > li h3 {padding-bottom: 16px;}
 #content .todoList ul.items > li h3 {padding-bottom: 16px;}
+#content .todoList ul.items > li dd.overdue,
+#content .todoList ul.items > li dd.high
+{color: #df0000;}
+#content .qnaList ul.items > li p {padding-bottom: 0px; padding-right: 220px;}
 
 
 /*s-default_list.css*/
@@ -671,8 +682,12 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 	background: transparent url(/janitor/admin/img/bg_bn_play_medium.png) no-repeat 0px 0px;
 }
 #content .defaultList ul.items > li.playing div.videoplayer {background-position: 0px -100px;}
-#content .defaultList ul.items > li .description,
-#content .defaultList ul.items > li dl {display: none;}
+#content .defaultList ul.items > li .description {display: none;}
+#content .defaultList ul.items > li dl {overflow: hidden; padding: 3px 30px;
+}
+#content .defaultList ul.items > li dt {float: left; clear: left;}
+#content .defaultList ul.items > li dt:after {content: ":\00a0";}
+#content .defaultList ul.items > li dd {float: left;clear: right; padding: 0 0 3px;}
 #content .defaultList ul.items > li .actions {position: absolute; top: 0px; padding: 0; right: 20px;}
 #content .defaultList ul.items > li .actions li {padding: 10px 0 10px 10px;}
 #content .defaultList .all_items div.filter {text-align: right; padding: 10px 20px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb;}
@@ -715,7 +730,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.defaultEdit > div.prices ul.prices li form {display: inline-block; vertical-align: top;}
 #content .scene.defaultEdit > div.prices ul.prices li input.delete {padding: 0; margin: 0; line-height: 20px; cursor: pointer; color: #999999; text-decoration: underline; box-shadow: none; text-shadow: none; border: none; background: none; border-radius: 0;}
 #content .scene.defaultEdit > div.prices ul.prices li input.delete:hover {color: #000000;}
-#content .scene.defaultEdit > div.media {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
+#content .scene.defaultEdit > div.media {padding: 0 0 10px; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.media form.upload {text-align: left; position: relative; z-index: 2;}
 #content .scene.defaultEdit > div.media form.upload .actions {display: none;}
 #content .scene.defaultEdit > div.media form.delete {padding: 0; position: absolute; top: 0; right: 0;}
@@ -762,6 +777,28 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 }
 #content .scene.defaultEdit > div.media ul.mediae li.video video {width: 100%; height: 100%;}
 #content .scene.defaultEdit > div.media ul.mediae li a.playing {background-position: center -100px;}
+#content .scene.defaultEdit > div.comments {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
+#content .scene.defaultEdit > div.comments ul.comments {border-top: 1px solid #dedede; padding-top: 15px;}
+#content .scene.defaultEdit > div.comments ul.comments > li {display: block; border-bottom: 1px solid #dedede; margin-bottom: 15px; position: relative;}
+#content .scene.defaultEdit > div.comments ul.comments > li ul.info {padding: 0 30px 5px;}
+#content .scene.defaultEdit > div.comments ul.comments > li ul.info li {display: inline-block; vertical-align: top;}
+#content .scene.defaultEdit > div.comments ul.comments > li ul.info li.user:after {content: ",\00a0";}
+#content .scene.defaultEdit > div.comments ul.comments > li p.comment {color: #313942; padding-bottom: 15px;}
+#content .scene.defaultEdit > div.comments ul.comments > li > ul.actions {position: absolute; top: 0; right: 0;}
+#content .scene.defaultEdit > div.comments ul.comments > li > ul.actions li {display: inline-block; vertical-align: top;}
+#content .scene.defaultEdit > div.comments > form {padding-bottom: 10px; padding-top: 5px;}
+#content .scene.defaultEdit > div.todos {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
+#content .scene.defaultEdit > div.todos ul.todos {list-style: disc; list-style-position: outside; margin-left: 15px; padding: 0 0 20px 30px;}
+#content .scene.defaultEdit > div.todos ul.todos > li {display: list-item;}
+#content .scene.defaultEdit > div.todos ul.todos > li {color: #313942 !important; padding-bottom: 7px;}
+#content .scene.defaultEdit > div.todos ul.todos > li a {color: #313942 !important;}
+#content .scene.defaultEdit > div.qnas {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
+#content .scene.defaultEdit > div.qnas ul.qnas {}
+#content .scene.defaultEdit > div.qnas ul.qnas > li ul.info {padding: 0 30px 0px;}
+#content .scene.defaultEdit > div.qnas ul.qnas > li ul.info li {display: inline-block; vertical-align: top;}
+#content .scene.defaultEdit > div.qnas ul.qnas > li ul.info li.user:after {content: ",\00a0";}
+#content .scene.defaultEdit > div.qnas ul.qnas > li {display: block; border-top: 1px solid #dedede; position: relative; padding-bottom: 8px; padding-top: 15px;}
+#content .scene.defaultEdit > div.qnas ul.qnas > li p {padding-bottom: 7px;}
 
 
 /*s-default_new.css*/

@@ -202,3 +202,54 @@ Util.Objects["page"] = new function() {
 window.onload = u.init;
 
 
+/*i-login-desktop_light.js*/
+Util.Objects["login"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			page.cN.scene = this;
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-signup-desktop_light.js*/
+Util.Objects["signup"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			page.cN.scene = this;
+		}
+		scene.ready();
+	}
+}
+
+
+/*i-newsletter-desktop_light.js*/
+Util.Objects["newsletter"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			this._form = u.qs("form", this);
+			u.f.init(this._form);
+			page.cN.scene = this;
+		}
+		scene.ready();
+	}
+}
+
+

@@ -8,8 +8,10 @@
 
 /* SERVICENAVIGATION */
 #header .servicenavigation {position: absolute; top: 5px; right: 50px;}
-#header .servicenavigation li {padding-left: 10px; display: inline-block; vertical-align: top;}
+#header .servicenavigation li {display: inline-block; vertical-align: top; color: #bbbbbb;}
 #header .servicenavigation li.navigation {display: none;}
+#header .servicenavigation li:after {content: "\00a0\00a0|\00a0\00a0";}
+#header .servicenavigation li:last-child:after {content: "";}
 
 
 /* NAViGATION */

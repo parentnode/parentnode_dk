@@ -150,6 +150,16 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene .pagination .next:hover,
 #content .scene .pagination .previous:hover {background-color: #313942;}
 #content .scene div.categories {padding-bottom: 20px;}
+#content .scene div.article ul.tags {padding-bottom: 10px;}
+#content .scene div.article ul.tags a {color: #cccccc;}
+#content .scene div.article ul.tags a:hover {color: #888888;}
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
+#content .scene ul.articles li.article h3 {font-size: 18px; line-height: 1em; padding-bottom: 5px;}
+#content .scene ul.articles li.article p {font-size: 13px; color: #888888;}
+#content .scene div.related {border-top: 1px solid #dedede; padding-top: 40px; position: relative; z-index: 1;}
+#content .scene div.comments {display: none;}
+#content .scene div.readstate {display: none;}
 #content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -401,11 +411,13 @@ body {}
 #content ul.actions a.button.primary:hover,
 #content .scene .pagination .next:hover,
 #content .scene .pagination .previous:hover {background-color: #034769;}
+#content .scene div.article ul.tags a:hover {color: #63add0;}
 #footer {border-color: #cccccc;}
 .terms_notification .accept,
 .terms_notification .details {color: #63add0;}
 .terms_notification {border-color: #034769;}
 .front #header .logo,
+.blog #navigation ul li.blog a,
 .manifest #navigation ul li.manifest a,
 .about #navigation ul li.about a {color: #034769;}
 

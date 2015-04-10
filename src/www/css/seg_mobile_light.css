@@ -120,6 +120,10 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.media {display: none;}
 #content .scene .pagination {}
 #content .scene div.categories {padding-bottom: 10px;}
+#content .scene ul.articles {padding: 0;}
+#content .scene ul.articles li.article {padding: 10px 0 0; border-top: 1px solid #dedede;}
+#content .scene div.comments {display: none;}
+#content .scene div.readstate {display: none;}
 #content .scene code {padding: 10px 10px; margin: 0 0 15px; background-color: #ededed; color: #333333; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -306,6 +310,7 @@ body {}
 #footer {border-color: #cccccc;}
 #footer p {color: #034769;}
 .front #navigation .front,
+.blog #navigation ul li.blog,
 .manifest #navigation ul li.manifest,
 .about #navigation ul li.about {color: #034769;}
 

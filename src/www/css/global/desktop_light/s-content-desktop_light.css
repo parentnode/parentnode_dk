@@ -111,6 +111,31 @@
 #content .scene div.categories {padding-bottom: 20px;}
 
 
+
+/* ARTICLE */
+#content .scene div.article ul.tags {padding-bottom: 10px;}
+#content .scene div.article ul.tags a {color: #cccccc;}
+#content .scene div.article ul.tags a:hover {color: #888888;}
+
+
+/* ARTICLES */
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
+#content .scene ul.articles li.article h3 {font-size: 18px; line-height: 1em; padding-bottom: 5px;}
+#content .scene ul.articles li.article p {font-size: 13px; color: #888888;}
+
+
+/* RELATED */
+#content .scene div.related {border-top: 1px solid #dedede; padding-top: 40px; position: relative; z-index: 1;}
+
+
+/* COMMENTS */
+#content .scene div.comments {display: none;}
+
+/* READSTATE */
+#content .scene div.readstate {display: none;}
+
+
 /* CODE AND TYPECASTING */
 #content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
 	font-family: "Monaco", "Courier New", "Courier";

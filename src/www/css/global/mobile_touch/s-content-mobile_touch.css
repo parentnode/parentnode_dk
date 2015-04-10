@@ -122,6 +122,31 @@
 #content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
 
 
+/* ARTICLES */
+#content .scene ul.articles {padding: 0;}
+#content .scene.articles ul.articles {padding: 20px 0 30px;}
+
+#content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
+#content .scene ul.articles li.article h3 {font-size: 18px; line-height: 1em; padding-bottom: 5px;}
+#content .scene ul.articles li.article p {font-size: 13px; color: #888888;}
+
+
+/* ARTICLE */
+#content .scene.article div.article h2 br {display: none;}
+#content .scene .article ul.tags {padding-bottom: 10px;}
+#content .scene .article ul.tags a {color: #dedede;}
+#content .scene .article ul.tags a:active {color: #00c90d;}
+
+
+/* RELATED */
+#content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
+
+
+/* COMMENTS */
+#content .scene div.comments {display: none;}
+#content .scene div.readstate {display: none;}
+
+
 /* CODE AND TYPECASTING */
 #content .scene code {color: #333333; padding: 10px 20px; margin: 0 0 15px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";

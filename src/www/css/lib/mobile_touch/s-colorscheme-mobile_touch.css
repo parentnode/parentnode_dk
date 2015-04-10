@@ -29,9 +29,13 @@ body {}
 .terms_notification {border-color: #034769;}
 
 
+#content .scene .article ul.tags a:active {color: #63add0;}
+
+
 /* LOCAL */
 
 .front #header .logo,
+.blog #navigation ul li.blog,
 .manifest #navigation ul li.manifest,
 .about #navigation ul li.about {color: #034769;}
 

@@ -25,6 +25,9 @@ body {}
 .terms_notification {border-color: #034769;}
 
 
+#content .scene div.comments.open h2 {color: #63add0;}
+
+
 /* LOCAL */
 
 .front #header .logo,

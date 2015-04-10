@@ -26,5 +26,6 @@ body {}
 
 
 .front #navigation .front,
+.blog #navigation ul li.blog,
 .manifest #navigation ul li.manifest,
 .about #navigation ul li.about {color: #034769;}

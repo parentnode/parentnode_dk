@@ -7,8 +7,8 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form-geolocation-desktop_light.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form-htmleditor-desktop_light.js"></script>');
 
-document.write('<script type="text/javascript" src="http://parentnode.local/js/lib/desktop_light/i-page-desktop_light.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/lib/desktop_light/i-login-desktop_light.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/lib/desktop_light/i-signup-desktop_light.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/lib/desktop_light/i-newsletter-desktop_light.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop_light/i-page-desktop_light.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop_light/i-login-desktop_light.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop_light/i-signup-desktop_light.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop_light/i-newsletter-desktop_light.js"></script>');
 

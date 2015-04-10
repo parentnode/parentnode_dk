@@ -88,6 +88,16 @@
 /* CATEGORIES */
 #content .scene div.categories {padding-bottom: 10px;}
 
+/* ARTICLES */
+#content .scene ul.articles {padding: 0;}
+#content .scene ul.articles li.article {padding: 10px 0 0; border-top: 1px solid #dedede;}
+/*#content .scene .article ul.tags a {color: #dedede;}*/
+
+
+/* COMMENTS */
+#content .scene div.comments {display: none;}
+#content .scene div.readstate {display: none;}
+
 
 /* CODE AND TYPECASTING */
 #content .scene code {padding: 10px 10px; margin: 0 0 15px; background-color: #ededed; color: #333333; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;

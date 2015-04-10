@@ -120,27 +120,30 @@ Util.Objects["docpage"] = new function() {
 
 			func._header = u.qs(".header", func);
 
-			u.svg({
+			func._header.expandarrow = u.svg({
+				"name":"expandarrow",
 				"node":func._header,
-				"width": "15px",
-				"height": "12px",
+				"class":"arrow",
+				"width":17,
+				"height":17,
 				"shapes":[
 					{
-						"type":"line",
-						"x1":1,
-						"y1":0,
-						"x2":7,
-						"y2":12
+						"type": "line",
+						"x1": 2,
+						"y1": 2,
+						"x2": 7,
+						"y2": 9
 					},
 					{
-						"type":"line",
-						"x1":6,
-						"y1":12,
-						"x2":12,
-						"y2":0
+						"type": "line",
+						"x1": 6,
+						"y1": 9,
+						"x2": 11,
+						"y2": 2
 					}
 				]
 			});
+
 
 			func._header._func = func;
 			func._body = u.qs(".body", func);
@@ -179,27 +182,30 @@ Util.Objects["docpage"] = new function() {
 			u.as(func._uses, "height", "20px");
 			func._uses._func = func;
 
-			u.svg({
+			func._uses.expandarrow = u.svg({
+				"name":"expandarrow",
 				"node":func._uses,
-				"width": "15px",
-				"height": "12px",
+				"class":"arrow",
+				"width":17,
+				"height":17,
 				"shapes":[
 					{
-						"type":"line",
-						"x1":1,
-						"y1":0,
-						"x2":5,
-						"y2":9
+						"type": "line",
+						"x1": 2,
+						"y1": 2,
+						"x2": 7,
+						"y2": 9
 					},
 					{
-						"type":"line",
-						"x1":4,
-						"y1":9,
-						"x2":8,
-						"y2":0
+						"type": "line",
+						"x1": 6,
+						"y1": 9,
+						"x2": 11,
+						"y2": 2
 					}
 				]
 			});
+
 
 			u.e.click(func._uses);
 			func._uses.clicked = function(event) {
@@ -245,24 +251,26 @@ Util.Objects["docpage"] = new function() {
 			u.as(scene._files._body, "display", "none");
 			scene._files._body._files = scene._files;
 
-			u.svg({
+			scene._files._header.expandarrow = u.svg({
+				"name":"expandarrow",
 				"node":scene._files._header,
-				"width": "15px",
-				"height": "12px",
+				"class":"arrow",
+				"width":17,
+				"height":17,
 				"shapes":[
 					{
-						"type":"line",
-						"x1":1,
-						"y1":0,
-						"x2":7,
-						"y2":12
+						"type": "line",
+						"x1": 2,
+						"y1": 2,
+						"x2": 7,
+						"y2": 9
 					},
 					{
-						"type":"line",
-						"x1":6,
-						"y1":12,
-						"x2":12,
-						"y2":0
+						"type": "line",
+						"x1": 6,
+						"y1": 9,
+						"x2": 11,
+						"y2": 2
 					}
 				]
 			});
@@ -296,28 +304,29 @@ Util.Objects["docpage"] = new function() {
 			u.as(scene._segments._body, "display", "none");
 			scene._segments._body._segments = scene._segments;
 
-			u.svg({
+			scene._segments._header.expandarrow = u.svg({
+				"name":"expandarrow",
 				"node":scene._segments._header,
-				"width": "15px",
-				"height": "12px",
+				"class":"arrow",
+				"width":17,
+				"height":17,
 				"shapes":[
 					{
-						"type":"line",
-						"x1":1,
-						"y1":0,
-						"x2":7,
-						"y2":12
+						"type": "line",
+						"x1": 2,
+						"y1": 2,
+						"x2": 7,
+						"y2": 9
 					},
 					{
-						"type":"line",
-						"x1":6,
-						"y1":12,
-						"x2":12,
-						"y2":0
+						"type": "line",
+						"x1": 6,
+						"y1": 9,
+						"x2": 11,
+						"y2": 2
 					}
 				]
 			});
-
 			u.e.click(scene._segments._header);
 			scene._segments._header.clicked = function(event) {
 

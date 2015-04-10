@@ -22,3 +22,8 @@ body #selection_options ul.actions input.button:hover,
 body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 #content .scene.docsindex .search .results .function:hover {background: #ededed;}
+
+
+#content .scene div.readstate:hover p {color: #000000;}
+#content .scene div.comments h2:hover {color: #888888;}
+#content .scene div.comments h2:hover svg.arrow line {stroke: #888888;}

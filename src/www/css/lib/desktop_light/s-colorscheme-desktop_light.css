@@ -22,6 +22,7 @@ body {}
 #content ul.actions a.button.primary:hover,
 #content .scene .pagination .next:hover,
 #content .scene .pagination .previous:hover {background-color: #034769;}
+#content .scene div.article ul.tags a:hover {color: #63add0;}
 
 #footer {border-color: #cccccc;}
 
@@ -33,6 +34,7 @@ body {}
 /* LOCAL */
 
 .front #header .logo,
+.blog #navigation ul li.blog a,
 .manifest #navigation ul li.manifest a,
 .about #navigation ul li.about a {color: #034769;}
 

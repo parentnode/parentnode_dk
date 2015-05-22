@@ -6375,38 +6375,112 @@ u.f.textEditor = function(field) {
 
 
 /*beta-u-animation-to.js*/
+	u.a.parseSVGPolygon = function(value) {
+		var pairs = value.trim().split(" ");
+		var sets = [];
+		for(x in pairs) {
+			parts = pairs[x].trim().split(",");
+			for(part in parts) {
+				parts[part] = Number(parts[part]);
+			}
+			sets[x] = parts;
+		}
+		return sets;
+	}
+	u.a.parseSVGPath = function(value) {
+		var pairs = {"m":2, "l":2, "a":7, "c":6, "s":4, "q":4, "z":0};
+		value = value.replace(/-/g, " -");
+		value = value.replace(/,/g, " ");
+		value = value.replace(/(m|l|a|c|s|q|M|L|A|C|S|Q)/g, " $1 ");
+		value = value.replace(/  /g, " ");
+		sets = value.match(/(m|l|a|c|s|q|M|L|A|C|S|Q)([0-9 \-\.]+)/g);
+		for(x in sets) {
+			parts = sets[x].trim().split(" ");
+			sets[x] = parts;
+			if(parts && pairs[parts[0].toLowerCase()] == parts.length-1) {
+			}
+			else {
+			}
+		}
+		return sets;
+	}
 	u.a.getInitialValue = function(node, attribute) {
 		var value = (node.getAttribute(attribute) ? node.getAttribute(attribute) : u.gcs(node, attribute)).replace(node._unit[attribute], "")
-		return Number(value.replace(/auto/, 0));
+		if(attribute.match(/^(d|points)$/)) {
+			return value;
+		}
+		else {
+			return Number(value.replace(/auto/, 0));
+		}
 	}
 	u.a.to = function(node, transition, attributes) {
-		var duration = transition.match(/[0-9.]+[ms]+/g);
-		if(duration) {
-			node.duration = duration[0].match("ms") ? parseFloat(duration[0]) : (parseFloat(duration[0]) * 1000);
+		var transition_parts = transition.split(" ");
+		if(transition_parts.length >= 3) {
+			node._target = transition_parts[0];
+			node.duration = transition_parts[1].match("ms") ? parseFloat(transition_parts[1]) : (parseFloat(transition_parts[1]) * 1000);
+			node._ease = transition_parts[2];
+			if(transition_parts.length == 4) {
+				node.delay = transition_parts[3].match("ms") ? parseFloat(transition_parts[3]) : (parseFloat(transition_parts[3]) * 1000);
+			}
 		}
+		var value, d;
 		node._start = {};
 		node._end = {};
 		node._unit = {};
 		for(attribute in attributes) {
-			node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
-			node._start[attribute] = Number(this.getInitialValue(node, attribute));
-			node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
+			if(attribute.match(/^(d)$/)) {
+				node._start[attribute] = this.parseSVGPath(this.getInitialValue(node, attribute));
+				node._end[attribute] = this.parseSVGPath(attributes[attribute]);
+			}
+			else if(attribute.match(/^(points)$/)) {
+				node._start[attribute] = this.parseSVGPolygon(this.getInitialValue(node, attribute));
+				node._end[attribute] = this.parseSVGPolygon(attributes[attribute]);
+			}
+			else {
+				node._unit[attribute] = attributes[attribute].toString().match(/\%|px/);
+				node._start[attribute] = this.getInitialValue(node, attribute);
+				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
+			}
 		}
+		node.easing = u.easings[node._ease];
 		node.transitionTo = function(progress) {
+			var easing = node.easing(progress);
 			for(attribute in attributes) {
-				if(attribute.match(/translate|rotate|scale/)) {
+				if(attribute.match(/^(translate|rotate|scale)$/)) {
 					if(attribute == "translate") {
-						u.a.translate(this, Math.round((this._end_x - this._start_x) * progress), Math.round((this._end_y - this._start_y) * progress))
+						u.a.translate(this, Math.round((this._end_x - this._start_x) * easing), Math.round((this._end_y - this._start_y) * easing))
 					}
 					else if(attribute == "rotate") {
 					}
 				}
-				else if(attribute.match(/x1|y1|x2|y2|r|cx|cy/)) {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * progress)) +  this._unit[attribute]
+				else if(attribute.match(/^(x1|y1|x2|y2|r|cx|cy|stroke-width)$/)) {
+					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
+					this.setAttribute(attribute, new_value);
+				}
+				else if(attribute.match(/^(d)$/)) {
+					var new_value = "";
+					for(x in this._start[attribute]) {
+						for(y in this._start[attribute][x]) {
+							if(parseFloat(this._start[attribute][x][y]) == this._start[attribute][x][y]) {
+								new_value += (Number(this._start[attribute][x][y]) + ((Number(this._end[attribute][x][y]) - Number(this._start[attribute][x][y])) * easing)) + " ";
+							}
+							else {
+								new_value += this._end[attribute][x][y] + " ";
+							}
+						}
+					}
+					this.setAttribute(attribute, new_value);
+				}
+				else if(attribute.match(/^(points)$/)) {
+					var new_value = "";
+					for(x in this._start[attribute]) {
+						new_value += (this._start[attribute][x][0] + ((this._end[attribute][x][0] - this._start[attribute][x][0]) * easing)) + ",";
+						new_value += (this._start[attribute][x][1] + ((this._end[attribute][x][1] - this._start[attribute][x][1]) * easing)) + " ";
+					}
 					this.setAttribute(attribute, new_value);
 				}
 				else {
-					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * progress)) +  this._unit[attribute]
+					var new_value = (this._start[attribute] + ((this._end[attribute] - this._start[attribute]) * easing)) +  this._unit[attribute]
 					u.as(node, attribute, new_value, false);
 				}
 			}
@@ -6417,6 +6491,7 @@ u.f.textEditor = function(field) {
 
 /*i-page-desktop.js*/
 u.bug_console_only = true;
+var page;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
 			page.style_tag = document.createElement("style");
@@ -6900,6 +6975,51 @@ Util.Objects["comments"] = new function() {
 		var i, node;
 		for(i = 0; node = div.comments[i]; i++) {
 			div.initComment(node);
+		}
+	}
+}
+
+/*u-geolocation-desktop.js*/
+u.injectGeolocation = function(node) {
+	if(!u.browser("IE", "<=9")) {
+		node.geolocation.node = node;
+		var dd_longitude = u.qs("dd.longitude", node.geolocation);
+		var dd_latitude = u.qs("dd.latitude", node.geolocation);
+		if(dd_longitude && dd_latitude) {
+			node.geo_longitude = parseFloat(dd_longitude.innerHTML);
+			node.geo_latitude = parseFloat(dd_latitude.innerHTML);
+			node.showMap = function() {
+				if(!this.geomap) {
+					this.geomap = u.ae(this, "div", {"class":"geomap"});
+					this.insertBefore(this.geomap, u.qs("dl.info", this));
+					var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
+					var html = '<html><head>';
+					html += '<style type="text/css">body {margin: 0;}#map {height: 200px; height: 200px;}</style>';
+					html += '<script type="text/javascript" src="'+maps_url+'"></script>';
+					html += '<script type="text/javascript">';
+					html += 'var map, marker;';
+					html += 'var initialize = function() {';
+					html += '	window._map_loaded = true;';
+					html += '	var mapOptions = {center: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'),zoom: 12};';
+					html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
+					html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'), draggable:true});';
+					html += '	marker.setMap(map);';
+					html += '};';
+					html += 'google.maps.event.addDomListener(window, "load", initialize);';
+					html += '</script>';
+					html += '</head><body><div id="map"></div></body></html>';
+					this.mapsiframe = u.ae(this.geomap, "iframe");
+					this.mapsiframe.doc = this.mapsiframe.contentDocument? this.mapsiframe.contentDocument: this.mapsiframe.contentWindow.document;
+					this.mapsiframe.doc.open();
+					this.mapsiframe.doc.write(html);
+					this.mapsiframe.doc.close();
+				}
+			}
+			node.geolocation.clicked = function() {
+				this.node.showMap();
+			}
+			u.ce(node.geolocation);
+			u.ac(node.geolocation, "active");
 		}
 	}
 }

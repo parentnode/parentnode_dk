@@ -14,28 +14,130 @@
 			<p>
 				In an effort to ensure that creativity, quality and ambition is prioritized over spreadsheet logic 
 				I have formulated the following development guidelines, challenging traditional
-				business models where the majority of decisions are made to maximize profit.
+				business models where the majority of decisions are made purely to maximize profit.
 			</p> 
 			<p>
 				These statements are meant to be disruptive. Don't do it all at once.
 			</p>
 
 			<ul class="manifest">
-				<li>The primary objective is always the end user</li>
-				<li>Find a secondary objective which is important to you personally</li>
-				<li>Ignore cost of development in favor of making the right long term decisions</li>
-				<li>Explore, philosophize, rationalize</li>
-				<li>Be uncompromisingly ambitious</li>
-				<li>If you think you have a good idea, build it three times</li>
-				<li>Concentrate, focus and think outside your box</li>
-				<li>Get lost in details</li>
-				<li>Restructure, refine, reimplement</li>
-				<li>Gain experience through insane experiments</li>
-				<li>Share everything</li>
-				<li>Feel free to curse</li>
-				<li>Do it anyway</li>
-				<li>Bring patience and expect hard work</li>
-				<li>Make yourself proud</li>
+				<li>
+					<h3>The primary objective is the end user</h3>
+					<p>
+						Forget about money - it corrupts everything and despite what they say money 
+						doesn't care about innovation. Right.
+					</p>
+				</li>
+				<li>
+					<h3>Make it personal</h3>
+					<p>
+						You should care. Leverage your own interests. 
+						What do you gain? Punch yourself hard in the face if you 
+						just said <em>money</em>.
+					</p>
+				</li>
+				<li>
+					<h3>Ignore cost of development</h3>
+					<p>
+						Favor making the right long term decisions. We can't keep wasting our time making 
+						up for short term profit thinking.
+					</p>
+				</li>
+				<li>
+					<h3>Explore, philosophize, rationalize</h3>
+					<p>
+						Peek into the dark corners. Be philosophical. And then come up with an explanation. 
+						In that order.
+					</p>
+				</li>
+				<li>
+					<h3>Be uncompromisingly ambitious</h3>
+					<p>
+						Think even bigger. Swim with the sharks. Drown a little each day. We need new ideas.
+					</p>
+				</li>
+				<li>
+					<h3>Build it three times</h3>
+					<p>
+						Something new will arise in the process, if nothing else you
+						will get a pretty good idea about the cost of your own bad habits.
+					</p>
+				</li>
+				<li>
+					<h3>Forget about fitting in</h3>
+					<p>
+						It is a waste of time and energy. Sheep fit in. Are you a sheep? I didn't think so.
+					</p>
+				</li>
+				<li>
+					<h3>Smoke weed</h3>
+					<p>
+						Or meditate. Lower your brain frequency to lessen resistance. Let go for a 
+						while to get a better grip.
+					</p>
+				</li>
+				<li>
+					<h3>Get lost in details</h3>
+					<p>
+						Take it all the way to the extreme. Out there on the edge there is a new 
+						idea waiting to be discovered.
+					</p>
+				</li>
+				<li>
+					<h3>Restructure, refine, reimplement</h3>
+					<p>
+						Learn from new experiences. Deal with your past mistakes. Understanding will sink in.
+					</p>
+				</li>
+				<li>
+					<h3>Gain experience through insane experiments</h3>
+					<p>
+						Waste your time building something completely useless just for fun. You will learn
+						something you didn't expect.
+					</p>
+				</li>
+
+				<li>
+					<h3>Never listen to guys/girls in suits</h3>
+					<p>
+						No comment needed.
+					</p>
+				</li>
+				<li>
+					<h3>Share everything</h3>
+					<p>
+						Sharing is selfish caring. You give, you get. It really is that simple. 
+						(It doesn't work if you only share shit)
+					</p>
+				</li>
+				<li>
+					<h3>Feel free to curse</h3>
+					<p>
+						Be passionate. Consider it a spice. Just don't overdo it. 
+						And remember to be polite now and then.
+					</p>
+				</li>
+				<li>
+					<h3>Do it anyway</h3>
+					<p>
+						So someone said you should do it? What the hell do they know. 
+						It is likely they are just scared. Don't be scared.
+					</p>
+				</li>
+				<li>
+					<h3>Bring patience and expect hard work</h3>
+					<p>
+						Only with endurance will you prevail. Don't pretend everything is a piece of cake, but eat
+						it as if it were.
+					</p>
+				</li>
+				<li>
+					<h3>Make yourself proud</h3>
+					<p>
+						Because in the end you are the one staring back from the mirror. If something makes you embassed,
+						you should stop right now.
+					</p>
+				</li>
 			</ul>
 		</div>
 	</div>

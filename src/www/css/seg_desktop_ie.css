@@ -121,7 +121,7 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 #content .scene dl h4,
 #content .scene dl h5,
 #content .scene dl h6 {padding-left: 0; padding-right: 0; padding-top: 10px;}
-#content .scene > ul.actions {border-top: 1px solid #dedede; margin: 0 0 20px; padding: 15px 50px;}
+#content .scene > ul.actions {margin: 0 0 20px; padding: 15px 50px;}
 #content .scene ul.tags {position: relative; z-index: 1; padding-bottom: 20px;}
 #content .scene ul.tags li {font-size: 12px; display: inline-block; vertical-align: top;}
 #content .scene ul.tags li:after {content: "\00a0|\00a0"; color: #dedede;}
@@ -626,9 +626,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 /*s-pages-desktop.css*/
 #content .scene.front ul.projects {padding-left: 0; padding-right: 0; margin: 0; list-style: none;}
 #content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;
-	font-family: "PT Serif", Times, serif;
-} 
+#content .scene.manifest ul.manifest li {padding: 0 0 15px;} 
+#content .scene.manifest ul.manifest li h3,
+#content .scene.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}
 #content .scene.article div.article {padding-bottom: 30px;}
 
 

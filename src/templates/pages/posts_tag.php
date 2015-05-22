@@ -11,6 +11,20 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => $
 <div class="scene posts tag i:scene">
 	<h1><?= $tag ?></h1>
 
+<? 
+  // CUSTOM TAG HEADERS - SHOULD BE DYNAMIC AT SOME POINT
+  if($tag == "Detector"): ?>
+
+	<p>Browsers, detection and segmentation.</p>
+
+<? elseif($tag == "Git"): ?>
+
+	<p>Git with it.</p>
+
+<? endif; ?>
+
+
+
 <?	if($items): ?>
 
 	<ul class="articles i:articlelist">

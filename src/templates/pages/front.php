@@ -11,57 +11,54 @@
 		</dl>
 
 		<div class="articlebody" itemprop="articleBody">
+
 			<p>
-				On the first day there was HTML.
+				Perfect is an illusion. We all have our own idea of perfect, reflecting our own priorities,
+				needs and desires. More often than not we are forced to accept a level far below our own idea of
+				perfection. To me that is deeply depressing and this is my compensation.
 			</p>
 			<p>
-				Technology should make life easier. Web technology should be centered on enabling frontend development,
-				because that is where technology meets people, and at the end of the day - if not for us, the users, the people,
-				then what for? Ease of use helps adaptation and minimizes support. Said in a business voice: It is an investment 
-				in your success. And yet, most platforms out there are either focused on the backend development or the content 
-				editing.
+				In my persuit of perfection I have built a full stack platform for web development. Always
+				prioritizing frontend development and content accissibility, while keeping complexity low and 
+				flexibility high. With no compromises because I never had a deadline.
 			</p>
 			<p>
-				A lot of things aren't exactly what they should be and some people use that as an excuse to
-				accept pretty bad as good enough. They just continue down the same old path, blindly ignoring
-				all warnings in the comfort of old habits and minimal effort. That is the problem, in general <em>and</em>
-				in webdevelopment.
-			</p>
-			<p>
-				We are here to create balance, by providing new web technologies designed to enable 
-				frontend developers. parentNode is founded on an idealistic dedication to frontend 
-				centered technology, because it is the only approach that makes sense when it comes to web
-				development.
+				I am this stubborn because I love coding and hate restrictions. Everything is open source and
+				forkable on GitHub. Try it out on your next project.
 			</p>
 
-			<h2>Our current projects</h2>
+			<h2>The parentNode platform</h2>
 			<ul class="projects">
-				<li class="detector">
-					<h3><a href="http://detector.parentnode.dk" target="_blank">Detector</a></h3>
-					<p>
-						Detector is your one-stop solution to supporting all HTML capable devices on earth and 
-						lowering your development complexity at the same time. 
-					</p>
-				</li>
 				<li class="manipulator">
 					<h3><a href="http://manipulator.parentnode.dk" target="_blank">Manipulator</a></h3>
 					<p>
 						Manipulator is an extremely flexible, performance optimized JavaScript library 
-						and framework with a slightly neurotic focus on details.
-					</p>
-				</li>
-				<li class="modulator">
-					<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
-					<p>
-						Modulator is a SEO optimized HTML model for web development, that allows for a complete separation
-						of content, design and functionality.
+						and framework with a slightly neurotic focus on details. Simple DOM manipulations
+						or advanced Animations. It is 8 times faster than jQuery.
 					</p>
 				</li>
 				<li class="janitor">
 					<h3><a href="http://janitor.parentnode.dk" target="_blank">Janitor</a></h3>
 					<p>
-						Janitor is a PHP content management developer toolkit, designed to build custom content managements systems, 
-						not to be one on its own.
+						Janitor is a PHP content management developer toolkit, designed to build custom 
+						content managements systems, not to be one on its own. A simple item-based model
+						allows you to extend Janitor in any way you want.
+					</p>
+				</li>
+				<li class="modulator">
+					<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
+					<p>
+						Modulator is a SEO optimized HTML model for web development, that allows for a 
+						complete separation of content, design and functionality. Get ready for copy/paste
+						markup for any site.
+					</p>
+				</li>
+				<li class="detector">
+					<h3><a href="http://detector.parentnode.dk" target="_blank">Detector</a></h3>
+					<p>
+						Detector is your one-stop solution to supporting all HTML capable devices on earth and 
+						lowering your development complexity at the same time. Providing you with a simple model
+						for mixing up your own device support in any given project.
 					</p>
 				</li>
 			</ul>

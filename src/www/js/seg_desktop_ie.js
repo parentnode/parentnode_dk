@@ -6798,6 +6798,7 @@ u.f.textEditor = function(field) {
 		}
 	}
 	u.a.to = function(node, transition, attributes) {
+		u.bug("to:" + u.nodeId(node) + ", " + transition + ", " + attributes);
 		var transition_parts = transition.split(" ");
 		if(transition_parts.length >= 3) {
 			node._target = transition_parts[0];
@@ -6826,6 +6827,7 @@ u.f.textEditor = function(field) {
 				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
 			}
 		}
+		u.bug(node._ease + ", " + u.easings[node._ease]);
 		node.easing = u.easings[node._ease];
 		node.transitionTo = function(progress) {
 			var easing = node.easing(progress);
@@ -6872,6 +6874,28 @@ u.f.textEditor = function(field) {
 		u.a.requestAnimationFrame(node, "transitionTo", node.duration);
 	}
 
+
+/*u-easings.js*/
+u.easings = new function() {
+	this["ease-in"] = function(progress) {
+		return Math.pow((progress*this.duration) / this.duration, 3);
+	}
+	this["linear"] = function(progress) {
+		return progress;
+	}
+	this["ease-out"] = function(progress) {
+		return 1 - Math.pow(1 - ((progress*this.duration) / this.duration), 3);
+	}
+	this["linear"] = function(progress) {
+		return (progress*this.duration) / this.duration;
+	}
+	this["ease-in-out"] = function(progress) {
+		if((progress*this.duration) > (this.duration / 2)) {
+			return 1 - Math.pow(1 - ((progress*this.duration) / this.duration), 3);
+		}
+		return Math.pow((progress*this.duration) / this.duration, 3);
+	}
+}
 
 /*i-page-desktop.js*/
 u.bug_console_only = true;
@@ -7414,7 +7438,7 @@ u.injectSharing = function(node) {
 		circle.svg = svg;
 		var new_radius = u.random(2, 5);
 		circle.transitioned = svg._circle_transitioned;
-		u.a.to(circle, "all linear 100ms", {"r":new_radius});
+		u.a.to(circle, "all 100ms linear", {"r":new_radius});
 		return circle;
 	}
 	node.sharing.drawLine = function(svg, x1, y1, x2, y2) {
@@ -7438,7 +7462,7 @@ u.injectSharing = function(node) {
 			u.ie(svg, line);
 			line.svg = svg;
 			line.transitioned = svg._line_transitioned;
-			u.a.to(line, "all linear 150ms", {"x2": x2, "y2": y2});
+			u.a.to(line, "all 150ms linear", {"x2": x2, "y2": y2});
 			return line;
 		}
 		return false;
@@ -7510,7 +7534,7 @@ u.injectSharing = function(node) {
 				this.transitioned = null;
 				this.svg.removeChild(this);
 			}
-			u.a.to(circle, "all linear 0.15s", {"r":0})
+			u.a.to(circle, "all 0.15s linear", {"r":0})
 		}
 		for(i = 0; line = lines[i]; i++) {
 			x1 = Number(line.getAttribute("x1"));
@@ -7528,7 +7552,7 @@ u.injectSharing = function(node) {
 				this.transitioned = null;
 				this.svg.removeChild(this);
 			}
-			u.a.to(line, "all linear 0.25s", {"x1":new_x, "y1":new_y, "x2":new_x, "y2":new_y})
+			u.a.to(line, "all 0.25s linear", {"x1":new_x, "y1":new_y, "x2":new_x, "y2":new_y})
 		}
 		u.t.setTimer(this.sharing.svg, function() {this.hide = false;}, 250)
 	}

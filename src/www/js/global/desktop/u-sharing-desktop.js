@@ -69,7 +69,7 @@ u.injectSharing = function(node) {
 
 		var new_radius = u.random(2, 5);
 		circle.transitioned = svg._circle_transitioned;
-		u.a.to(circle, "all linear 100ms", {"r":new_radius});
+		u.a.to(circle, "all 100ms linear", {"r":new_radius});
 		
 		return circle;
 	}
@@ -105,7 +105,7 @@ u.injectSharing = function(node) {
 //					u.bug("x2:" + x2 + " , y2:" + y2)
 
 			line.transitioned = svg._line_transitioned;
-			u.a.to(line, "all linear 150ms", {"x2": x2, "y2": y2});
+			u.a.to(line, "all 150ms linear", {"x2": x2, "y2": y2});
 
 			return line;
 			
@@ -223,7 +223,7 @@ u.injectSharing = function(node) {
 				this.svg.removeChild(this);
 			}
 
-			u.a.to(circle, "all linear 0.15s", {"r":0})
+			u.a.to(circle, "all 0.15s linear", {"r":0})
 		}
 		for(i = 0; line = lines[i]; i++) {
 
@@ -246,7 +246,7 @@ u.injectSharing = function(node) {
 				this.transitioned = null;
 				this.svg.removeChild(this);
 			}
-			u.a.to(line, "all linear 0.25s", {"x1":new_x, "y1":new_y, "x2":new_x, "y2":new_y})
+			u.a.to(line, "all 0.25s linear", {"x1":new_x, "y1":new_y, "x2":new_x, "y2":new_y})
 
 		}
 

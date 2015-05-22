@@ -9,6 +9,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9/src/u-form-geolocation.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9/src/u-form-htmleditor.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-animation-to.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-easings.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page-desktop.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-login-desktop.js"></script>');

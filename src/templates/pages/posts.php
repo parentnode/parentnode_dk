@@ -39,7 +39,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 
 				// editing?
 				$editing_tag = arrayKeyValue($item["tags"], "context", "editing");
-				if($editing_tag): ?>
+				if($editing_tag !== false): ?>
 				<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 <?				endif; ?>
 				<li><a href="/blog">Posts</a></li>

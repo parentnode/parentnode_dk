@@ -21,6 +21,10 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => $
 
 	<p>Detector segments explained.</p>
 
+<? elseif($tag == "Browsers"): ?>
+
+	<p>Browsers in detail.</p>
+
 <? elseif($tag == "Git"): ?>
 
 	<p>Git with it. My notes on how to use Git.</p>
@@ -39,7 +43,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => $
 <?			if($item["tags"]):
 				// editing?
 				$editing_tag = arrayKeyValue($item["tags"], "context", "editing");
-				if($editing_tag): ?>
+				if($editing_tag !== false): ?>
 				<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 <?				endif; ?>
 				<li><a href="/blog">Posts</a></li>

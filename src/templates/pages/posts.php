@@ -35,10 +35,14 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 		<li class="article id:<?= $item["item_id"] ?> readstate:<?= $item["readstate"] ? 1 : "" ?>">
 
 			<ul class="tags">
-<?			if($item["tags"]): ?>
-<?				if(arrayKeyValue($item["tags"], "context", "editing")): ?>
-					<li class="editing" title="This post is work in progress">Still editing</li>
+<?			if($item["tags"]):
+
+				// editing?
+				$editing_tag = arrayKeyValue($item["tags"], "context", "editing");
+				if($editing_tag): ?>
+				<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 <?				endif; ?>
+				<li><a href="/blog">Posts</a></li>
 <?				foreach($item["tags"] as $item_tag): ?>
 <?	 				if($item_tag["context"] == $itemtype): ?>
 				<li><a href="/blog/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>

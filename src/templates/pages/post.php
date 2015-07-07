@@ -10,6 +10,9 @@ if($item) {
 
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
+
+	// editing?
+	$editing_tag = arrayKeyValue($item["tags"], "context", "editing");
 }
 else {
 	// itemtype pattern for missing item
@@ -41,11 +44,10 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 		<ul class="tags">
 <?		if($item["tags"]): ?>
-<?			if(arrayKeyValue($item["tags"], "context", "editing")): ?>
-					<li class="editing" title="This post is work in progress">Still editing</li>
+<?			if($editing_tag): ?>
+				<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
 <?			endif; ?>
-<?		endif; ?>
-<?		if($item["tags"]): ?>
+				<li><a href="/blog">Posts</a></li>
 <?			foreach($item["tags"] as $tag): ?>
 <?	 			if($tag["context"] == $itemtype): ?>
 			<li itemprop="articleSection"><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
@@ -56,7 +58,6 @@ $related_items = $IC->getRelatedItems($related_pattern);
 
 		<h1 itemprop="name"><?= $item["name"] ?></h1>
 
-
 		<dl class="info">
 			<dt class="published_at">Date published</dt>
 			<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d", strtotime($item["published_at"])) ?></dd>
@@ -65,7 +66,6 @@ $related_items = $IC->getRelatedItems($related_pattern);
 			<dt class="hardlink">Hardlink</dt>
 			<dd class="hardlink" itemprop="url"><?= SITE_URL."/blog/".$item["sindex"] ?></dd>
 		</dl>
-
 
 		<div class="articlebody" itemprop="articleBody">
 			<?= $item["html"] ?>

@@ -5,7 +5,7 @@ global $itemtype;
 
 
 // get post tags for listing
-$categories = $IC->getTags(array("context" => $itemtype));
+$categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "readstate" => true)));
 

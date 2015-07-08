@@ -1,12 +1,11 @@
 u.bug_console_only = true;
-var page;
 
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
 
 		//if(u.hc(page, "i:page")) {
 			//alert("wop");
-
+			window.page = page;
 
 			// create a generel style rule
 			page.style_tag = document.createElement("style");
@@ -56,6 +55,12 @@ Util.Objects["page"] = new function() {
 			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
 			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
 
+
+			// FORK ME?
+			if(u.github_fork) {
+				var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
+				u.ce(github, {"type":"link"});
+			}
 
 
 			// global resize handler 

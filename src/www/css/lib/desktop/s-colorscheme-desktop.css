@@ -16,7 +16,8 @@ body {}
 #content .scene hr {border-color: #cccccc;}
 
 #content ul.actions input.button.primary,
-#content ul.actions a.button.primary {background-color: #63add0;}
+#content ul.actions a.button.primary,
+#header ul.servicenavigation li.github {background-color: #63add0;}
 
 #footer {border-color: #cccccc;}
 

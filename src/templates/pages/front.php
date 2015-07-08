@@ -70,4 +70,15 @@
 			</p>
 		</div>
 	</div>
+
+	<div class="usedby">
+		<h2>Selected clients</h2>
+		<ul>
+			<li class="distortion" title="Distortion">Distortion</li>
+			<li class="landskabsarkitekter" title="Danske Landskabsarkitekter">Danske Landskabsarkitekter</li>
+			<li class="metro" title="Copenhagen Metro">Copenhagen Metro</li>
+			<li class="urbangreen" title="URBAN GREEN">URBAN GREEN</li>
+			<li class="oeo" title="OEO Design Studio">OEO Design Studio</li>
+		</ul>
+	</div>
 </div>

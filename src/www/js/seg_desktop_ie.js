@@ -5124,6 +5124,7 @@ if(u.a.vendor() == "ms") {
 /*u-settings.js*/
 u.site_name = "parentNode";
 u.facebook_app_id = "789445694430356";
+u.github_fork = {"url":"https://github.com/parentnode", "text":"parentNode on GitHub"};
 u.txt = {};
 u.txt["share"] = "Share";
 u.txt["not_read"] = "Click here - we'll help you remember what you have read.";
@@ -6798,7 +6799,6 @@ u.f.textEditor = function(field) {
 		}
 	}
 	u.a.to = function(node, transition, attributes) {
-		u.bug("to:" + u.nodeId(node) + ", " + transition + ", " + attributes);
 		var transition_parts = transition.split(" ");
 		if(transition_parts.length >= 3) {
 			node._target = transition_parts[0];
@@ -6827,7 +6827,6 @@ u.f.textEditor = function(field) {
 				node._end[attribute] = attributes[attribute].toString().replace(node._unit[attribute], "");
 			}
 		}
-		u.bug(node._ease + ", " + u.easings[node._ease]);
 		node.easing = u.easings[node._ease];
 		node.transitionTo = function(progress) {
 			var easing = node.easing(progress);
@@ -6899,9 +6898,9 @@ u.easings = new function() {
 
 /*i-page-desktop.js*/
 u.bug_console_only = true;
-var page;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
+			window.page = page;
 			page.style_tag = document.createElement("style");
 			page.style_tag.setAttribute("media", "all")
 			page.style_tag.setAttribute("type", "text/css")
@@ -6927,6 +6926,10 @@ Util.Objects["page"] = new function() {
 			page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
 			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
 			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
+			if(u.github_fork) {
+				var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
+				u.ce(github, {"type":"link"});
+			}
 			page.resized = function() {
 				u.bug("page resized")
 				page.browser_h = u.browserH();
@@ -7057,6 +7060,7 @@ Util.Objects["login"] = new function() {
 		scene.ready = function() {
 			this._form = u.qs("form", this);
 			u.f.init(this._form);
+			this._form.fields["username"].focus();
 			page.cN.scene = this;
 			page.resized();
 		}

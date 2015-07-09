@@ -179,6 +179,12 @@
 #content .scene div.vcard .email {font-size: 13px;}
 
 
+
+/* USED BY (BRANDING FOOTER) */
+#content .scene .usedby {display: none;}
+
+
+
 /* LOGIN */
 #content .scene.login form {padding-bottom: 20px;}
 

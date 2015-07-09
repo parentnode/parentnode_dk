@@ -202,6 +202,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.vcard .name {padding: 0 0 15px;}
 #content .scene div.vcard .tel,
 #content .scene div.vcard .email {font-size: 13px;}
+#content .scene .usedby {display: none;}
 #content .scene.login form {padding-bottom: 20px;}
 #content .errormessage {color: #df0000;}
 

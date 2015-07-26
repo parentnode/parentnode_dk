@@ -70,9 +70,9 @@
 					</p>
 				</li>
 				<li>
-					<h3>Smoke weed</h3>
+					<h3>Meditate</h3>
 					<p>
-						Or meditate. Lower your brain frequency to lessen resistance. Let go for a 
+						Or smoke weed. Lower your brain frequency to lessen resistance. Let go for a 
 						while to get a better grip.
 					</p>
 				</li>

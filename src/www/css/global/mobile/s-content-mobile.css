@@ -131,5 +131,6 @@
 #content .scene div.vcard .email {font-size: 13px;}
 
 
-/* SHARING */
+/* USED BY (BRANDING FOOTER) */
+#content .scene .usedby {display: none;}
 

@@ -57,6 +57,8 @@
 #content .scene div.functions .function .body .callbacks dd {width: auto; display: block;}
 
 #content .scene div.functions .function .body .example {padding: 0 0 20px;}
+#content .scene div.functions .function .body .examples h4 {padding-bottom: 5px;}
+#content .scene div.functions .function .body .example h5 {padding-bottom: 5px; font-size: 13px;}
 #content .scene div.functions .function .body .example p {padding-bottom: 5px;}
 
 #content .scene div.functions .function .body .uses .javascript {padding: 5px 0 0 10px;}

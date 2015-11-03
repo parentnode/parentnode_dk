@@ -8,9 +8,9 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9/src/u-form-htmleditor.js"></script>');
 
 
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/mobile_touch/i-page-mobile_touch.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/mobile_touch/i-login-mobile_touch.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/mobile_touch/i-signup-mobile_touch.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/mobile_touch/i-newsletter-mobile_touch.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/mobile_touch/i-article-mobile_touch.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-page-smartphone.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-login-smartphone.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-signup-smartphone.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-newsletter-smartphone.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-article-smartphone.js"></script>');
 

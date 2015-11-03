@@ -5,6 +5,7 @@ Util.Objects["article"] = new function() {
 		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
 
 
+
 		// INIT IMAGES
 		var i, image;
 		article._images = u.qsa("div.image,div.media", article);

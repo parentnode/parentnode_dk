@@ -177,7 +177,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content ul.actions input.button {padding: 3px 12px 5px;}
 }
-#content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 6px 12px 8px;}
+#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 6px 12px 8px;}
 
 
 /* DEFAULT BUTTON */
@@ -350,3 +350,11 @@ body #selection_options ul.actions a.button {background-color: #8c9399; color: #
 .delete_selection {position: absolute; z-index: 1150; top: 0; left: 0; border-radius: 8px; width: 14px; height: 14px; font-size: 10px; line-height: 14px; text-align: center; background: #ffffff; border: 1px solid #000000; cursor: pointer;}
 
 
+
+/* TODO: test this IE specific hack (made when simplifying segments - but didn't have time to test) */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	#content .field.files input[type=file] {font-size: 130px;}
+
+	#content .field.html .editor div.tag.media input {font-size: 130px;}
+	#content .field.html .editor div.tag.file input {font-size: 130px;}	
+}

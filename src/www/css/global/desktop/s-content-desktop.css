@@ -79,6 +79,7 @@
 
 /* INFO */
 #content .scene dl.info {position: relative; z-index: 1; padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
+
 #content .scene dl.info dt {display: none;}
 #content .scene dl.info dd {width: auto; font-size: 12px; color: #999999;}
 #content .scene dl.info dd.author:before {content: "\00a0|\00a0"; color: #dedede;}
@@ -138,6 +139,7 @@
 
 
 /* ARTICLE */
+#content .scene div.article {position: relative;}
 #content .scene div.article ul.tags {padding-bottom: 30px;}
 #content .scene div.article ul.tags a {color: #cccccc;}
 

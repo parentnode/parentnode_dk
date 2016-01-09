@@ -1,9 +1,9 @@
-@import url(http://parentnode.local/css/global/desktop_light/s-page-desktop_light.css);
-@import url(http://parentnode.local/css/global/desktop_light/s-header-desktop_light.css);
-@import url(http://parentnode.local/css/global/desktop_light/s-footer-desktop_light.css);
+@import url(http://parentnode.local/css/global/desktop_light/s-page.css);
+@import url(http://parentnode.local/css/global/desktop_light/s-header.css);
+@import url(http://parentnode.local/css/global/desktop_light/s-footer.css);
 
-@import url(http://parentnode.local/css/global/desktop_light/s-content-desktop_light.css);
-@import url(http://parentnode.local/css/global/desktop_light/s-form-desktop_light.css);
+@import url(http://parentnode.local/css/global/desktop_light/s-content.css);
+@import url(http://parentnode.local/css/global/desktop_light/s-form.css);
 
-@import url(http://parentnode.local/css/global/desktop_light/s-itemtypes-desktop_light.css);
-@import url(http://parentnode.local/css/global/desktop_light/s-documentation-desktop_light.css);
+@import url(http://parentnode.local/css/global/desktop_light/s-itemtypes.css);
+@import url(http://parentnode.local/css/global/desktop_light/s-documentation.css);

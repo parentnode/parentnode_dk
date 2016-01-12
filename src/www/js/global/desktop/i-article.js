@@ -21,7 +21,7 @@ Util.Objects["article"] = new function() {
 			if(image._id && image._format) {
 
 				// add image
-				image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + image.offsetWidth + "x." + image._format;
+				image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "540x." + image._format;
 				u.a.setOpacity(image, 0);
 				image.loaded = function(queue) {
 

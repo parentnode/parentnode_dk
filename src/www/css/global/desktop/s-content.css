@@ -84,6 +84,9 @@
 #content .scene dl.info dd {width: auto; font-size: 12px; color: #999999;}
 #content .scene dl.info dd.author:before {content: "\00a0|\00a0"; color: #dedede;}
 #content .scene dl.info dd.hardlink {display: none;}
+#content .scene dl.info dd.publisher {display: none;}
+#content .scene dl.info dd.image_info {display: none;}
+#content .scene dl.info dd.modified_at {display: none;}
 
 
 /* GEOLOCATION */
@@ -108,7 +111,7 @@
 #content .scene div.image {}
 #content .scene div.image img {cursor: zoom-in; margin: 0 30px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
 #content .scene div.image p {margin-top: -20px; padding: 0 50px 30px; font-size: 0;}
-#content .scene div.image p a {font-style: italic; font-size: 13px; display: block; color: #cccccc; display: none;}
+#content .scene div.image p a {font-style: italic; font-size: 13px; display: block; color: #cccccc; display: none; cursor: default;}
 #content .scene div.image.loaded p a {display: block;}
 #content .scene div.image.fullsize {}
 #content .scene div.image.fullsize img {cursor: zoom-out; width: 100%; margin: 0 0 30px; border-radius: 0;}

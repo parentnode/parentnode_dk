@@ -36,6 +36,7 @@
 						and framework with a slightly neurotic focus on details. Simple DOM manipulations
 						or advanced Animations. It is 8 times faster than jQuery.
 					</p>
+					<p>Current version: 0.9.1</p>
 				</li>
 				<li class="janitor">
 					<h3><a href="http://janitor.parentnode.dk" target="_blank">Janitor</a></h3>
@@ -44,14 +45,7 @@
 						content managements systems, not to be one on its own. A simple item-based model
 						allows you to extend Janitor in any way you want.
 					</p>
-				</li>
-				<li class="modulator">
-					<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
-					<p>
-						Modulator is a SEO optimized HTML model for web development, that allows for a 
-						complete separation of content, design and functionality. Get ready for copy/paste
-						markup for any site.
-					</p>
+					<p>Current version: 0.7.6</p>
 				</li>
 				<li class="detector">
 					<h3><a href="http://detector.parentnode.dk" target="_blank">Detector</a></h3>
@@ -60,6 +54,16 @@
 						lowering your development complexity at the same time. Providing you with a simple model
 						for mixing up your own device support in any given project.
 					</p>
+					<p>Current version: 3.1</p>
+				</li>
+				<li class="modulator">
+					<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
+					<p>
+						Modulator is a SEO optimized HTML model for web development, that allows for a 
+						complete separation of content, design and functionality. Get ready for copy/paste
+						markup for any site.
+					</p>
+					<p>Current version: 1</p>
 				</li>
 			</ul>
 

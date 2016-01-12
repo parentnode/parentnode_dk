@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1-full Copyright 2015 http://manipulator.parentnode.dk
-js-merged @ 2016-01-06 12:49:58
+js-merged @ 2016-01-12 09:43:49
 */
 
 /*seg_smartphone_include.js*/
@@ -279,13 +279,14 @@ Util.Animation = u.a = new function() {
 	// 	
 	this._animationqueue = {};
 	this.requestAnimationFrame = function(node, callback, duration) {
-		var start = new Date().getTime();
+		if(!u.a.__animation_frame_start) {
+			u.a.__animation_frame_start = Date.now();
+		}
 		var id = u.randomString();
 		u.a._animationqueue[id] = {};
 		u.a._animationqueue[id].id = id;
 		u.a._animationqueue[id].node = node;
 		u.a._animationqueue[id].callback = callback;
-		u.a._animationqueue[id].start = start;
 		u.a._animationqueue[id].duration = duration;
 		u.t.setTimer(u.a, function() {u.a.finalAnimationFrame(id)}, duration);
 		if(!u.a._animationframe) {
@@ -295,7 +296,10 @@ Util.Animation = u.a = new function() {
 				var id, animation;
 				for(id in u.a._animationqueue) {
 					animation = u.a._animationqueue[id];
-					animation.node[animation.callback]((timestamp-animation.start) / animation.duration);
+					if(!animation["__animation_frame_start_"+id]) {
+						animation["__animation_frame_start_"+id] = timestamp;
+					}
+					animation.node[animation.callback]((timestamp-animation["__animation_frame_start_"+id]) / animation.duration);
 				}
 				if(Object.keys(u.a._animationqueue).length) {
 					u.a._requestAnimationId = window._requestAnimationFrame(u.a._animationframe);
@@ -309,6 +313,7 @@ Util.Animation = u.a = new function() {
 	}
 	this.finalAnimationFrame = function(id) {
 		var animation = u.a._animationqueue[id];
+		animation["__animation_frame_start_"+id] = false;
 		animation.node[animation.callback](1);
 		if(typeof(animation.node.transitioned) == "function") {
 			animation.node.transitioned({});
@@ -324,6 +329,7 @@ Util.Animation = u.a = new function() {
 		}
 		if(u.a._requestAnimationId) {
 			window._cancelAnimationFrame(u.a._requestAnimationId);
+			u.a.__animation_frame_start = false;
 			u.a._requestAnimationId = false;
 		}
 	}

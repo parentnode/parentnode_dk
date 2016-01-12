@@ -29,103 +29,6 @@ Util.Animation = u.a = new function() {
 
 
 
-
-	// TODO:
-	// idea:
-	// make framework create correct function names, upon request
-	// IE. first time transform is called, check for existence of window.transform 
-	// (or document.documentElement.style.transform)
-	// if it doesn't exist, create it and return function name
-	//
-	// conclusion: not a good idea - needs to be created as DOM prototype and this will not be optimal
-
-	// idea:
-	// 
-
-//	alert("rest")
-//
-// 	// get vendor, to avoid setting more than the required type
-// 	// exceptions to be aware of
-// 	this._vendor_exceptions = {
-// 		"mozTransform":"MozTransform",
-// 		"mozTransition":"MozTransition",
-// 		"mozTransitionEnd":"transitionend",
-// 		"msTransitionEnd":"transitionend",
-// 		"mozTransformOrigin":"MozTransformOrigin",
-// 		"mozPerspectiveOrigin":"MozPerspectiveOrigin",
-// 		"mozTransformStyle":"MozTransformStyle",
-// 		"mozPerspective":"MozPerspective",
-// 		"mozBackfaceVisibility":"MozBackfaceVisibility",
-// 		"msCancelAnimationFrame":"cancelAnimationFrame"
-// 	};
-// 	// method cache - when a vendor method has been requested once,
-// 	// it will be stored, to avoid wasting time every time
-// 	this._vendor_methods = {};
-//
-// 	// find correct method
-// 	// checks for exceptions and stores method in cache (_vendor_methods)
-//  	this.vendorMethod = function(method) {
-// 		var vender_method = this._vendor+method;
-// 		method = this._vendor ? method.replace(/^([a-z]{1})/, function(word){return word.toUpperCase()}) : method;
-//
-// 		if(this._vendor_exceptions[this._vendor+method]) {
-// 			this._vendor_methods[vender_method] = this._vendor_exceptions[this._vendor+method];
-// 			return;
-// 		}
-//  		this._vendor_methods[vender_method] = this._vendor+method;
-//  		return;
-// 	}
-//
-// 	// get vendor and optional method name
-// 	// returns name from cache (_vendor_methods)
-// 	// or checks method using vendorMethod
-// 	this.vendor = function(method) {
-// //		u.bug("vendor: "+ this._vendor + ":" + method);
-//
-// 		// only run detection once
-// 		if(this._vendor === undefined) {
-// //			u.bug("no implementation")
-//
-// 			if(document.documentElement.style.webkitTransform != undefined) {
-// //			if(document.body.style.webkitTransform != undefined) {
-// //				u.bug("vendor: webkit")
-// 				this._vendor = "webkit";
-// 			}
-// 			else if(document.documentElement.style.MozTransform != undefined) {
-// //			else if(document.body.style.MozTransform != undefined) {
-// //				u.bug("vendor: moz")
-// 				this._vendor = "moz";
-// 			}
-// 			else if(document.documentElement.style.oTransform != undefined) {
-// //			else if(document.body.style.oTransform != undefined) {
-// //				u.bug("vendor: o")
-// 				this._vendor = "o";
-// 			}
-// 			else if(document.documentElement.style.msTransform != undefined) {
-// //			else if(document.body.style.msTransform != undefined) {
-// //				u.bug("vendor: ms")
-// 				this._vendor = "ms";
-// 			}
-// 			else {
-// //				u.bug("vendor: unknown")
-// 				this._vendor = "";
-// 			}
-// 		}
-//
-// 		if(!method) {
-// 			return this._vendor;
-// 		}
-//
-// 		if(this._vendor_methods[this._vendor+method] === undefined) {
-// 			this.vendorMethod(method);
-// 		}
-//
-// //		u.bug(this._vendor_methods[this._vendor+method] + ", method:" + method)
-// 		return this._vendor_methods[this._vendor+method];
-// 	}
-
-
-
 	/**
 	* Apply CSS transition to node
 	*/
@@ -260,25 +163,11 @@ Util.Animation = u.a = new function() {
 
 
 	// EXPERIMENTAL: remove transform, because Firefox 23 makes render-error, when returning to 0 in translates
+	// DEPRECATED: excess code to replicate one-liner
 	this.removeTransform = function(node) {
 		u.as(node, "transform", "none");
 
 	}
-
-
-	// // Set origin
-	// this.origin = function(node, x, y) {
-	//
-	// 	// set origin
-	// 	u.as(node, "transformOrigin", x +"px "+ y +"px");
-	//
-	// 	// store values
-	// 	node._origin_x = x;
-	// 	node._origin_y = y;
-	//
-	// 	// update dom
-	// 	node.offsetHeight;
-	// }
 
 
 	/**
@@ -416,23 +305,25 @@ Util.Animation = u.a = new function() {
 	// }
 
 
-
-	// ANIMATION FRAME
-
 	this._animationqueue = {};
 	this.requestAnimationFrame = function(node, callback, duration) {
 //		u.bug("requestAnimationFrame:" + callback + ", " + duration + ", " + u.nodeId(node) + ", " + u.a._requestAnimationId)
 
+		if(!u.a.__animation_frame_start) {
+			u.a.__animation_frame_start = Date.now();
+		}
 		// add animation to stack
-		var start = new Date().getTime();
+//		var start = Date.now() - u.a.__animation_frame_start;
 		var id = u.randomString();
+
+//		u.bug("now:" + Date.now() + ", " + start)
 
 		// create object with all information
 		u.a._animationqueue[id] = {};
 		u.a._animationqueue[id].id = id;
 		u.a._animationqueue[id].node = node;
 		u.a._animationqueue[id].callback = callback;
-		u.a._animationqueue[id].start = start;
+//		u.a._animationqueue[id].start = start;
 		u.a._animationqueue[id].duration = duration;
 
 		// TODO: timers are not very precise - is this a good idea+
@@ -451,13 +342,23 @@ Util.Animation = u.a = new function() {
 
 //				u.bug("frame:" + timestamp);
 
+
+
 				var id, animation;
 				for(id in u.a._animationqueue) {
 
 					animation = u.a._animationqueue[id];
 
+					if(!animation["__animation_frame_start_"+id]) {
+						// add animation to stack
+						animation["__animation_frame_start_"+id] = timestamp;
+//						animation["__animation_frame_start_"+id] = (Date.now() - u.a.__animation_frame_start) + timestamp;
+//						u.bug("now:" + animation["__animation_frame_start_"+id])
+					}
+					
+
 					// progress callback
-					animation.node[animation.callback]((timestamp-animation.start) / animation.duration);
+					animation.node[animation.callback]((timestamp-animation["__animation_frame_start_"+id]) / animation.duration);
 				}
 
 				// continue animationFrame loop
@@ -485,6 +386,7 @@ Util.Animation = u.a = new function() {
 //		u.bug("finalAnimationFrame:" + ", " + id + ", " + u.a._requestAnimationId);
 
 		var animation = u.a._animationqueue[id];
+		animation["__animation_frame_start_"+id] = false;
 		animation.node[animation.callback](1);
 
 		if(typeof(animation.node.transitioned) == "function") {
@@ -519,6 +421,7 @@ Util.Animation = u.a = new function() {
 //				u.bug(this.vendor("cancelAnimationFrame"));
 			window._cancelAnimationFrame(u.a._requestAnimationId);
 
+			u.a.__animation_frame_start = false;
 			u.a._requestAnimationId = false;
 		}
 	}

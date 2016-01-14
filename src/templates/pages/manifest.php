@@ -120,7 +120,7 @@
 				<li>
 					<h3>Do it anyway</h3>
 					<p>
-						So someone said you should do it? What the hell do they know. 
+						So someone said you shouldn't do it? What the hell do they know. 
 						It is likely they are just scared. Don't be scared.
 					</p>
 				</li>

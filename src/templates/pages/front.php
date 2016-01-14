@@ -19,7 +19,7 @@
 			</p>
 			<p>
 				In my persuit of perfection I have built a full stack platform for web development. Always
-				prioritizing frontend development and content accissibility, while keeping complexity low and 
+				prioritizing frontend development and content accessibility, while keeping complexity low and 
 				flexibility high. With no compromises because I never had a deadline.
 			</p>
 			<p>
@@ -34,7 +34,7 @@
 					<p>
 						Manipulator is an extremely flexible, performance optimized JavaScript library 
 						and framework with a slightly neurotic focus on details. Simple DOM manipulations
-						or advanced Animations. It is 8 times faster than jQuery.
+						or advanced animations. It is 8 times faster than jQuery.
 					</p>
 					<p>Current version: 0.9.1</p>
 				</li>

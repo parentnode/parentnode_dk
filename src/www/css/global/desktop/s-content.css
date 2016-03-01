@@ -1,5 +1,5 @@
 #content {position: relative;}
-#content .scene {position: relative; padding: 50px 0;}
+#content .scene {position: relative; padding: 50px 0 75px;}
 
 
 /* BASIC CONTENT */
@@ -11,7 +11,7 @@
 #content .scene h4,
 #content .scene h5,
 #content .scene h6,
-#content .scene p {width: 500px;}
+#content .scene p {width: 500px; position: relative;}
 #content .scene hr {border: none; border-top: 1px solid #888888; margin: 30px 0 50px; padding: 0;}
 #content .scene p.note {font-style: italic;}
 
@@ -27,7 +27,8 @@
 
 #content .scene ul.tags+h2,
 #content .scene dl.geo+h2,
-#content .scene dl.info+h2 {padding-top: 0;}
+#content .scene dl.info+h2,
+#content .scene ul.info+h2 {padding-top: 0;}
 
 #content .scene p+code {margin-top: -15px;}
 #content .scene dl.info+dl.geo {padding-left: 0;}
@@ -35,7 +36,7 @@
 
 /* LISTS */
 #content .scene ul,
-#content .scene ol {padding: 0 50px 15px;}
+#content .scene ol {padding: 0 70px 15px;}
 
 
 /* ITEMS */
@@ -46,7 +47,7 @@
 
 
 /* DEFINITION LIST */
-#content .scene dl {padding: 0 50px 15px; width: 500px;}
+#content .scene dl {padding: 0 70px 15px; width: 500px;}
 #content .scene dt {width: 100px; text-align: right; padding: 0 5px 0 0; color: #999999;} 
 #content .scene dt:after {content: ":";}
 /* one px off dd width, to support Androids */
@@ -63,7 +64,7 @@
 
 
 /* SCENE ACTIONS */
-#content .scene > ul.actions {margin: 0 0 20px; padding: 15px 50px;}
+#content .scene > ul.actions {margin: 0 0 20px; padding: 15px 70px;}
 
 
 /* TAGS */
@@ -81,12 +82,23 @@
 #content .scene dl.info {position: relative; z-index: 1; padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
 
 #content .scene dl.info dt {display: none;}
-#content .scene dl.info dd {width: auto; font-size: 12px; color: #999999;}
+#content .scene dl.info dd {width: auto; font-size: 12px; color: #cccccc;}
 #content .scene dl.info dd.author:before {content: "\00a0|\00a0"; color: #dedede;}
-#content .scene dl.info dd.hardlink {display: none;}
+#content .scene dl.info dd.main_entity {display: none;}
 #content .scene dl.info dd.publisher {display: none;}
 #content .scene dl.info dd.image_info {display: none;}
 #content .scene dl.info dd.modified_at {display: none;}
+
+/* INFO */
+#content .scene ul.info {position: relative; z-index: 1; padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
+
+#content .scene ul.info li {width: auto; font-size: 12px; color: #cccccc; display: inline-block; vertical-align: top;}
+#content .scene ul.info li.author:before {content: "\00a0|\00a0"; color: #dedede;}
+#content .scene ul.info li.main_entity {display: none;}
+#content .scene ul.info li.publisher {display: none;}
+#content .scene ul.info li.image_info {display: none;}
+#content .scene ul.info li.modified_at {display: none;}
+
 
 
 /* GEOLOCATION */
@@ -108,9 +120,8 @@
 
 /* IMAGE */
 #content .scene div.image {position: relative; z-index: 1;}
-#content .scene div.image {}
-#content .scene div.image img {cursor: zoom-in; margin: 0 30px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
-#content .scene div.image p {margin-top: -20px; padding: 0 50px 30px; font-size: 0;}
+#content .scene div.image img {cursor: zoom-in; margin: 0 50px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
+#content .scene div.image p {margin-top: -20px; padding: 0 70px 40px; font-size: 0;}
 #content .scene div.image p a {font-style: italic; font-size: 13px; display: block; color: #cccccc; display: none; cursor: default;}
 #content .scene div.image.loaded p a {display: block;}
 #content .scene div.image.fullsize {}
@@ -119,8 +130,8 @@
 /* MEDIA - FROM HTML EDITOR*/
 #content .scene div.media {position: relative; z-index: 1;}
 #content .scene div.media {}
-#content .scene div.media img {cursor: zoom-in;margin: 0 30px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
-#content .scene div.media p {margin-top: -20px; padding: 0 50px 30px; font-size: 0;}
+#content .scene div.media img {cursor: zoom-in;margin: 0 50px 30px; width: 540px; border-radius: 5px; overflow: hidden;}
+#content .scene div.media p {margin-top: -20px; padding: 0 70px 30px; font-size: 0;}
 #content .scene div.media p a {font-style: italic; font-size: 13px; display: block; color: #cccccc; display: none;}
 #content .scene div.media.loaded p a {display: block;}
 #content .scene div.media.fullsize {}
@@ -132,10 +143,13 @@
 
 
 /* CATEGORIES */
-#content .scene div.categories {padding-bottom: 20px; display: inline-block; vertical-align: top; width: 250px;}
+#content .scene div.categories {padding-bottom: 5px; display: inline-block; vertical-align: top; width: 250px;}
 #content .scene div.categories ul {padding-right: 0;}
 #content .scene div.categories ul.tags li {font-size: 14px; padding-bottom: 5px; display: block;}
 #content .scene div.categories ul.tags li:after {content: "";}
+#content .scene div.categories ul.tags li.selected:before {width: 15px; content: "*"; color: #000000; display: inline-block; vertical-align: top; padding-top: 9px; line-height: 6px;}
+#content .scene div.categories ul.tags li.selected {margin-left: -15px;}
+#content .scene div.categories ul.tags li.selected a {color: #000000;  display: inline-block; vertical-align: top; }
 #content .scene div.categories ul.actions {padding-bottom: 0;}
 #content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
 
@@ -151,28 +165,28 @@
 #content .scene ul.articles {padding: 0;}
 #content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
 #content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
-#content .scene ul.articles li.article:first-child {border-top: none;}
+#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
 #content .scene ul.articles li.article h3 {font-size: 18px; line-height: 1em; padding-bottom: 5px;}
 #content .scene ul.articles li.article p {font-size: 13px; color: #888888;}
-#content .scene ul.articles li.article > svg.checkmark {position: absolute; top: 14px; left: 25px;}
+#content .scene ul.articles li.article > svg.checkmark {position: absolute; top: 14px; left: 45px;}
 #content .scene ul.articles li.article > svg.checkmark line {stroke: #666666; stroke-width: 3px;}
 
 
 
 /* RELATED */
-#content .scene div.related {border-top: 1px solid #ccdbcd; padding-top: 40px; position: relative; z-index: 1;}
+#content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
 #content .scene div.related ul.articles {padding: 0;}
-#content .scene div.related li.article:first-child {border-top: none;}
+#content .scene div.related ul.articles li.item dl.info {display: none;}
 
 
 /* SHARING */
-#content .scene div.sharing {padding: 0; position: relative; height: 40px;}
-#content .scene div.sharing p {padding: 0; z-index: 2; position: absolute; top: 22px; left: 100px; display: none; font-size: 11px; color: #999999;}
-#content .scene div.sharing h3 {position: absolute; top: 0px; left: 100px; padding: 0; display: none;}
+#content .scene div.sharing {padding: 0 0 20px; position: relative; height: 40px;}
+#content .scene div.sharing p {padding: 0; z-index: 2; position: absolute; top: 22px; left: 120px; display: none; font-size: 11px; color: #999999;}
+#content .scene div.sharing h3 {position: absolute; top: 0px; left: 120px; padding: 0; display: none;}
 #content .scene div.sharing.hover {z-index: 2;}
 #content .scene div.sharing.hover h3,
 #content .scene div.sharing.hover p {display: block;}
-#content .scene div.sharing svg {z-index: 0; margin-left: 50px; position: absolute; width: 500px; height: 300px; top: -130px;}
+#content .scene div.sharing svg {z-index: 0; margin-left: 70px; position: absolute; width: 500px; height: 300px; top: -130px;}
 #content .scene div.sharing svg rect {cursor: pointer;}
 #content .scene div.sharing svg circle.primary {stroke: #666666; fill: #ffffff;}
 #content .scene div.sharing svg circle {fill: #ededed; stroke: #999999; stroke-width: 1px;}
@@ -181,20 +195,21 @@
 #content .scene div.sharing svg rect.primary {fill: #ff0000;}
 
 
-/* READSTATE */
-#content .scene div.readstate div {margin-left: 50px; margin-bottom: 40px; padding: 10px; position: relative; z-index: 1; border-radius: 5px; border: 1px solid #dedede; width: 478px;}
-#content .scene div.readstate p {font-size: 13px; color: #dedede; padding: 0 50px 0 0; width: auto;}
-#content .scene div.readstate div {cursor: pointer;}
-#content .scene div.readstate svg {position: absolute; top: 11px; right: 10px;}
-#content .scene div.readstate svg line {stroke: #dedede; stroke-width: 3px;}
-#content .scene div.readstate.is_read svg line {stroke: #666666;}
+
+/* READSTATE CHECKMARK */
+#content .scene svg.checkmark {position: absolute; top: 0; left: 0;}
+#content .scene h1 svg.checkmark {top: 13px; left: 35px; transform: scale(1.5);}
+#content .scene h2 svg.checkmark {top: 8px; left: 40px; transform: scale(1.2);}
+#content .scene h3 svg.checkmark {top: 3px; left: 45px;}
+#content .scene svg.checkmark line {stroke: #dedede; stroke-width: 3px;}
+#content .scene svg.checkmark.read line {stroke: #666666;}
 
 
 
 /* COMMENTS */
 #content .scene div.comments {padding-bottom: 15px; position: relative; z-index: 1;}
 #content .scene div.comments h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
-#content .scene div.comments h2 svg.arrow {position: absolute; top: 6px; right: 55px;}
+#content .scene div.comments h2 svg.arrow {position: absolute; top: 3px; left: 45px;}
 #content .scene div.comments h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
 
 #content .scene div.comments > p,
@@ -209,15 +224,15 @@
 #content .scene div.comments > p {color: #999999; font-size: 13px; padding-bottom: 25px;}
 #content .scene div.comments ul.comments {padding: 0; margin: 0;}
 #content .scene div.comments ul.comments > li {padding-bottom: 10px; padding-left: 0;}
-#content .scene div.comments ul.comments > li ul.info {padding-bottom: 0; margin: 0; list-style: none;}
-#content .scene div.comments ul.comments > li ul.info li {display: inline-block; vertical-align: top; color: #999999; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene div.comments ul.comments > li ul.info {padding-bottom: 0; margin: 0; list-style: none; display: block;}
+#content .scene div.comments ul.comments > li ul.info li {display: inline-block; vertical-align: top; color: #cccccc; font-size: 12px; padding-bottom: 0; padding-left: 0;}
 #content .scene div.comments ul.comments > li ul.info li.user:after {content: ",\00a0";}
 #content .scene div.comments ul.comments > li p.comment {padding-bottom: 15px; font-size: 13px;}
 #content .scene div.comments .field {padding-bottom: 10px;}
 
 
 /* CODE AND TYPECASTING */
-#content .scene code {padding: 10px 10px; margin: 0 30px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
+#content .scene code {padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
 	-moz-tab-size: 4;

@@ -1,4 +1,3 @@
-
 // global function to add checkmark
 u.addExpandArrow = function(node) {
 

@@ -2,11 +2,13 @@
 // global function to add checkmark
 u.addCheckmark = function(node) {
 
+	// u.bug("add checkmark:" + node.current_readstate + ", " + u.nodeId(node.parentNode) + ", " + (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"])); 
+
 	node.checkmark = u.svg({
 		"name":"checkmark",
 		"node":node,
-		"class":"checkmark",
-		"title":node.readstate ? ("Læst "+u.date("Y-m-d", node.readstate)) : false,
+		"class":"checkmark "+(node.current_readstate ? "read" : "not_read"),
+		"title":(node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
 		"width":17,
 		"height":17,
 		"shapes":[
@@ -26,6 +28,7 @@ u.addCheckmark = function(node) {
 			}
 		]
 	});
+	node.checkmark.node = node;
 }
 
 // global function to remove checkmark

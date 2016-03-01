@@ -18,14 +18,21 @@ Util.Objects["comments"] = new function() {
 
 				u.rc(this.div, "open");
 				u.addExpandArrow(this);
-
+				u.saveCookie("comments_open_state", 0, {"path":"/"})
 			}
 			else {
 
 				u.ac(this.div, "open");
 				u.addCollapseArrow(this);
+				u.saveCookie("comments_open_state", 1, {"path":"/"})
 			}
 		}
+
+		div.comments_open_state = u.getCookie("comments_open_state", {"path":"/"});
+		if(div.comments_open_state) {
+			div.header.clicked();
+		}
+
 
 		// comment initialization (still not doing anything)
 		div.initComment = function(node) {

@@ -5,6 +5,14 @@ Util.Objects["article"] = new function() {
 		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
 
 
+		// csrf token for data manipulation
+		article.csrf_token = article.getAttribute("data-csrf-token");
+
+
+		// find primary header
+		article.header = u.qs("h1,h2,h3", article);
+		article.header.article = article;
+
 
 		// INIT IMAGES
 		var i, image;
@@ -13,6 +21,13 @@ Util.Objects["article"] = new function() {
 
 			image.node = article;
 
+			// remove link from caption
+			image.caption = u.qs("p a", image);
+			if(image.caption) {
+				image.caption.removeAttribute("href");
+			}
+
+			// get image variables
 			image._id = u.cv(image, "item_id");
 			image._format = u.cv(image, "format");
 			image._variant = u.cv(image, "variant");
@@ -22,7 +37,11 @@ Util.Objects["article"] = new function() {
 
 				// add image
 				image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "540x." + image._format;
-				u.a.setOpacity(image, 0);
+				u.ass(image, {
+					// "height": image.wrapper_height,
+					"opacity": 0
+				});
+
 				image.loaded = function(queue) {
 
 					u.ac(this, "loaded");
@@ -31,6 +50,7 @@ Util.Objects["article"] = new function() {
 					this._image.image = this;
 					this._image.src = queue[0].image.src;
 
+					// correct scroll for image expansion
 					if(this.node.article_list) {
 						this.node.article_list.correctScroll(this.node, this, -10);
 					}
@@ -78,7 +98,10 @@ Util.Objects["article"] = new function() {
 					}
 
 					u.a.transition(this, "all 0.5s ease-in-out");
-					u.a.setOpacity(this, 1);
+					u.ass(this, {
+						//"height": (this._image.offsetHeight + this.wrapper_height) +"px",
+						"opacity": 1
+					});
 				}
 				u.preloader(image, [image._image_src]);
 			}
@@ -95,16 +118,71 @@ Util.Objects["article"] = new function() {
 
 
 		// INIT SHARING
-		var hardlink = u.qs("dd.hardlink", article);
+		var hardlink = u.qs("li.main_entity", article);
 		article.hardlink = hardlink ? hardlink.innerHTML : false;
 		if(article.hardlink && typeof(u.injectSharing) == "function") {
 
 			// Correct scroll offset - callback
 			article.shareInjected = function() {
-				this.article_list.correctScroll(this, this.sharing);
+				if(this.article_list) {
+					this.article_list.correctScroll(this, this.sharing);
+				}
 			}
 			u.injectSharing(article);
 
 		}
+
+		
+		// READ-STATE
+		article.header.current_readstate = article.getAttribute("data-readstate");
+		article.update_readstate_url = article.getAttribute("data-readstate-update");
+		article.delete_readstate_url = article.getAttribute("data-readstate-delete");
+		if(article.header.current_readstate || (article.update_readstate_url && article.delete_readstate_url)) {
+			u.bug("add readstate:" + article.header.current_readstate)
+
+			// add checkmark
+			u.addCheckmark(article.header);
+
+			u.ce(article.header.checkmark);
+			article.header.checkmark.clicked = function() {
+				
+				// already has readstate - delete it
+				if(this.node.current_readstate) {
+					this.response = function(response) {
+						if(response.cms_status == "success" && response.cms_object) {
+
+							// remove read info
+							this.setAttribute("class", "checkmark not_read");
+							this.node.current_readstate = false;
+							this.node.article.setAttribute("data-readstate", "");
+							this.setAttribute("title", u.txt["readstate-not_read"]);
+
+						}
+					}
+					u.request(this, this.node.article.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
+				}
+				// add readstate
+				else {
+					this.response = function(response) {
+						if(response.cms_status == "success" && response.cms_object) {
+
+							// add read info
+							this.setAttribute("class", "checkmark read");
+							this.node.current_readstate = new Date();
+							this.node.article.setAttribute("data-readstate", this.node.current_readstate);
+							
+							this.setAttribute("title", u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate));
+
+						}
+					}
+					u.request(this, this.node.article.update_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
+				}
+
+			}
+			
+		}
+
+
+		
 	}
 }

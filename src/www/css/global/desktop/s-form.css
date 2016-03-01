@@ -5,7 +5,7 @@
 	/*background: transparent url(http://parentnode.local/img/temp-input.png) repeat-y top left;*/
 }
 #content fieldset {border: none; display: block;}
-#content .field {padding: 0 48px 15px; position: relative; font-size: 0; z-index: 1;}
+#content .field {padding: 0 68px 15px; position: relative; font-size: 0; z-index: 1;}
 
 
 /* INLINE LABELS */
@@ -55,7 +55,7 @@
 
 
 /* FILES */
-#content .field.files {border: 3px dashed #dedede; display: block; width: 378px; border-radius: 5px; position: relative; margin: 2px 48px 17px; padding: 0;}
+#content .field.files {border: 3px dashed #dedede; display: block; width: 378px; border-radius: 5px; position: relative; margin: 2px 68px 17px; padding: 0;}
 #content .field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;}
 #content .field.files label {color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
 #content .field.files.loading label {display: none;}
@@ -119,7 +119,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 
 
 /* VALIDATION */
-#content .field .indicator {position: absolute; top: 4px; left: 435px; width: 25px; height: 25px;}
+#content .field .indicator {position: absolute; top: 4px; left: 455px; width: 25px; height: 25px;}
 #content .field.required .indicator { 
 	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 0 -292px;
 }
@@ -131,7 +131,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field.boolean .indicator {top: -5px;}
 
 /* FILES */
-#content .field.files .indicator {left: 384px; top: -1px;}
+#content .field.files .indicator {left: 404px; top: -1px;}
 
 
 /* CORRECT */
@@ -194,7 +194,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 
 
 /* HELP - HINT AND ERROR MESSAGES */
-#content .field div.help {position: absolute; left: 455px; top: 6px; width: 200px;}
+#content .field div.help {position: absolute; left: 475px; top: 6px; width: 200px;}
 #content .field.files div.help {left: 404px;}
 
 #content .field div.error,

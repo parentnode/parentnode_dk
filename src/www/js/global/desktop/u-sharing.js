@@ -3,6 +3,10 @@ u.injectSharing = function(node) {
 
 	// sharing wrapper
 	node.sharing = u.ae(node, "div", {"class":"sharing"});
+	var ref_point = u.qs("div.comments", node);
+	if(ref_point) {
+		node.sharing = node.insertBefore(node.sharing, ref_point);
+	}
 
 	node.h3_share = u.ae(node.sharing, "h3", {"html":u.txt["share"]})
 	node.p_share = u.ae(node.sharing, "p", {"html":node.hardlink})

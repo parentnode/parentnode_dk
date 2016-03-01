@@ -8,29 +8,41 @@ Util.Objects["readstate"] = new function() {
 		node.update_readstate_url = node.getAttribute("data-readstate-update");
 		node.delete_readstate_url = node.getAttribute("data-readstate-delete");
 
-		node._not_read = u.txt["not_read"]; //"Klik på <em>Tjek</em>-ikonet når du har læst et emne, så husker vi det for dig.";
-		node._read = u.txt["read"];//"Læst";
+//		node._not_read = u.txt["readstate-not_read"]; //"Klik på <em>Tjek</em>-ikonet når du har læst et emne, så husker vi det for dig.";
+//		node._read = u.txt["readstate-read"];//"Læst";
 
-		node.parent_li = u.pn(node, {"include":"li"});
+
+		//node.parent_li = u.pn(node, {"include":"li"});
+
+//		var header = u.qs("h1,h2,h3", node.parentNode);
+		u.addCheckmark(node);
+
+		// u.ass(node, {
+		// 	"top":u.qs("h1,h2,h3", node.parentNode).offsetTop+"px"
+		// });
 
 		// if interaction data available
 		if(node.update_readstate_url && node.delete_readstate_url && node.csrf_token) {
 
-			node.div = u.ae(node, "div");
 
-			if(node.readstate) {
-				u.ac(node, "is_read");
-				node.text = u.ae(node.div, "p", {"html":node._read + " " + u.date("Y-m-d", node.readstate)});
-			}
-			else {
-				node.text = u.ae(node.div, "p", {"html":node._not_read});
-			}
-			u.addCheckmark(node.div);
+			//
+			u.ce(node);
+
+			// node.div = u.ae(node, "div");
+			//
+			// if(node.readstate) {
+			// 	node.checkmark.title = node.readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d", node.readstate)) : u.txt["readstate-not_read"];
+			// // 	u.ac(node, "is_read");
+			// // 	node.text = u.ae(node.div, "p", {"html":node._read + " " + u.date("Y-m-d", node.readstate)});
+			// }
+			// else {
+			// 	node.text = u.ae(node.div, "p", {"html":node._not_read});
+			// }
 
 
-			node.div.node = node;
-			u.ce(node.div);
-			node.div.clicked = function() {
+			// node.div.node = node;
+			// u.ce(node.checkmark);
+			node.clicked = function() {
 
 				// already has readstate - delete it
 				if(this.node.readstate) {

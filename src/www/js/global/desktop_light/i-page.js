@@ -3,6 +3,9 @@ u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
 
+		window.page = page;
+
+
 		// header reference
 		page.hN = u.qs("#header");
 		page.hN.service = u.qs(".servicenavigation", page.hN);

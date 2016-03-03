@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5, h6, p, ul, li, dl, dd, dt {padding: 0; margin: 0;}
 h1, h2, h3, h4, h5, h6, p, li, dd, dt, span, a {line-height: 1em; font-weight: normal;}
 
 ul {list-style: none;}
-a {text-decoration: none; cursor: pointer;}
+a {/*text-decoration: none;*/ cursor: pointer;}
 
 img {border: 0; display: block;}
 form, fieldset, label, input, select, textarea {padding: 0; margin: 0; font-weight: normal;}
@@ -20,18 +20,18 @@ input, textarea {outline: none;}
 
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
 
-h1 {padding: 0 50px 30px; font-size: 48px; line-height: 1.05em;
+h1 {padding: 0 70px 30px; font-size: 48px; line-height: 1.05em;
 	font-family: "PT Serif", Times, serif;
 }
-h2 {padding: 0 50px 30px; font-size: 30px; line-height: 1.1em;
+h2 {padding: 0 70px 30px; font-size: 30px; line-height: 1.1em;
 	font-family: "PT Serif", Times, serif;
 }
-h3 {padding: 0 50px 10px; font-size: 20px; line-height: 1.25em;}
-h4 {padding: 0 50px 5px; font-size: 14px; line-height: 1em; font-weight: bold;}
-h5 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
-h6 {padding: 0 50px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
+h3 {padding: 0 70px 10px; font-size: 20px; line-height: 1.25em;}
+h4 {padding: 0 70px 5px; font-size: 14px; line-height: 1em; font-weight: bold;}
+h5 {padding: 0 70px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
+h6 {padding: 0 70px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
 
-p {padding: 0 50px 20px; font-size: 14px; line-height: 1.38em;} 
+p {padding: 0 70px 20px; font-size: 14px; line-height: 1.38em;} 
 
 
 ul,
@@ -57,6 +57,4 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 .terms_notification {position: absolute; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; background: #ffffff; border: 1px solid #888888; border-right: none;}
 .terms_notification h3 {padding: 0; font-size: 14px;}
 .terms_notification .accept,
-.terms_notification .details {padding: 0; font-size: 13px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0;}
-.terms_notification .accept:hover,
-.terms_notification .details:hover {text-decoration: underline;}
+.terms_notification .details {text-decoration: underline; padding: 0; font-size: 13px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0;}

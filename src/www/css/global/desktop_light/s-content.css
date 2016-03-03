@@ -1,5 +1,5 @@
-#content {position: relative; width: 600px; margin: 0 auto;}
-#content .scene {position: relative; padding: 50px 0;}
+#content {position: relative; width: 640px; margin: 0 auto;}
+#content .scene {position: relative; padding: 50px 0 70px;}
 
 
 
@@ -36,7 +36,7 @@
 
 /* LISTS */
 #content .scene ul,
-#content .scene ol {padding: 0 50px 15px;}
+#content .scene ol {padding: 0 70px 15px;}
 #content .scene li {padding: 0 0 5px;}
 #content .scene li h1,
 #content .scene li h2,
@@ -56,7 +56,7 @@
 
 
 /* DEFINITION LIST */
-#content .scene dl {padding: 0 50px 15px; overflow: hidden; width: 500px;}
+#content .scene dl {padding: 0 70px 15px; overflow: hidden; width: 500px;}
 #content .scene dt {padding: 0 0 5px 0; color: #999999;} 
 #content .scene dd {padding: 0 0 12px 20px;}
 #content .scene dt span {text-transform: none;}
@@ -70,15 +70,19 @@
 
 
 /* TAGS */
-#content .scene ul.tags li {font-size: 12px; display: block;}
-
+#content .scene ul.tags {padding-bottom: 20px;}
+#content .scene ul.tags li {font-size: 12px; display: inline; padding: 0 7px 0 0;}
+#content .scene ul.tags li a {color: #cccccc;}
 #content .scene ul.tags li.editing {background: #666666; border-radius: 5px; color: #ffffff; margin: -2px 10px 8px -4px; padding: 2px 10px; display: inline-block; vertical-align: top;}
 
 
 /* INFO */
 #content .scene dl.info dt {display: none;}
 #content .scene dl.info dd {padding-left: 0; padding-right: 0; padding-bottom: 3px; font-size: 12px; color: #999999;}
-#content .scene dl.info dd.hardlink {display: none;}
+#content .scene dl.info dd.main_entity {display: none;}
+#content .scene dl.info dd.publisher {display: none;}
+#content .scene dl.info dd.image_info {display: none;}
+#content .scene dl.info dd.modified_at {display: none;}
 
 
 /* GEOLOCATION */
@@ -108,36 +112,38 @@
 
 
 /* CATEGORIES */
-#content .scene div.categories {padding-bottom: 20px;}
+#content .scene div.categories {padding-bottom: 5px; display: inline; vertical-align: top; width: 250px;}
+#content .scene div.categories ul {padding-right: 0;}
+#content .scene div.categories ul.tags li {font-size: 14px; padding-bottom: 5px; display: block;}
+#content .scene div.categories ul.tags li.selected a {color: #000000;}
+#content .scene div.categories ul.actions {padding-bottom: 0;}
+#content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
+
 
 
 
 /* ARTICLE */
-#content .scene div.article ul.tags {padding-bottom: 10px;}
-#content .scene div.article ul.tags a {color: #cccccc;}
-#content .scene div.article ul.tags a:hover {color: #888888;}
+#content .scene div.article ul.tags {padding-bottom: 20px;}
+#content .scene ul.tags a:hover {color: #888888;}
 
 
 /* ARTICLES */
 #content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #dedede; position: relative;}
 #content .scene ul.articles li.article ul.tags {padding-bottom: 15px;}
-#content .scene ul.articles li.article h3 {font-size: 18px; line-height: 1em; padding-bottom: 5px;}
-#content .scene ul.articles li.article p {font-size: 13px; color: #888888;}
-
+#content .scene ul.articles li.article h3 {font-size: 22px; line-height: 1em; padding-bottom: 15px;
+	font-family: "PT Serif", Times, serif;
+}
 
 /* RELATED */
-#content .scene div.related {border-top: 1px solid #dedede; padding-top: 40px; position: relative; z-index: 1;}
+#content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
 
 
 /* COMMENTS */
 #content .scene div.comments {display: none;}
 
-/* READSTATE */
-#content .scene div.readstate {display: none;}
-
 
 /* CODE AND TYPECASTING */
-#content .scene code {width: 480px; padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
+#content .scene code {width: 480px; padding: 10px 10px; margin: 0 70px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
 	-moz-tab-size: 4;
@@ -161,11 +167,18 @@
 #content .scene span.command {color: #4b5cd7;}
 
 
+
 /* VCARD */
-#content .scene div.vcard {padding: 0 50px 25px;}
-#content .scene div.vcard .name {padding: 0 0 15px;}
-#content .scene div.vcard .tel,
-#content .scene div.vcard .email {font-size: 14px;}
+#content .scene div.vcard {padding: 0 70px 25px;}
+#content .scene div.vcard .name {padding: 0 0 15px; font-size: 30px;
+	font-family: "PT Serif", Times, serif;
+}
+#content .scene div.vcard dl.info {padding: 0 0 30px;}
+#content .scene div.vcard dl.info dt,
+#content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
+#content .scene div.vcard dl.info dd {padding-bottom: 10px; color: #cccccc;}
+#content .scene div.vcard dl.info dd ul {padding: 0;}
+#content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 
 
 /* USED BY (BRANDING FOOTER) */

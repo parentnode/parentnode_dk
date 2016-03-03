@@ -118,7 +118,7 @@ Util.Objects["article"] = new function() {
 
 
 		// INIT SHARING
-		var hardlink = u.qs("li.main_entity", article);
+		var hardlink = u.qs("li.main_entity.share", article);
 		article.hardlink = hardlink ? hardlink.innerHTML : false;
 		if(article.hardlink && typeof(u.injectSharing) == "function") {
 

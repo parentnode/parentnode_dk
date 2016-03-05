@@ -229,9 +229,11 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 
 /* HELP - HINTS */
 #content .field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
-#content .field.focus div.hint,
-#content .field.hover div.hint {display: block;}
+#content .field.focus div.hint {display: block;}
 
+#content .field.error div.hint {display: none;}
+#content .field.correct div.hint,
+#content .field.correct div.error {display: none;}
 
 
 /* HTML EDITOR */

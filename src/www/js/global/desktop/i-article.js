@@ -14,6 +14,7 @@ Util.Objects["article"] = new function() {
 		article.header.article = article;
 
 
+
 		// INIT IMAGES
 		var i, image;
 		article._images = u.qsa("div.image,div.media", article);
@@ -31,6 +32,7 @@ Util.Objects["article"] = new function() {
 			image._id = u.cv(image, "item_id");
 			image._format = u.cv(image, "format");
 			image._variant = u.cv(image, "variant");
+
 
 			// if image
 			if(image._id && image._format) {
@@ -132,7 +134,6 @@ Util.Objects["article"] = new function() {
 
 		}
 
-		
 		// READ-STATE
 		article.header.current_readstate = article.getAttribute("data-readstate");
 		article.update_readstate_url = article.getAttribute("data-readstate-update");
@@ -145,7 +146,7 @@ Util.Objects["article"] = new function() {
 
 			u.ce(article.header.checkmark);
 			article.header.checkmark.clicked = function() {
-				
+
 				// already has readstate - delete it
 				if(this.node.current_readstate) {
 					this.response = function(response) {
@@ -179,10 +180,8 @@ Util.Objects["article"] = new function() {
 				}
 
 			}
-			
+
 		}
 
-
-		
 	}
 }

@@ -1,5 +1,5 @@
 /* HEADER */
-#header {position: fixed; height: 60px; width: 100%; top: 0; left: 0; background: #ffffff; z-index: 100;
+#header {position: fixed; height: 60px; width: 100%; top: 0; left: 0; background: #ffffff; z-index: 100; overflow: hidden;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;

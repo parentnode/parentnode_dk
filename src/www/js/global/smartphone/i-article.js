@@ -1,40 +1,68 @@
 
-
+// Stardard article enabling
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
-//		u.bug("article init:" + u.nodeId(article))
+		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
+
+
+		// csrf token for data manipulation
+		article.csrf_token = article.getAttribute("data-csrf-token");
+
+
+		// find primary header
+		article.header = u.qs("h1,h2,h3", article);
+		article.header.article = article;
+
+
 
 		// INIT IMAGES
 		var i, image;
 		article._images = u.qsa("div.image,div.media", article);
 		for(i = 0; image = article._images[i]; i++) {
 
+			image.node = article;
+
+			// remove link from caption
+			image.caption = u.qs("p a", image);
+			if(image.caption) {
+				image.caption.removeAttribute("href");
+			}
+
+			// get image variables
 			image._id = u.cv(image, "item_id");
 			image._format = u.cv(image, "format");
 			image._variant = u.cv(image, "variant");
-
-			// remove link
-			u.ce(image);
-			u.rc(image, "link");
 
 			// if image
 			if(image._id && image._format) {
 
 				// add image
 				image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "480x." + image._format;
-				image._image = u.ie(image, "img");
-				u.a.setOpacity(image, 0);
+				u.ass(image, {
+					// "height": image.wrapper_height,
+					"opacity": 0
+				});
+
 				image.loaded = function(queue) {
 
-					// if image is off the top of the screen, correct scrolling to match new photo
-					if(u.absY(this) < u.scrollY()) {
-						window.scrollTo(0, u.scrollY()+queue[0].image.height)
-					}
+					u.ac(this, "loaded");
 
+					this._image = u.ie(this, "img");
+					this._image.image = this;
 					this._image.src = queue[0].image.src;
 
+					// correct scroll for image expansion
+					if(this.node.article_list) {
+						this.node.article_list.correctScroll(this.node, this, -10);
+					}
+
+
 					u.a.transition(this, "all 0.5s ease-in-out");
-					u.a.setOpacity(this, 1);
+					u.ass(this, {
+						//"height": (this._image.offsetHeight + this.wrapper_height) +"px",
+						"opacity": 1
+					});
+
 				}
 				u.preloader(image, [image._image_src]);
 

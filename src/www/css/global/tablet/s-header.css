@@ -1,0 +1,3 @@
+/* CURRENTLY NO LOGIN ON TABLET */
+#header .servicenavigation li.admin,
+#header .servicenavigation li.user {display: none;}

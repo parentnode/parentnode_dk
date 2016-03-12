@@ -5,7 +5,6 @@ parentnode.dk is a Copenhagen based open source project and part of think.dk, a 
 
 The website is primarily built using Janitor and Manipulator. Visit http://parentnode.dk for more information.
 
-
 # Licenses:
 parentnode.dk is licensed as follows:
 

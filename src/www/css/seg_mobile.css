@@ -63,6 +63,8 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 /*s-footer.css*/
 #footer {text-align: center; border-top: 1px solid #888888; margin: 0;}
 #footer p {padding: 10px;}
+#footer .servicenavigation {display: none;}
+
 
 /*s-content.css*/
 #content {position: relative;}
@@ -111,6 +113,12 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene dl.info dd {padding-left: 0; padding-right: 0; padding-bottom: 3px; font-size: 12px; color: #999999;}
 #content .scene dl.info dt {display: none;}
 #content .scene dl.info dd.hardlink {display: none;}
+#content .scene ul.info {padding-bottom: 10px; padding-right: 0;}
+#content .scene ul.info li {font-size: 12px; color: #cccccc; display: block;}
+#content .scene ul.info li.main_entity {display: none;}
+#content .scene ul.info li.publisher {display: none;}
+#content .scene ul.info li.image_info {display: none;}
+#content .scene ul.info li.modified_at {display: none;}
 #content .scene dl.geo {margin-top: -15px;}
 #content .scene dl.geo dd {padding-bottom: 3px; font-size: 12px; color: #999999;}
 #content .scene dl.geo dt {display: none;}
@@ -120,8 +128,13 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.media {display: none;}
 #content .scene .pagination {}
 #content .scene div.categories {padding-bottom: 10px;}
+#content .scene div.article {padding-bottom: 20px;}
+#content .scene div.article ul.tags a {color: #cccccc;}
 #content .scene ul.articles {padding: 0;}
 #content .scene ul.articles li.article {padding: 10px 0 0; border-top: 1px solid #dedede;}
+#content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
+#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
+#content .scene div.related {}
 #content .scene div.comments {display: none;}
 #content .scene div.readstate {display: none;}
 #content .scene code {padding: 10px 10px; margin: 0 0 15px; background-color: #ededed; color: #333333; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
@@ -146,10 +159,15 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene span.file {color: #a62300;}
 #content .scene span.htmltag {text-transform: uppercase;}
 #content .scene span.command {color: #4b5cd7;}
-#content .scene div.vcard {padding: 0 10px 15px;}
-#content .scene div.vcard .name {padding: 0 0 15px;}
-#content .scene div.vcard .tel,
-#content .scene div.vcard .email {font-size: 13px;}
+#content .scene div.vcard {padding: 0 0 15px; margin-top: 45px; border-top: 1px solid #dedede;}
+#content .scene div.vcard h2 {margin-top: -45px; padding-bottom: 50px;}
+#content .scene div.vcard dl.info {}
+#content .contact div.vcard dl.financial {display: none;}
+#content .scene div.vcard dl.info dt,
+#content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
+#content .scene div.vcard dl.info dd {padding-bottom: 10px; color: #cccccc;}
+#content .scene div.vcard dl.info dd ul {padding: 0;}
+#content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 #content .scene .usedby {display: none;}
 
 
@@ -334,11 +352,12 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 
 
 /*s-pages.css*/
-#content .scene.front ul.projects {padding-left: 0; padding-right: 0; margin: 0; list-style: none;}
+#content .scene ul.info {display: none;}
+#content .login form {display: none;}
 #content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;
-	font-family: Times, serif;
-} 
+#content .scene.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;} 
+#content .scene.manifest ul.manifest li h3,
+#content .scene.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}
 
 
 /*s-colorscheme.css*/
@@ -353,6 +372,7 @@ body {}
 #content ul.actions a.button.primary {background-color: #63add0;}
 #content ul.actions input.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #034769;}
+#content .scene div.categories ul.tags li.selected a {color: #034769;}
 #footer {border-color: #cccccc;}
 #footer p {color: #034769;}
 .front #navigation .front,

@@ -21,15 +21,18 @@ body {}
 #content ul.actions a.button.primary {background-color: #63add0;}
 #content ul.actions input.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #034769;}
+#content .scene div.article ul.tags li a:active,
+#content .scene ul.articles li.article ul.tags li a:active {color: #63add0;}
+
+#content .scene div.categories ul.tags li.selected a,
+#content .scene div.categories ul.tags li.selected:before {color: #034769;}
 
 #footer {border-color: #cccccc;}
+#footer a {color: #63add0;}
 
-.terms_notification .accept,
-.terms_notification .details {color: #63add0;}
-.terms_notification {border-color: #034769;}
+.terms_notification {background: #034769;}
 
 
-#content .scene .article ul.tags a:active {color: #63add0;}
 
 
 /* LOCAL */

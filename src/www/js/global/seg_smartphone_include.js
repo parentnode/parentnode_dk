@@ -9,6 +9,8 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-page.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-front.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-scene.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-login.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-signup.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/i-newsletter.js"></script>');

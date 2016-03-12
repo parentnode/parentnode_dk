@@ -1,8 +1,12 @@
-/* FRONT */
-#content .scene.front ul.projects {padding-left: 0; padding-right: 0; margin: 0; list-style: none;}
+#content .scene ul.info {display: none;}
+
+
+/* POST ARTICLE */
+#content .scene.post div.article ul.info {display: block;}
+
 
 /* MANIFEST */
 #content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;
-	font-family: "PT Serif", Times, serif;
-} 
+#content .scene.manifest ul.manifest li {padding: 0 0 15px;} 
+#content .scene.manifest ul.manifest li h3,
+#content .scene.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}

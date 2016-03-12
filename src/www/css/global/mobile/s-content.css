@@ -98,6 +98,7 @@
 
 
 /* ARTICLE */
+#content .scene div.article {padding-bottom: 20px;}
 #content .scene div.article ul.tags a {color: #cccccc;}
 
 
@@ -109,7 +110,7 @@
 
 
 /* RELATED */
-#content .scene div.related {padding-top: 20px;}
+#content .scene div.related {}
 
 
 /* COMMENTS */
@@ -143,13 +144,17 @@
 
 
 /* VCARD */
-#content .scene div.vcard {padding: 0 0 15px;}
+#content .scene div.vcard {padding: 0 0 15px; margin-top: 45px; border-top: 1px solid #dedede;}
+#content .scene div.vcard h2 {margin-top: -45px; padding-bottom: 50px;}
 #content .scene div.vcard dl.info {}
+#content .contact div.vcard dl.financial {display: none;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
 #content .scene div.vcard dl.info dd {padding-bottom: 10px; color: #cccccc;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
+
+
 
 
 /* USED BY (BRANDING FOOTER) */

@@ -22,13 +22,13 @@ body {}
 #content ul.actions a.button.primary:hover,
 #content .scene .pagination .next:hover,
 #content .scene .pagination .previous:hover {background-color: #034769;}
-#content .scene div.article ul.tags a:hover {color: #63add0;}
+#content .scene div.categories ul.tags li.selected a {color: #034769;}
+#content .scene ul.tags a:hover {color: #63add0;}
 
 #footer {border-color: #cccccc;}
+#footer a {color: #63add0;}
 
-.terms_notification .accept,
-.terms_notification .details {color: #63add0;}
-.terms_notification {border-color: #034769;}
+.terms_notification {background-color: #034769;}
 
 
 /* LOCAL */

@@ -131,6 +131,7 @@
 
 
 /* ARTICLE */
+#content .scene div.article {padding-bottom: 30px;}
 #content .scene div.article ul.tags {padding-bottom: 20px;}
 #content .scene ul.tags a:hover {color: #888888;}
 
@@ -143,7 +144,7 @@
 }
 
 /* RELATED */
-#content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
+#content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 
 
 /* COMMENTS */
@@ -177,11 +178,10 @@
 
 
 /* VCARD */
-#content .scene div.vcard {padding: 0 70px 25px;}
-#content .scene div.vcard .name {padding: 0 0 15px; font-size: 30px;
-	font-family: "PT Serif", Times, serif;
-}
-#content .scene div.vcard dl.info {padding: 0 0 30px;}
+#content .scene div.vcard {height: 160px; margin-top: 65px; border-top: 1px solid #dedede; padding: 0 70px 25px;}
+#content .scene div.vcard h2 {margin-top: -65px; padding: 0 0 60px;}
+#content .scene div.vcard dl.info {width: 230px; padding: 0 0 30px; display: inline; float: left; vertical-align: top;}
+#content .scene div.vcard dl.info.financial {display: none;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
 #content .scene div.vcard dl.info dd {padding-bottom: 10px; color: #cccccc;}

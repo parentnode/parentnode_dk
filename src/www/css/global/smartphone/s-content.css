@@ -68,8 +68,10 @@
 #content .scene ul.tags li {font-size: 12px; display: inline-block; padding: 3px 0;}
 #content .scene ul.tags li:after {content: "\00a0\00a0|\00a0\00a0"; color: #dedede;}
 #content .scene ul.tags li:last-child:after {content: "";}
+#content .scene ul.tags a:active {color: #888888;}
 
-#content .scene ul.tags li.editing {background: #666666; border-radius: 5px; color: #ffffff; margin: -2px 10px 5px -4px; padding: 2px 10px; display: inline-block; vertical-align: top;}
+#content .scene ul.tags li.editing {background: #666666; border-radius: 5px; color: #ffffff; margin: 1px 10px 5px -4px; padding: 2px 10px; display: inline-block; vertical-align: top;}
+#content .scene ul.tags li.editing:after {content: "";}
 
 
 /* INFO */
@@ -151,14 +153,14 @@
 
 
 /* ARTICLE */
+#content .scene div.article {padding-bottom: 30px;}
 #content .scene div.article h2 br {display: none;}
 #content .scene div.article ul.tags {padding-bottom: 20px;}
 #content .scene div.article ul.tags a {color: #dedede;}
-#content .scene div.article ul.tags a:active {color: #00c90d;}
 
 
 /* RELATED */
-#content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
+#content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 
 
 /* COMMENTS */
@@ -192,17 +194,15 @@
 
 
 /* VCARD */
-#content .scene div.vcard {padding: 0 20px 20px;}
+#content .scene div.vcard {margin-top: 52px; border-top: 1px solid #dedede; padding: 0 0 20px;}
+#content .scene div.vcard h2 {margin-top: -52px; padding-bottom: 48px;}
+#content .scene div.vcard dl.info {padding: 0 20px 20px; display: block;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
 #content .scene div.vcard dl.info dd {padding-bottom: 10px;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
-
-/*#content .scene div.vcard .name {padding: 0 0 15px;}
-#content .scene div.vcard .tel,
-#content .scene div.vcard .email {font-size: 13px;}
-*/
+#content .scene div.vcard dl.info dd li a {padding-bottom: 10px; display: inline-block;}
 
 
 /* USED BY (BRANDING FOOTER) */

@@ -19,6 +19,7 @@ body {}
 #content ul.actions a.button.primary {background-color: #63add0;}
 #content ul.actions input.button.primary:active,
 #content ul.actions a.button.primary:active {background-color: #034769;}
+#content .scene div.categories ul.tags li.selected a {color: #034769;}
 
 #footer {border-color: #cccccc;}
 #footer p {color: #034769;}

@@ -154,7 +154,7 @@
 
 
 /* ARTICLE */
-#content .scene div.article {position: relative;}
+#content .scene div.article {position: relative; padding-bottom: 30px;}
 #content .scene div.article ul.tags {padding-bottom: 30px;}
 #content .scene div.article ul.tags a {color: #cccccc;}
 
@@ -176,7 +176,7 @@
 
 
 /* RELATED */
-#content .scene div.related {padding-top: 40px; position: relative; z-index: 1;}
+#content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 
 
 /* SHARING */
@@ -232,7 +232,7 @@
 
 
 /* CODE AND TYPECASTING */
-#content .scene code {padding: 10px 10px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
+#content .scene code {padding: 10px 20px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
 	-moz-tab-size: 4;
@@ -257,13 +257,9 @@
 
 
 /* VCARD */
-#content .scene div.vcard {padding: 0 70px 25px;}
-#content .scene div.vcard div {font-size: 14px; color: #777777;}
-
-#content .scene div.vcard .name {padding: 0 0 15px; font-size: 30px;
-	font-family: "PT Serif", Times, serif;
-}
-#content .scene div.vcard dl.info {padding: 0 0 30px;}
+#content .scene div.vcard.company {margin-top: 65px; border-top: 1px solid #dedede; padding: 0 70px 25px;}
+#content .scene div.vcard.company h2 {margin-top: -65px; padding: 0 0 60px;}
+#content .scene div.vcard dl.info {width: 230px; padding: 0 0 30px; display: inline-block; vertical-align: top;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
 #content .scene div.vcard dl.info dd {padding-bottom: 10px;}

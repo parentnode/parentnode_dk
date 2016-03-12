@@ -1,8 +1,7 @@
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/seg_desktop_include.js"></script>');
 
-document.write('<script type="text/javascript" src="/js/lib/desktop/i-articlelist.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-article_mini_list.js"></script>');
 
-document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-readstate.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-comments.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/u-geolocation.js"></script>');

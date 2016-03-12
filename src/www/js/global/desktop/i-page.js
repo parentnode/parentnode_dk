@@ -1,10 +1,19 @@
+// can be removed after updating to next version of Manipulator
 u.bug_console_only = true;
 
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
-
+		// u.bug("init page")
 
 		window.page = page;
+
+		// show parentnode comment in console
+		u.bug_force = true;
+		u.bug("think.dk is built using Manipulator, Janitor and Detector");
+		u.bug("Visit http://parentnode.dk for more information");
+		u.bug("Free lunch for new contributers ;-)");
+		u.bug_force = false;
+
 
 		// create a generel style rule
 		page.style_tag = document.createElement("style");
@@ -13,10 +22,9 @@ Util.Objects["page"] = new function() {
 		page.style_tag = u.ae(document.head, page.style_tag);
 
 
-
 		// header reference
 		page.hN = u.qs("#header");
-		page.hN.service = u.qs(".servicenavigation", page.hN);
+		page.hN.service = u.qs("ul.servicenavigation", page.hN);
 
 
 		// content reference
@@ -30,16 +38,7 @@ Util.Objects["page"] = new function() {
 
 		// footer reference
 		page.fN = u.qs("#footer");
-		page.fN.service = u.qs(".servicenavigation", page.fN);
-
-
-		page.fN.slogan = u.qs("p", page.fN);
-		if(page.fN.slogan) {
-			u.ce(page.fN.slogan);
-			page.fN.slogan.clicked = function(event) {
-				window.open("http://parentnode.dk");
-			}
-		}
+		page.fN.service = u.qs("ul.servicenavigation", page.fN);
 
 
 		// LOGO
@@ -50,25 +49,21 @@ Util.Objects["page"] = new function() {
 		page.logo.font_size_gap = page.logo.font_size-14;
 		page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
 
+
 		// create rule for logo
 		page.style_tag.sheet.insertRule("#header a.logo {}", 0);
 		page.logo.css_rule = page.style_tag.sheet.cssRules[0];
 
 
-		// FORK ME?
-		if(u.github_fork) {
-			var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
-			u.ce(github, {"type":"link"});
-		}
-
 
 		// global resize handler 
 		page.resized = function() {
-			u.bug("page resized")
+//			u.bug("page resized")
 
-			// adjust content height
 			page.browser_h = u.browserH();
 			page.browser_w = u.browserW();
+
+			// adjust content height
 			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
 
 			u.as(page.cN, "min-height", "auto", false);
@@ -85,12 +80,8 @@ Util.Objects["page"] = new function() {
 
 
 			// forward resize event to current scene
-			if(page.cN && page.cN.scene) {
-
-				if(typeof(page.cN.scene.resized) == "function") {
-					page.cN.scene.resized();
-				}
-
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
+				page.cN.scene.resized();
 			}
 
 		}
@@ -175,7 +166,7 @@ Util.Objects["page"] = new function() {
 		page.acceptCookies = function() {
 
 			// show terms notification
-			if(!u.getCookie("terms_v1")) {
+			if(u.terms_version && !u.getCookie(u.terms_version)) {
 
 				var terms = u.ie(document.body, "div", {"class":"terms_notification"});
 				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
@@ -184,12 +175,11 @@ Util.Objects["page"] = new function() {
 				u.ce(bn_accept);
 				bn_accept.clicked = function() {
 					this.terms.parentNode.removeChild(this.terms);
-					u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
 				}
 
-				if(!location.href.match(/\/terms/)) {
-					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details"});
-					bn_details.url = "/terms";
+				if(!location.href.match(/\/terms\//)) {
+					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
 					u.ce(bn_details, {"type":"link"});
 				}
 
@@ -206,7 +196,7 @@ Util.Objects["page"] = new function() {
 		// initialize navigation elements
 		page.initNavigation = function() {
 
-			var i, node;
+			var i, node, nodes;
 
 			page.nN.list = u.qs("ul", page.nN);
 			page.nN.list.nodes = u.qsa("li", page.nN.list);
@@ -229,7 +219,7 @@ Util.Objects["page"] = new function() {
 			}
 
 			// enable navigation link animation where relevant
-			var nodes = u.qsa("#navigation li,a.logo", page.hN);
+			nodes = u.qsa("#navigation li,a.logo", page.hN);
 			for(i = 0; node = nodes[i]; i++) {
 
 				u.ce(node, {"type":"link"});
@@ -271,6 +261,29 @@ Util.Objects["page"] = new function() {
 					u.a.scale(this, 0.8);
 				}
 
+			}
+
+			// remove accessibility #navigation anchor from header servicenavigation
+			if(page.hN.service) {
+				var nav_anchor = u.qs("li.navigation", page.hN.service);
+				if(nav_anchor) {
+					page.hN.service.removeChild(nav_anchor);
+				}
+			}
+
+			// insert footer servicenavigation into header servicenavigation
+			if(page.fN.service) {
+				nodes = u.qsa("li", page.fN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ie(page.hN.service, node);
+				}
+				page.fN.removeChild(page.fN.service);
+			}
+
+			// Add FORK ME?
+			if(u.github_fork) {
+				var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
+				u.ce(github, {"type":"link"});
 			}
 
 		}

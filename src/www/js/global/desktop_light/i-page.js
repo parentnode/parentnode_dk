@@ -1,3 +1,4 @@
+// can be removed after updating to next version of Manipulator
 u.bug_console_only = true;
 
 Util.Objects["page"] = new function() {
@@ -5,10 +6,32 @@ Util.Objects["page"] = new function() {
 
 		window.page = page;
 
+		// show parentnode comment in console
+		u.bug_force = true;
+		u.bug("think.dk is built using Manipulator, Janitor and Detector");
+		u.bug("Visit http://parentnode.dk for more information");
+		u.bug("Free lunch for new contributers ;-)");
+		u.bug_force = false;
+
 
 		// header reference
 		page.hN = u.qs("#header");
 		page.hN.service = u.qs(".servicenavigation", page.hN);
+
+
+		// content reference
+		page.cN = u.qs("#content", page);
+
+
+		// navigation reference
+		page.nN = u.qs("#navigation", page);
+		page.nN = u.ie(page.hN, page.nN);
+
+
+		// footer reference
+		page.fN = u.qs("#footer");
+		page.fN.service = u.qs(".servicenavigation", page.fN);
+
 
 		// add logo to navigation
 		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
@@ -17,23 +40,31 @@ Util.Objects["page"] = new function() {
 			location.href = '/';
 		}
 
-		// content reference
-		page.cN = u.qs("#content", page);
 
-		// navigation reference
-		page.nN = u.qs("#navigation", page);
-		page.nN.list = u.qs("ul", page.nN);
-		page.nN = u.ie(page.hN, page.nN);
+		// global resize handler 
+		page.resized = function() {
+//			u.bug("page resized")
 
-		// footer reference
-		page.fN = u.qs("#footer");
-		// move li to #header .servicenavigation
-		page.fN.service = u.qs(".servicenavigation", page.fN);
+			page.browser_h = u.browserH();
+			page.browser_w = u.browserW();
 
-		page.fN.slogan = u.qs("p", page.fN);
-		u.ce(page.fN.slogan);
-		page.fN.slogan.clicked = function(event) {
-			window.open("http://parentnode.dk");
+			// forward resize event to current scene
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
+				page.cN.scene.resized();
+			}
+
+		}
+
+		// global scroll handler 
+		page.scrolled = function() {
+
+			page.scrolled_y = u.scrollY();
+
+			// forward scroll event to current scene
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
+				page.cN.scene.scrolled();
+			}
+
 		}
 
 
@@ -47,24 +78,63 @@ Util.Objects["page"] = new function() {
 				// page is ready
 				u.ac(this, "ready");
 
-				// show terms notification
-				if(!u.getCookie("terms_v1")) {
-					var terms = u.ie(document.body, "div", {"class":"terms_notification"});
-					u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
-					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
-					bn_accept.terms = terms;
-					u.ce(bn_accept);
-					bn_accept.clicked = function() {
-						this.terms.parentNode.removeChild(this.terms);
-						u.saveCookie("terms_v1", true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
-					}
+				this.initNavigation();
 
-					if(!location.href.match(/\/terms/)) {
-						var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
-						u.ce(bn_details, {"type":"link"});
-					}
+				this.resized();
+
+				// accept cookies
+				page.acceptCookies();
+			}
+		}
+
+
+		// show accept cookies dialogue
+		page.acceptCookies = function() {
+
+			// show terms notification
+			if(u.terms_version && !u.getCookie(u.terms_version)) {
+
+				var terms = u.ie(document.body, "div", {"class":"terms_notification"});
+				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
+				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+				bn_accept.terms = terms;
+				u.ce(bn_accept);
+				bn_accept.clicked = function() {
+					this.terms.parentNode.removeChild(this.terms);
+					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+				}
+
+				if(!location.href.match(/\/terms\//)) {
+					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
+					u.ce(bn_details, {"type":"link"});
+				}
+
+			}
+
+		}
+
+		// initialize navigation elements
+		page.initNavigation = function() {
+
+			var i, node, nodes;
+
+			// remove accessibility #navigation anchor from header servicenavigation
+			if(page.hN.service) {
+				var nav_anchor = u.qs("li.navigation", page.hN.service);
+				if(nav_anchor) {
+					page.hN.service.removeChild(nav_anchor);
 				}
 			}
+
+			// insert footer servicenavigation into header servicenavigation
+			if(page.fN.service) {
+				nodes = u.qsa("li", page.fN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ie(page.hN.service, node);
+				}
+				page.fN.removeChild(page.fN.service);
+			}
+
 		}
 
 		// ready to start page builing process

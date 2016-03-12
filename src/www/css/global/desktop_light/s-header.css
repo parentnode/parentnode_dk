@@ -6,7 +6,7 @@
 #header .logo:hover {text-decoration: underline;}
 
 #header .servicenavigation {position: absolute; top: 5px; right: 50px;}
-#header .servicenavigation li {display: inline; vertical-align: top;}
+#header .servicenavigation li {display: inline; vertical-align: top; color: #bbbbbb;}
 #header .servicenavigation li.navigation,
 #header .servicenavigation li.admin,
 #header .servicenavigation li.user {display: none;}

@@ -54,7 +54,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 
 #page {position: relative; min-height: 100%;}
 
-.terms_notification {position: absolute; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; background: #ffffff; border: 1px solid #888888; border-right: none;}
-.terms_notification h3 {padding: 0; font-size: 14px;}
+.terms_notification {position: absolute; z-index: 90; top: 50%; margin-top: -100px; right: 0px; padding: 15px 20px; background: #888888; border-right: none;}
+.terms_notification h3 {padding: 0 0 15px; font-size: 14px; color: #ffffff;}
 .terms_notification .accept,
-.terms_notification .details {text-decoration: underline; padding: 0; font-size: 13px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0;}
+.terms_notification .details {text-decoration: underline; padding: 0; font-size: 13px; line-height: 18px; display: inline; vertical-align: bottom; padding: 0 15px 0 0; color: #ffffff;}

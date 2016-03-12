@@ -119,7 +119,7 @@ This License applies to code to which the Initial Developer has attached the not
 
 6.1	New Versions.
 
-parentNode ApS (“parentNode”) may publish revised and/or new versions of the License from time to time. Each version will be given a distinguishing version number.
+parentNode.dk may publish revised and/or new versions of the License from time to time. Each version will be given a distinguishing version number.
 
 6.2	Effect of New Versions.
 
@@ -193,26 +193,19 @@ The term “External Deployment” means the use, distribution, or communication
 
 #EXHIBIT A. Common Public Attribution License Version 1.0.
 
-“The contents of this file are subject to the Common Public Attribution License Version 1.0 (the “License”); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://faarevejlegolfhotel.dk/legal. The License is based on the Mozilla Public License Version 1.1 but Sections 14 and 15 have been added to cover use of software over a computer network and provide for limited attribution for the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+“The contents of this file are subject to the Common Public Attribution License Version 1.0 (the “License”); you may not use this file except in compliance with the License. You may obtain a copy of the License at https://github.com/parentnode/parentnode_dk/blob/master/LICENSE-CPAL.md. The License is based on the Mozilla Public License Version 1.1 but Sections 14 and 15 have been added to cover use of software over a computer network and provide for limited attribution for the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
 Software distributed under the License is distributed on an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language governing rights and limitations under the License.
 
 The Original Code is parentnode.dk.
 
-The Initial Developer of the Original Code is Martin Kaestel Nielsen. All portions of the code written by Martin Kaestel Nielsen are Copyright (c) 2013. All Rights Reserved.
-
-Contributor Martin Kaestel Nielsen.  
+The Initial Developer of the Original Code is Martin Kaestel Nielsen. All portions of the code written by Martin Kaestel Nielsen are covered by this license.
 
 [NOTE: The text of this Exhibit A may differ slightly from the text of the notices in the Source Code files of the Original Code. You should use the text of this Exhibit A rather than the text found in the Original Code Source Code for Your Modifications.]
 
 
 #EXHIBIT B. Attribution Information
 
-Attribution Copyright Notice: Copyright 2013 parentNode ApS
-
-Attribution Phrase (not exceeding 10 words): Copyright 2013 parentNode ApS
-
+Attribution Copyright Notice: Copyright 2016, parentNode.dk
 Attribution URL: parentnode.dk
-
-Graphic Image as provided online: http://parentnode.dk/img/license_badge.png.
 
 Display of Attribution Information is required in Larger Works which are defined in the CPAL as a work which combines Covered Code or portions thereof with code not governed by the terms of the CPAL.

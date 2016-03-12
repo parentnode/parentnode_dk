@@ -1,14 +1,29 @@
 <div class="scene front i:front">
 
 	<div class="article" itemscope itemtype="http://schema.org/Article">
-		<h1 itemprop="name">You have to start somewhere ...</h1>
+		<h1 itemprop="headline">You have to start somewhere ...</h1>
 
-		<dl class="info">
-			<dt class="published_at">Date published</dt>
-			<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
-			<dt class="author">Author</dt>
-			<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
-		</dl>
+		<ul class="info">
+			<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></li>
+			<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></li>
+			<li class="author" itemprop="author">Martin Kæstel Nielsen</li>
+			<li class="main_entity share" itemprop="mainEntityOfPage"><?= SITE_URL."/" ?></li>
+			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+				<ul class="publisher_info">
+					<li class="name" itemprop="name">parentnode.dk</li>
+					<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+						<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
+						<span class="image_width" itemprop="width" content="720"></span>
+						<span class="image_height" itemprop="height" content="405"></span>
+					</li>
+				</ul>
+			</li>
+			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+				<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
+				<span class="image_width" itemprop="width" content="720"></span>
+				<span class="image_height" itemprop="height" content="405"></span>
+			</li>
+		</ul>
 
 		<div class="articlebody" itemprop="articleBody">
 
@@ -24,48 +39,46 @@
 			</p>
 			<p>
 				I am this stubborn because I love coding and hate restrictions. Everything is open source and
-				forkable on GitHub. Try it out on your next project.
+				forkable on <a href="https://github.com/parentnode">GitHub</a>. Try it out on your next project.
 			</p>
 
 			<h2>The parentNode platform</h2>
-			<ul class="projects">
-				<li class="manipulator">
-					<h3><a href="http://manipulator.parentnode.dk" target="_blank">Manipulator</a></h3>
-					<p>
-						Manipulator is an extremely flexible, performance optimized JavaScript library 
-						and framework with a slightly neurotic focus on details. Simple DOM manipulations
-						or advanced animations. It is 8 times faster than jQuery.
-					</p>
-					<p>Current version: 0.9.1</p>
-				</li>
-				<li class="janitor">
-					<h3><a href="http://janitor.parentnode.dk" target="_blank">Janitor</a></h3>
-					<p>
-						Janitor is a PHP content management developer toolkit, designed to build custom 
-						content managements systems, not to be one on its own. A simple item-based model
-						allows you to extend Janitor in any way you want.
-					</p>
-					<p>Current version: 0.7.6</p>
-				</li>
-				<li class="detector">
-					<h3><a href="http://detector.parentnode.dk" target="_blank">Detector</a></h3>
-					<p>
-						Detector is your one-stop solution to supporting all HTML capable devices on earth and 
-						lowering your development complexity at the same time. Providing you with a simple model
-						for mixing up your own device support in any given project.
-					</p>
-					<p>Current version: 3.1</p>
-				</li>
-				<li class="modulator">
-					<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
-					<p>
-						Modulator is a SEO optimized HTML model for web development, that allows for a 
-						complete separation of content, design and functionality. Get ready for copy/paste
-						markup for any site.
-					</p>
-					<p>Current version: 1</p>
-				</li>
-			</ul>
+			<p>
+				The parentNode platform is composed of the following projects:
+			</p>
+
+			<h3><a href="http://manipulator.parentnode.dk" target="_blank">Manipulator</a></h3>
+			<p>
+				Manipulator is an extremely flexible, performance optimized JavaScript library 
+				and framework with a slightly neurotic focus on details. Simple DOM manipulations
+				or advanced animations. It is 8 times faster than jQuery.
+			</p>
+			<p>Current version: 0.9.1</p>
+
+			<h3><a href="http://janitor.parentnode.dk" target="_blank">Janitor</a></h3>
+			<p>
+				Janitor is a PHP content management developer toolkit, designed to build custom 
+				content managements systems, not to be one on its own. A simple item-based model
+				allows you to extend Janitor in any way you want.
+			</p>
+			<p>Current version: 0.7.6</p>
+
+			<h3><a href="http://detector.parentnode.dk" target="_blank">Detector</a></h3>
+			<p>
+				Detector is your one-stop solution to supporting all HTML capable devices on earth and 
+				lowering your development complexity at the same time. Providing you with a simple model
+				for mixing up your own device support in any given project.
+			</p>
+			<p>Current version: 3.1</p>
+
+			<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
+			<p>
+				Modulator is a SEO optimized HTML model for web development, that allows for a 
+				complete separation of content, design and functionality. Get ready for copy/paste
+				markup for any site.
+			</p>
+			<p>Current version: 1</p>
+
 
 			<h2>Want to contribute?</h2>
 			<p>

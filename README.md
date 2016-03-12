@@ -10,7 +10,7 @@ The website is primarily built using Janitor and Manipulator. Visit http://paren
 parentnode.dk is licensed as follows:
 
 ##Source code:
-https://github.com/kaestel/parentnode_dk/blob/master/LICENSE-CPAL.md
+https://github.com/parentnode/parentnode_dk/blob/master/LICENSE-CPAL.md
 
 ##Content:
 http://creativecommons.org/licenses/by/4.0/

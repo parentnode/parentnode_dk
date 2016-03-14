@@ -15,3 +15,9 @@
 /* TODOS - DONE / NOT DONE */
 #content .scene ul.todos > li ul.actions {display: none;}
 
+
+/* WISHLIST */
+#content .scene ul.wishlist {}
+
+/* WISH RESERVE / UN-RESERVE */
+#content .scene ul.wishes > li ul.actions {display: none;}

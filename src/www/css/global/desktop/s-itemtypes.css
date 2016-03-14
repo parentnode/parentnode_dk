@@ -26,5 +26,27 @@
 #content .scene ul.todos > li ul.actions.closed .open {display: inline-block;}
 
 
+/* WISHLIST */
+#content .scene ul.wishlists {padding-left: 50px; padding-right: 50px;}
+
+
+/* WISH */
+#content .scene ul.wishes {padding-left: 70px; padding-right: 70px;}
+#content .scene ul.wishes > li .image,
+#content .scene ul.wishes > li .text {display: inline-block; vertical-align: top;}
+#content .scene ul.wishes > li .image {width: 250px; height: 140px; background-position: center center; background-size: 100% auto; margin-bottom: 0px; cursor: default;}
+#content .scene ul.wishes > li h3 {padding: 0 25px 10px;}
+#content .scene ul.wishes > li div.description p {padding: 0 25px;}
+
+/* WISH PRICE */
+#content .scene ul.wishes dl.info {padding: 0 25px 20px;}
+#content .scene ul.wishes dl.info dd {font-size: 13px; display: block;}
+
+
+/* WISH RESERVE / UN-RESERVE */
+#content .scene ul.wishes > li ul.actions {padding: 0 25px;}
+#content .scene ul.wishes > li ul.actions.reserved .reserve {display: none;}
+#content .scene ul.wishes > li ul.actions .unreserve {display: none;}
+#content .scene ul.wishes > li ul.actions.reserved .unreserve {display: inline-block;}
 
 

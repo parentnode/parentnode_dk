@@ -27,7 +27,7 @@
 #content .scene ul.wishlist {}
 
 /* WISH */
-#content .scene ul.wishes > li .image {height: 30px; background-position: center center; background-size: 100% auto; margin-bottom: 10px; cursor: default;}
+#content .scene ul.wishes > li .image {height: 30px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 10px; cursor: default;}
 
 /* WISH INFO */
 #content .scene ul.wishes dl.info dd {font-size: 13px; display: block; padding-bottom: 8px;}

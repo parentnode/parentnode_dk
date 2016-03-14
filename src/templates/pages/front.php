@@ -57,8 +57,8 @@
 
 			<h3><a href="http://janitor.parentnode.dk" target="_blank">Janitor</a></h3>
 			<p>
-				Janitor is a PHP content management developer toolkit, designed to build custom 
-				content managements systems, not to be one on its own. A simple item-based model
+				Janitor is an open source PHP content management and distribution developer toolkit, 
+				with a unique focus on frontend development. A simple item-based model
 				allows you to extend Janitor in any way you want.
 			</p>
 			<p>Current version: 0.7.6</p>
@@ -71,7 +71,7 @@
 			</p>
 			<p>Current version: 3.1</p>
 
-			<h3><a href="http://modulator.parentnode.dk" target="_blank">Modulator</a></h3>
+			<h3><a href="http://modulator.parentnode.dk" target="_blank">mMarkup</a></h3>
 			<p>
 				Modulator is a SEO optimized HTML model for web development, that allows for a 
 				complete separation of content, design and functionality. Get ready for copy/paste

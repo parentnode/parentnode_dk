@@ -2,11 +2,15 @@
 
 
 /* LOGIN */
-#content .login form {display: none;}
+#content div.login form {display: none;}
+
+
+/* POST ARTICLE */
+#content div.post div.article ul.info {display: block;}
 
 
 /* MANIFEST */
-#content .scene.manifest ul.manifest {padding-top: 25px;}
-#content .scene.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;} 
-#content .scene.manifest ul.manifest li h3,
-#content .scene.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}
+#content div.manifest ul.manifest {padding-top: 25px;}
+#content div.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;} 
+#content div.manifest ul.manifest li h3,
+#content div.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}

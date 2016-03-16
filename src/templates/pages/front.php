@@ -71,13 +71,13 @@
 			</p>
 			<p>Current version: 3.1</p>
 
-			<h3><a href="http://modulator.parentnode.dk" target="_blank">mMarkup</a></h3>
+			<h3><a href="http://templator.parentnode.dk" target="_blank">Templator</a></h3>
 			<p>
-				Modulator is a SEO optimized HTML model for web development, that allows for a 
+				Templator is a semantic search engine optimized HTML template model for web development, that allows for a 
 				complete separation of content, design and functionality. Get ready for copy/paste
 				markup for any site.
 			</p>
-			<p>Current version: 1</p>
+			<p>Current version: 2</p>
 
 
 			<h2>Want to contribute?</h2>

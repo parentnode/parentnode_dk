@@ -1,6 +1,10 @@
 #content .scene ul.info {display: none;}
 
 
+/* POST ARTICLE */
+#content .post div.article ul.info {display: block;}
+
+
 /* LOGIN */
 #content .scene.login form {display: none;}
 

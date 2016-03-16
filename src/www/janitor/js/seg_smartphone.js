@@ -8373,8 +8373,6 @@ Util.Objects["flushUserSession"] = new function() {
 
 
 /*ga.js*/
-u.ga_account = 'UA-49720985-1';
-u.ga_domain = 'parentnode.dk';
 
 
 /*u-googleanalytics.js*/
@@ -8409,4 +8407,11 @@ if(u.ga_account) {
 	}
 }
 
+
+
+/*i-form.js*/
+Util.Objects["generic"] = new function() {
+	this.init = function(div) {
+	}
+}
 

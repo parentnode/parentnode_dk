@@ -22,14 +22,13 @@ body {}
 
 #content .scene div.categories ul.tags li.selected a,
 #content .scene div.categories ul.tags li.selected:before {color: #034769;}
+#content .scene div.comments.open h2 {color: #63add0;}
 
 #footer {border-color: #cccccc;}
 #footer a {color: #63add0;}
 
 .terms_notification {background-color: #034769;}
 
-
-#content .scene div.comments.open h2 {color: #034769;}
 
 
 /* LOCAL */

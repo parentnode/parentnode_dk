@@ -428,6 +428,7 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 
 /*s-pages.css*/
 #content .scene ul.info {display: none;}
+#content .post div.article ul.info {display: block;}
 #content .scene.login form {display: none;}
 #content .scene.manifest ul.manifest {padding-top: 25px;}
 #content .scene.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;} 

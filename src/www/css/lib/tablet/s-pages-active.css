@@ -1,7 +1,7 @@
 #content ul.actions input.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #034769;}
+#content ul.actions a.button.primary:active
+#header ul.servicenavigation li.github:hover {background-color: #034769;}
 
-#content .scene .article ul.tags a:active {color: #34cc3d;}
-
-#content .scene div.comments h2:active {color: #34cc3d;}
-#content .scene div.comments h2:active svg.arrow line {stroke: #34cc3d;}
+#content .scene .article ul.tags a:active {color: #63add0;}
+#content .scene div.comments h2:active {color: #63add0;}
+#content .scene div.comments h2:active svg.arrow line {stroke: #63add0;}

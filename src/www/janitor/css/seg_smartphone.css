@@ -846,3 +846,8 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.defaultNew > form .actions li {padding: 0 5px 10px;}
 
 
+
+/*s-content.css*/
+.awstats #content .scene h1 {padding-bottom: 74px; border-bottom: 1px solid #bbbbbb;}
+.awstats #content .scene ul {padding: 30px;}
+.awstats #content .scene ul li {display: block; font-size: 15px; padding: 0 0 7px;}

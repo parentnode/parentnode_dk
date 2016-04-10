@@ -9,7 +9,7 @@ Util.Objects["page"] = new function() {
 
 		// show parentnode comment in console
 		u.bug_force = true;
-		u.bug("think.dk is built using Manipulator, Janitor and Detector");
+		u.bug("This site is built using Manipulator, Janitor and Detector");
 		u.bug("Visit http://parentnode.dk for more information");
 		u.bug("Free lunch for new contributers ;-)");
 		u.bug_force = false;

@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-04-10 17:45:21
+js-merged @ 2016-04-10 17:55:21
 */
 
 /*seg_desktop_light_include.js*/
@@ -3733,7 +3733,7 @@ Util.Objects["page"] = new function() {
 	this.init = function(page) {
 		window.page = page;
 		u.bug_force = true;
-		u.bug("think.dk is built using Manipulator, Janitor and Detector");
+		u.bug("This site is built using Manipulator, Janitor and Detector");
 		u.bug("Visit http://parentnode.dk for more information");
 		u.bug("Free lunch for new contributers ;-)");
 		u.bug_force = false;

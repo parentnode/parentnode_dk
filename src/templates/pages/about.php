@@ -26,7 +26,6 @@
 		</ul>
 
 		<div class="articlebody" itemprop="articleBody">
-
 			<h2>
 				On the first day there was HTML. The backend wasn't made until years later. God was clearly busy browsing
 				the internet.

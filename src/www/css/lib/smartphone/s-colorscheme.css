@@ -12,6 +12,8 @@ body {}
 #header .servicenavigation li.navigation div {background: #63add0;}
 #header .servicenavigation li.navigation.open div {background: #034769;}
 #navigation ul li {color: #63add0;}
+#navigation ul li.admin,
+#navigation ul li.user {border-color: #034769}
 
 #content .scene a,
 #content .scene dl.geo.active dd {color: #63add0;}

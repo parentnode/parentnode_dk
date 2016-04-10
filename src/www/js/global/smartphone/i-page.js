@@ -237,6 +237,13 @@ Util.Objects["page"] = new function() {
 				page.fN.removeChild(page.fN.service);
 			}
 
+			// append header servicenavigation to header servicenavigation
+			if(page.hN.service) {
+				nodes = u.qsa("li:not(.navigation)", page.hN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ae(page.nN.list, node);
+				}
+			}
 
 			var i, node, nodes;
 			// enable animation on submenus and logo

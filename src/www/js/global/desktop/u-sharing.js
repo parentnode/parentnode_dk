@@ -3,6 +3,7 @@ u.injectSharing = function(node) {
 
 	// sharing wrapper
 	node.sharing = u.ae(node, "div", {"class":"sharing"});
+	node.sharing.node = node;
 	var ref_point = u.qs("div.comments", node);
 	if(ref_point) {
 		node.sharing = node.insertBefore(node.sharing, ref_point);
@@ -10,9 +11,9 @@ u.injectSharing = function(node) {
 
 	node.h3_share = u.ae(node.sharing, "h3", {"html":u.txt["share"]})
 	node.p_share = u.ae(node.sharing, "p", {"html":node.hardlink})
-	u.e.click(node.p_share);
-	node.p_share.clicked = function() {
-		u.selectText(this);
+	u.e.click(node.sharing);
+	node.sharing.clicked = function() {
+		u.selectText(this.node.p_share);
 	}
 
 	// create base svg (base sharing icon)

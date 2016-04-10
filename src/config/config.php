@@ -19,6 +19,8 @@ define("SITE_EMAIL", "info@parentnode.dk");
 * Optional constants
 */
 define("DEFAULT_PAGE_DESCRIPTION", "");
+define("DEFAULT_PAGE_IMAGE", "/img/logo-large.png");
+
 define("DEFAULT_LANGUAGE_ISO", "EN");
 define("DEFAULT_COUNTRY_ISO", "DK");
 

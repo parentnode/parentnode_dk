@@ -5,9 +5,7 @@
 	/*background: transparent url(http://parentnode.local/img/temp-input.png) repeat-y top left;*/
 }
 #content fieldset {border: none; display: block;}
-#content .field {padding: 0 18px 15px; position: relative; font-size: 0; z-index: 1;
-	margin-left: 18px;
-}
+#content .field {padding: 0 18px 10px; position: relative; font-size: 0; z-index: 1;}
 
 
 /* INLINE LABELS */
@@ -19,10 +17,14 @@
 #content .field select,
 #content .field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
 
-#content .field input {width: 100%; height: 24px; padding: 2px 6px;
-	margin-left: -16px;
+#content .field input {width: calc(100% - 18px); height: 24px; padding: 2px 6px;
+/*	margin-left: -16px;*/
 }
-#content .field select {width: 100%; height: 33px; color: #333333; padding: 5px 3px 2px 2px;}
+#content .field input::-ms-clear, #content .field textarea::-ms-clear {
+	display: none;
+}
+
+#content .field select {width: calc(100% - 24px); height: 33px; color: #333333; padding: 5px 3px 2px 2px;}
 #content .field select option {padding: 5px 3px 2px 6px;}
 /* SET BACKGROUND IMAGE FOR WEBKIT SELECTS */
 @media all and (-webkit-min-device-pixel-ratio:0) {
@@ -32,9 +34,9 @@
 	}
 }
 
-#content .field textarea {width: 100%; height: 100px; overflow: auto; padding: 6px 0 2px 6px;}
+#content .field textarea {width: calc(100% - 18px); height: 100px; overflow: auto; padding: 6px 6px 2px 6px;}
 #content .field.short textarea {height: 40px;}
-#content .field textarea.autoexpand {width: 100%; padding: 6px 6px 2px; overflow: hidden;}
+#content .field textarea.autoexpand {width: calc(100% - 24px); padding: 6px 6px 2px; overflow: hidden;}
 
 /* PSEUDO LABEL - FAKE PLACEHOLDER FOR INTERGER AND NUMBER INPUTS */
 #content .field .pseudolabel {position: absolute; font-size: 14px; display: inline-block; padding: 5px 6px; z-index: 2;}
@@ -87,9 +89,8 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 
 
 /* FOCUS */
-#content .field.focus {margin-left: 18px;}
 #content .field.focus input,
-#content .field.focus textarea {margin: 0 0 0 -18px;}
+#content .field.focus textarea {}
 #content .field.focus select {padding: 4px 3px 1px 0px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content .field.focus select {padding: 2px 3px 3px 5px;
@@ -98,7 +99,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 }
 #content .field.focus input,
 #content .field.focus select,
-#content .field.focus textarea {border: 3px solid #5c5c5c;}
+#content .field.focus textarea {border: 3px solid #5c5c5c; margin: 0;}
 
 /* RADIOBUTTONS + CHECKBOX */
 #content .field.radiobuttons.focus input,
@@ -145,14 +146,17 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 
 
 /* ERROR */
-#content .field.error {margin-left: 18px;}
+#content .field.error {
+	
+/*	margin-left: 18px;*/
+}
 
 #content .field.error input,
-#content .field.error textarea {margin: 0 0 0 -18px;}
+#content .field.error textarea {}
 #content .field.error select {padding: 3px 3px 2px 0px;}
 #content .field.error input,
 #content .field.error select,
-#content .field.error textarea {border: 3px solid #a62300;}
+#content .field.error textarea {border: 3px solid #a62300; margin: 0;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content .field.error select {padding: 2px 3px 3px 5px;
 		background-position: 358px -979px;
@@ -180,7 +184,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 	user-select: none;
 }
 
-#content ul.actions input.button {width: auto; height: 28px; padding: 3px 12px; display: inline-block; vertical-align: top; outline: none;
+#content ul.actions input.button {width: auto; height: 28px; padding: 3px 12px; display: inline-block; vertical-align: top; outline: none; border-radius: 0; border: 0;
 	-webkit-appearance: none;
 }
 @media all and (-webkit-min-device-pixel-ratio:0) {
@@ -214,13 +218,11 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 
 
 /* HELP - HINT AND ERROR MESSAGES */
-#content .field div.help {width: 100%; margin-left: -15px;}
+#content .field div.help {width: 100%;}
 #content .field.files div.help {left: 404px;}
 
 #content .field div.error,
-#content .field div.hint {display: none; padding: 5px; border-radius: 3px; font-size: 12px; margin-top: -3px;
-	width: 100%;
-}
+#content .field div.hint {display: none; box-sizing: border-box; padding: 5px; border-radius: 3px; font-size: 12px; margin: 1px 0 0;}
 
 
 /* HELP - ERRORS */
@@ -228,7 +230,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field.error div.error {display: block;}
 
 /* HELP - HINTS */
-#content .field div.hint {z-index: 9; border: 1px solid #007633; color: #007633; background: #d0f4e0;}
+#content .field div.hint {border: 1px solid #007633; color: #007633; background: #d0f4e0;}
 #content .field.focus div.hint {display: block;}
 
 #content .field.error div.hint {display: none;}

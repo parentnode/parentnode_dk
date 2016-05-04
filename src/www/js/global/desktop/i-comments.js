@@ -124,6 +124,9 @@ Util.Objects["comments"] = new function() {
 				}
 			}
 		}
+		else {
+			u.ae(div, "p", {"html":"Login or signup to comment"})
+		}
 
 
 		// initalize existing comments

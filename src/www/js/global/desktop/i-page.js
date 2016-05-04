@@ -57,7 +57,7 @@ Util.Objects["page"] = new function() {
 
 
 		// global resize handler 
-		page.resized = function() {
+		page.resized = function(event) {
 //			u.bug("page resized")
 
 			page.browser_h = u.browserH();
@@ -65,6 +65,8 @@ Util.Objects["page"] = new function() {
 
 			// adjust content height
 			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
+
+//			u.bug("page.cN.offsetHeight:" + page.cN.offsetHeight)
 
 			u.as(page.cN, "min-height", "auto", false);
 			if(page.available_height >= page.cN.offsetHeight) {
@@ -79,15 +81,20 @@ Util.Objects["page"] = new function() {
 			}
 
 
+			// u.bug(page.cN + "&&" + page.cN.scene + "&&" + (page.cN.scene ? typeof(page.cN.scene.resized) : "undefined"));
+			// if(page.cN.scene) {
+			// 	u.bug(u.nodeId(page.cN.scene));
+			// }
+
 			// forward resize event to current scene
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
-				page.cN.scene.resized();
+				page.cN.scene.resized(event);
 			}
 
 		}
 
 		// global scroll handler 
-		page.scrolled = function() {
+		page.scrolled = function(event) {
 
 			page.scrolled_y = u.scrollY();
 
@@ -133,7 +140,7 @@ Util.Objects["page"] = new function() {
 
 			// forward scroll event to current scene
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
-				page.cN.scene.scrolled();
+				page.cN.scene.scrolled(event);
 			}
 
 		}
@@ -168,9 +175,15 @@ Util.Objects["page"] = new function() {
 			// show terms notification
 			if(u.terms_version && !u.getCookie(u.terms_version)) {
 
+				var terms_link = u.qs("li.terms a");
+				if(terms_link && terms_link.href) {
+					
+				}
+				u.bug("terms_link:" + terms_link.href)
+
 				var terms = u.ie(document.body, "div", {"class":"terms_notification"});
-				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
-				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
+				u.ae(terms, "h3", {"html":u.stringOr(u.txt["terms-headline"], "We love <br />cookies and privacy")});
+				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":u.stringOr(u.txt["terms-accept"], "Accept")});
 				bn_accept.terms = terms;
 				u.ce(bn_accept);
 				bn_accept.clicked = function() {
@@ -178,8 +191,8 @@ Util.Objects["page"] = new function() {
 					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
 				}
 
-				if(!location.href.match(/\/terms\//)) {
-					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
+				if(!location.href.match(terms_link.href)) {
+					var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_link.href});
 					u.ce(bn_details, {"type":"link"});
 				}
 

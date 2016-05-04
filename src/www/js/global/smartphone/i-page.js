@@ -48,7 +48,6 @@ Util.Objects["page"] = new function() {
 
 			// adjust content height
 			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
-
 			u.as(page.cN, "min-height", "auto", false);
 			if(page.available_height >= page.cN.offsetHeight) {
 				u.as(page.cN, "min-height", page.available_height+"px", false);

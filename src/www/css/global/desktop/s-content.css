@@ -292,4 +292,4 @@
 #content .scene.login form {padding-bottom: 20px;}
 
 /* ERROR MESSAGES */
-#content .errormessage {color: #df0000;}
+#content .scene p.errormessage {color: #df0000;}

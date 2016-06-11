@@ -12,9 +12,13 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?
+// Platform PAGE
+$item = $IC->getItem(array("tags" => "page:platform"));
+?>
 	<url>
 		<loc><?= SITE_URL ?>/</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/front.php")) ?></lastmod>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
@@ -36,6 +40,16 @@ foreach($items as $item):
 		<priority>1</priority>
 	</url>
 <? endforeach; ?>
+<?
+// Platform PAGE
+$item = $IC->getItem(array("tags" => "page:tools"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/tools</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
 	<url>
 		<loc><?= SITE_URL ?>/manifest</loc>
 		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/manifest.php")) ?></lastmod>

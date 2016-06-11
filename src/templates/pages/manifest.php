@@ -149,7 +149,7 @@
 				<li>
 					<h3>Make yourself proud</h3>
 					<p>
-						Because in the end you are the one staring back from the mirror. If something makes you embassed,
+						Because in the end you are the one staring back from the mirror. If something makes you embarrassed,
 						you should stop doing it right now.
 					</p>
 				</li>

@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-04-10 17:55:21
+js-merged @ 2016-06-11 23:53:48
 */
 
 /*seg_mobile_include.js*/
@@ -3658,6 +3658,9 @@ u.txt["read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
+u.txt["terms-headline"] = "We love <br />cookies and privacy";
+u.txt["terms-accept"] = "Accept";
+u.txt["terms-details"] = "Details";
 
 /*u-googleanalytics.js*/
 if(u.ga_account) {

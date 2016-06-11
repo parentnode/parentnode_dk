@@ -4311,12 +4311,18 @@ Util.Objects["collapseHeader"] = new function() {
 				this.div._toggle_is_closed = false;
 				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true});
 				u.addCollapseArrow(this);
+				if(typeof(this.div.headerExpanded) == "function") {
+					this.div.headerExpanded();
+				}
 			}
 			else {
 				u.as(this.div, "height", this.offsetHeight+"px");
 				this.div._toggle_is_closed = true;
 				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true});
 				u.addExpandArrow(this);
+				if(typeof(this.div.headerCollapsed) == "function") {
+					this.div.headerCollapsed();
+				}
 			}
 		}
 		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true});
@@ -4325,6 +4331,9 @@ Util.Objects["collapseHeader"] = new function() {
 		}
 		else {
 			u.addCollapseArrow(div._toggle_header);
+			if(typeof(div.headerExpanded) == "function") {
+				div.headerExpanded();
+			}
 		}
 	}
 }
@@ -4354,7 +4363,6 @@ u.defaultFilters = function(div) {
 		for(j = 0; text_node = text_nodes[j]; j++) {
 			node._c += u.text(text_node).toLowerCase() + ";"; 
 		}
-		u.bug("c:" + node._c)
 	}
 	var tags = u.qsa("li.tag", div.list);
 	if(tags) {
@@ -4381,8 +4389,6 @@ u.defaultFilters = function(div) {
 					this._filter.selected_tags.push(this.tag);
 					u.ac(this, "selected");
 				}
-				u.bug("pre filter")
-				u.xInObject(this._filter.selected_tags);
 				this._filter.form.updated();
 			}
 		}
@@ -4402,7 +4408,6 @@ u.defaultFilters = function(div) {
 		if(this.selected_tags.length) {
 			var regex = new RegExp("("+this.selected_tags.join(";|")+";)", "g");
 			var match = node._c.match(regex);
-			u.bug("match:" + match + ", " + "("+this.selected_tags.join(";|")+";)")
 			if(!match || match.length != this.selected_tags.length) {
 				return false;
 			}
@@ -8052,7 +8057,7 @@ Util.Objects["page"] = new function() {
 	this.init = function(page) {
 		window.page = page;
 		u.bug_force = true;
-		u.bug("This is built using Manipulator, Janitor and Detector");
+		u.bug("This site is built using Manipulator, Janitor and Detector");
 		u.bug("Visit http://parentnode.dk for more information");
 		u.bug("Free lunch for new contributers ;-)");
 		u.bug_force = false;
@@ -8210,39 +8215,44 @@ Util.Objects["page"] = new function() {
 			var sections = u.qsa("ul.navigation > li", page.nN);
 			if(sections) {
 				for(i = 0; section = sections[i]; i++) {
-					section.nodes = u.qsa("li", section);
-					if(section.nodes.length) {
-						for(j = 0; node = section.nodes[j]; j++) {
-							u.ce(node, {"type":"link"});
-							if(u.hc(node, document.body.className)) {
-								u.ac(node, "selected");
+					section.header = u.qs("h3", section);
+					if(section.header) {
+						section.nodes = u.qsa("li", section);
+						if(section.nodes.length) {
+							for(j = 0; node = section.nodes[j]; j++) {
+								u.ce(node, {"type":"link"});
+								if(u.hc(node, document.body.className)) {
+									u.ac(node, "selected");
+								}
+							}
+							if(section.header) {
+								section.header.section = section;
+								u.e.click(section.header);
+								section.header.clicked = function() {
+									if(this.section.is_open) {
+										this.section.is_open = false;
+										u.as(this.section, "height", this.offsetHeight+"px");
+										u.saveNodeCookie(this.section, "open", 0, {"ignore_classvars":true});
+										u.addExpandArrow(this);
+										page.nN.list.updateDragBoundaries();
+									}
+									else {
+										this.section.is_open = true;
+										u.as(this.section, "height", "auto");
+										u.saveNodeCookie(this.section, "open", 1, {"ignore_classvars":true});
+										u.addCollapseArrow(this);
+										page.nN.list.updateDragBoundaries();
+									}
+								}
+								var state = u.getNodeCookie(section, "open", {"ignore_classvars":true});
+								if(!state) {
+									section.is_open = true;
+								}
+								section.header.clicked();
 							}
 						}
-						section.header = u.qs("h3", section);
-						if(section.header) {
-							section.header.section = section;
-							u.e.click(section.header);
-							section.header.clicked = function() {
-								if(this.section.is_open) {
-									this.section.is_open = false;
-									u.as(this.section, "height", this.offsetHeight+"px");
-									u.saveNodeCookie(this.section, "open", 0, {"ignore_classvars":true});
-									u.addExpandArrow(this);
-									page.nN.list.updateDragBoundaries();
-								}
-								else {
-									this.section.is_open = true;
-									u.as(this.section, "height", "auto");
-									u.saveNodeCookie(this.section, "open", 1, {"ignore_classvars":true});
-									u.addCollapseArrow(this);
-									page.nN.list.updateDragBoundaries();
-								}
-							}
-							var state = u.getNodeCookie(section, "open", {"ignore_classvars":true});
-							if(!state) {
-								section.is_open = true;
-							}
-							section.header.clicked();
+						else {
+							u.ac(section, "empty");
 						}
 					}
 					else {
@@ -8460,7 +8470,12 @@ Util.Objects["defaultNew"] = new function() {
 		form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success" && response.cms_object) {
-					location.href = this.action.replace("\/save", "/edit/"+response.cms_object.item_id);
+					if(this.action.match(/\/save/)) {
+						location.href = this.action.replace("\/save", "/edit/"+response.cms_object.item_id);
+					}
+					else if(this.actions["cancel"]) {
+						this.actions["cancel"].clicked();
+					}
 				}
 				else {
 					page.notify(response);
@@ -9898,7 +9913,22 @@ Util.Objects["newslettersProfile"] = new function() {
 		}
 	}
 }
-
+Util.Objects["resetPassword"] = new function() {
+	this.init = function(form) {
+		u.f.init(form);
+		form.submitted = function() {
+			this.response = function(response) {
+				if(response.cms_status == "success") {
+					location.href = "/login";
+				}
+				else {
+					page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Password could not be updated"});
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+		}
+	}
+}
 
 
 /*i-form.js*/

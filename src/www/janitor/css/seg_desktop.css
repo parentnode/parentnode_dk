@@ -71,6 +71,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #navigation > ul.navigation h3:hover {color: #ffffff;}
 #navigation > ul.navigation ul {}
 #navigation > ul.navigation ul li {padding-left: 20px; border-top: 1px solid #404a56;}
+#navigation > ul.navigation > li.empty {display: none;}
 #navigation li.selected a {padding-left: 35px; color: #ffffff;}
 
 
@@ -258,10 +259,16 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field.location.error input.error {margin: 0; border: 3px solid #f8c9bb;}
 #content .field.files.error {border-color: #f8c9bb;}
 #content ul.actions {padding: 0 25px;}
-#content ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 10px; vertical-align: top;}
+#content ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 10px; vertical-align: top;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
 #content ul.actions input.button {width: auto; height: 26px; padding: 3px 10px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	#content ul.actions input.button {padding-bottom: 4px;}
+	#content ul.actions input.button {padding-bottom: 4px;
+		-webkit-appearance: none;
+	}
 }
 #content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 5px 12px 7px;}
 #content ul.actions input.button,
@@ -485,11 +492,12 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.userEdit > div.usernames {border-bottom: 1px solid #bbbbbb;}
 #content .scene.userEdit > div.usernames form.email {font-size: 0;}
 #content .scene.userEdit > div.usernames form.mobile {padding-bottom: 15px; font-size: 0;}
-#content .scene.userEdit > div.usernames .actions {text-align: left; width: calc(25% - 10px); display: inline-block; vertical-align: top; padding: 21px 0 9px;}
+#content .scene.userEdit > div.usernames .actions {text-align: left; display: inline-block; vertical-align: top; padding: 4px 0;}
 #content .scene.userEdit > div.usernames .actions li {padding: 0;}
-#content .scene.userEdit > div.usernames .actions li input.button {height: 28px; padding-top: 6px;}
-#content .scene.userEdit > div.usernames fieldset {display: inline-block; vertical-align: top; width: calc(75% - 10px);}
+#content .scene.userEdit > div.usernames .actions li input.button {padding-top: 4px;}
+#content .scene.userEdit > div.usernames fieldset {display: inline-block; vertical-align: top;}
 #content .scene.userEdit > div.usernames fieldset .field {padding-right: 5px;}
+#content .scene.userEdit > div.usernames fieldset .field input {width: 250px;}
 #content .scene.userEdit > div.password {border-bottom: 1px solid #bbbbbb;}
 #content .scene.userEdit > div.password div.password_state {}
 #content .scene.userEdit > div.password div.password_state a {text-decoration: underline;}
@@ -499,7 +507,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.userEdit > div.password div.password_state.set .password_set {display: block;}
 #content .scene.userEdit > div.password div.new_password {display: none;}
 #content .scene.userEdit > div.password .actions {text-align: left;}
-#content .scene.userEdit > div.password .actions li {padding: 0 5px 25px 0;}
+#content .scene.userEdit > div.password .actions li {padding: 0 5px 25px;}
 #content .scene.userEdit > div.apitoken {border-bottom: 1px solid #bbbbbb;}
 #content .scene.userEdit > div.apitoken form {display: inline-block; vertical-align: top; padding-bottom: 15px;}
 #content .scene.userEdit > div.apitoken form.renew ul.actions {padding-right: 0;}
@@ -604,7 +612,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content div.disabled_items > p {padding-top: 20px;}
 #content div.all_items > h2 + ul.items,
 #content div.all_items > p + ul.items {border-top: 1px solid #dedede;}
-#content div.all_items ul.items > li {display: block; position: relative; border-bottom: 1px solid #dedede;}
+#content div.all_items ul.items > li {display: block; position: relative; border-bottom: 1px solid #dedede; overflow: hidden;}
 #content div.all_items ul.items > li:hover {background-color: #edf0f2;}
 #content div.all_items ul.items > li h3 {padding: 10px 250px 10px 30px;}
 #content div.all_items.images ul.items > li {background-repeat: no-repeat; background-position: 0px center;}
@@ -780,7 +788,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.wishList div.wishlists {padding: 0 0 50px; border-bottom: 1px solid #aaaaaa;}
 #content .scene.wishList ul.items > li dl dt.reserved {display: none;}
 #content .scene.wishList ul.items > li dl dd.reserved {font-size: 14px;}
-
+#content .scene.eventList ul.items > li.past {background: #dddddd;}
 
 
 /*s-content.css*/

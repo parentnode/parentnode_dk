@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-04-10 17:55:20
+js-merged @ 2016-06-11 23:53:48
 */
 
 /*seg_desktop_include.js*/
@@ -4368,6 +4368,9 @@ u.txt["read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
+u.txt["terms-headline"] = "We love <br />cookies and privacy";
+u.txt["terms-accept"] = "Accept";
+u.txt["terms-details"] = "Details";
 
 /*u-googleanalytics.js*/
 if(u.ga_account) {
@@ -6323,7 +6326,7 @@ Util.Objects["page"] = new function() {
 		page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
 		page.style_tag.sheet.insertRule("#header a.logo {}", 0);
 		page.logo.css_rule = page.style_tag.sheet.cssRules[0];
-		page.resized = function() {
+		page.resized = function(event) {
 			page.browser_h = u.browserH();
 			page.browser_w = u.browserW();
 			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
@@ -6338,10 +6341,10 @@ Util.Objects["page"] = new function() {
 				u.rc(page, "fixed");
 			}
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
-				page.cN.scene.resized();
+				page.cN.scene.resized(event);
 			}
 		}
-		page.scrolled = function() {
+		page.scrolled = function(event) {
 			page.scrolled_y = u.scrollY();
 			if(page.scrolled_y < page.logo.top_offset) {
 				page.logo.is_reduced = false;
@@ -6366,7 +6369,7 @@ Util.Objects["page"] = new function() {
 				page.nN.css_rule.style.setProperty("top", (page.nN.top_offset-page.nN.top_offset_gap)+"px", "important");
 			}
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
-				page.cN.scene.scrolled();
+				page.cN.scene.scrolled(event);
 			}
 		}
 		page.ready = function() {
@@ -6380,23 +6383,26 @@ Util.Objects["page"] = new function() {
 		}
 		page.acceptCookies = function() {
 			if(u.terms_version && !u.getCookie(u.terms_version)) {
-				var terms = u.ie(document.body, "div", {"class":"terms_notification"});
-				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
-				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
-				bn_accept.terms = terms;
-				u.ce(bn_accept);
-				bn_accept.clicked = function() {
-					this.terms.parentNode.removeChild(this.terms);
-					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+				var terms_link = u.qs("li.terms a");
+				if(terms_link && terms_link.href) {
+					var terms = u.ie(document.body, "div", {"class":"terms_notification"});
+					u.ae(terms, "h3", {"html":u.stringOr(u.txt["terms-headline"], "We love <br />cookies and privacy")});
+					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":u.stringOr(u.txt["terms-accept"], "Accept")});
+					bn_accept.terms = terms;
+					u.ce(bn_accept);
+					bn_accept.clicked = function() {
+						this.terms.parentNode.removeChild(this.terms);
+						u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					}
+					if(!location.href.match(terms_link.href)) {
+						var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_link.href});
+						u.ce(bn_details, {"type":"link"});
+					}
+					u.a.transition(terms, "all 0.5s ease-in");
+					u.ass(terms, {
+						"opacity": 1
+					});
 				}
-				if(!location.href.match(/\/terms\//)) {
-					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
-					u.ce(bn_details, {"type":"link"});
-				}
-				u.a.transition(terms, "all 0.5s ease-in");
-				u.ass(terms, {
-					"opacity": 1
-				});
 			}
 		}
 		page.initNavigation = function() {
@@ -6418,6 +6424,7 @@ Util.Objects["page"] = new function() {
 				u.ce(node, {"type":"link"});
 				u.e.hover(node);
 				node.over = function() {
+					u.a.transition(this, "none");
 					this.transitioned = function() {
 						this.transitioned = function() {
 							this.transitioned = function() {
@@ -6429,10 +6436,16 @@ Util.Objects["page"] = new function() {
 						u.a.transition(this, "all 0.1s ease-in-out");
 						u.a.scale(this, 1.15);
 					}
-					u.a.transition(this, "all 0.1s ease-in-out");
-					u.a.scale(this, 1.22);
+					if(this._scale != 1.22) {
+						u.a.transition(this, "all 0.1s ease-in-out");
+						u.a.scale(this, 1.22);
+					}
+					else {
+						this.transitioned();
+					}
 				}
 				node.out = function() {
+					u.a.transition(this, "none");
 					this.transitioned = function() {
 						this.transitioned = function() {
 							u.a.transition(this, "none");
@@ -6440,8 +6453,13 @@ Util.Objects["page"] = new function() {
 						u.a.transition(this, "all 0.1s ease-in");
 						u.a.scale(this, 1);
 					}
-					u.a.transition(this, "all 0.1s ease-in");
-					u.a.scale(this, 0.8);
+					if(this._scale != 0.8) {
+						u.a.transition(this, "all 0.1s ease-in");
+						u.a.scale(this, 0.8);
+					}
+					else {
+						this.transitioned();
+					}
 				}
 			}
 			if(page.hN.service) {
@@ -6828,6 +6846,9 @@ Util.Objects["comments"] = new function() {
 					u.as(this.div.actions, "display", "");
 				}
 			}
+		}
+		else {
+			u.ae(div, "p", {"html":"Login or signup to comment"})
 		}
 		var i, node;
 		for(i = 0; node = div.comments[i]; i++) {

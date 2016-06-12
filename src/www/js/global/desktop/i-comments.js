@@ -125,7 +125,7 @@ Util.Objects["comments"] = new function() {
 			}
 		}
 		else {
-			u.ae(div, "p", {"html":"Login or signup to comment"})
+			u.ae(div, "p", {"html": (u.txt["login_to_comment"] ? u.txt["login_to_comment"] : "Login or signup to comment")});
 		}
 
 

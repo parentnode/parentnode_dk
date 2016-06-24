@@ -181,6 +181,9 @@
 
 /* RELATED */
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
+#content .scene div.related h2 a {font-size: 10px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
 
 
 /* SHARING */
@@ -233,6 +236,16 @@
 #content .scene div.comments ul.comments > li ul.info li.user:after {content: ",\00a0";}
 #content .scene div.comments ul.comments > li p.comment {padding-bottom: 15px; font-size: 13px;}
 #content .scene div.comments .field {padding-bottom: 10px;}
+
+
+
+/* OFFER */
+#content .scene dl.offer {font-size: 0; padding: 0;}
+#content .scene dl.offer dt {display: none;}
+#content .scene dl.offer .url {display: none;}
+#content .scene dl.offer dd {font-size: 11px; width: auto; display: inline-block; vertical-align: top;}
+#content .scene dl.offer dd.currency:after {content: "\00a0";}
+
 
 
 /* CODE AND TYPECASTING */

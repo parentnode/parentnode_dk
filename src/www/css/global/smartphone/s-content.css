@@ -146,7 +146,7 @@
 
 #content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
 #content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
-#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
+#content .scene ul.articles li.article ul.tags li {color: #cccccc;}
 #content .scene ul.articles li.article h3 {font-size: 20px; line-height: 1em; padding-bottom: 10px;
 	font-family: "PT Serif", Times, serif;
 }
@@ -156,16 +156,29 @@
 #content .scene div.article {padding-bottom: 30px;}
 #content .scene div.article h2 br {display: none;}
 #content .scene div.article ul.tags {padding-bottom: 20px;}
+/*
+#content .scene div.article ul.tags li,
 #content .scene div.article ul.tags a {color: #dedede;}
-
+*/
 
 /* RELATED */
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
+#content .scene div.related h2 a {font-size: 11px; display: inline-block; vertical-align: middle;
+	font-family: "OpenSans";
+}
 
 
 /* COMMENTS */
 #content .scene div.comments {display: none;}
 #content .scene div.readstate {display: none;}
+
+
+/* OFFER */
+#content .scene dl.offer {font-size: 0; padding: 0;}
+#content .scene dl.offer dt {display: none;}
+#content .scene dl.offer .url {display: none;}
+#content .scene dl.offer dd {font-size: 13px; width: auto; display: inline-block; vertical-align: top; padding: 0;}
+#content .scene dl.offer dd.currency:after {content: "\00a0";}
 
 
 /* CODE AND TYPECASTING */

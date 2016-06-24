@@ -1,7 +1,7 @@
 /* BASE FORM ELEMENTS */
 #content form {}
 #content fieldset {border: none; display: block;}
-#content .field {padding: 0 48px 15px; position: relative; font-size: 0;}
+#content .field {padding: 0 68px 15px; position: relative; font-size: 0;}
 
 
 /* INLINE LABELS */

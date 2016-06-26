@@ -3,6 +3,7 @@ Util.Objects["articleMiniList"] = new function() {
 //		u.bug("articleMiniList");
 
 		list.articles = u.qsa("li.article", list);
+//		list.add_readmore = u.hc(list, "readmore");
 
 		var i, node;
 		for(i = 0; node = list.articles[i]; i++) {
@@ -13,6 +14,21 @@ Util.Objects["articleMiniList"] = new function() {
 			if(header.current_readstate) {
 				u.addCheckmark(header);
 			}
+
+// 			// does header have link?
+// 			link = u.qs("a", header);
+//
+// 			// should node be extended with readmore link
+// 			u.bug(list.add_readmore + "; " + link)
+// 			if(list.add_readmore && link) {
+// //				var anchor_point = u.qs(".description p", node)
+// //				u.ae(anchor_point, "a", {"href":link.href, "html":" "+u.txt["readmore"]});
+//
+// 				ul = u.ae(node, "ul", {"class":"actions"});
+// 				li = u.ae(ul, "li", {"class":"readmore"});
+// 				u.ae(li, "a", {"href":link.href, "html":" "+u.txt["readmore"]});
+//
+// 			}
 
 		}
 

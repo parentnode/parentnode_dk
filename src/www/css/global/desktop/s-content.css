@@ -171,6 +171,8 @@
 #content .scene ul.articles li.article h3 {font-size: 22px; line-height: 1em; padding-bottom: 10px;
 	font-family: "PT Serif", Times, serif;
 }
+#content .scene ul.articles li.article ul.actions {margin-top: -10px;}
+#content .scene ul.articles li.article ul.actions li {padding-bottom: 0;}
 
 
 /*#content .scene ul.articles li.article p {font-size: 13px; color: #888888;}*/
@@ -181,7 +183,8 @@
 
 /* RELATED */
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
-#content .scene div.related h2 a {font-size: 10px; display: inline-block; vertical-align: middle;
+#content .scene div.related h2 {padding-bottom: 15px;}
+#content .scene div.related h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
 

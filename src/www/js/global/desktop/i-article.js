@@ -121,7 +121,7 @@ Util.Objects["article"] = new function() {
 
 		// INIT SHARING
 		var hardlink = u.qs("li.main_entity.share", article);
-		article.hardlink = hardlink ? hardlink.innerHTML : false;
+		article.hardlink = hardlink ? (hardlink.hasAttribute("content") ? hardlink.getAttribute("content") : hardlink.innerHTML) : false;
 		if(article.hardlink && typeof(u.injectSharing) == "function") {
 
 			// Correct scroll offset - callback

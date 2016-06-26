@@ -163,7 +163,8 @@
 
 /* RELATED */
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
-#content .scene div.related h2 a {font-size: 11px; display: inline-block; vertical-align: middle;
+#content .scene div.related h2 {padding-bottom: 15px;}
+#content .scene div.related h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
 

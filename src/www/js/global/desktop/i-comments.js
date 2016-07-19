@@ -67,7 +67,7 @@ Util.Objects["comments"] = new function() {
 				this.div.form.div = div;
 
 				u.ae(this.div.form, "input", {"type":"hidden","name":"csrf-token", "value":this.div.csrf_token});
-				u.f.addField(this.div.form, {"type":"text", "name":"comment", "label":u.txt["comment"]});
+				u.f.addField(this.div.form, {"type":"text", "name":"item_comment", "label":u.txt["comment"]});
 				actions = u.ae(this.div.form, "ul", {"class":"actions"});
 
 				bn_add = u.f.addAction(actions, {"value":u.txt["add_comment"], "class":"button primary update", "name":"add"});

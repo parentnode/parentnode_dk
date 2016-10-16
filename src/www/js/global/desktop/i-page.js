@@ -162,10 +162,18 @@ Util.Objects["page"] = new function() {
 				// set scroll handler
 				u.e.addEvent(window, "scroll", page.scrolled);
 
+
+				u.notifier(this);
+
+
 				this.initNavigation();
 
 				this.resized();
 
+				u.a.transition(page.fN, "all 0.5s ease-in");
+				u.ass(page.fN, {
+					"opacity":1
+				})
 			}
 		}
 

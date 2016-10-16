@@ -72,3 +72,13 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 .terms_notification .accept {float: left;}
 .terms_notification .details {float: right;}
 
+
+#page #notifications {
+	position: fixed;
+	z-index: 110;
+	top: 0;
+	width: 200px; left: 50%; margin-left: -100px;
+	background: #333333; color: #ffffff;
+}
+#page #notifications div {padding: 10px 20px; color: #ffffff;}
+#page #notifications .error {background: #df0000;}

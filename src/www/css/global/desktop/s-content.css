@@ -1,7 +1,6 @@
 #content {position: relative;}
 #content .scene {position: relative; padding: 50px 0 75px;}
 
-
 /* BASIC CONTENT */
 #content .scene .link {cursor: pointer;}
 #content .scene a {color: #888888;}
@@ -41,14 +40,14 @@
 
 /* ITEMS */
 #content .scene ul.items {padding: 0;}
-#content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede;}
+#content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede; position: relative;}
 #content .scene ul.items li.item h2 {position: relative; z-index: 1;}
 
 
 
 /* DEFINITION LIST */
 #content .scene dl {padding: 0 70px 15px; width: 500px;}
-#content .scene dt {width: 100px; text-align: right; padding: 0 5px 0 0; color: #999999;} 
+#content .scene dt {width: 100px; text-align: right; padding: 0 5px 6px 0; color: #999999;} 
 #content .scene dt:after {content: ":";}
 /* one px off dd width, to support Androids */
 #content .scene dd {padding: 0 0 6px; width: 394px;}
@@ -313,6 +312,7 @@
 
 /* LOGIN */
 #content .scene.login form {padding-bottom: 20px;}
+#content .scene form li.forgot {padding-top: 5px;}
 
 /* ERROR MESSAGES */
-#content .scene p.errormessage {color: #df0000;}
+#content .scene div.messages > p.error {color: #df0000;}

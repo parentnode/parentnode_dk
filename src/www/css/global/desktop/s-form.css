@@ -53,6 +53,18 @@
 #content .field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
 #content .field.radiobuttons div.item label {font-size: 14px; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
 
+/* REMOVE SPINNER FROM NUMBER */
+#content .field input[type="integer"],
+#content .field input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+#content .field input[type="integer"]::-webkit-inner-spin-button,
+#content .field input[type="integer"]::-webkit-outer-spin-button,
+#content .field input[type="number"]::-webkit-inner-spin-button,
+#content .field input[type="number"]::-webkit-outer-spin-button {margin: 0;
+	-webkit-appearance: none;
+}
 
 /* FILES */
 #content .field.files {border: 3px dashed #dedede; display: block; width: 378px; border-radius: 5px; position: relative; margin: 2px 68px 17px; padding: 0;}

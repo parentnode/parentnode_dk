@@ -14,7 +14,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 	<h1>bLog</h1>
 	<p>
 		Tech stuff all over. It's not really a Blog. <br />
-		You'll figure it out, otherwise read the <a href="http://google.com?q=manual" target="_blank">manual</a>.
+		You'll figure it out, otherwise read the <a href="http://google.com/search?q=manual" target="_blank">manual</a>.
 	</p>
 
 

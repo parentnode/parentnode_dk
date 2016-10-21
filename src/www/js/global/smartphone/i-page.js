@@ -103,6 +103,10 @@ Util.Objects["page"] = new function() {
 				// set orientation change handler
 				u.e.addEvent(window, "orientationchange", page.orientationchanged);
 
+
+				u.notifier(this);
+
+
 				this.initNavigation();
 
 				this.resized();
@@ -290,6 +294,9 @@ Util.Objects["page"] = new function() {
 			// get clean set of navigation nodes (for animation on open and close)
 			page.nN.nodes = u.qsa("li", page.nN.list);
 
+			u.ass(page.hN.service, {
+				"opacity":1
+			})
 		}
 
 

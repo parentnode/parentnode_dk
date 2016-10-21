@@ -9,7 +9,7 @@
 
 
 /* INLINE LABELS */
-#content label {display: none;}
+#content label {display: block; padding: 0 0 0 3px; font-size: 10px;}
 
 
 /* BASIC FORM INPUTS */
@@ -24,8 +24,8 @@
 	display: none;
 }
 
-#content .field select {width: calc(100% - 24px); height: 33px; color: #333333; padding: 5px 3px 2px 2px;}
-#content .field select option {padding: 5px 3px 2px 6px;}
+#content .field select {width: calc(100% - 2px); height: 30px; color: #333333; padding: 2px 3px 2px 2px;}
+#content .field select option {padding: 2px 3px 2px 6px;}
 /* SET BACKGROUND IMAGE FOR WEBKIT SELECTS */
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content .field select {width: 100%; height: 31px; padding: 2px 3px 2px 7px; 
@@ -60,6 +60,20 @@
 #content .field.radiobuttons div.item label {font-size: 14px; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
 
 
+/* REMOVE SPINNER FROM NUMBER */
+#content .field input[type="integer"],
+#content .field input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+#content .field input[type="integer"]::-webkit-inner-spin-button,
+#content .field input[type="integer"]::-webkit-outer-spin-button,
+#content .field input[type="number"]::-webkit-inner-spin-button,
+#content .field input[type="number"]::-webkit-outer-spin-button {margin: 0;
+	-webkit-appearance: none;
+}
+
+
 /* FILES */
 #content .field.files {border: 3px dashed #dedede; display: block; width: 378px; border-radius: 5px; position: relative; margin: 2px 18px 17px; padding: 0;}
 #content .field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;}
@@ -91,7 +105,9 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 /* FOCUS */
 #content .field.focus input,
 #content .field.focus textarea {}
-#content .field.focus select {padding: 4px 3px 1px 0px;}
+#content .field.focus select {padding: 2px 3px 2px 2px; height: 34px;
+	width: calc(100% - 0px);
+}
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content .field.focus select {padding: 2px 3px 3px 5px;
 		background-position: 358px -979px;
@@ -125,24 +141,25 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 
 
 /* VALIDATION */
-#content .field .indicator {position: absolute; top: 4px; left: 405px; width: 25px; height: 25px;}
+#content .field .indicator {width: 25px; height: 15px; display: inline-block; margin-bottom: -2px;}
 #content .field.required .indicator { 
-	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 0 -292px;
+	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 3px -295px;
 }
-#content .field.text.required .indicator {background-position: 0 -296px;}
+/*#content .field.text.required .indicator {background-position: 0 -296px;}*/
 
 /* RADIOBUTTONS + CHECKBOX */
+/*
 #content .field.radiobuttons .indicator,
 #content .field.checkbox .indicator,
 #content .field.boolean .indicator {top: -5px;}
-
+*/
 /* FILES */
+/*
 #content .field.files .indicator {left: 384px; top: -1px;}
-
+*/
 
 /* CORRECT */
-#content .field.correct .indicator {background-position: 2px -320px;}
-#content .field.text.correct .indicator {background-position: 2px -321px;}
+#content .field.correct .indicator {background-position: 3px -324px;}
 
 
 /* ERROR */

@@ -160,7 +160,7 @@ Util.Objects["article"] = new function() {
 
 						}
 					}
-					u.request(this, this.node.article.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
+					u.request(this, this.node.article.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token+"&item_id"});
 				}
 				// add readstate
 				else {

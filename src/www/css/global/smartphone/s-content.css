@@ -175,11 +175,14 @@
 
 
 /* OFFER */
-#content .scene dl.offer {font-size: 0; padding: 0;}
-#content .scene dl.offer dt {display: none;}
-#content .scene dl.offer .url {display: none;}
-#content .scene dl.offer dd {font-size: 13px; width: auto; display: inline-block; vertical-align: top; padding: 0;}
-#content .scene dl.offer dd.currency:after {content: "\00a0";}
+#content .scene ul.offer,
+#content .scene .articlebody ul.offer {font-size: 0; padding: 0; margin: 0; list-style: none;}
+#content .scene ul.offer li.name,
+#content .scene ul.offer li.currency,
+#content .scene ul.offer li.url {display: none;}
+#content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
+#content .scene ul.offer li.default {text-decoration: line-through;}
+
 
 
 /* CODE AND TYPECASTING */
@@ -226,7 +229,9 @@
 
 /* LOGIN */
 #content .scene.login form {padding-bottom: 20px;}
+#content .scene form li.forgot {padding-top: 5px;}
+
 
 /* ERROR MESSAGES */
-#content .errormessage {color: #df0000;}
+#content .scene div.messages > p.error {color: #df0000;}
 

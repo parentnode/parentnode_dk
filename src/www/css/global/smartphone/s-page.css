@@ -69,3 +69,14 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 .terms_notification .details {float: right;}
 .terms_notification .accept:active,
 .terms_notification .details:active {text-decoration: underline;}
+
+
+#page #notifications {
+	position: fixed;
+	z-index: 110;
+	top: 0;
+	width: 200px; left: 50%; margin-left: -100px;
+	background: #333333; color: #ffffff;
+}
+#page #notifications div {padding: 10px 20px; color: #ffffff;}
+#page #notifications .error {background: #df0000;}

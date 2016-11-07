@@ -219,24 +219,27 @@ Util.Objects["page"] = new function() {
 			var i, node, nodes;
 
 			page.nN.list = u.qs("ul", page.nN);
-			page.nN.list.nodes = u.qsa("li", page.nN.list);
+			if(page.nN.list) {
+				page.nN.list.nodes = u.qsa("li", page.nN.list);
 
-			if(page.nN.list.nodes.length) {
-				// set reducing scope
-				page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
-				page.nN.font_size_gap = page.nN.font_size-14;
-				page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
-				page.nN.top_offset_gap = page.nN.top_offset-10;
+				if(page.nN.list.nodes.length) {
+					// set reducing scope
+					page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
+					page.nN.font_size_gap = page.nN.font_size-14;
+					page.nN.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
+					page.nN.top_offset_gap = page.nN.top_offset-10;
 
-				// create rule for Navigation
-				page.style_tag.sheet.insertRule("#navigation {}", 0);
-				page.nN.css_rule = page.style_tag.sheet.cssRules[0];
+					// create rule for Navigation
+					page.style_tag.sheet.insertRule("#navigation {}", 0);
+					page.nN.css_rule = page.style_tag.sheet.cssRules[0];
 
-				// create rule for Navigation nodes
-				page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
-				page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
-	//			u.bug("cssText:" + page.nN.css_rule.cssText + ", " + u.nodeId(page.nN));
+					// create rule for Navigation nodes
+					page.style_tag.sheet.insertRule("#navigation ul li {}", 0);
+					page.nN.list.css_rule = page.style_tag.sheet.cssRules[0];
+		//			u.bug("cssText:" + page.nN.css_rule.cssText + ", " + u.nodeId(page.nN));
+				}
 			}
+
 
 			// enable navigation link animation where relevant
 			nodes = u.qsa("#navigation li,a.logo", page.hN);

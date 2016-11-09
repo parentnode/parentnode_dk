@@ -8,6 +8,7 @@
 
 #header .servicenavigation li.navigation {}
 #header .servicenavigation li.navigation a {}
+#header .servicenavigation li.login {display: none;}
 #header .servicenavigation li.user {display: none;}
 #header .servicenavigation li.admin {display: none;}
 

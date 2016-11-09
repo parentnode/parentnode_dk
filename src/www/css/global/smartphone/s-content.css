@@ -137,6 +137,7 @@
 #content .scene div.categories ul.tags li.selected a {color: #000000;  display: inline-block; vertical-align: top; }
 #content .scene div.categories ul.actions {padding-bottom: 0;}
 #content .scene div.categories ul.actions li {padding-bottom: 0; font-size: 15px; display: block;}
+#content .scene div.categories + div.categories{padding-top: 25px;}
 
 
 

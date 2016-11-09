@@ -101,7 +101,7 @@
 
 
 /* GEOLOCATION */
-#content .scene dl.geo {position: relative; z-index: 1; padding-bottom: 20px; padding-right: 0; display: inline-block; vertical-align: top; width: auto;}
+#content .scene dl.geo {position: relative; z-index: 1; padding-bottom: 20px; padding-left: 0; display: inline-block; vertical-align: top; width: auto;}
 #content .scene dl.geo .location:before {content: "|\00a0"; color: #dedede;}
 #content .scene dl.geo dd {padding-right: 0; width: auto; font-size: 12px; color: #999999;}
 
@@ -281,6 +281,8 @@
 /* VCARD */
 #content .scene div.vcard.company {margin-top: 65px; border-top: 1px solid #dedede; padding: 0 70px 25px;}
 #content .scene div.vcard.company h2 {margin-top: -65px; padding: 0 0 60px;}
+#content .scene div.vcard.person {margin-top: 65px; border-top: 1px solid #dedede; padding: 0 70px 25px;}
+#content .scene div.vcard.person h2 {margin-top: -65px; padding: 0 0 60px;}
 #content .scene div.vcard dl.info {width: 230px; padding: 0 0 30px; display: inline-block; vertical-align: top;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}

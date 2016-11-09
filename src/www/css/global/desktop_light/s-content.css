@@ -120,7 +120,7 @@
 
 
 /* CATEGORIES */
-#content .scene div.categories {padding-bottom: 5px; display: inline; vertical-align: top; width: 250px;}
+#content .scene div.categories {padding-bottom: 25px; display: block; vertical-align: top;}
 #content .scene div.categories ul {padding-right: 0;}
 #content .scene div.categories ul.tags li {font-size: 14px; padding-bottom: 5px; display: block;}
 #content .scene div.categories ul.tags li.selected a {color: #000000;}

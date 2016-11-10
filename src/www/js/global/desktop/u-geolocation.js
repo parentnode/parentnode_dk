@@ -2,26 +2,31 @@ u.injectGeolocation = function(node) {
 	
 	if(!u.browser("IE", "<=9")) {
 		node.geolocation.node = node;
-//			u.bug("node.geolocation:" + node.geolocation)
+//		u.bug("node.geolocation:" + node.geolocation)
 
-		var dd_longitude = u.qs("dd.longitude", node.geolocation);
-		var dd_latitude = u.qs("dd.latitude", node.geolocation);
+		var li_longitude = u.qs("li.longitude", node.geolocation);
+		var li_latitude = u.qs("li.latitude", node.geolocation);
 
-		if(dd_longitude && dd_latitude) {
-			node.geo_longitude = parseFloat(dd_longitude.innerHTML);
-			node.geo_latitude = parseFloat(dd_latitude.innerHTML);
+		// u.bug("li_longitude:" + li_longitude)
+		// u.bug("li_latitude:" + li_latitude)
+
+		if(li_longitude && li_latitude) {
+			node.geo_longitude = parseFloat(li_longitude.getAttribute("content"));
+			node.geo_latitude = parseFloat(li_latitude.getAttribute("content"));
+
+			// u.bug("geo_longitude:" + node.geo_longitude)
+			// u.bug("geo_latitude:" + node.geo_latitude)
 
 			node.showMap = function() {
 
 				if(!this.geomap) {
 					
 					this.geomap = u.ae(this, "div", {"class":"geomap"});
-					this.insertBefore(this.geomap, u.qs("dl.info", this));
+					this.insertBefore(this.geomap, u.qs("ul.info", this));
 
 					var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
 					var html = '<html><head>';
-					html += '<style type="text/css">body {margin: 0;}#map {height: 200px; height: 200px;}</style>';
-//						html += '<style type="text/css">body {margin: 0;}#map {height: 100%;}</style>';
+					html += '<style type="text/css">body {margin: 0;}#map {height: 300px;}</style>';
 					html += '<script type="text/javascript" src="'+maps_url+'"></script>';
 					html += '<script type="text/javascript">';
 					html += 'var map, marker;';

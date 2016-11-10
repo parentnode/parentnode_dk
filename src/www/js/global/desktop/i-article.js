@@ -111,7 +111,7 @@ Util.Objects["article"] = new function() {
 
 
 		// INIT GEOLOCATION MAP
-		article.geolocation = u.qs("dl.geo", article);
+		article.geolocation = u.qs("ul.geo", article);
 		if(article.geolocation && typeof(u.injectGeolocation) == "function") {
 
 			u.injectGeolocation(article);

@@ -1,20 +1,20 @@
-u.geolocation = function(node) {
+u.injectGeolocation = function(node) {
 
 	node.geolocation.node = node;
-//	u.bug("node.geolocation:" + node.geolocation)
+	u.bug("node.geolocation:" + node.geolocation)
 
-	var dd_longitude = u.qs("dd.longitude", node.geolocation);
-	var dd_latitude = u.qs("dd.latitude", node.geolocation);
+	var li_longitude = u.qs("li.longitude", node.geolocation);
+	var li_latitude = u.qs("li.latitude", node.geolocation);
 
-	if(dd_longitude && dd_latitude) {
-		node.geo_longitude = parseFloat(dd_longitude.innerHTML);
-		node.geo_latitude = parseFloat(dd_latitude.innerHTML);
+	if(li_longitude && li_latitude) {
+		node.geo_longitude = parseFloat(li_longitude.getAttribute("content"));
+		node.geo_latitude = parseFloat(li_latitude.getAttribute("content"));
 
 		node.showMap = function() {
 
 			if(!this.geomap) {
 
-				var injection_point = u.ns(this.geolocation);
+				var injection_point = u.ns(u.qs("ul.info", this));
 				this.geomap = u.ae(this, "div", {"class":"geomap"});
 				if(injection_point) {
 					this.insertBefore(this.geomap, injection_point);

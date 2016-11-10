@@ -7,6 +7,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_1/src/u-form-htmleditor.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-notifier.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-sortable.js"></script>');
 
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/smartphone/u-form-custom.js"></script>');

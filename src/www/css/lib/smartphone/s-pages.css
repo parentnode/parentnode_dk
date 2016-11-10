@@ -3,6 +3,7 @@
 
 /* POST ARTICLE */
 #content .scene.post div.article ul.info {display: block;}
+#content .scene.template div.article ul.info {display: block;}
 
 
 /* MANIFEST */

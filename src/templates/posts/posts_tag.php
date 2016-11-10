@@ -55,7 +55,8 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 <?	if($items): ?>
 	<ul class="items articles i:articleMiniList">
-		<? foreach($items as $item): ?>
+		<? foreach($items as $item):
+			$media = $IC->sliceMedia($item); ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 			data-readstate="<?= $item["readstate"] ?>"
 			>
@@ -77,33 +78,9 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 			<h3 itemprop="headline"><a href="/blog/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
 
-			<ul class="info">
-				<li class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", strtotime($item["published_at"])) ?>"><?= date("Y-m-d, H:i", strtotime($item["published_at"])) ?></li>
-				<li class="modified_at" itemprop="dateModified" content="<?= date("Y-m-d", strtotime($item["modified_at"])) ?>"></li>
-				<li class="author" itemprop="author"><?= $item["user_nickname"] ?></li>
-				<li class="main_entity" itemprop="mainEntityOfPage" content="<?= SITE_URL."/blog/".$item["sindex"] ?>"></li>
-				<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-					<ul class="publisher_info">
-						<li class="name" itemprop="name">think.dk</li>
-						<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-							<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-							<span class="image_width" itemprop="width" content="720"></span>
-							<span class="image_height" itemprop="height" content="405"></span>
-						</li>
-					</ul>
-				</li>
-				<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-				<? if($media): ?>
-					<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/720x.<?= $media["format"] ?>"></span>
-					<span class="image_width" itemprop="width" content="720"></span>
-					<span class="image_height" itemprop="height" content="<?= floor(720 / ($media["width"] / $media["height"])) ?>"></span>
-				<? else: ?>
-					<span class="image_url" itemprop="url" content="<?= SITE_URL ?>/img/logo-large.png"></span>
-					<span class="image_width" itemprop="width" content="720"></span>
-					<span class="image_height" itemprop="height" content="405"></span>
-				<? endif; ?>
-				</li>
-			</ul>
+
+			<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], $media, true) ?>
+
 
 			<? if($item["description"]): ?>
 			<div class="description" itemprop="description">

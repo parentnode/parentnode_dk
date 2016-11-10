@@ -1,17 +1,21 @@
 <?php
-$IC = new Items();
+global $action;
+global $model;
 
-$page_item = $IC->getItem(array("tags" => "page:tools", "extend" => array("user" => true, "mediae" => true)));
+$IC = new Items();
+$page_item = $IC->getItem(array("tags" => "page:signup-receipt", "extend" => array("user" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
-	
-?>
-<div class="scene tools i:scene">
 
+
+$email = session()->value("signup_email");
+session()->reset("signup_email");
+?>
+<div class="scene signup i:scene">
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
-	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
+	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
 		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
@@ -24,15 +28,18 @@ if($page_item) {
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/tools", $media, true) ?>
+		<?= $HTML->articleInfo($page_item, "/signup/receipt", $media, false) ?>
 
 
 		<? if($page_item["html"]): ?>
 		<div class="articlebody" itemprop="articleBody">
-			<?= $page_item["html"] ?>
+			<?= preg_replace("/{email}/", $email, $page_item["html"]) ?>
 		</div>
 		<? endif; ?>
 	</div>
+<? else:?>
+	<h1>Receipt</h1>
+	<p>Thanks for signing up. You'll hear from us soon.</p>
 <? endif; ?>
 
 </div>

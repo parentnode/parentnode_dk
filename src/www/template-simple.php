@@ -69,21 +69,35 @@ $page->header();
 
 		<h1 itemprop="name">Primary headline followed by paragraph</h1>
 
-		<dl class="info">
-			<dt class="published_at">Date published</dt>
-			<dd class="published_at" itemprop="datePublished" content="<?= date("Y-m-d", filemtime(__FILE__)) ?>"><?= date("Y-m-d, H:i", filemtime(__FILE__)) ?></dd>
-			<dt class="author">Author</dt>
-			<dd class="author" itemprop="author">Martin Kæstel Nielsen</dd>
-		</dl>
+		<ul class="info">
+			<li class="published_at" itemprop="datePublished" content="2015-01-25">2015-01-25, 06:24</li>
+			<li class="modified_at" itemprop="dateModified" content="2015-02-22"></li>
+			<li class="author" itemprop="author">Martin Kæstel Nielsen</li>
+			<li class="main_entity share" itemprop="mainEntityOfPage" content="http://kaestel.local/geek/logs/dubai-transit"></li>
+			<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+				<ul class="publisher_info">
+					<li class="name" itemprop="name">kaestel.dk</li>
+					<li class="logo" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+						<span class="image_url" itemprop="url" content="http://kaestel.local/img/logo-large.png"></span>
+						<span class="image_width" itemprop="width" content="720"></span>
+						<span class="image_height" itemprop="height" content="405"></span>
+					</li>
+				</ul>
+			</li>
+			<li class="image_info" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+				<span class="image_url" itemprop="url" content="http://kaestel.local/images/545/qyqtk4pv/720x.jpg"></span>
+				<span class="image_width" itemprop="width" content="720"></span>
+				<span class="image_height" itemprop="height" content="442"></span>
+			</li>
+			<li class="place" itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">
+				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+					<li class="location" itemprop="name">Dubai International Airport</li>
+					<li class="latitude" itemprop="latitude" content="25.25137"></li>
+					<li class="longitude" itemprop="longitude" content="55.35683"></li>
+				</ul>
+			</li>
+		</ul>
 
-		<dl class="geo" itemprop="contentLocation" itemscope itemtype="http://schema.org/GeoCoordinates">
-			<dt class="location">location</dt>
-			<dd class="location" itemprop="name">San Francisco</dd>
-			<dt class="latitude">&phi;</dt>
-			<dd class="latitude" itemprop="latitude">12°</dd>
-			<dt class="longitude">&lambda;</dt>
-			<dd class="longitude" itemprop="longitude">12°</dd>
-		</dl>
 
 		<div class="articlebody" itemprop="articleBody">
 			<h2>Secondary headline after info</h2>
@@ -163,11 +177,59 @@ $page->header();
 	<hr />
 
 
-	<h2>Vcard</h2>
-	<div itemtype="http://schema.org/Person" itemscope="" class="vcard company">
-		<div itemprop="name" class="name fn org">Martin Kæstel Nielsen</div>
-		<div itemprop="telephone" class="tel"><a href="callto:+4520742819">+45 2074 2819</a></div>
-		<div itemprop="email" class="email"><a href="mailto:martin@kaestel.dk">martin@kaestel.dk</a></div>
+	<h2>Vcards</h2>
+	<div itemtype="http://schema.org/Organization" itemscope class="vcard company">
+		<h2 class="name fn org" itemprop="name">parentNode.dk</h2>
+
+		<dl class="info basic">
+			<dt class="address">Address</dt>
+			<dd class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+				<ul>
+					<li itemprop="streetAddress">Æbeløgade 4</li>
+					<li><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
+					<li class="country" itemprop="addressCountry">Denmark</li>
+				</ul>
+			</dd>
+		</dl>
+
+		<dl class="info contact">
+			<dt class="contact">Contact</dt>
+			<dd class="contact">
+				<ul>
+					<li class="email"><a href="mailto:info@parentnode.dk" itemprop="email" content="info@parentnode.dk">info@parentnode.dk</a></li>
+				</ul>
+			</dd>
+			<dt class="social">Social media</dt>
+			<dd class="social">
+				<ul>
+					<li class="facebook"><a href="https://facebook.com/parentnode">Facebook</a></li>
+					<li class="linkedin"><a href="https://www.linkedin.com/company/parentnode">LinkedIn</a></li>
+				</ul>
+			</dd>
+		</dl>
+
+	</div>
+
+	<div itemtype="http://schema.org/Person" itemscope class="vcard person">
+		<h2 class="name" itemprop="name">Martin Kæstel Nielsen</h2>
+
+		<dl class="info contact">
+			<dt class="contact">Contact</dt>
+			<dd class="contact">
+				<ul>
+					<li class="tel" itemprop="telephone" content="+4520742819">+45 2074 2819</li>
+					<li class="email"><a href="mailto:martin@kaestel.dk" itemprop="email" content="martin@kaestel.dk">martin@kaestel.dk</a></li>
+				</ul>
+			</dd>
+			<dt class="social">Social media</dt>
+			<dd class="social">
+				<ul>
+					<li class="facebook"><a href="https://facebook.com/kaestel">Facebook</a></li>
+					<li class="linkedin"><a href="https://www.linkedin.com/in/kaestel">LinkedIn</a></li>
+				</ul>
+			</dd>
+		</dl>
+
 	</div>
 
 

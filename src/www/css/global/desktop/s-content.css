@@ -139,6 +139,7 @@
 
 /* ARTICLE */
 #content .scene div.article {position: relative; padding-bottom: 30px;}
+#content .scene div.article h1 svg.checkmark {cursor: pointer;}
 #content .scene div.article ul.tags {padding-bottom: 30px;}
 #content .scene div.article ul.tags li,
 #content .scene div.article ul.tags li a {color: #cccccc;}

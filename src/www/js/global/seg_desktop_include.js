@@ -12,6 +12,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-sortable.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-date.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-front.js"></script>');

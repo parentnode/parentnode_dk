@@ -136,16 +136,19 @@ Util.Objects["article"] = new function() {
 
 		// READ-STATE
 		article.header.current_readstate = article.getAttribute("data-readstate");
-		article.update_readstate_url = article.getAttribute("data-readstate-update");
+		article.add_readstate_url = article.getAttribute("data-readstate-add");
 		article.delete_readstate_url = article.getAttribute("data-readstate-delete");
-		if(article.header.current_readstate || (article.update_readstate_url && article.delete_readstate_url)) {
+		if(article.header.current_readstate || (article.add_readstate_url && article.delete_readstate_url)) {
 			u.bug("add readstate:" + article.header.current_readstate)
 
 			// add checkmark
 			u.addCheckmark(article.header);
 
 			u.ce(article.header.checkmark);
-			article.header.checkmark.clicked = function() {
+			article.header.checkmark.clicked = function(event) {
+
+				// hide hint
+				this.out(event);
 
 				// already has readstate - delete it
 				if(this.node.current_readstate) {
@@ -156,7 +159,7 @@ Util.Objects["article"] = new function() {
 							this.setAttribute("class", "checkmark not_read");
 							this.node.current_readstate = false;
 							this.node.article.setAttribute("data-readstate", "");
-							this.setAttribute("title", u.txt["readstate-not_read"]);
+							this.hint_txt = u.txt["readstate-not_read"];
 
 						}
 					}
@@ -171,12 +174,11 @@ Util.Objects["article"] = new function() {
 							this.setAttribute("class", "checkmark read");
 							this.node.current_readstate = new Date();
 							this.node.article.setAttribute("data-readstate", this.node.current_readstate);
-							
-							this.setAttribute("title", u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate));
+							this.hint_txt = u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate);
 
 						}
 					}
-					u.request(this, this.node.article.update_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
+					u.request(this, this.node.article.add_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
 				}
 
 			}

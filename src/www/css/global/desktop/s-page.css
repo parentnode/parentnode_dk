@@ -73,12 +73,8 @@ dd {display: inline-block; vertical-align: top; font-size: 13px; line-height: 1.
 .terms_notification .details {float: right;}
 
 
-#page #notifications {
-	position: fixed;
-	z-index: 110;
-	top: 0;
-	width: 200px; left: 50%; margin-left: -100px;
-	background: #333333; color: #ffffff;
-}
+#page #notifications {position: fixed; z-index: 110; top: 0; width: 200px; left: 50%; margin-left: -100px; background: #333333; color: #ffffff;}
 #page #notifications div {padding: 10px 20px; color: #ffffff;}
 #page #notifications .error {background: #df0000;}
+
+body > div.hint {z-index: 100; position: absolute; top: 0; left: 0; padding: 3px 5px; background: #ffffff; color: #888888; border: 1px solid #888888; box-shadow: 2px 2px 2px #888888; border-radius: 5px;}

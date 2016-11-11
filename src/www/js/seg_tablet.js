@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-11-10 22:53:43
+js-merged @ 2016-11-11 14:55:45
 */
 
 /*seg_tablet_include.js*/
@@ -4309,8 +4309,8 @@ u.ga_account = 'UA-49720985-1';
 u.ga_domain = 'parentnode.dk';
 u.txt = {};
 u.txt["share"] = "Share";
-u.txt["not_read"] = "Click here - we'll help you remember what you have read.";
-u.txt["read"] = "Read";
+u.txt["readstate-not_read"] = "Click to mark as read";
+u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
@@ -6904,6 +6904,44 @@ u.sortable = function(scope, _options) {
 }
 
 
+/*u-date.js*/
+Util.date = function(format, timestamp, months) {
+	var date = timestamp ? new Date(timestamp) : new Date();
+	if(isNaN(date.getTime())) {
+		if(new Date(timestamp.replace(/ /, "T"))) {
+			date = new Date(timestamp.replace(/ /, "T"));
+		}
+		else {
+			if(!timestamp.match(/[A-Z]{3}\+[0-9]{4}/)) {
+				if(timestamp.match(/ \+[0-9]{4}/)) {
+					date = new Date(timestamp.replace(/ (\+[0-9]{4})/, " GMT$1"));
+				}
+			}
+		}
+		if(isNaN(date.getTime())) {
+			date = new Date();
+		}
+	}
+	var tokens = /d|j|m|n|F|Y|G|H|i|s/g;
+	var chars = new Object();
+	chars.j = date.getDate();
+	chars.d = (chars.j > 9 ? "" : "0") + chars.j;
+	chars.n = date.getMonth()+1;
+	chars.m = (chars.n > 9 ? "" : "0") + chars.n;
+	chars.F = months ? months[date.getMonth()] : "";
+	chars.Y = date.getFullYear();
+	chars.G = date.getHours();
+	chars.H = (chars.G > 9 ? "" : "0") + chars.G;
+	var i = date.getMinutes();
+	chars.i = (i > 9 ? "" : "0") + i;
+	var s = date.getSeconds();
+	chars.s = (s > 9 ? "" : "0") + s;
+	return format.replace(tokens, function (_) {
+		return _ in chars ? chars[_] : _.slice(1, _.length - 1);
+	});
+};
+
+
 /*i-page.js*/
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
@@ -7272,20 +7310,21 @@ Util.Objects["article"] = new function() {
 			u.injectSharing(article);
 		}
 		article.header.current_readstate = article.getAttribute("data-readstate");
-		article.update_readstate_url = article.getAttribute("data-readstate-update");
+		article.add_readstate_url = article.getAttribute("data-readstate-add");
 		article.delete_readstate_url = article.getAttribute("data-readstate-delete");
-		if(article.header.current_readstate || (article.update_readstate_url && article.delete_readstate_url)) {
+		if(article.header.current_readstate || (article.add_readstate_url && article.delete_readstate_url)) {
 			u.bug("add readstate:" + article.header.current_readstate)
 			u.addCheckmark(article.header);
 			u.ce(article.header.checkmark);
-			article.header.checkmark.clicked = function() {
+			article.header.checkmark.clicked = function(event) {
+				this.out(event);
 				if(this.node.current_readstate) {
 					this.response = function(response) {
 						if(response.cms_status == "success" && response.cms_object) {
 							this.setAttribute("class", "checkmark not_read");
 							this.node.current_readstate = false;
 							this.node.article.setAttribute("data-readstate", "");
-							this.setAttribute("title", u.txt["readstate-not_read"]);
+							this.hint_txt = u.txt["readstate-not_read"];
 						}
 					}
 					u.request(this, this.node.article.delete_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token+"&item_id"});
@@ -7296,10 +7335,10 @@ Util.Objects["article"] = new function() {
 							this.setAttribute("class", "checkmark read");
 							this.node.current_readstate = new Date();
 							this.node.article.setAttribute("data-readstate", this.node.current_readstate);
-							this.setAttribute("title", u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate));
+							this.hint_txt = u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", this.node.current_readstate);
 						}
 					}
-					u.request(this, this.node.article.update_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
+					u.request(this, this.node.article.add_readstate_url, {"method":"post", "params":"csrf-token="+this.node.article.csrf_token});
 				}
 			}
 		}
@@ -7705,11 +7744,11 @@ u.injectSharing = function(node) {
 
 /*u-checkmark.js*/
 u.addCheckmark = function(node) {
+	u.bug("add checkmark:" + node.current_readstate + ", " + u.nodeId(node.parentNode) + ", " + (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"])); 
 	node.checkmark = u.svg({
 		"name":"checkmark",
 		"node":node,
 		"class":"checkmark "+(node.current_readstate ? "read" : "not_read"),
-		"title":(node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
 		"width":17,
 		"height":17,
 		"shapes":[
@@ -7729,9 +7768,27 @@ u.addCheckmark = function(node) {
 			}
 		]
 	});
+	node.checkmark.hint_txt = (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
 	node.checkmark.node = node;
+	u.e.hover(node.checkmark);
+	node.checkmark.over = function(event) {
+		this.hint = u.ae(document.body, "div", {"class":"hint", "html":this.hint_txt});
+		u.ass(this.hint, {
+			"top":(u.absY(this.parentNode)+parseInt(u.gcs(this, "top"))+(Number(this.getAttribute("width")))) + "px",
+			"left":(u.absX(this.parentNode)+parseInt(u.gcs(this, "left"))+Number(this.getAttribute("width"))) + "px"
+		});
+	}
+	node.checkmark.out = function(event) {
+		if(this.hint) {
+			this.hint.parentNode.removeChild(this.hint);
+			delete this.hint;
+		}
+	}
 }
 u.removeCheckmark = function(node) {
+	if(node.checkmark.hint) {
+		node.checkmark.hint.parentNode.removeChild(node.checkmark.hint);
+	}
 	if(node.checkmark) {
 		node.checkmark.parentNode.removeChild(node.checkmark);
 		node.checkmark = false;

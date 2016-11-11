@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-11-10 22:53:43
+js-merged @ 2016-11-11 14:55:45
 */
 
 /*seg_desktop_light_include.js*/
@@ -3653,8 +3653,8 @@ u.ga_account = 'UA-49720985-1';
 u.ga_domain = 'parentnode.dk';
 u.txt = {};
 u.txt["share"] = "Share";
-u.txt["not_read"] = "Click here - we'll help you remember what you have read.";
-u.txt["read"] = "Read";
+u.txt["readstate-not_read"] = "Click to mark as read";
+u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";

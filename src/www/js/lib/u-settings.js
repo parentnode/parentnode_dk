@@ -10,8 +10,9 @@ u.ga_domain = 'parentnode.dk';
 u.txt = {};
 u.txt["share"] = "Share";
 
-u.txt["not_read"] = "Click here - we'll help you remember what you have read.";
-u.txt["read"] = "Read";
+u.txt["readstate-not_read"] = "Click to mark as read";
+u.txt["readstate-read"] = "Read";
+
 
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";

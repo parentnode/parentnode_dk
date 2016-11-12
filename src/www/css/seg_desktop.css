@@ -245,6 +245,7 @@ body > div.hint {z-index: 100; position: absolute; top: 0; left: 0; padding: 3px
 #content .scene ul.offer li.url {display: none;}
 #content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
 #content .scene ul.offer li.default {text-decoration: line-through;}
+#content .scene ul.offer li.description {padding-top: 4px; display: block;}
 #content .scene code {padding: 10px 20px; margin: 0 50px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; overflow: auto; white-space: pre; border-radius: 5px;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -559,7 +560,7 @@ body #selection_options ul.actions a.button {background-color: #8c9399; color: #
 #content .scene ul.todos > li ul.actions.closed .close {display: none;}
 #content .scene ul.todos > li ul.actions .open {display: none;}
 #content .scene ul.todos > li ul.actions.closed .open {display: inline-block;}
-#content .scene ul.wishlists {padding-left: 50px; padding-right: 50px;}
+#content .scene ul.wishlists {padding-left: 70px; padding-right: 70px;}
 #content .scene ul.wishes {padding-left: 70px; padding-right: 70px;}
 #content .scene ul.wishes > li .image,
 #content .scene ul.wishes > li .text {display: inline-block; vertical-align: top;}
@@ -567,7 +568,10 @@ body #selection_options ul.actions a.button {background-color: #8c9399; color: #
 #content .scene ul.wishes > li h3 {padding: 0 25px 10px;}
 #content .scene ul.wishes > li div.description p {padding: 0 25px;}
 #content .scene ul.wishes dl.info {padding: 0 25px 20px;}
-#content .scene ul.wishes dl.info dd {font-size: 13px; display: block;}
+#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dt.link {display: none;}
+#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto;}
 #content .scene ul.wishes > li ul.actions {padding: 0 25px;}
 #content .scene ul.wishes > li ul.actions.reserved .reserve {display: none;}
 #content .scene ul.wishes > li ul.actions .unreserve {display: none;}
@@ -734,6 +738,7 @@ body {}
 #content ul.actions input.button.primary:hover,
 #content ul.actions a.button.primary:hover,
 #header ul.servicenavigation li.github:hover {background-color: #034769;}
+#content .scene ul.articles .article ul.tags li a:hover,
 #content .scene .article ul.tags a:hover {color: #63add0;}
 #content .scene div.comments h2:hover {color: #63add0;}
 #content .scene div.comments h2:hover svg.arrow line {stroke: #63add0;}

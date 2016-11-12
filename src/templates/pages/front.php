@@ -1,7 +1,7 @@
 <?php
 $IC = new Items();
 
-$page_item = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => true, "mediae" => true)));
+$page_item = $IC->getItem(array("tags" => "page:front", "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -20,6 +20,12 @@ $event_items = $IC->getItems(array("itemtype" => "event", "tags" => "on:frontpag
 		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 		<? endif; ?>
 
+
+		<?= $HTML->articleTags($page_item, [
+			"context" => false
+		]) ?>
+
+
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
 		<? if($page_item["subheader"]): ?>
@@ -27,7 +33,10 @@ $event_items = $IC->getItems(array("itemtype" => "event", "tags" => "on:frontpag
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/", $media, true) ?>
+		<?= $HTML->articleInfo($page_item, "/", [
+			"media" => $media, 
+			"sharing" => true
+		]) ?>
 
 
 		<? if($page_item["html"]): ?>
@@ -49,28 +58,21 @@ $event_items = $IC->getItems(array("itemtype" => "event", "tags" => "on:frontpag
 				data-readstate="<?= $item["readstate"] ?>"
 				>
 
-				<ul class="tags">
-				<? if($item["tags"]):
-					// editing?
-					$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
 
-					<? if($editing_tag !== false): ?>
-					<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
-					<? endif; ?>
+				<?= $HTML->articleTags($item, [
+					"context" => ["post"],
+					"url" => "/blog/tag",
+					"default" => ["/blog", "Posts"]
+				]) ?>
 
-					<li><a href="/blog">Posts</a></li>
-					<? foreach($item["tags"] as $item_tag): ?>
-						<? if($item_tag["context"] == "post"): ?>
-					<li itemprop="articleSection"><a href="/blog/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
-						<? endif; ?>
-					<? endforeach; ?>
-				<? endif; ?>
-				</ul>
 
 				<h3 itemprop="headline"><a href="/blog/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
 
 
-				<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], $media, true) ?>
+				<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
+					"media" => $media, 
+					"sharing" => true
+				]) ?>
 
 
 				<? if($item["html"]): ?>

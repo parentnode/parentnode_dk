@@ -45,25 +45,21 @@ $related_items = $IC->getRelatedItems($related_pattern);
 		</div>
 		<? endif; ?>
 
-		<ul class="tags">
-		<? if($item["tags"]):
-			$editing_tag = arrayKeyValue($item["tags"], "context", "editing"); ?>
-			<? if($editing_tag !== false): ?>
-			<li class="editing" title="This post is work in progress"><?= $item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"] ?></li>
-			<? endif; ?>
-			<li><a href="/blog">Posts</a></li>
-			<? foreach($item["tags"] as $item_tag): ?>
-				<? if($item_tag["context"] == $itemtype): ?>
-			<li itemprop="articleSection"><a href="/blog/tag/<?= urlencode($item_tag["value"]) ?>"><?= $item_tag["value"] ?></a></li>
-				<? endif; ?>
-			<? endforeach; ?>
-		<? endif; ?>
-		</ul>
+
+		<?= $HTML->articleTags($item, [
+			"context" => [$itemtype],
+			"url" => "/blog/tag",
+			"default" => ["/blog", "Posts"]
+		]) ?>
+
 
 		<h1 itemprop="headline"><?= $item["name"] ?></h1>
 
 
-		<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], $media, true) ?>
+		<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
+			"media" => $media, 
+			"sharing" => true
+		]) ?>
 
 
 		<div class="articlebody" itemprop="articleBody">

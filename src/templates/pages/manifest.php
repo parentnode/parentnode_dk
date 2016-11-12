@@ -1,7 +1,7 @@
 <?php
 $IC = new Items();
 
-$page_item = $IC->getItem(array("tags" => "page:manifest", "extend" => array("user" => true, "mediae" => true, "comments" => true)));
+$page_item = $IC->getItem(array("tags" => "page:manifest", "extend" => array("user" => true, "mediae" => true, "comments" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -17,6 +17,12 @@ if($page_item) {
 		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 		<? endif; ?>
 
+
+		<?= $HTML->articleTags($page_item, [
+			"context" => false
+		]) ?>
+
+
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
 		<? if($page_item["subheader"]): ?>
@@ -24,7 +30,10 @@ if($page_item) {
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/manifest", $media, true) ?>
+		<?= $HTML->articleInfo($page_item, "/manifest", [
+			"media" => $media, 
+			"sharing" => true
+		]) ?>
 
 
 		<? if($page_item["html"]): ?>

@@ -3,6 +3,7 @@
 #content ul.actions a.button.primary:hover,
 #header ul.servicenavigation li.github:hover {background-color: #034769;}
 
+#content .scene ul.articles .article ul.tags li a:hover,
 #content .scene .article ul.tags a:hover {color: #63add0;}
 #content .scene div.comments h2:hover {color: #63add0;}
 #content .scene div.comments h2:hover svg.arrow line {stroke: #63add0;}

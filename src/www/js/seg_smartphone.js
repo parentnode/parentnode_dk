@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-11-11 14:55:45
+js-merged @ 2016-11-12 01:41:43
 */
 
 /*seg_smartphone_include.js*/
@@ -6346,59 +6346,61 @@ Util.Objects["page"] = new function() {
 		page.initNavigation = function() {
 			page.nN.list = u.qs("ul.navigation", page.nN);
 			this.bn_nav = u.qs(".servicenavigation li.navigation", this.hN);
-			u.ae(this.bn_nav, "div");
-			u.ae(this.bn_nav, "div");
-			u.ae(this.bn_nav, "div");
-			u.ce(this.bn_nav);
-			this.bn_nav.clicked = function(event) {
-				if(u.hc(this, "open")) {
-					u.rc(this, "open");
-					var i, node;
-					for(i = 0; node = page.nN.nodes[i]; i++) {
-						u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-						u.ass(node, {
-							"opacity": 0,
-							"transform":"translate(0, -30px)"
+			if(this.bn_nav) {
+				u.ae(this.bn_nav, "div");
+				u.ae(this.bn_nav, "div");
+				u.ae(this.bn_nav, "div");
+				u.ce(this.bn_nav);
+				this.bn_nav.clicked = function(event) {
+					if(u.hc(this, "open")) {
+						u.rc(this, "open");
+						var i, node;
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+							u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
+							u.ass(node, {
+								"opacity": 0,
+								"transform":"translate(0, -30px)"
+							});
+						}
+						page.hN.transitioned = function() {
+							u.ass(page.nN, {
+								"display": "none"
+							});
+						}
+						u.a.transition(page.hN, "all 0.3s ease-in "+(page.nN.nodes.length*100)+"ms");
+						u.ass(page.hN, {
+							"height": "60px"
 						});
 					}
-					page.hN.transitioned = function() {
+					else {
+						u.ac(this, "open");
+						var i, node;
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+							u.ass(node, {
+								"opacity": 0,
+								"transform":"translate(0, 30px)"
+							});
+						}
+						u.a.transition(page.hN, "all 0.3s ease-in");
+						u.ass(page.hN, {
+							"height": window.innerHeight+"px",
+						});
 						u.ass(page.nN, {
-							"display": "none"
+							"display": "block"
 						});
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+							u.a.transition(node, "all 0.3s ease-in "+(100 + (i*100))+"ms");
+							u.ass(node, {
+								"opacity": 1,
+								"transform":"translate(0, 0)"
+							});
+						}
 					}
-					u.a.transition(page.hN, "all 0.3s ease-in "+(page.nN.nodes.length*100)+"ms");
-					u.ass(page.hN, {
-						"height": "60px"
-					});
+					page.nN.start_drag_y = (window.innerHeight - 100) - page.nN.offsetHeight;
+					page.nN.end_drag_y = page.nN.offsetHeight;
 				}
-				else {
-					u.ac(this, "open");
-					var i, node;
-					for(i = 0; node = page.nN.nodes[i]; i++) {
-						u.ass(node, {
-							"opacity": 0,
-							"transform":"translate(0, 30px)"
-						});
-					}
-					u.a.transition(page.hN, "all 0.3s ease-in");
-					u.ass(page.hN, {
-						"height": window.innerHeight+"px",
-					});
-					u.ass(page.nN, {
-						"display": "block"
-					});
-					for(i = 0; node = page.nN.nodes[i]; i++) {
-						u.a.transition(node, "all 0.3s ease-in "+(100 + (i*100))+"ms");
-						u.ass(node, {
-							"opacity": 1,
-							"transform":"translate(0, 0)"
-						});
-					}
-				}
-				page.nN.start_drag_y = (window.innerHeight - 100) - page.nN.offsetHeight;
-				page.nN.end_drag_y = page.nN.offsetHeight;
+				u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
 			}
-			u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
 			if(page.fN.service) {
 				nodes = u.qsa("li", page.fN.service);
 				for(i = 0; node = nodes[i]; i++) {
@@ -6441,9 +6443,11 @@ Util.Objects["page"] = new function() {
 				}
 			}
 			page.nN.nodes = u.qsa("li", page.nN.list);
-			u.ass(page.hN.service, {
-				"opacity":1
-			})
+			if(page.hN.service) {
+				u.ass(page.hN.service, {
+					"opacity":1
+				});
+			}
 		}
 		page.ready();
 	}
@@ -6542,7 +6546,7 @@ Util.Objects["newsletter"] = new function() {
 /*i-article.js*/
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
-		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
+		u.bug("article init:" + u.nodeId(article));
 		article.csrf_token = article.getAttribute("data-csrf-token");
 		article.header = u.qs("h1,h2,h3", article);
 		article.header.article = article;

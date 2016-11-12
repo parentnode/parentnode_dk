@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-11-11 14:55:45
+js-merged @ 2016-11-12 01:41:43
 */
 
 /*seg_tablet_include.js*/
@@ -7231,7 +7231,7 @@ Util.Objects["newsletter"] = new function() {
 /*i-article.js*/
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
-		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
+		u.bug("article init:" + u.nodeId(article));
 		article.csrf_token = article.getAttribute("data-csrf-token");
 		article.header = u.qs("h1,h2,h3", article);
 		article.header.article = article;
@@ -7313,7 +7313,6 @@ Util.Objects["article"] = new function() {
 		article.add_readstate_url = article.getAttribute("data-readstate-add");
 		article.delete_readstate_url = article.getAttribute("data-readstate-delete");
 		if(article.header.current_readstate || (article.add_readstate_url && article.delete_readstate_url)) {
-			u.bug("add readstate:" + article.header.current_readstate)
 			u.addCheckmark(article.header);
 			u.ce(article.header.checkmark);
 			article.header.checkmark.clicked = function(event) {
@@ -7413,7 +7412,6 @@ Util.Objects["articleMiniList"] = new function() {
 		for(i = 0; node = list.articles[i]; i++) {
 			var header = u.qs("h2,h3", node);
 			header.current_readstate = node.getAttribute("data-readstate");
-			u.bug("header.current_readstate:" + header.current_readstate )
 			if(header.current_readstate) {
 				u.addCheckmark(header);
 			}
@@ -7558,7 +7556,6 @@ u.injectGeolocation = function(node) {
 
 /*u-sharing.js*/
 u.injectSharing = function(node) {
-	u.bug("sharing")
 	node.sharing = u.ae(node, "div", {"class":"sharing"});
 	node.sharing.node = node;
 	var ref_point = u.qs("div.comments", node);
@@ -7744,7 +7741,6 @@ u.injectSharing = function(node) {
 
 /*u-checkmark.js*/
 u.addCheckmark = function(node) {
-	u.bug("add checkmark:" + node.current_readstate + ", " + u.nodeId(node.parentNode) + ", " + (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"])); 
 	node.checkmark = u.svg({
 		"name":"checkmark",
 		"node":node,

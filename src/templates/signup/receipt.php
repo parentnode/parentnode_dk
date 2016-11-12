@@ -23,12 +23,20 @@ session()->reset("signup_email");
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
+
+		<?= $HTML->articleTags($page_item, [
+			"context" => false
+		]) ?>
+
+
 		<? if($page_item["subheader"]): ?>
 		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
 		<? endif; ?>
 
 
-		<?= $HTML->articleInfo($page_item, "/signup/receipt", $media, false) ?>
+		<?= $HTML->articleInfo($page_item, "/signup/receipt", [
+			"media" => $media, 
+		]) ?>
 
 
 		<? if($page_item["html"]): ?>

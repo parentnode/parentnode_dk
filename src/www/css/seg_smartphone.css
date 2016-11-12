@@ -208,6 +208,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.offer li.url {display: none;}
 #content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
 #content .scene ul.offer li.default {text-decoration: line-through;}
+#content .scene ul.offer li.description {padding-top: 4px; display: block;}
 #content .scene code {color: #333333; padding: 10px 20px; margin: 0 0 15px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -517,10 +518,14 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene ul.todos > li ul.actions.closed .close {display: none;}
 #content .scene ul.todos > li ul.actions .open {display: none;}
 #content .scene ul.todos > li ul.actions.closed .open {display: inline-block;}
-#content .scene ul.wishlist {}
+#content .scene ul.wishlists {padding-left: 20px; padding-right: 20px;}
 #content .scene ul.wishes > li .image {height: 30px; background-position: center center; background-size: 100% auto; background-repeat: no-repeat; margin-bottom: 10px; cursor: default;}
-#content .scene ul.wishes dl.info dd {font-size: 13px; display: block; padding-bottom: 8px;}
-#content .scene ul.wishes > li ul.actions {padding: 0 25px 10px;}
+#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dt.price:after {content: ":";}
+#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto; padding-left: 5px;}
+#content .scene ul.wishes dl.info dt.link {display: none;}
+#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto; padding-left: 0;}
+#content .scene ul.wishes > li ul.actions {padding: 0 20px 10px;}
 #content .scene ul.wishes > li ul.actions.reserved .reserve {display: none;}
 #content .scene ul.wishes > li ul.actions .unreserve {display: none;}
 #content .scene ul.wishes > li ul.actions.reserved .unreserve {display: inline-block;}

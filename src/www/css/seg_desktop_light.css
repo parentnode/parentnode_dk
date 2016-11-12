@@ -165,10 +165,14 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 }
 #content .scene div.related {padding-top: 10px; position: relative; z-index: 1;}
 #content .scene div.comments {display: none;}
-#content .scene dl.offer {font-size: 0; padding: 0;}
-#content .scene dl.offer dt {display: none;}
-#content .scene dl.offer .url {display: none;}
-#content .scene dl.offer dd {font-size: 13px; width: auto; display: inline; padding: 0 5px 0 0;}
+#content .scene ul.offer,
+#content .scene .articlebody ul.offer {font-size: 0; padding: 0; margin: 0; list-style: none;}
+#content .scene ul.offer li.name,
+#content .scene ul.offer li.currency,
+#content .scene ul.offer li.url {display: none;}
+#content .scene ul.offer li {font-size: 11px; width: auto; display: inline; vertical-align: top; padding: 0 5px 0 0;}
+#content .scene ul.offer li.default {text-decoration: line-through; color: #df0000;}
+#content .scene ul.offer li.description {padding-top: 4px; display: block;}
 #content .scene code {width: 480px; padding: 10px 10px; margin: 0 70px 15px; background-color: #ededed; color: #333333; font-size: 12px; display: block; white-space: pre-wrap; overflow: auto;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -319,6 +323,8 @@ dd {display: block; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.todos dl.info {padding-bottom: 10px;}
 #content .scene ul.todos > li ul.actions {display: none;}
 #content .scene ul.wishlist {}
+#content .scene ul.wishes dl.info dt {display: none;}
+#content .scene ul.wishes dl.info dd {padding-left: 0;}
 #content .scene ul.wishes > li ul.actions {display: none;}
 
 

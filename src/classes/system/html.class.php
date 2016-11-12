@@ -36,7 +36,19 @@ class HTML extends HTMLCore {
 	}
 
 
-	function articleInfo($item, $url, $media = false, $sharing = false) {
+	function articleInfo($item, $url, $_options) {
+
+		$media = false;
+		$sharing = false;
+
+		if($_options !== false) {
+			foreach($_options as $_option => $_value) {
+				switch($_option) {
+					case "media"            : $media              = $_value; break;
+					case "sharing"          : $sharing            = $_value; break;
+				}
+			}
+		}
 
 		$_ = '';
 
@@ -83,6 +95,81 @@ class HTML extends HTMLCore {
 
 		return $_;
 
+	}
+
+
+	// $context should be array of allowed contexts
+	// - if $context is false, no tags are shown (except editing and default tag)
+	// $default should be array with url and text
+	// $url should be url to prefix tag links
+	// $editing defines if editing link is shown
+	function articleTags($item, $_options = false) {
+
+		$context = false;
+		$default = false;
+		$url = false;
+		$editing = true;
+		$schema = "articleSection";
+
+
+		if($_options !== false) {
+			foreach($_options as $_option => $_value) {
+				switch($_option) {
+					case "context"           : $context             = $_value; break;
+					case "default"           : $default             = $_value; break;
+
+					case "url"               : $url                 = $_value; break;
+					
+					case "editing"           : $editing             = $_value; break;
+					case "schema"            : $schema              = $_value; break;
+
+				}
+			}
+		}
+
+
+
+		$_ = '';
+
+
+		// editing tag
+		if($item["tags"] && $editing):
+			$editing_tag = arrayKeyValue($item["tags"], "context", "editing");
+			if($editing_tag !== false):
+				$_ .= '	<li class="editing" title="This post is work in progress">'.($item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"]).'</li>';
+			endif;
+		endif;
+
+		// default tag
+		if(is_array($default)):
+			$_ .= '	<li><a href="'.$default[0].'">'.$default[1].'</a></li>';
+		endif;
+
+		// item tag list
+		if($item["tags"] && $context):
+			foreach($item["tags"] as $item_tag):
+				if(array_search($item_tag["context"], $context) !== false):
+					$_ .= '	<li'.($schema ? ' itemprop="'.$schema.'"' : '').'>';
+					if($url):
+						$_ .= '<a href="'.$url."/".urlencode($item_tag["value"]).'">';
+					endif;
+					$_ .= $item_tag["value"];
+					if($url):
+						$_ .= '</a>';
+					endif;
+					$_ .= '</li>';
+				endif;
+			endforeach;
+		endif;
+
+
+		// only print tags ul if it has content
+		if($_) {
+			$_ = '<ul class="tags">'.$_.'</ul>';
+		}
+
+
+		return $_;
 	}
 
 }

@@ -52,6 +52,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 }
 #header .servicenavigation li.navigation {}
 #header .servicenavigation li.navigation a {}
+#header .servicenavigation li.cart {display: none;}
 #header .servicenavigation li.login {display: none;}
 #header .servicenavigation li.user {display: none;}
 #header .servicenavigation li.admin {display: none;}
@@ -253,7 +254,9 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene .articlebody ul.actions li {padding-left: 0;}
 #content .scene ul.todos dl.info {padding-bottom: 10px;}
 #content .scene ul.todos > li ul.actions {display: none;}
-#content .scene ul.wishlist {}
+#content .scene ul.wishlists {padding-left: 10px; padding-right: 10px;}
+#content .scene ul.wishes dl.info dt {display: none;}
+#content .scene ul.wishes dl.info dd {padding-left: 0;}
 #content .scene ul.wishes > li ul.actions {display: none;}
 
 

@@ -2,7 +2,7 @@
 // Stardard article enabling
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
-		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
+		u.bug("article init:" + u.nodeId(article));
 
 
 		// csrf token for data manipulation
@@ -139,7 +139,7 @@ Util.Objects["article"] = new function() {
 		article.add_readstate_url = article.getAttribute("data-readstate-add");
 		article.delete_readstate_url = article.getAttribute("data-readstate-delete");
 		if(article.header.current_readstate || (article.add_readstate_url && article.delete_readstate_url)) {
-			u.bug("add readstate:" + article.header.current_readstate)
+			//			u.bug("add readstate:" + article.header.current_readstate);
 
 			// add checkmark
 			u.addCheckmark(article.header);

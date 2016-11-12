@@ -2,7 +2,7 @@
 // Stardard article enabling
 Util.Objects["article"] = new function() {
 	this.init = function(article) {
-		u.bug("article init:" + u.nodeId(article) + "," + u.qs("h1,h2,h3", article).innerHTML)
+		u.bug("article init:" + u.nodeId(article));
 
 
 		// csrf token for data manipulation

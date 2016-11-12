@@ -10,7 +10,7 @@ Util.Objects["articleMiniList"] = new function() {
 
 			var header = u.qs("h2,h3", node);
 			header.current_readstate = node.getAttribute("data-readstate");
-			u.bug("header.current_readstate:" + header.current_readstate )
+//			u.bug("header.current_readstate:" + header.current_readstate );
 
 			if(header.current_readstate) {
 				u.addCheckmark(header);

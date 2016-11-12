@@ -1,5 +1,5 @@
 u.injectSharing = function(node) {
-	u.bug("sharing")
+//	u.bug("sharing")
 
 	// sharing wrapper
 	node.sharing = u.ae(node, "div", {"class":"sharing"});

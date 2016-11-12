@@ -27,7 +27,7 @@
 
 
 /* WISHLIST */
-#content .scene ul.wishlists {padding-left: 50px; padding-right: 50px;}
+#content .scene ul.wishlists {padding-left: 70px; padding-right: 70px;}
 
 
 /* WISH */
@@ -40,7 +40,10 @@
 
 /* WISH PRICE */
 #content .scene ul.wishes dl.info {padding: 0 25px 20px;}
-#content .scene ul.wishes dl.info dd {font-size: 13px; display: block;}
+#content .scene ul.wishes dl.info dt.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dd.price {display: inline-block; vertical-align: top; width: auto;}
+#content .scene ul.wishes dl.info dt.link {display: none;}
+#content .scene ul.wishes dl.info dd.link {font-size: 13px; display: block; width: auto;}
 
 
 /* WISH RESERVE / UN-RESERVE */

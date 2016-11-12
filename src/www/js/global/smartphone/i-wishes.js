@@ -3,23 +3,23 @@ Util.Objects["wishes"] = new function() {
 //		u.bug("scene init:" + u.nodeId(scene))
 
 
-		scene.image_width = 250;
+		scene.image_width = 100;
 
 
 		scene.resized = function() {
 //			u.bug("scene.resized:" + u.nodeId(this));
 
 
-			// resize text nodes
-			if(this.nodes.length) {
-				var text_width = this.nodes[0].offsetWidth - this.image_width;
+			if(this.nodes && this.nodes.length) {
 				for(i = 0; node = this.nodes[i]; i++) {
-					u.as(node.text_mask, "width", text_width+"px", false);
+					if(node.image_mask) {
+						u.ass(node.image_mask, {
+							"height":Math.floor(node.image_mask.offsetWidth / (250/140)) + "px"
+						});
+					}
 				}
 			}
 
-			// refresh dom
-			this.offsetHeight;
 		}
 
 		scene.scrolled = function() {
@@ -28,8 +28,6 @@ Util.Objects["wishes"] = new function() {
 
 		scene.ready = function() {
 //			u.bug("scene.ready:" + u.nodeId(this));
-
-			page.cN.scene = this;
 
 			this.nodes = u.qsa("li.item", this);
 			if(this.nodes.length) {
@@ -42,36 +40,10 @@ Util.Objects["wishes"] = new function() {
 					node.image_format = u.cv(node, "format");
 					node.image_variant = u.cv(node, "variant");
 
-					// restructure content
-					node.image_mask = u.ae(node, "div", {"class":"image"});
-					node.text_mask = u.ae(node, "div", {"class":"text"});
 
-					u.as(node.text_mask, "width", text_width+"px", false);
-					if(node.image_format) {
-						u.as(node.image_mask, "backgroundImage", "url(/images/"+node.item_id+"/"+node.image_variant+"/"+this.image_width+"x."+node.image_format+")");
-					}
-					// or fallback image
-					else {
-						u.as(node.image_mask, "backgroundImage", "url(/images/0/missing/"+this.image_width+"x.png)");
-					}
-
-					node._header = u.qs("h3", node);
-					if(node._header) {
-						u.ae(node.text_mask, node._header);
-					}
-					node._info = u.qs("dl.info", node);
-					if(node._info) {
-						u.ae(node.text_mask, node._info);
-					}
-
-					node._actions = u.qs("ul.actions", node);
-					if(node._actions) {
-						u.ae(node.text_mask, node._actions);
-					}
-
-					node._description = u.qs("div.description", node);
-					if(node._description) {
-						u.ae(node.text_mask, node._description);
+					if(node.item_id && node.image_format && node.image_variant) {
+						node.image_mask = u.ie(node, "div", {"class":"image"});
+						u.as(node.image_mask, "backgroundImage", "url(/images/"+node.item_id+"/"+node.image_variant+"/540x."+node.image_format+")");
 					}
 
 
@@ -98,7 +70,7 @@ Util.Objects["wishes"] = new function() {
 
 							this.response = function(response) {
 								if(response.cms_status == "success") {
-									u.ac(this.node._actions, "reserved");
+									u.ac(this.node.actions, "reserved");
 								}
 								else {
 	//								alert("server communication failed");
@@ -131,7 +103,7 @@ Util.Objects["wishes"] = new function() {
 
 							this.response = function(response) {
 								if(response.cms_status == "success") {
-									u.rc(this.node._actions, "reserved");
+									u.rc(this.node.actions, "reserved");
 								}
 								else {
 	//								alert("server communication failed");
@@ -145,7 +117,7 @@ Util.Objects["wishes"] = new function() {
 			}
 
 
-
+			page.cN.scene = this;
 			page.resized();
 		}
 

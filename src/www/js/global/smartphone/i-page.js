@@ -152,83 +152,85 @@ Util.Objects["page"] = new function() {
 
 			// create burger menu
 			this.bn_nav = u.qs(".servicenavigation li.navigation", this.hN);
-			u.ae(this.bn_nav, "div");
-			u.ae(this.bn_nav, "div");
-			u.ae(this.bn_nav, "div");
+			if(this.bn_nav) {
+				u.ae(this.bn_nav, "div");
+				u.ae(this.bn_nav, "div");
+				u.ae(this.bn_nav, "div");
 
-			// enable nav link
-			u.ce(this.bn_nav);
-			this.bn_nav.clicked = function(event) {
+				// enable nav link
+				u.ce(this.bn_nav);
+				this.bn_nav.clicked = function(event) {
 
-				// close navigation
-				if(u.hc(this, "open")) {
-					u.rc(this, "open");
+					// close navigation
+					if(u.hc(this, "open")) {
+						u.rc(this, "open");
 
-					var i, node;
-					// set hide animation for nav nodes
-					for(i = 0; node = page.nN.nodes[i]; i++) {
+						var i, node;
+						// set hide animation for nav nodes
+						for(i = 0; node = page.nN.nodes[i]; i++) {
 
-						u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
-						u.ass(node, {
-							"opacity": 0,
-							"transform":"translate(0, -30px)"
+							u.a.transition(node, "all 0.2s ease-in "+(i*100)+"ms");
+							u.ass(node, {
+								"opacity": 0,
+								"transform":"translate(0, -30px)"
+							});
+						}
+
+						// hide navigation when hidden
+						page.hN.transitioned = function() {
+							u.ass(page.nN, {
+								"display": "none"
+							});
+						}
+
+						// collapse header
+						u.a.transition(page.hN, "all 0.3s ease-in "+(page.nN.nodes.length*100)+"ms");
+						u.ass(page.hN, {
+							"height": "60px"
 						});
-					}
 
-					// hide navigation when hidden
-					page.hN.transitioned = function() {
+					}
+					// open navigation
+					else {
+						u.ac(this, "open");
+
+						var i, node;
+						// set initial animation state for nav nodes
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+							u.ass(node, {
+								"opacity": 0,
+								"transform":"translate(0, 30px)"
+							});
+						}
+
+						// set animation for header
+						u.a.transition(page.hN, "all 0.3s ease-in");
+						u.ass(page.hN, {
+							"height": window.innerHeight+"px",
+						});
 						u.ass(page.nN, {
-							"display": "none"
+							"display": "block"
 						});
+
+						// set animation for nav nodes
+						for(i = 0; node = page.nN.nodes[i]; i++) {
+
+							u.a.transition(node, "all 0.3s ease-in "+(100 + (i*100))+"ms");
+							u.ass(node, {
+								"opacity": 1,
+								"transform":"translate(0, 0)"
+							});
+						}
 					}
 
-					// collapse header
-					u.a.transition(page.hN, "all 0.3s ease-in "+(page.nN.nodes.length*100)+"ms");
-					u.ass(page.hN, {
-						"height": "60px"
-					});
+					// update drag coordinates
+					page.nN.start_drag_y = (window.innerHeight - 100) - page.nN.offsetHeight;
+					page.nN.end_drag_y = page.nN.offsetHeight;
 
 				}
-				// open navigation
-				else {
-					u.ac(this, "open");
-
-					var i, node;
-					// set initial animation state for nav nodes
-					for(i = 0; node = page.nN.nodes[i]; i++) {
-						u.ass(node, {
-							"opacity": 0,
-							"transform":"translate(0, 30px)"
-						});
-					}
-
-					// set animation for header
-					u.a.transition(page.hN, "all 0.3s ease-in");
-					u.ass(page.hN, {
-						"height": window.innerHeight+"px",
-					});
-					u.ass(page.nN, {
-						"display": "block"
-					});
-
-					// set animation for nav nodes
-					for(i = 0; node = page.nN.nodes[i]; i++) {
-
-						u.a.transition(node, "all 0.3s ease-in "+(100 + (i*100))+"ms");
-						u.ass(node, {
-							"opacity": 1,
-							"transform":"translate(0, 0)"
-						});
-					}
-				}
-
-				// update drag coordinates
-				page.nN.start_drag_y = (window.innerHeight - 100) - page.nN.offsetHeight;
-				page.nN.end_drag_y = page.nN.offsetHeight;
-
+				// enable dragging on navigation
+				u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
 			}
-			// enable dragging on navigation
-			u.e.drag(this.nN, [0, (window.innerHeight - 100) - this.nN.offsetHeight, this.hN.offsetWidth, this.nN.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
 
 
 			// append footer servicenavigation to header servicenavigation
@@ -294,9 +296,11 @@ Util.Objects["page"] = new function() {
 			// get clean set of navigation nodes (for animation on open and close)
 			page.nN.nodes = u.qsa("li", page.nN.list);
 
-			u.ass(page.hN.service, {
-				"opacity":1
-			})
+			if(page.hN.service) {
+				u.ass(page.hN.service, {
+					"opacity":1
+				});
+			}
 		}
 
 

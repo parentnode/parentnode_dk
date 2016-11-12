@@ -233,6 +233,8 @@
 #content .scene ul.offer li.url {display: none;}
 #content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
 #content .scene ul.offer li.default {text-decoration: line-through;}
+#content .scene ul.offer li.description {padding-top: 4px; display: block;}
+
 /*#content .scene ul.offer dd.currency:after {content: "\00a0";}*/
 
 

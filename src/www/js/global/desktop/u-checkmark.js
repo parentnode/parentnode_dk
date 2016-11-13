@@ -35,7 +35,7 @@ u.addCheckmark = function(node) {
 	node.checkmark.over = function(event) {
 		this.hint = u.ae(document.body, "div", {"class":"hint", "html":this.hint_txt});
 		u.ass(this.hint, {
-			"top":(u.absY(this.parentNode)+parseInt(u.gcs(this, "top"))+(Number(this.getAttribute("width")))) + "px",
+			"top":(u.absY(this.parentNode)+parseInt(u.gcs(this, "top"))+(Number(this.getAttribute("height")))) + "px",
 			"left":(u.absX(this.parentNode)+parseInt(u.gcs(this, "left"))+Number(this.getAttribute("width"))) + "px"
 		});
 	}

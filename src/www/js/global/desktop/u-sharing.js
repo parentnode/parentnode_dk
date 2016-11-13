@@ -9,8 +9,71 @@ u.injectSharing = function(node) {
 		node.sharing = node.insertBefore(node.sharing, ref_point);
 	}
 
-	node.h3_share = u.ae(node.sharing, "h3", {"html":u.txt["share"]})
-	node.p_share = u.ae(node.sharing, "p", {"html":node.hardlink})
+	node.h3_share = u.ae(node.sharing, "h3", {"html":u.txt["share"]});
+	if(!u.getCookie("share-info")) {
+		node.share_info = u.ae(node.h3_share, "span", {"html":u.txt["share-info-headline"]});
+		node.share_info.node = node;
+
+		u.e.hover(node.share_info, {"delay":500});
+		node.share_info.over = function() {
+		
+			if(!this.hint) {
+				this.hint = u.ae(document.body, "div", {"class":"hint"});
+				this.hint.share_info = this;
+				u.ae(this.hint, "p", {"html":u.txt["share-info-txt"]});
+
+				this.bn_ok = u.ae(this.hint, "a", {"html":u.txt["share-info-ok"]});
+				this.bn_ok.share_info = this;
+				u.ce(this.bn_ok);
+				this.bn_ok.clicked = function(event) {
+
+					// don't show help again
+					u.saveCookie("share-info", 1, {"path":"/"});
+
+					// hide hint
+					this.share_info.out();
+
+					// remove share info
+					this.share_info.parentNode.removeChild(this.share_info);
+
+					// select link
+					this.share_info.node.sharing.clicked();
+				}
+				this.hint.over = function() {
+					var share_info_event = new MouseEvent("mouseover", {
+						bubbles: true,
+						cancelable: true,
+						view: window
+					});
+					this.share_info.dispatchEvent(share_info_event);
+				}
+				u.e.addEvent(this.hint, "mouseover", this.hint.over);
+				this.hint.out = function() {
+					var share_info_event = new MouseEvent("mouseout", {
+						bubbles: true,
+						cancelable: true,
+						view: window
+					});
+					this.share_info.dispatchEvent(share_info_event);
+				}
+				u.e.addEvent(this.hint, "mouseout", this.hint.out);
+
+				u.ass(this.hint, {
+					"top":(u.absY(this) + this.offsetHeight + 5) + "px",
+					"left":(u.absX(this)) + "px"
+				});
+			}
+		
+		}
+		node.share_info.out = function() {
+			if(this.hint) {
+				this.hint.parentNode.removeChild(this.hint);
+				delete this.hint;
+			}
+		}
+	}
+
+	node.p_share = u.ae(node.sharing, "p", {"html":node.hardlink});
 	u.e.click(node.sharing);
 	node.sharing.clicked = function() {
 		u.selectText(this.node.p_share);
@@ -94,7 +157,7 @@ u.injectSharing = function(node) {
 
 //					u.bug("x2:" + x2 + " , y2:" + y2)
 
-		if(x2 < 490 && y2 > 10 && y2 < 290 && (x2 < 70 || x2 > 450 || (y2 < 130 && y1 < 130) || (y2 > 170 && y1 > 170))) {
+		if(x2 < 490 && y2 > 10 && y2 < 290 && (x2 < 70 || x2 > 450 || (y2 < 130 && y1 < 130) || (y2 > 180 && y1 > 180))) {
 			
 			var line = u.svgShape(svg, {
 				"type": "line",
@@ -260,11 +323,11 @@ u.injectSharing = function(node) {
 	}
 	node.sharing.autohide = function() {
 		u.t.resetTimer(this.button.t_hide);
-		this.button.t_hide = u.t.setTimer(this.button, this.button.out, 500);
+//		this.button.t_hide = u.t.setTimer(this.button, this.button.out, 500);
 	}
 
 	u.e.addEvent(node.sharing.button, "mouseover", node.sharing.button.over);
-	u.e.addEvent(node.sharing, "mouseleave", node.sharing.autohide);
+//	u.e.addEvent(node.sharing, "mouseleave", node.sharing.autohide);
 
 
 	if(typeof(node.sharingInjected) == "function") {

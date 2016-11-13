@@ -174,8 +174,10 @@
 
 /* SHARING */
 #content .scene div.sharing {padding: 0 0 20px; position: relative; height: 40px; overflow: hidden;}
-#content .scene div.sharing p {padding: 0; z-index: 2; position: absolute; top: 22px; left: 120px; display: none; font-size: 11px; color: #999999;}
-#content .scene div.sharing h3 {position: absolute; top: 0px; left: 120px; padding: 0; display: none;}
+#content .scene div.sharing p {z-index: 2; padding: 0; position: absolute; top: 25px; left: 120px; display: none; font-size: 11px; color: #999999;}
+#content .scene div.sharing h3 {z-index: 2; position: absolute; top: 0px; left: 120px; padding: 0; display: none;}
+#content .scene div.sharing h3 span {display: inline-block; vertical-align: top; margin: 9px 0 0 7px; font-size: 11px; line-height: 11px;}
+
 #content .scene div.sharing.hover {z-index: 2; overflow: visible;}
 #content .scene div.sharing.hover h3,
 #content .scene div.sharing.hover p {display: block;}

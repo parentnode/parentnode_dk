@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-11-12 01:41:43
+js-merged @ 2016-11-13 15:51:46
 */
 
 /*seg_smartphone_include.js*/
@@ -4309,6 +4309,9 @@ u.ga_account = 'UA-49720985-1';
 u.ga_domain = 'parentnode.dk';
 u.txt = {};
 u.txt["share"] = "Share";
+u.txt["share-info-headline"] = "(How do I share?)";
+u.txt["share-info-txt"] = "We have not includered social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
+u.txt["share-info-ok"] = "OK";
 u.txt["readstate-not_read"] = "Click to mark as read";
 u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";

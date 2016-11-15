@@ -28,7 +28,7 @@ u.injectSharing = function(node) {
 				this.bn_ok.clicked = function(event) {
 
 					// don't show help again
-					u.saveCookie("share-info", 1, {"path":"/"});
+					u.saveCookie("share-info", 1, {"expires":false, "path":"/"});
 
 					// hide hint
 					this.share_info.out();

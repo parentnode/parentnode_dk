@@ -89,6 +89,7 @@
 /* ARTICLE */
 #content .scene div.article {padding-bottom: 20px;}
 #content .scene div.article ul.tags a {color: #cccccc;}
+#content .scene div.article div.articlebody .placeholder {display: none;}
 
 
 /* ARTICLES */

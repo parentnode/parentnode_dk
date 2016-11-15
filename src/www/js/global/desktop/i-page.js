@@ -91,6 +91,8 @@ Util.Objects["page"] = new function() {
 				page.cN.scene.resized(event);
 			}
 
+			// refresh DOM
+			page.offsetHeight;
 		}
 
 		// global scroll handler 
@@ -193,7 +195,7 @@ Util.Objects["page"] = new function() {
 					u.ce(bn_accept);
 					bn_accept.clicked = function() {
 						this.terms.parentNode.removeChild(this.terms);
-						u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+						u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
 					}
 
 					if(!location.href.match(terms_link.href)) {

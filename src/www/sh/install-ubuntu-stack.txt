@@ -1,16 +1,27 @@
 #!/bin/bash
 
-# curl -L http://parentnode.local/install-ubuntu-stack | bash
+# curl -L http://test.parentnode.dk/install-ubuntu-stack | bash
+
+# curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt > install-ubuntu-stack.sh && sudo ./install-ubuntu-stack.sh
 
 echo 
-echo "parentNode Ubuntu stack installer"
+echo "         Welcome to the          "
+echo "parentNode/Ubuntu stack installer"
 echo
 
+echo
+echo "Updating package information"
+echo
 
 # UPDATE APT AND UPGRADE ALL EXISTING SOFTWARE
-sudo apt update
-sudo apt upgrade
-sudo apt full-upgrade
+sudo apt update < /dev/tty
+
+
+echo
+echo "Upgrading package information"
+echo
+
+sudo apt full-upgrade < /dev/tty
 
 
 # INSTALL GIT

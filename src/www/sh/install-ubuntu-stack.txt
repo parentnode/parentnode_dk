@@ -1,6 +1,7 @@
 #!/bin/bash
+# bash <(curl -s http://test.parentnode.dk/sh/install-ubuntu-stack.txt)
 
-# curl -L http://test.parentnode.dk/install-ubuntu-stack | bash
+# curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt | bash
 
 # curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt > install-ubuntu-stack.sh && sudo ./install-ubuntu-stack.sh
 
@@ -9,19 +10,30 @@ echo "         Welcome to the          "
 echo "parentNode/Ubuntu stack installer"
 echo
 
+
+echo
+echo "Updating LOCALE information"
+echo
+
+sudo apt install language-pack-UTF-8
+sudo locale-gen UTF-8
+/usr/sbin/update-locale LANG=en_GB.utf8
+
+
 echo
 echo "Updating package information"
 echo
 
 # UPDATE APT AND UPGRADE ALL EXISTING SOFTWARE
-sudo apt update < /dev/tty
+sudo apt update
 
 
 echo
 echo "Upgrading package information"
 echo
 
-sudo apt full-upgrade < /dev/tty
+sudo apt full-upgrade
+
 
 
 # INSTALL GIT

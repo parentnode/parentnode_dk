@@ -7,6 +7,7 @@ echo
 echo 
 echo "         Welcome to the          "
 echo "parentNode/Ubuntu stack installer"
+echo "---------------------------------"
 echo
 
 echo "Please enter you password to continue."
@@ -33,7 +34,9 @@ echo
 sudo apt full-upgrade
 
 
-
+echo
+echo "Install Git"
+echo
 # INSTALL GIT
 sudo apt install git
 
@@ -45,9 +48,15 @@ if [ -d "/srv/tools" ]; then
 
 fi
 
+echo
+echo "Clone install tools"
+echo
 # CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
 sudo git clone https://github.com/parentnode/ubuntu_environment /srv/tools
 
 
+echo
+echo "Run installer"
+echo
 # RUN INSTALL SCRIPT
 sudo /srv/tools/_tools/install.sh

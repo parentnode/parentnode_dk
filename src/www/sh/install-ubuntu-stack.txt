@@ -17,7 +17,6 @@ echo
 
 sudo apt install language-pack-UTF-8
 sudo locale-gen UTF-8
-/usr/sbin/update-locale LANG=en_GB.utf8
 
 
 echo
@@ -40,17 +39,15 @@ sudo apt full-upgrade
 sudo apt install git
 
 
-# DOES TOOLS ALREADY EXIST
-if [ ! -d "/srv/tools" ]; then
+# DOES TOOLS ALREADY EXIST - DELETE THEM AND CLONE AGAIN
+if [ -d "/srv/tools" ]; then
 
-	# CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
-	sudo git clone https://github.com/parentnode/ubuntu_environment /srv/tools
-
-else
-
-	cd /srv/tools && sudo git pull && cd 
+	sudo rm -R /srv/tools
 
 fi
+
+# CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
+sudo git clone https://github.com/parentnode/ubuntu_environment /srv/tools
 
 
 # RUN INSTALL SCRIPT

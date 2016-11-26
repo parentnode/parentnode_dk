@@ -3,13 +3,14 @@
 
 # curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt | bash
 
-# curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt > install-ubuntu-stack.sh && sudo ./install-ubuntu-stack.sh
-
+echo 
 echo 
 echo "         Welcome to the          "
 echo "parentNode/Ubuntu stack installer"
 echo
 
+echo "Please enter you password to continue."
+sudo ls 2<&1
 
 echo
 echo "Updating LOCALE information"

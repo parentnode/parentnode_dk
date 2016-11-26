@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# curl -L http://parentnode.local/install-ubuntu-stack | bash
+
+echo 
+echo "parentNode Ubuntu stack installer"
+echo
+
+
+# UPDATE APT AND UPGRADE ALL EXISTING SOFTWARE
+sudo apt update
+sudo apt upgrade
+sudo apt full-upgrade
+
+
+# INSTALL GIT
+sudo apt install git
+
+
+# DOES TOOLS ALREADY EXIST
+if [ ! -d "/srv/tools" ]; then
+
+	# CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
+	sudo git clone https://github.com/parentnode/ubuntu_environment /srv/tools
+
+else
+
+	cd /srv/tools && sudo git pull && cd 
+
+fi
+
+
+# RUN INSTALL SCRIPT
+sudo /srv/tools/_tools/install.sh

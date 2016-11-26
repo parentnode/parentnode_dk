@@ -47,7 +47,7 @@
 #content .scene dl {padding: 0 20px 15px; overflow: hidden;}
 #content .scene dt {padding: 0 0 2px 0; color: #999999;} 
 
-#content .scene dd {padding: 0 0 12px 20px;}
+#content .scene dd {padding: 0 0 12px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px;}
 #content .scene dl dl dt {}
@@ -160,6 +160,7 @@
 
 
 /* COMMENTS */
+#content .scene div.qnas {display: none;}
 #content .scene div.comments {display: none;}
 #content .scene div.readstate {display: none;}
 
@@ -174,6 +175,8 @@
 #content .scene ul.offer li.default {text-decoration: line-through;}
 #content .scene ul.offer li.description {padding-top: 4px; display: block;}
 
+#content .scene ul.offer li.description ul {list-style: disc;}
+#content .scene ul.offer li.description ul li {display: list-item; padding: 0 0 3px; font-size: 13px;}
 
 
 /* CODE AND TYPECASTING */
@@ -207,7 +210,6 @@
 #content .scene div.vcard dl.info {padding: 0 20px 20px; display: block;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
-#content .scene div.vcard dl.info dd {padding-bottom: 10px; padding-left: 0;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 #content .scene div.vcard dl.info dd li a {padding-bottom: 10px; display: inline-block;}

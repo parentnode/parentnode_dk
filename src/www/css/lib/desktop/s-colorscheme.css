@@ -16,13 +16,15 @@ body {}
 
 #content .scene hr {border-color: #cccccc;}
 
-#content ul.actions input.button.primary,
+ul.actions input.button.primary,
+ul.actions a.button.primary,
 #content ul.actions a.button.primary,
-#header ul.servicenavigation li.github {background-color: #63add0;}
+#header ul.servicenavigation li.github {background-color: #63add0; color: #ffffff;}
 
 #content .scene div.categories ul.tags li.selected a,
 #content .scene div.categories ul.tags li.selected:before {color: #034769;}
 #content .scene div.comments.open h2 {color: #63add0;}
+#content .scene div.qnas.open h2 {color: #63add0;}
 
 #footer {border-color: #cccccc;}
 #footer a {color: #63add0;}

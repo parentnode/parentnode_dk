@@ -58,10 +58,13 @@ Util.Objects["page"] = new function() {
 				page.cN.scene.resized();
 			}
 
+			page.offsetHeight;
 		}
 
 		// global scroll handler 
 		page.scrolled = function() {
+
+			page.scrolled_y = u.scrollY();
 
 			// forward scroll event to current scene
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {

@@ -13,6 +13,7 @@ Util.Objects["articleMiniList"] = new function() {
 //			u.bug("header.current_readstate:" + header.current_readstate );
 
 			if(header.current_readstate) {
+				u.ac(header, "read");
 				u.addCheckmark(header);
 			}
 

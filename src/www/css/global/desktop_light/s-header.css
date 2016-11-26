@@ -9,7 +9,8 @@
 #header .servicenavigation li {display: inline; vertical-align: top; color: #bbbbbb; padding-left: 10px;}
 #header .servicenavigation li.navigation,
 #header .servicenavigation li.admin,
-#header .servicenavigation li.user {display: none;}
+#header .servicenavigation li.user,
+#header .servicenavigation li.cart {display: none;}
 
 
 /* NAViGATION */

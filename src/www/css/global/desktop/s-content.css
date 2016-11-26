@@ -203,6 +203,7 @@
 
 /* COMMENTS */
 #content .scene div.comments {padding-bottom: 15px; position: relative; z-index: 1;}
+#content .scene div.articlebody + div.comments {padding-top: 20px;}
 #content .scene div.comments h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
 #content .scene div.comments h2 svg.arrow {position: absolute; top: 3px; left: 45px;}
 #content .scene div.comments h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
@@ -226,6 +227,33 @@
 #content .scene div.comments .field {padding-bottom: 10px;}
 
 
+/* QnAs */
+#content .scene div.qnas {padding-bottom: 15px; position: relative; z-index: 1;}
+#content .scene div.articlebody + div.qnas {padding-top: 20px;}
+
+#content .scene div.qnas h2 {font-size: 16px; padding-bottom: 25px; position: relative; color: #dedede; cursor: pointer;}
+#content .scene div.qnas h2 svg.arrow {position: absolute; top: 3px; left: 45px;}
+#content .scene div.qnas h2 svg.arrow line {stroke: #dedede; stroke-width: 3px;}
+
+#content .scene div.qnas > p,
+#content .scene div.qnas ul.qnas,
+#content .scene div.qnas ul.actions {display: none;}
+
+#content .scene div.qnas.open h2 {color: #00c90d;}
+#content .scene div.qnas.open > p,
+#content .scene div.qnas.open ul.qnas,
+#content .scene div.qnas.open ul.actions {display: block;}
+
+#content .scene div.qnas > p {color: #999999; font-size: 13px; padding-bottom: 25px;}
+#content .scene div.qnas ul.qnas {padding: 0; margin: 0;}
+#content .scene div.qnas ul.qnas > li {padding-bottom: 15px; padding-left: 0;}
+#content .scene div.qnas ul.qnas > li ul.info {padding-bottom: 0; margin: 0; list-style: none; display: block;}
+#content .scene div.qnas ul.qnas > li ul.info li {display: inline-block; vertical-align: top; color: #cccccc; font-size: 12px; padding-bottom: 0; padding-left: 0;}
+#content .scene div.qnas ul.qnas > li ul.info li.user:after {content: ",\00a0";}
+#content .scene div.qnas ul.qnas > li p.question {padding-bottom: 10px; font-size: 13px;}
+#content .scene div.qnas .field {padding-bottom: 10px;}
+
+
 
 /* OFFER */
 #content .scene ul.offer,
@@ -237,7 +265,25 @@
 #content .scene ul.offer li.default {text-decoration: line-through;}
 #content .scene ul.offer li.description {padding-top: 4px; display: block;}
 
+#content .scene ul.offer li.description ul {list-style: disc;}
+#content .scene ul.offer li.description ul li {display: list-item; padding: 0 0 3px; font-size: 13px;}
+
 /*#content .scene ul.offer dd.currency:after {content: "\00a0";}*/
+
+
+/* PAGINATION */
+body > div.pagination li.next > svg.arrow {position: absolute; top: 14px; right: 2px;}
+body > div.pagination li.next > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+body > div.pagination li.previous > svg.arrow {position: absolute; top: 14px; left: 8px;}
+body > div.pagination li.previous > svg.arrow line {stroke: #26962d; stroke-width: 3px;}
+body > div.pagination li.previous,
+body > div.pagination li.next {z-index: 100; position: fixed; top: 50%; margin-top: -20px; height: 40px; width: 0; overflow: hidden; border: 1px solid #26962d; cursor: pointer; background: #ffffff;}
+body > div.pagination li.previous {left: 0; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left: none; padding-left: 30px;}
+body > div.pagination li.next {right: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-right: none; padding-right: 30px;}
+body > div.pagination li.previous a,
+body > div.pagination li.next a {font-size: 16px; line-height: 16px; display: inline-block; vertical-align: top; padding: 11px 12px 13px; white-space: nowrap; opacity: 0;}
+body > div.pagination li.previous a {padding-left: 0;}
+body > div.pagination li.next a {padding-right: 0;}
 
 
 

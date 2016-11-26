@@ -22,6 +22,7 @@ u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
 
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
+u.txt["relogin"] = "Your session timed out - please login to continue.";
 
 
 // terms

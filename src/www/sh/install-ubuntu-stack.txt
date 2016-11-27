@@ -11,7 +11,7 @@ echo "---------------------------------"
 echo
 
 echo "Please enter you password to continue."
-sudo ls 2<&1
+sudo ls &>/dev/null
 
 echo
 echo "Updating LOCALE information (Adding en_GB.UTF-8)"

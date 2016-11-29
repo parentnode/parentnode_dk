@@ -10,8 +10,14 @@ echo "parentNode/Ubuntu stack installer"
 echo "---------------------------------"
 echo
 
-echo "Please enter you password to continue."
-sudo ls &>/dev/null
+
+if sudo -n false 2>/dev/null; then 
+
+	echo "Please enter you password to continue."
+	sudo ls &>/dev/null
+
+fi
+
 
 echo
 echo "Updating LOCALE information (Adding en_GB.UTF-8)"

@@ -6,16 +6,20 @@
 
 echo 
 echo 
+echo 
 echo "         Welcome to the          "
 echo "parentNode/Ubuntu stack installer"
 echo "---------------------------------"
 echo
-
+echo 
+echo "Preparing for installation ..."
+echo
 
 # FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
 sudo ls &>/dev/null
 
 
+echo
 echo
 echo "Updating LOCALE information (Adding en_GB.UTF-8)"
 echo
@@ -25,6 +29,7 @@ export LC_ALL="en_GB.utf8"
 
 
 echo
+echo
 echo "Updating package information"
 echo
 
@@ -33,12 +38,14 @@ sudo apt update
 
 
 echo
-echo "Upgrading package information"
+echo
+echo "Upgrading packages"
 echo
 # UPGRADE ALL EXISTING SOFTWARE
 sudo apt full-upgrade
 
 
+echo
 echo
 echo "Install Git"
 echo
@@ -54,14 +61,16 @@ if [ -d "/srv/tools" ]; then
 fi
 
 echo
-echo "Clone install tools"
+echo
+echo "Cloning install tools"
 echo
 # CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
 sudo git clone https://github.com/parentnode/ubuntu_environment /srv/tools
 
 
 echo
-echo "Run installer"
+echo
+echo "Running installer"
 echo
 # RUN INSTALL SCRIPT
 sudo /srv/tools/_tools/install.sh

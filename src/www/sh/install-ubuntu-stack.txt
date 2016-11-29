@@ -3,6 +3,9 @@
 
 # curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt | bash
 
+trap command SIGINT
+
+
 echo 
 echo 
 echo "         Welcome to the          "
@@ -10,8 +13,10 @@ echo "parentNode/Ubuntu stack installer"
 echo "---------------------------------"
 echo
 
+has_sudo=$(sudo -n true)
+echo "has sudo: $has_sudo"
 
-if [ ! sudo -n true 2>/dev/null ]; then 
+if test -n has_sudo; then 
 
 	echo "Please enter you password to continue."
 	sudo ls &>/dev/null
@@ -68,3 +73,5 @@ echo "Run installer"
 echo
 # RUN INSTALL SCRIPT
 sudo /srv/tools/_tools/install.sh
+
+

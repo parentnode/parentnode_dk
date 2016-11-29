@@ -11,7 +11,7 @@ echo "---------------------------------"
 echo
 
 
-if sudo -n false 2>/dev/null; then 
+if [ ! sudo -n true 2>/dev/null ]; then 
 
 	echo "Please enter you password to continue."
 	sudo ls &>/dev/null

@@ -13,7 +13,7 @@ echo "parentNode/Ubuntu stack installer"
 echo "---------------------------------"
 echo
 
-if test sudo -n true 2>/dev/null = true ]; then 
+if test ! sudo -n true 2>/dev/null ]; then 
     echo "I got sudo"
 else
     echo "I don't have sudo"

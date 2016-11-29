@@ -23,7 +23,7 @@ fi
 has_sudo=$(sudo -n true 2>/dev/null)
 echo "has sudo: $has_sudo"
 
-if [ ! has_sudo]; then 
+if [ ! has_sudo ]; then 
 
 	echo "Please enter you password to continue."
 	sudo ls &>/dev/null

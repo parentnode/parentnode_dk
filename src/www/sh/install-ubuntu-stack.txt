@@ -13,7 +13,7 @@ echo "parentNode/Ubuntu stack installer"
 echo "---------------------------------"
 echo
 
-if sudo -n false 2>/dev/null; then 
+if [ ! sudo -n true 2>/dev/null ]; then 
     echo "I got sudo"
 else
     echo "I don't have sudo"
@@ -23,7 +23,9 @@ fi
 # has_sudo=$()
 # echo "has sudo: $has_sudo"
 
-if sudo -n false 2>/dev/null; then 
+if sudo -n true 2>/dev/null; then 
+
+else
 
 	echo "Please enter you password to continue."
 	sudo ls &>/dev/null

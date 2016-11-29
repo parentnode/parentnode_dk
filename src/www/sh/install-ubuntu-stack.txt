@@ -3,8 +3,6 @@
 
 # curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt | bash
 
-trap command SIGINT
-
 
 echo 
 echo 

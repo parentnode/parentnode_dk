@@ -7,9 +7,10 @@
 echo 
 echo 
 echo 
-echo "         Welcome to the          "
-echo "parentNode/Ubuntu stack installer"
-echo "---------------------------------"
+echo "                    Welcome to the          "
+echo "           parentNode/Ubuntu stack installer"
+echo
+echo "--------------------------------------------------------"
 echo
 echo 
 echo "Preparing for installation ..."
@@ -23,8 +24,7 @@ echo
 echo
 echo "Updating LOCALE information (Adding en_GB.UTF-8)"
 echo
-sudo locale-gen en_GB.UTF-8
-
+sudo locale-gen en_GB.UTF-8 &>/dev/null
 export LC_ALL="en_GB.utf8"
 
 

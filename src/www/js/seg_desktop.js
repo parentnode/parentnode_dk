@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-11-13 20:26:04
+js-merged @ 2017-01-20 18:14:49
 */
 
 /*seg_desktop_include.js*/
@@ -4372,6 +4372,7 @@ u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
+u.txt["relogin"] = "Your session timed out - please login to continue.";
 u.txt["terms-headline"] = "We love <br />cookies and privacy";
 u.txt["terms-accept"] = "Accept";
 u.txt["terms-details"] = "Details";
@@ -6424,6 +6425,8 @@ u.notifier = function(node) {
 				u.ae(overlay, login);
 				u.as(document.body, "overflow", "hidden");
 				var form = u.qs("form", overlay);
+				var relogin = u.ae(login, "p", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.insertBefore(relogin, form);
 				form.overlay = overlay;
 				u.ae(form, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
 				u.f.init(form);
@@ -6933,8 +6936,8 @@ Util.svg = function(svg_object) {
 	if(svg_object.title) {
 		svg.setAttributeNS(null, "title", svg_object.title);
 	}
-	if(svg_object.class) {
-		svg.setAttributeNS(null, "class", svg_object.class);
+	if(svg_object["class"]) {
+		svg.setAttributeNS(null, "class", svg_object["class"]);
 	}
 	if(svg_object.width) {
 		svg.setAttributeNS(null, "width", svg_object.width);
@@ -7047,6 +7050,7 @@ Util.Objects["page"] = new function() {
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
 				page.cN.scene.resized(event);
 			}
+			page.offsetHeight;
 		}
 		page.scrolled = function(event) {
 			page.scrolled_y = u.scrollY();
@@ -7101,7 +7105,7 @@ Util.Objects["page"] = new function() {
 					u.ce(bn_accept);
 					bn_accept.clicked = function() {
 						this.terms.parentNode.removeChild(this.terms);
-						u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+						u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
 					}
 					if(!location.href.match(terms_link.href)) {
 						var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_link.href});
@@ -7479,6 +7483,7 @@ Util.Objects["articleMiniList"] = new function() {
 			var header = u.qs("h2,h3", node);
 			header.current_readstate = node.getAttribute("data-readstate");
 			if(header.current_readstate) {
+				u.ac(header, "read");
 				u.addCheckmark(header);
 			}
 		}
@@ -7642,7 +7647,7 @@ u.injectSharing = function(node) {
 				this.bn_ok.share_info = this;
 				u.ce(this.bn_ok);
 				this.bn_ok.clicked = function(event) {
-					u.saveCookie("share-info", 1, {"path":"/"});
+					u.saveCookie("share-info", 1, {"expires":false, "path":"/"});
 					this.share_info.out();
 					this.share_info.parentNode.removeChild(this.share_info);
 					this.share_info.node.sharing.clicked();
@@ -7965,3 +7970,54 @@ u.addCollapseArrow = function(node) {
 		]
 	});
 }
+u.addPreviousArrow = function(node) {
+	node.arrow = u.svg({
+		"name":"prevearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 9,
+				"y1": 2,
+				"x2": 2,
+				"y2": 7
+			},
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 6,
+				"x2": 9,
+				"y2": 11
+			}
+		]
+	});
+}
+u.addNextArrow = function(node) {
+	node.arrow = u.svg({
+		"name":"nextearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 2,
+				"x2": 9,
+				"y2": 7
+			},
+			{
+				"type": "line",
+				"x1": 9,
+				"y1": 6,
+				"x2": 2,
+				"y2": 11
+			}
+		]
+	});
+}
+

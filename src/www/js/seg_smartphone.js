@@ -1,6 +1,6 @@
 /*
 Manipulator v0.9.1 Copyright 2016 http://manipulator.parentnode.dk
-js-merged @ 2016-11-13 20:26:04
+js-merged @ 2017-01-20 18:14:49
 */
 
 /*seg_smartphone_include.js*/
@@ -4318,6 +4318,7 @@ u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
 u.txt["cancel"] = "Cancel";
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
+u.txt["relogin"] = "Your session timed out - please login to continue.";
 u.txt["terms-headline"] = "We love <br />cookies and privacy";
 u.txt["terms-accept"] = "Accept";
 u.txt["terms-details"] = "Details";
@@ -5919,6 +5920,8 @@ u.notifier = function(node) {
 				u.ae(overlay, login);
 				u.as(document.body, "overflow", "hidden");
 				var form = u.qs("form", overlay);
+				var relogin = u.ae(login, "p", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.insertBefore(relogin, form);
 				form.overlay = overlay;
 				u.ae(form, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
 				u.f.init(form);
@@ -6300,8 +6303,10 @@ Util.Objects["page"] = new function() {
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
 				page.cN.scene.resized();
 			}
+			page.offsetHeight;
 		}
 		page.scrolled = function() {
+			page.scrolled_y = u.scrollY();
 			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
 				page.cN.scene.scrolled();
 			}

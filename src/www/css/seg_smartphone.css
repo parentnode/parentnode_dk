@@ -130,7 +130,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 20px; border-top: 1px solid #dedede;}
 #content .scene dl {padding: 0 20px 15px; overflow: hidden;}
 #content .scene dt {padding: 0 0 2px 0; color: #999999;} 
-#content .scene dd {padding: 0 0 12px 20px;}
+#content .scene dd {padding: 0 0 12px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px;}
 #content .scene dl dl dt {}
@@ -199,6 +199,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.related h2 a {font-size: 12px; display: inline-block; vertical-align: middle;
 	font-family: "OpenSans";
 }
+#content .scene div.qnas {display: none;}
 #content .scene div.comments {display: none;}
 #content .scene div.readstate {display: none;}
 #content .scene ul.offer,
@@ -209,6 +210,8 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.offer li {font-size: 11px; width: auto; display: inline-block; vertical-align: top; padding: 0 5px 0 0;}
 #content .scene ul.offer li.default {text-decoration: line-through;}
 #content .scene ul.offer li.description {padding-top: 4px; display: block;}
+#content .scene ul.offer li.description ul {list-style: disc;}
+#content .scene ul.offer li.description ul li {display: list-item; padding: 0 0 3px; font-size: 13px;}
 #content .scene code {color: #333333; padding: 10px 20px; margin: 0 0 15px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
@@ -236,7 +239,6 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene div.vcard dl.info {padding: 0 20px 20px; display: block;}
 #content .scene div.vcard dl.info dt,
 #content .scene div.vcard dl.info dd {display: block; width: auto; text-align: left;}
-#content .scene div.vcard dl.info dd {padding-bottom: 10px; padding-left: 0;}
 #content .scene div.vcard dl.info dd ul {padding: 0;}
 #content .scene div.vcard dl.info dd li {font-size: 12px; color: #cccccc;}
 #content .scene div.vcard dl.info dd li a {padding-bottom: 10px; display: inline-block;}
@@ -252,7 +254,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 }
 #content fieldset {border: none; display: block;}
 #content .field {padding: 0 18px 10px; position: relative; font-size: 0; z-index: 1;}
-#content label {display: block; padding: 0 0 0 3px; font-size: 10px;}
+#content label {display: block; padding: 0 0 0 4px; font-size: 10px;}
 #content .field input,
 #content .field select,
 #content .field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
@@ -338,7 +340,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field select.default,
 #content .field textarea.default,
 #content .field .pseudolabel {color: #aaaaaa;}
-#content .field .indicator {width: 25px; height: 15px; display: inline-block; margin-bottom: -2px;}
+#content .field .indicator {width: 20px; height: 15px; display: inline-block; margin-bottom: -2px; margin-top: -2px;}
 #content .field.required .indicator { 
 	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 3px -295px;
 }
@@ -368,15 +370,15 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 	-webkit-user-select: none;
 	user-select: none;
 }
-#content ul.actions input.button {width: auto; height: 28px; padding: 3px 12px; display: inline-block; vertical-align: top; outline: none; border-radius: 0; border: 0;
+#content ul.actions input.button {width: auto; height: 32px; padding: 2px 12px 4px; display: inline-block; vertical-align: top; outline: none; border-radius: 0; border: 0;
 	-webkit-appearance: none;
 }
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content ul.actions input.button {padding-bottom: 5px;}
 }
-#content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 6px 12px 8px;}
+#content ul.actions a.button {display: block; text-decoration: none; height: 18px; padding: 8px 12px 6px;}
 #content ul.actions input.button,
-#content ul.actions a.button {font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
+#content ul.actions a.button {font-size: 16px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
 #content ul.actions input.button:active,
 #content ul.actions a.button:active {background-color: #bebebe;}
 #content ul.actions input.button.primary,
@@ -507,7 +509,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene .articlebody ol {list-style-position: outside; margin-left: 20px;}
 #content .scene .articlebody ul {list-style-type: disc;}
 #content .scene .articlebody ol {list-style-type: decimal;}
-#content .scene .articlebody li {font-size: 14px; padding-bottom: 7px; padding-left: 3px;}
+#content .scene .articlebody li {font-size: 13px; padding-bottom: 15px; padding-left: 3px; line-height: 1.538em;}
 #content .scene .articlebody ul.actions {list-style: none; margin: 0;}
 #content .scene .articlebody ul.actions li {padding-left: 0;}
 #content .scene ul.todos dl.info {padding-bottom: 10px;}

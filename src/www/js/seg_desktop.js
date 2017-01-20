@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2017-01-20 22:55:09
+js-merged @ 2017-01-20 23:31:12
 */
 
 /*seg_desktop_include.js*/
@@ -8026,7 +8026,7 @@ u.addNextArrow = function(node) {
 Util.Objects["ubuntuSetupPost"] = new function() {
 	this.init = function(post) {
 		var extension_start = u.qs(".extension_start", post);
-		var form = u.f.addForm(post, {"class":"labelstyle:inject"});
+		var form = u.f.addForm(post, {"class":"labelstyle:inject ubuntuSetupPost"});
 		var extension_text = u.ae(form, "p", {"html":"To make the following commands C/P ready, you can enter your information here:"});
 		var fieldset = u.f.addFieldset(form);
 		u.f.addField(fieldset, {"label":"IP address", "name":"ip", "class":"ip_master"});

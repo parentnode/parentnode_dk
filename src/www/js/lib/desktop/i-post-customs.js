@@ -3,7 +3,7 @@ Util.Objects["ubuntuSetupPost"] = new function() {
 
 		var extension_start = u.qs(".extension_start", post);
 
-		var form = u.f.addForm(post, {"class":"labelstyle:inject"});
+		var form = u.f.addForm(post, {"class":"labelstyle:inject ubuntuSetupPost"});
 		var extension_text = u.ae(form, "p", {"html":"To make the following commands C/P ready, you can enter your information here:"});
 
 		var fieldset = u.f.addFieldset(form);

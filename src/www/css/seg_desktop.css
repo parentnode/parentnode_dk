@@ -809,3 +809,8 @@ ul.actions a.button.primary:hover,
 #content .scene div.qnas h2:hover {color: #00c90d;}
 #content .scene div.qnas h2:hover svg.arrow line {stroke: #63add0;}
 
+
+/*s-post-customs.css*/
+#content .scene.post form.ubuntuSetupPost {padding-bottom: 10px;}
+#content .scene.post form.ubuntuSetupPost p,
+#content .scene.post form.ubuntuSetupPost div.field {padding-bottom: 8px;}

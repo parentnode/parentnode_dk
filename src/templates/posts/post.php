@@ -32,7 +32,7 @@ $related_items = $IC->getRelatedItems($related_pattern);
 <? if($item):
 	$media = $IC->sliceMedia($item); ?>
 
-	<div class="article i:article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
+	<div class="article i:article id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/NewsArticle"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-readstate="<?= $item["readstate"] ?>"
 		data-readstate-add="<?= $this->validPath("/janitor/admin/profile/addReadstate/".$item["item_id"]) ?>" 

@@ -1,18 +1,16 @@
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_1/merged/seg_desktop.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/merged/seg_desktop.js"></script>');
 
 document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-googleanalytics.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-googleanalytics.js"></script>');
 
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_1/src/u-form-geolocation.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_1/src/u-form-htmleditor.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form-builder.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-animation-to.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-fontsReady.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-notifier.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-textscaler.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-sortable.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-svg.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-date.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-form-geolocation.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-form-htmleditor.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/beta-u-animation-to.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/beta-u-fontsReady.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/beta-u-notifier.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-sortable.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-date.js"></script>');
+
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-page.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/desktop/i-front.js"></script>');

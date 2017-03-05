@@ -46,6 +46,7 @@ u.injectSharing = function(node) {
 						view: window
 					});
 					this.share_info.dispatchEvent(share_info_event);
+					this.share_info.node.sharing.button.dispatchEvent(share_info_event);
 				}
 				u.e.addEvent(this.hint, "mouseover", this.hint.over);
 				this.hint.out = function() {
@@ -55,6 +56,7 @@ u.injectSharing = function(node) {
 						view: window
 					});
 					this.share_info.dispatchEvent(share_info_event);
+					this.share_info.node.sharing.dispatchEvent(share_info_event);
 				}
 				u.e.addEvent(this.hint, "mouseout", this.hint.out);
 

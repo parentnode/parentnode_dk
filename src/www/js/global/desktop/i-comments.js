@@ -96,8 +96,8 @@ Util.Objects["comments"] = new function() {
 
 							var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
 							var info = u.ae(comment_li, "ul", {"class":"info"});
-							u.ae(info, "li", {"class":"user", "html":response.cms_object["nickname"]});
 							u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
+							u.ae(info, "li", {"class":"author", "html":response.cms_object["nickname"]});
 							u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
 
 							this.div.initComment(comment_li);

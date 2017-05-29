@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2017-01-23 14:31:05
+js-merged @ 2017-05-29 23:41:06
 */
 
 /*seg_smartphone_include.js*/
@@ -6640,7 +6640,7 @@ Util.Objects["page"] = new function() {
 				u.ce(bn_accept);
 				bn_accept.clicked = function() {
 					this.terms.parentNode.removeChild(this.terms);
-					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+					u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
 				}
 				if(!location.href.match(/\/terms/)) {
 					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});

@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2017-01-23 14:31:05
+js-merged @ 2017-05-29 23:41:05
 */
 
 /*seg_desktop_include.js*/
@@ -7391,8 +7391,8 @@ Util.Objects["comments"] = new function() {
 							}
 							var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
 							var info = u.ae(comment_li, "ul", {"class":"info"});
-							u.ae(info, "li", {"class":"user", "html":response.cms_object["nickname"]});
 							u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
+							u.ae(info, "li", {"class":"author", "html":response.cms_object["nickname"]});
 							u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
 							this.div.initComment(comment_li);
 							this.parentNode.removeChild(this);
@@ -7498,6 +7498,7 @@ u.injectSharing = function(node) {
 						view: window
 					});
 					this.share_info.dispatchEvent(share_info_event);
+					this.share_info.node.sharing.button.dispatchEvent(share_info_event);
 				}
 				u.e.addEvent(this.hint, "mouseover", this.hint.over);
 				this.hint.out = function() {
@@ -7507,6 +7508,7 @@ u.injectSharing = function(node) {
 						view: window
 					});
 					this.share_info.dispatchEvent(share_info_event);
+					this.share_info.node.sharing.dispatchEvent(share_info_event);
 				}
 				u.e.addEvent(this.hint, "mouseout", this.hint.out);
 				u.ass(this.hint, {
@@ -7883,6 +7885,34 @@ Util.Objects["ubuntuSetupPost"] = new function() {
 			var i, username;
 			for(i = 0; username = this.usernames[i]; i++) {
 				username.innerHTML = this.val();
+			}
+		}
+		extension_start.parentNode.insertBefore(form, extension_start);
+	}
+}
+Util.Objects["dynamicVariablesPost"] = new function() {
+	this.init = function(post) {
+		var extension_start = u.qs(".extension_start", post);
+		var form = u.f.addForm(post, {"class":"labelstyle:inject dynamicVariablesPost"});
+		var extension_text = u.ae(form, "p", {"html":"To make the following commands C/P ready, enter your information here:"});
+		var fieldset = u.f.addFieldset(form);
+		var var_names = {};
+		var dyn_vars = u.qsa("span.dynvar");
+		var i, dyn_var;
+		for(i = 0; dyn_var = dyn_vars[i]; i++) {
+			dyn_var.var_name = dyn_var.className.replace(/(dynvar|[ ])/g, "");
+			if(!var_names[dyn_var.var_name]) {
+				var_names[dyn_var.var_name] = u.f.addField(fieldset, {"label":dyn_var.innerHTML, "name":dyn_var.var_name, "class":dyn_var.var_name+"_master"});
+			}
+		}
+		u.f.init(form);
+		for(i = 0; dyn_var = dyn_vars[i]; i++) {
+			form.fields[dyn_var.var_name].placeholders = u.qsa("span.dynvar."+dyn_var.var_name, post);
+			form.fields[dyn_var.var_name].updated = function() {
+				var i, placeholder;
+				for(i = 0; placeholder = this.placeholders[i]; i++) {
+					placeholder.innerHTML = this.val();
+				}
 			}
 		}
 		extension_start.parentNode.insertBefore(form, extension_start);

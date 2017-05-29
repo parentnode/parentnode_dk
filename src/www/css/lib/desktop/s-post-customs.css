@@ -2,3 +2,9 @@
 
 #content .scene.post form.ubuntuSetupPost p,
 #content .scene.post form.ubuntuSetupPost div.field {padding-bottom: 8px;}
+
+
+#content .scene.post form.dynamicVariablesPost {padding-bottom: 10px;}
+
+#content .scene.post form.dynamicVariablesPost p,
+#content .scene.post form.dynamicVariablesPost div.field {padding-bottom: 8px;}

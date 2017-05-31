@@ -4543,9 +4543,13 @@ u.defaultFilters = function(div) {
 			this.current_filter = query + "," + this.selected_tags.join(",");
 			for(i = 0; node = this.div.nodes[i]; i++) {
 				if(node._c.match(query) && this.checkTags(node)) {
+					node._hidden = false;
+					u.rc(node, "hidden");
 					u.as(node, "display", "block", false);
 				}
 				else {
+					node._hidden = true;
+					u.ac(node, "hidden");
 					u.as(node, "display", "none", false);
 				}
 			}
@@ -7601,11 +7605,21 @@ Util.Objects["defaultNew"] = new function() {
 		form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success" && response.cms_object) {
-					if(this.action.match(/\/save$/)) {
+					if(response.return_to) {
+						if(response.cms_object.item_id) {
+							location.href = response.return_to + response.cms_object.item_id;
+						}
+						else if(response.cms_object.id) {
+							location.href = response.return_to + response.cms_object.id;
+						}
+						else {
+						}
+					}
+					else if(this.action.match(/\/save$/)) {
 						location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.item_id;
 					}
 					else if(location.href.match(/\/new$/)) {
-						location.href = location.href.replace(/\/new/, "/edit/")+response.cms_object.item_id;
+						location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.item_id;
 					}
 					else if(this.actions["cancel"]) {
 						this.actions["cancel"].clicked();
@@ -7719,7 +7733,7 @@ Util.Objects["oneButtonForm"] = new function() {
 				u.rc(this.confirm_submit_button, "confirm");
 			}
 			node.form.submitted = function() {
-				if(!u.hc(this.confirm_submit_button, "confirm")) {
+				if(!u.hc(this.confirm_submit_button, "confirm") && this.confirm_submit_button.confirm_value) {
 					u.ac(this.confirm_submit_button, "confirm");
 					this.confirm_submit_button.value = this.confirm_submit_button.confirm_value;
 					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
@@ -9053,7 +9067,7 @@ Util.Objects["newOrderFromCart"] = new function() {
 		if(bn_convert) {
 			bn_convert.confirmed = function(response) {
 				u.bug("confirmed checkout")
-				if(response.cms_status == "success") {
+				if(response.cms_status == "success" && response.cms_object) {
 					location.href = location.href.replace(/\/cart\/edit\/.+/, "/order/edit/"+response.cms_object["id"]);
 				}
 			}

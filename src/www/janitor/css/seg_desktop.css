@@ -76,7 +76,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #page > .servicenavigation li:last-child:after {content: "";}
 #page > .servicenavigation li a {display: inline-block; vertical-align: top;}
 #page > .servicenavigation li a:hover {text-decoration: underline;}
-#navigation {opacity: 0; width: 230px;}
+#navigation {opacity: 0; width: 230px; overflow: auto; height: calc(100% - 140px);}
 #navigation ul li {color: #8c9399; display: block; text-transform: uppercase;}
 #navigation ul li:hover {color: #ffffff;}
 #navigation ul li a {display: block; padding: 14px 20px 15px;}
@@ -484,7 +484,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content ul.tags li {display: inline-block; vertical-align: top; margin: 0 6px 6px 0; border-radius: 12px; background-color: #313942; padding: 4px 7px 6px; color: #ffffff; font-size: 0;}
 #content ul.tags li.add {padding: 4px 4px 6px; cursor: pointer; width: 13px; text-align: center;}
 #content ul.tags li.add:hover {background-color: #64ad8e;}
-#content ul.tags li span {font-size: 11px; line-height: 1em; color: #ffffff !important;}
+#content ul.tags li span {font-size: 11px; line-height: 1em; color: #ffffff;}
 #content ul.tags li span.context {text-transform: uppercase;}
 #content ul.tags li span.context:after {content: ":";}
 #content ul.tags li span.value {}
@@ -499,11 +499,13 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content div.tagoptions ul.actions li input {margin-top: 4px;}
 #content .edittags ul.tags li {cursor: pointer;}
 #content .edittags ul.tags li:hover,
-#content .edittags ul.tags li.add:hover {background-color: #df0000;}
+#content .edittags ul.tags li.add:hover {background-color: #df0000; color: #ffffff;}
 #content .edittags div.tagoptions ul.tags {display: block;}
 #content div.tagoptions ul.tags {position: relative; z-index: 10; display: none;}
-#content div.tagoptions ul.tags li {background-color: #313942;}
+#content div.tagoptions ul.tags li {background-color: #dedede;}
+#content div.tagoptions ul.tags li span {color: #333333;}
 #content div.tagoptions ul.tags li:hover {background-color: #64ad8e;}
+#content div.tagoptions ul.tags li:hover span {color: #ffffff;}
 #content div.all_items div.tagoptions {padding-top: 8px;}
 #content div.all_items ul.items > li div.tagoptions ul.actions {position: static; right: auto; top: auto;}
 #content div.all_items ul.items > li div.tagoptions ul.actions li {padding-top: 1px;}
@@ -520,7 +522,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 /*s-shop.css*/
 #content .defaultList.shopList ul.items > li dl.details dt.price {display: none;}
-#content .defaultList.shopList ul.items > li dl.details dd.price {position: absolute; top: 10px; right: 100px; font-size: 14px;}
+#content .defaultList.shopList ul.items > li dl.details dd.price {position: absolute; top: 10px; right: 100px; font-size: 26px;}
 #content .defaultList.shopList ul.items > li p.error {padding-bottom: 6px; color: #df0000;}
 #content .defaultEdit.shopView dl.list {padding-top: 3px; padding-right: 0; padding-bottom: 40px; width: 370px;}
 #content .defaultEdit.shopView dl.list dt {width: 120px;}
@@ -562,8 +564,8 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultEdit.cartView div.order {border-top: 1px solid #bbbbbb; padding-bottom: 40px;}
 #content .defaultEdit.orderView {}
 #content .defaultEdit.orderView div.orderstatus {border-bottom: 1px solid #bbbbbb;}
-#content .defaultEdit.orderView div.comment {border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb;}
-#content .defaultEdit.orderView div.payments {border-top: 1px solid #bbbbbb;}
+#content .defaultEdit.orderView div.comment {border-top: 1px solid #bbbbbb;}
+#content .defaultEdit.orderView div.payments {border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb;}
 #content .defaultEdit.orderView div.payments ul.actions {padding-bottom: 10px;}
 #content .defaultEdit.orderView ul.items li.pending h3,
 #content .defaultEdit.orderView ul.items li.waiting h3,
@@ -612,7 +614,11 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.userEdit > div.newsletters ul.newsletters > li h3 {padding: 4px 0 0; display: inline-block; vertical-align: top;}
 #content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions {padding: 0 10px 0 0; display: inline-block; vertical-align: top;}
 #content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions li {padding: 0;}
-#content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions li input {width: 100px; text-align: center;}
+#content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions li input {font-size: 0; height: 26px; width: 26px; padding: 3px 12px;}
+#content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions li.unsubscribe input.button {background-color: #f4f5f5; border-left: 3px solid #8c9399; border-top: 3px solid #8c9399; border-right: 27px solid #8c9399; border-bottom: 3px solid #8c9399;}
+#content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions li.subscribe input.button {background-color: #f4f5f5; border-right: 3px solid orange; border-top: 3px solid orange; border-left: 27px solid orange; border-bottom: 3px solid orange;}
+#content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions li.unsubscribe form:after {content: "ON"; font-size: 10px; font-weight: 700; color: #8c9399; display: block; width: 20px; height: 20px; position: relative; top: -19px; left: 6px;}
+#content .scene.userEdit > div.newsletters ul.newsletters > li ul.actions li.subscribe form:after {content: "OFF"; font-size: 10px; font-weight: 700; color: orange; display: block; width: 20px; height: 20px; position: relative; top: -19px; left: 29px;}
 #content .scene.userEdit > div.newsletters > ul.actions {padding-top: 20px; border-top: 1px solid #dedede;}
 #content .scene.userEdit > div.newsletters ul.newsletters > li.subscribed li.subscribe {display: none;}
 #content .scene.userEdit > div.newsletters ul.newsletters > li.subscribed li.unsubscribe {display: inline-block;}
@@ -624,7 +630,8 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultEdit.accessEdit > div.access ul.points li.action {border-top: 1px solid #dedede; padding: 10px 0 0;}
 #content .defaultEdit.usergroupEdit > ul.actions li.access {float: right; padding-right: 0;}
 #content .defaultList.userContentList div.all_items {padding-bottom: 20px;}
-#content .defaultList.userContentList ul.items > li h3 br {display: none;}
+#content .defaultList.userOrderList div.all_items {padding-bottom: 20px;}
+#content .defaultList.userOrderList div.all_items ul.items dd.payment_status.missing {color: #df0000;}
 #content .defaultNew.userSubscriptions .item {padding-top: 10px;}
 #content .defaultNew.userSubscriptions .item p {padding-bottom: 3px;}
 #content .defaultList.userSubscriptions dd.price.default {text-decoration: line-through;}
@@ -633,32 +640,41 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .defaultList.userSubscriptions dd.price+dt.price,
 #content .defaultList.userSubscriptions dd.price+dt.price+dd.price {padding-top: 0;}
 #content .defaultList.userSubscriptions dt.membership {display: none;}
-#content .defaultList.userSubscriptions dd.membership {color: #df0000; clear: left; padding-top: 5px;}
+#content .defaultList.userSubscriptions dd.membership {color: green; clear: left; padding-top: 5px;}
 #content .defaultList.userSubscriptions dd.payment_status.missing {color: #df0000;}
 #content .defaultView.userMembership > div > h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 0 0 20px;}
-#content .defaultView.userMembership .item {margin-top: 20px; position: relative;}
-#content .defaultView.userMembership .item.change {border-top: 1px solid #bbbbbb;}
-#content .defaultView.userMembership .item h3 {padding-bottom: 20px; font-size: 28px;}
-#content .defaultView.userMembership dl {margin-top: -5px; overflow: hidden; padding: 0 30px 20px;}
-#content .defaultView.userMembership dt::after {content: ":\00a0";}
-#content .defaultView.userMembership dt {clear: left; float: left;}
-#content .defaultView.userMembership dd {clear: right; float: left; padding: 0 0 3px;}
-#content .defaultView.userMembership dd.price.default {text-decoration: line-through;}
-#content .defaultView.userMembership dt.price,
-#content .defaultView.userMembership dd.price {padding-top: 5px;}
-#content .defaultView.userMembership dd.price+dt.price,
-#content .defaultView.userMembership dd.price+dt.price+dd.price {padding-top: 0;}
-#content .defaultView.userMembership dt.membership {display: none;}
-#content .defaultView.userMembership dd.membership {color: #df0000; clear: left; padding-top: 5px;}
-#content .defaultView.userMembership dt.payment_method,
-#content .defaultView.userMembership dd.payment_method {padding-top: 5px;}
-#content .defaultView.userMembership dd.payment_status.missing {color: #df0000;}
-#content .defaultView.userMembership div.option {padding-bottom: 30px;}
-#content .defaultView.userMembership div.option h3 {padding-bottom: 10px; font-size: 18px;}
-#content .defaultView.userMembership div.option p {padding-bottom: 10px;}
+#content .defaultView.userMembership div.item {position: relative; border-bottom: 1px solid #bbbbbb;}
+#content .defaultView.userMembership div.item h3 {padding-bottom: 20px; font-size: 28px;}
+#content .defaultView.userMembership div.item dl {margin-top: -5px; overflow: hidden; padding: 0 30px 20px;}
+#content .defaultView.userMembership div.item dt::after {content: ":\00a0";}
+#content .defaultView.userMembership div.item dt {clear: left; float: left;}
+#content .defaultView.userMembership div.item dd {clear: right; float: left; padding: 0 0 3px;}
+#content .defaultView.userMembership div.item dd.price.default {text-decoration: line-through;}
+#content .defaultView.userMembership div.item dt.price,
+#content .defaultView.userMembership div.item dd.price {padding-top: 5px;}
+#content .defaultView.userMembership div.item dd.price+dt.price,
+#content .defaultView.userMembership div.item dd.price+dt.price+dd.price {padding-top: 0;}
+#content .defaultView.userMembership div.item dt.membership {display: none;}
+#content .defaultView.userMembership div.item dd.membership {color: #df0000; clear: left; padding-top: 5px;}
+#content .defaultView.userMembership div.item dt.payment_method,
+#content .defaultView.userMembership div.item dd.payment_method {padding-top: 5px;}
+#content .defaultView.userMembership div.item dd.payment_status.missing {color: #df0000;}
+#content .defaultView.userMembership div.item ul.actions {padding-bottom: 15px;}
+#content .defaultView.userMembership div.orders {border-bottom: 1px solid #bbbbbb;}
+#content .defaultView.userMembership div.orders ul.items {padding-bottom: 25px;}
+#content .defaultView.userMembership div.orders ul.items dd.payment_status.missing {color: #df0000;}
+#content .defaultView.userMembership div.change {border-bottom: 1px solid #bbbbbb;}
+#content .defaultView.userMembership div.change div.option {padding-bottom: 30px;}
+#content .defaultView.userMembership div.change div.option h3 {padding-bottom: 10px; font-size: 18px;}
+#content .defaultView.userMembership div.change div.option p {padding-bottom: 10px;}
+#content .defaultView.userMembership div.cancel {}
 #content .defaultList.memberList dd.payment_status.missing {color: #df0000;}
+#content .defaultEdit.userMember ul.actions li.user {float: right; padding: 0 0 10px 10px;}
+#content .defaultEdit.userMember div.orders {border-bottom: 1px solid #bbbbbb;}
+#content .defaultEdit.userMember div.orders ul.items {padding-bottom: 25px;}
 #content .defaultList.userContentList div.comments ul.items > li {}
 #content .defaultList.usersNotVerified > ul.actions li.remind {float: right; padding: 0 0 10px 10px;}
+#content .defaultList.newsletterList > ul.actions li.download {float: right; padding: 0 0 10px 10px;}
 #content .scene.profileEdit div.password label {display: block; padding-left: 3px;}
 #content .scene.profileEdit div.password .indicator {top: 20px;}
 #content .scene.profileEdit div.cancellation div.field.password {display: none;}
@@ -759,9 +775,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content div.all_items ul.items > li ul.actions li input.button {height: 24px;}
 #content div.all_items div.filter {padding: 10px 0 4px; min-height: 28px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb; position: relative; overflow: hidden;}
 #content div.all_items div.filter ul.tags {padding-bottom: 0; padding-right: 150px;}
-#content div.all_items div.filter ul.tags li {font-size: 12px; background-color: #dedede; cursor: pointer;}
+#content div.all_items div.filter ul.tags li {font-size: 12px; background-color: #dedede; color: #333333; cursor: pointer;}
 #content div.all_items div.filter ul.tags li.selected,
-#content div.all_items div.filter ul.tags li:hover {background-color: #313942;}
+#content div.all_items div.filter ul.tags li:hover {background-color: #313942; color: #ffffff;}
 #content div.all_items div.filter.filtering {background: red;}
 #content div.all_items div.filter form {position: absolute; right: 30px; top: 9px;}
 #content div.all_items div.filter .field {padding: 0 0 6px;}
@@ -909,9 +925,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.defaultEdit > div.qnas ul.qnas > li ul.info li.user:after {content: ",\00a0";}
 #content .scene.defaultEdit > div.qnas ul.qnas > li {display: block; border-top: 1px solid #dedede; position: relative; padding-bottom: 8px; padding-top: 15px;}
 #content .scene.defaultEdit > div.qnas ul.qnas > li p {padding-bottom: 7px;}
-#content .scene.defaultEdit div.togglable {overflow: hidden;}
-#content .scene.defaultEdit div.togglable h2 {position: relative;}
-#content .scene.defaultEdit div.togglable h2 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}
+#content .scene div.togglable {overflow: hidden;}
+#content .scene div.togglable h2 {position: relative;}
+#content .scene div.togglable h2 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}
 
 
 /*s-default_new.css*/

@@ -30,7 +30,7 @@ Util.Objects["qnas"] = new function() {
 		}
 
 		div.qna_open_state = u.getCookie("qna_open_state", {"path":"/"});
-		if(div.qna_open_state) {
+		if(div.qna_open_state == 1) {
 			div.header.clicked();
 		}
 

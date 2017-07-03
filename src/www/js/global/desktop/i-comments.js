@@ -29,7 +29,7 @@ Util.Objects["comments"] = new function() {
 		}
 
 		div.comments_open_state = u.getCookie("comments_open_state", {"path":"/"});
-		if(div.comments_open_state) {
+		if(div.comments_open_state == 1) {
 			div.header.clicked();
 		}
 

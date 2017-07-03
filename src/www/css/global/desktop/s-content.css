@@ -144,6 +144,11 @@
 #content .scene div.article ul.tags li,
 #content .scene div.article ul.tags li a {color: #cccccc;}
 
+/* ARTICLE REFERENCES */
+#content .scene div.article div.articlebody span.sup.reference {font-size: 10px; line-height: 1.1em; vertical-align: top; padding-left: 2px;}
+#content .scene div.article div.articlebody h3.reference {padding-top: 20px;}
+#content .scene div.article div.articlebody p.reference {font-style: italic;}
+
 
 /* ARTICLES */
 #content .scene ul.articles {padding: 0;}

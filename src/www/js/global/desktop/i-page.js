@@ -11,7 +11,7 @@ Util.Objects["page"] = new function() {
 		u.bug_force = true;
 		u.bug("This site is built using Manipulator, Janitor and Detector");
 		u.bug("Visit http://parentnode.dk for more information");
-		u.bug("Free lunch for new contributers ;-)");
+//		u.bug("Free lunch for new contributers ;-)");
 		u.bug_force = false;
 
 
@@ -39,20 +39,6 @@ Util.Objects["page"] = new function() {
 		// footer reference
 		page.fN = u.qs("#footer");
 		page.fN.service = u.qs("ul.servicenavigation", page.fN);
-
-
-		// LOGO
-		// add logo to navigation
-		page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
-		page.logo.url = '/';
-		page.logo.font_size = parseInt(u.gcs(page.logo, "font-size"));
-		page.logo.font_size_gap = page.logo.font_size-14;
-		page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
-
-
-		// create rule for logo
-		page.style_tag.sheet.insertRule("#header a.logo {}", 0);
-		page.logo.css_rule = page.style_tag.sheet.cssRules[0];
 
 
 
@@ -100,19 +86,25 @@ Util.Objects["page"] = new function() {
 
 			page.scrolled_y = u.scrollY();
 
-			// reduce logo
-			if(page.scrolled_y < page.logo.top_offset) {
-
-				page.logo.is_reduced = false;
-
-				var reduce_font = (1-(page.logo.top_offset-page.scrolled_y)/page.logo.top_offset) * page.logo.font_size_gap;
-				page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-reduce_font)+"px", "important");
+			// allow for custom logo reduction (used on stopknappen)
+			if(typeof(u.logoScroller) == "function") {
+				u.logoScroller();
 			}
-			// claim end state, once
-			else if(!page.logo.is_reduced) {
+			else {
+				// reduce logo
+				if(page.scrolled_y < page.logo.top_offset) {
 
-				page.logo.is_reduced = true;
-				page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-page.logo.font_size_gap)+"px", "important");
+					page.logo.is_reduced = false;
+
+					var reduce_font = (1-(page.logo.top_offset-page.scrolled_y)/page.logo.top_offset) * page.logo.font_size_gap;
+					page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-reduce_font)+"px", "important");
+				}
+				// claim end state, once
+				else if(!page.logo.is_reduced) {
+
+					page.logo.is_reduced = true;
+					page.logo.css_rule.style.setProperty("font-size", (page.logo.font_size-page.logo.font_size_gap)+"px", "important");
+				}
 			}
 
 			// reduce navigation
@@ -167,15 +159,14 @@ Util.Objects["page"] = new function() {
 
 				u.notifier(this);
 
+				this.initHeader();
 
 				this.initNavigation();
 
+				this.initFooter();
+
 				this.resized();
 
-				u.a.transition(page.fN, "all 0.5s ease-in");
-				u.ass(page.fN, {
-					"opacity":1
-				})
 			}
 		}
 
@@ -213,6 +204,26 @@ Util.Objects["page"] = new function() {
 
 			}
 
+		}
+
+
+		// initialize header elements
+		page.initHeader = function() {
+			
+			// LOGO
+			// add logo to navigation
+			page.logo = u.ie(page.hN, "a", {"class":"logo", "html":u.eitherOr(u.site_name, "Frontpage")});
+			page.logo.url = '/';
+			page.logo.font_size = parseInt(u.gcs(page.logo, "font-size"));
+			page.logo.font_size_gap = page.logo.font_size-14;
+			page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
+
+
+			// create rule for logo
+			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
+			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
+
+			
 		}
 
 		// initialize navigation elements
@@ -326,6 +337,16 @@ Util.Objects["page"] = new function() {
 				u.ce(github, {"type":"link"});
 			}
 
+		}
+
+		// initialize footer elements
+		page.initFooter = function() {
+
+			u.a.transition(page.fN, "all 0.5s ease-in");
+			u.ass(page.fN, {
+				"opacity":1
+			});
+			
 		}
 
 		// ready to start page builing process

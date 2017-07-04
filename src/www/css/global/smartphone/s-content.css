@@ -132,11 +132,12 @@
 
 /* ARTICLES */
 #content .scene ul.articles {padding: 0;}
-#content .scene.articles ul.articles {padding: 20px 0 30px;}
+#content .scene.articles ul.articles {padding: 0 0 30px;}
 
 #content .scene ul.articles li.article {padding: 20px 0 0; border-top: 1px solid #ccdbcd;}
 #content .scene ul.articles li.article ul.tags {padding-bottom: 10px;}
-#content .scene ul.articles li.article ul.tags li {color: #cccccc;}
+#content .scene ul.articles li.article ul.tags li,
+#content .scene ul.articles li.article ul.tags li a {color: #cccccc;}
 #content .scene ul.articles li.article h3 {font-size: 20px; line-height: 1em; padding-bottom: 10px;
 	font-family: "PT Serif", Times, serif;
 }
@@ -145,6 +146,8 @@
 /* ARTICLE */
 #content .scene div.article {padding-bottom: 30px;}
 #content .scene div.article h2 br {display: none;}
+#content .scene div.article ul.tags li,
+#content .scene div.article ul.tags li a {color: #cccccc;}
 #content .scene div.article ul.tags {padding-bottom: 20px;}
 /*
 #content .scene div.article ul.tags li,

@@ -10,7 +10,7 @@ Util.Objects["page"] = new function() {
 		u.bug_force = true;
 		u.bug("This site is built using Manipulator, Janitor and Detector");
 		u.bug("Visit http://parentnode.dk for more information");
-		u.bug("Free lunch for new contributers ;-)");
+//		u.bug("Free lunch for new contributers ;-)");
 		u.bug_force = false;
 
 

@@ -122,27 +122,37 @@ Util.Objects["page"] = new function() {
 
 			// show terms notification
 			if(u.terms_version && !u.getCookie(u.terms_version)) {
-				var terms = u.ie(page.cN, "div", {"class":"terms_notification"});
-				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
-				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
-				bn_accept.terms = terms;
-				u.ce(bn_accept);
-				bn_accept.clicked = function() {
-					this.terms.parentNode.removeChild(this.terms);
-//					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
-					u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
+
+				var terms_link = u.qs("li.terms a");
+
+				// if terms link has been made clickable, the hraf is stored in parentNode.url
+				if(terms_link && (terms_link.href || terms_link.parentNode.url)) {
+
+					var terms_url = terms_link.href || terms_link.parentNode.url;
+					var terms = u.ie(page.cN, "div", {"class":"terms_notification"});
+					u.ae(terms, "h3", {"html":u.stringOr(u.txt["terms-headline"], "We love <br />cookies and privacy")});
+					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":u.stringOr(u.txt["terms-accept"], "Accept")});
+					bn_accept.terms = terms;
+					u.ce(bn_accept);
+					bn_accept.clicked = function() {
+						this.terms.parentNode.removeChild(this.terms);
+	//					u.saveCookie(u.terms_version, true, {"expiry":new Date(new Date().getTime()+(1000*60*60*24*365)).toGMTString()});
+						u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
+					}
+
+					if(!location.href.match(terms_url)) {
+						var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_url});
+						u.ce(bn_details, {"type":"link"});
+					}
+
+					// show terms/cookie approval
+					u.a.transition(terms, "all 0.5s ease-in");
+					u.ass(terms, {
+						"opacity": 1
+					});
+
 				}
 
-				if(!location.href.match(/\/terms/)) {
-					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
-					u.ce(bn_details, {"type":"link"});
-				}
-
-				// show terms/cookie approval
-				u.a.transition(terms, "all 0.5s ease-in");
-				u.ass(terms, {
-					"opacity": 1
-				});
 			}
 
 		}

@@ -185,10 +185,12 @@ ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 10px
 
 ul.actions input.button {width: auto; height: 28px; padding: 3px 9px; display: inline-block; vertical-align: top;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	ul.actions input.button {padding: 3px 12px 5px;}
+	ul.actions input.button {padding: 3px 12px 5px;
+		-webkit-appearance: none;
+	}
 }
 ul.actions a.button,
-#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 6px 12px 8px; text-decoration: none;}
+#content ul.actions a.button {display: block; text-decoration: none; height: 16px; padding: 6px 12px 8px;}
 
 
 /* DEFAULT BUTTON */

@@ -235,7 +235,7 @@ Util.Objects["page"] = new function() {
 			if(page.nN.list) {
 				page.nN.list.nodes = u.qsa("li", page.nN.list);
 
-				if(page.nN.list.nodes.length) {
+				if(page.nN.list.nodes.length > 1) {
 					// set reducing scope
 					page.nN.font_size = parseInt(u.gcs(page.nN.list.nodes[1], "font-size"));
 					page.nN.font_size_gap = page.nN.font_size-14;

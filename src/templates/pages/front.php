@@ -75,9 +75,9 @@ $event_items = $IC->getItems(array("itemtype" => "event", "tags" => "on:frontpag
 				]) ?>
 
 
-				<? if($item["html"]): ?>
-				<div class="articlebody" itemprop="articleBody">
-					<?= $item["html"] ?>
+				<? if($item["description"]): ?>
+				<div class="description" itemprop="description">
+					<p><?= nl2br($item["description"]) ?></p>
 				</div>
 				<? endif; ?>
 

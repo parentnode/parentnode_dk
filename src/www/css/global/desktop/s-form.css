@@ -164,7 +164,9 @@ div.field.error textarea {border: 3px solid #a62300;}
 /* ERROR - RADIOBUTTONS + CHECKBOX */
 div.field.radiobuttons.error input,
 div.field.checkbox.error input,
-div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;}
+div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;
+	box-shadow: 0px 0px 0px 1px #df0000;
+}
 
 /* ERROR - LOCATION */
 div.field.location.error input {margin: 2px; border: 1px solid #dcdcdc;}

@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2017-05-31 09:14:22
+js-merged @ 2017-10-08 16:20:27
 */
 
 /*seg_smartphone_include.js*/
@@ -4457,86 +4457,7 @@ u.txt["terms-accept"] = "Accept";
 u.txt["terms-details"] = "Details";
 
 /*u-basics.js*/
-Util.Objects["oneButtonForm"] = new function() {
-	this.init = function(node) {
-		u.bug("oneButtonForm:" + u.nodeId(node));
-		if(!node.childNodes.length) {
-			var csrf_token = node.getAttribute("data-csrf-token");
-			var form_action = node.getAttribute("data-form-action");
-			var button_value = node.getAttribute("data-button-value");
-			var button_name = node.getAttribute("data-button-name");
-			var button_class = node.getAttribute("data-button-class");
-			var inputs = node.getAttribute("data-inputs");
-			if(csrf_token && form_action && button_value) {
-				node.form = u.f.addForm(node, {"action":form_action, "class":"confirm_action_form"});
-				node.form.node = node;
-				u.ae(node.form, "input", {"type":"hidden","name":"csrf-token", "value":csrf_token});
-				if(inputs) {
-					for(input_name in inputs)
-					u.ae(node.form, "input", {"type":"hidden","name":input_name, "value":inputs[input_name]});
-				}
-				u.f.addAction(node.form, {"value":button_value, "class":"button" + (button_class ? " "+button_class : ""), "name":u.stringOr(button_name, "save")});
-			}
-		}
-		else {
-			node.form = u.qs("form", node);
-		}
-		if(node.form) {
-			u.f.init(node.form);
-			node.form.node = node;
-			node.form.confirm_submit_button = u.qs("input[type=submit]", node.form);
-			node.form.confirm_submit_button.org_value = node.form.confirm_submit_button.value;
-			node.form.confirm_submit_button.confirm_value = node.getAttribute("data-confirm-value");
-			node.form.success_function = node.getAttribute("data-success-function");
-			node.form.success_location = node.getAttribute("data-success-location");
-			node.form.restore = function(event) {
-				u.t.resetTimer(this.t_confirm);
-				this.confirm_submit_button.value = this.confirm_submit_button.org_value;
-				u.rc(this.confirm_submit_button, "confirm");
-			}
-			node.form.submitted = function() {
-				if(!u.hc(this.confirm_submit_button, "confirm") && this.confirm_submit_button.confirm_value) {
-					u.ac(this.confirm_submit_button, "confirm");
-					this.confirm_submit_button.value = this.confirm_submit_button.confirm_value;
-					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-				}
-				else {
-					u.t.resetTimer(this.t_confirm);
-					this.response = function(response) {
-						page.notify(response);
-						if(response) {
-							if(response.cms_object && response.cms_object.constraint_error) {
-								this.value = this.confirm_submit_button.org_value;
-								u.ac(this, "disabled");
-							}
-							else {
-								if(this.success_location) {
-									u.ass(this.confirm_submit_button, {
-										"display": "none"
-									});
-									location.href = this.success_location;
-								}
-								else if(this.success_function) {
-									if(typeof(this.node[this.success_function]) == "function") {
-										this.node[this.success_function](response);
-									}
-								}
-								else if(typeof(this.node.confirmed) == "function") {
-									this.node.confirmed(response);
-								}
-								else {
-									u.bug("default return handling" + this.success_location)
-								}
-							}
-						}
-						this.restore();
-					}
-					u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-				}
-			}
-		}
-	}
-}
+
 
 /*u-googleanalytics.js*/
 if(u.ga_account) {
@@ -6291,9 +6212,11 @@ u.notifier = function(node) {
 			}
 		}
 		else if(typeof(response) == "object" && response.isHTML) {
-			var login = u.qs(".scene.login", response);
+			var login = u.qs(".scene.login form", response);
 			var messages = u.qsa(".scene div.messages p", response);
 			if(login && !u.qs("#login_overlay")) {
+				// 
+				// 
 				this.autosave_disabled = true;
 				if(page.t_autosave) {
 					u.t.resetTimer(page.t_autosave);
@@ -6302,14 +6225,12 @@ u.notifier = function(node) {
 				overlay.node = this;
 				u.ae(overlay, login);
 				u.as(document.body, "overflow", "hidden");
-				var form = u.qs("form", overlay);
-				var relogin = u.ae(login, "p", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
-				login.insertBefore(relogin, form);
-				form.overlay = overlay;
-				u.ae(form, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
-				u.f.init(form);
-				form.fields["username"].focus();
-				form.submitted = function() {
+				var relogin = u.ie(login, "h1", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.overlay = overlay;
+				u.ae(login, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
+				u.f.init(login);
+				login.fields["username"].focus();
+				login.submitted = function() {
 					this.response = function(response) {
 						if(response.isJSON && response.cms_status == "success") {
 							var csrf_token = response.cms_object["csrf-token"];
@@ -6663,7 +6584,6 @@ Util.Objects["page"] = new function() {
 		u.bug_force = true;
 		u.bug("This site is built using Manipulator, Janitor and Detector");
 		u.bug("Visit http://parentnode.dk for more information");
-		u.bug("Free lunch for new contributers ;-)");
 		u.bug_force = false;
 		page.hN = u.qs("#header");
 		page.hN.service = u.qs(".servicenavigation", page.hN);
@@ -6715,23 +6635,27 @@ Util.Objects["page"] = new function() {
 		}
 		page.acceptCookies = function() {
 			if(u.terms_version && !u.getCookie(u.terms_version)) {
-				var terms = u.ie(page.cN, "div", {"class":"terms_notification"});
-				u.ae(terms, "h3", {"html":"We love <br />cookies and privacy"});
-				var bn_accept = u.ae(terms, "a", {"class":"accept", "html":"Accept"});
-				bn_accept.terms = terms;
-				u.ce(bn_accept);
-				bn_accept.clicked = function() {
-					this.terms.parentNode.removeChild(this.terms);
-					u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
+				var terms_link = u.qs("li.terms a");
+				if(terms_link && (terms_link.href || terms_link.parentNode.url)) {
+					var terms_url = terms_link.href || terms_link.parentNode.url;
+					var terms = u.ie(page.cN, "div", {"class":"terms_notification"});
+					u.ae(terms, "h3", {"html":u.stringOr(u.txt["terms-headline"], "We love <br />cookies and privacy")});
+					var bn_accept = u.ae(terms, "a", {"class":"accept", "html":u.stringOr(u.txt["terms-accept"], "Accept")});
+					bn_accept.terms = terms;
+					u.ce(bn_accept);
+					bn_accept.clicked = function() {
+						this.terms.parentNode.removeChild(this.terms);
+						u.saveCookie(u.terms_version, true, {"path":"/", "expires":false});
+					}
+					if(!location.href.match(terms_url)) {
+						var bn_details = u.ae(terms, "a", {"class":"details", "html":u.stringOr(u.txt["terms-details"], "Details"), "href":terms_url});
+						u.ce(bn_details, {"type":"link"});
+					}
+					u.a.transition(terms, "all 0.5s ease-in");
+					u.ass(terms, {
+						"opacity": 1
+					});
 				}
-				if(!location.href.match(/\/terms/)) {
-					var bn_details = u.ae(terms, "a", {"class":"details", "html":"Details", "href":"/terms"});
-					u.ce(bn_details, {"type":"link"});
-				}
-				u.a.transition(terms, "all 0.5s ease-in");
-				u.ass(terms, {
-					"opacity": 1
-				});
 			}
 		}
 		page.initNavigation = function() {

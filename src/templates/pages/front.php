@@ -7,8 +7,6 @@ if($page_item) {
 }
 
 $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
-$event_items = $IC->getItems(array("itemtype" => "event", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
-	
 ?>
 <div class="scene front i:front">
 

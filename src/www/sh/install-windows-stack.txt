@@ -1,0 +1,43 @@
+#!/bin/bash -e
+# bash <(curl -s http://test.parentnode.dk/sh/install-windows-stack.txt)
+
+
+echo 
+echo 
+echo 
+echo "                    Welcome to the          "
+echo "           parentNode/Windows stack installer"
+echo
+echo "--------------------------------------------------------"
+echo
+echo 
+echo "Preparing for installation ..."
+echo
+
+
+# TODO: Update to powershell check and git check
+macports_ok=$(sudo port -version exit 2>/dev/null || echo "")
+
+if [ -z "$macports_ok" ]; then
+
+	echo "You need to install PowerShell"
+
+fi
+
+
+echo
+echo
+echo "Cloning install tools"
+echo
+# CLONE THE FULL WINDOWS INSTALL AND TOOLS FROM GITHUB
+git clone https://github.com/parentnode/windows_environment /srv/sites/parentnode/windows_environment
+
+
+echo
+echo
+echo "Running installer"
+echo
+# RUN INSTALL SCRIPT
+/srv/sites/parentnode/windows_environment/install.sh
+
+

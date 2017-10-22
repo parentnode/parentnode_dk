@@ -1,0 +1,55 @@
+#!/bin/bash -e
+# bash <(curl -s http://test.parentnode.dk/sh/install-osx-stack.txt)
+
+
+echo 
+echo 
+echo 
+echo "                    Welcome to the          "
+echo "           parentNode/OS X stack installer"
+echo
+echo "--------------------------------------------------------"
+echo
+echo 
+echo "Preparing for installation ..."
+echo
+
+# FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
+sudo ls &>/dev/null
+
+
+
+
+macports_ok=$(sudo port -version exit 2>/dev/null || echo "")
+
+# Login was successful - it means that DB was not set up yet
+if [ -z "$macports_ok" ]; then
+
+	echo "You need to install "
+
+fi
+
+
+# DOES TOOLS ALREADY EXIST - DELETE THEM AND CLONE AGAIN
+if [ -d "/srv/tools" ]; then
+
+	sudo rm -R /srv/tools
+
+fi
+
+echo
+echo
+echo "Cloning install tools"
+echo
+# CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
+sudo git clone https://github.com/parentnode/os_x_environment /srv/sites/parentnode/os_x_environment
+
+
+echo
+echo
+echo "Running installer"
+echo
+# RUN INSTALL SCRIPT
+sudo php /srv/sites/parentnode/os_x_environment/install.php
+
+

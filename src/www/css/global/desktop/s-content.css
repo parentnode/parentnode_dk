@@ -313,7 +313,10 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene span.var {color: #007633;}
 #content .scene span.value {color: #a65900; font-style: italic;}
 #content .scene span.file {color: #a62300;}
-#content .scene span.htmltag {text-transform: uppercase;}
+#content .scene span.htmltag {text-transform: uppercase; font-size: 0.7em;}
+#content .scene span.htmltag:before {content: "<"; line-height: 2.1em; vertical-align: top;}
+#content .scene span.htmltag:after {content: ">"; line-height: 2.1em; vertical-align: top;}
+
 #content .scene span.command {color: #4b5cd7;}
 
 

@@ -14,30 +14,31 @@ echo
 echo "Preparing for installation ..."
 echo
 
+echo "Install method seems to work"
 
 # TODO: Update to powershell check and git check
-macports_ok=$(sudo port -version exit 2>/dev/null || echo "")
+# macports_ok=$(sudo port -version exit 2>/dev/null || echo "")
 
-if [ -z "$macports_ok" ]; then
-
-	echo "You need to install PowerShell"
-
-fi
-
-
-echo
-echo
-echo "Cloning install tools"
-echo
-# CLONE THE FULL WINDOWS INSTALL AND TOOLS FROM GITHUB
-git clone https://github.com/parentnode/windows_environment /srv/sites/parentnode/windows_environment
+# if [ -z "$macports_ok" ]; then
+#
+# 	echo "You need to install PowerShell"
+#
+# fi
 
 
-echo
-echo
-echo "Running installer"
-echo
-# RUN INSTALL SCRIPT
-/srv/sites/parentnode/windows_environment/install.sh
-
+# echo
+# echo
+# echo "Cloning install tools"
+# echo
+# # CLONE THE FULL WINDOWS INSTALL AND TOOLS FROM GITHUB
+# git clone https://github.com/parentnode/windows_environment /srv/sites/parentnode/windows_environment
+#
+#
+# echo
+# echo
+# echo "Running installer"
+# echo
+# # RUN INSTALL SCRIPT
+# /srv/sites/parentnode/windows_environment/install.sh
+#
 

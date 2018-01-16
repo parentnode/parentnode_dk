@@ -18,27 +18,44 @@ echo
 sudo ls &>/dev/null
 
 
-xcode_ok = $(xcodebuild -version exit 2>/dev/null || echo "")
+xcode_ok=$(xcodebuild -version exit 2>/dev/null || echo "")
+
+if [ -z "$xcode_ok" ]; then
+
+	echo
+	echo "You need to install Xcode before you can continue."
+	echo
+	open https://itunes.apple.com/gh/app/xcode/id497799835
+	exit 1;
+
+fi
 
 
-xcode_cl_ok = $(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>/dev/null || echo "");
+xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>/dev/null || echo "");
 
 if [ -z "$xcode_cl_ok" ]; then
 
 	xcode-select --install
 
-	echo "Run the setup command again when the command line tools are installed"
+	echo
+	echo "Run the setup command again when the command line tools are installed. See you again."
+	echo
 	exit 1;
 
-}
+fi
 
+#macports_ok=$(sudo port version exit 2>/dev/null || echo "")
 
-macports_ok=$(sudo port -version exit 2>/dev/null || echo "")
+# Macports not installed yet
+if [ ! -e "/opt/local/bin/port" ]; then
 
-# Login was successful - it means that DB was not set up yet
-if [ -z "$macports_ok" ]; then
-
+	echo
 	echo "You need to install macports before you can continue."
+	echo
+	echo "NOTE: The terminal must be restarted, after installing MacPorts"
+	echo
+	open https://macports.org
+	exit 1;
 
 fi
 

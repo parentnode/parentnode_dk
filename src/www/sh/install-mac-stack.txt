@@ -6,7 +6,7 @@ echo
 echo 
 echo 
 echo "                    Welcome to the          "
-echo "           parentNode/OS X stack installer"
+echo "           parentNode/Mac OS stack installer"
 echo
 echo "--------------------------------------------------------"
 echo
@@ -72,8 +72,9 @@ echo
 echo "Cloning install tools"
 echo
 # CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
-sudo git clone https://github.com/parentnode/os_x_environment /srv/tools
-
+sudo git clone https://github.com/parentnode/mac_environment /srv/tools
+# temp dev option
+# sudo cp -R /srv/sites/parentnode/mac_environment /srv/tools
 
 echo
 echo

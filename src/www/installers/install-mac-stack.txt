@@ -1,5 +1,6 @@
 #!/bin/bash -e
-# bash <(curl -s http://test.parentnode.dk/sh/install-osx-stack.txt)
+# bash <(curl -s http://test.parentnode.dk/installers/install-mac-stack.txt)
+# bash <(curl -s http://parentnode.local/installers/install-mac-stack.txt)
 
 
 echo 

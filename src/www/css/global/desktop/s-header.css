@@ -10,7 +10,7 @@
 
 
 /* SERVICENAVIGATION */
-#header .servicenavigation {position: absolute; top: 5px; right: 40px;}
+#header .servicenavigation {position: absolute; top: 5px; right: 43px;}
 #header .servicenavigation li {display: inline-block; vertical-align: top; color: #bbbbbb; padding: 3px 0;}
 #header .servicenavigation li.navigation {display: none;}
 #header .servicenavigation li:before {content: "\00a0\00a0|\00a0\00a0"; color: #bbbbbb;}
@@ -23,7 +23,7 @@
 
 
 /* NAViGATION */
-#navigation {z-index: 50; position: fixed; right: 30px; top: 65px; 
+#navigation {z-index: 50; position: fixed; right: 33px; top: 65px; 
 	background-color: rgba(255,255,255, 0.8); border-radius: 5px;
 }
 #navigation ul {}

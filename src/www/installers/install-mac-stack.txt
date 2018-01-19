@@ -1,0 +1,87 @@
+#!/bin/bash -e
+# bash <(curl -s http://test.parentnode.dk/installers/install-mac-stack.txt)
+# bash <(curl -s http://parentnode.local/installers/install-mac-stack.txt)
+
+
+echo 
+echo 
+echo 
+echo "                    Welcome to the          "
+echo "           parentNode/Mac OS stack installer"
+echo
+echo "--------------------------------------------------------"
+echo
+echo 
+echo "Preparing for installation ..."
+echo
+
+# FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
+sudo ls &>/dev/null
+
+
+xcode_ok=$(xcodebuild -version exit 2>/dev/null || echo "")
+
+if [ -z "$xcode_ok" ]; then
+
+	echo
+	echo "You need to install Xcode before you can continue."
+	echo
+	open https://itunes.apple.com/gh/app/xcode/id497799835
+	exit 1;
+
+fi
+
+
+xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>/dev/null || echo "");
+
+if [ -z "$xcode_cl_ok" ]; then
+
+	xcode-select --install
+
+	echo
+	echo "Run the setup command again when the command line tools are installed. See you again."
+	echo
+	exit 1;
+
+fi
+
+#macports_ok=$(sudo port version exit 2>/dev/null || echo "")
+
+# Macports not installed yet
+if [ ! -e "/opt/local/bin/port" ]; then
+
+	echo
+	echo "You need to install macports before you can continue."
+	echo
+	echo "NOTE: The terminal must be restarted, after installing MacPorts"
+	echo
+	open https://macports.org
+	exit 1;
+
+fi
+
+
+# DOES TOOLS ALREADY EXIST - DELETE THEM AND CLONE AGAIN
+if [ -d "/srv/tools" ]; then
+
+	sudo rm -R /srv/tools
+
+fi
+
+echo
+echo
+echo "Cloning install tools"
+echo
+# CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
+sudo git clone https://github.com/parentnode/mac_environment /srv/tools
+# temp dev option
+# sudo cp -R /srv/sites/parentnode/mac_environment /srv/tools
+
+echo
+echo
+echo "Running installer"
+echo
+# RUN INSTALL SCRIPT
+sudo php /srv/tools/_tools/install.php
+
+

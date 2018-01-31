@@ -6,6 +6,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-form-builder.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/beta-u-form-onebuttonform.js"></script>');
 
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-form-geolocation.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-form-htmleditor.js"></script>');

@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2017-10-08 16:20:27
+js-merged @ 2018-01-31 16:50:10
 */
 
 /*seg_seo_include.js*/

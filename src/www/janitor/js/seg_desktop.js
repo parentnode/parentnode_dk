@@ -4546,7 +4546,9 @@ Util.Objects["collapseHeader"] = new function() {
 		div._toggle_header.clicked = function() {
 			if(this.div._toggle_is_closed) {
 				u.ac(this.div, "open");
-				u.as(this.div, "height", "auto");
+				u.ass(this.div, {
+					height: "auto"
+				});
 				this.div._toggle_is_closed = false;
 				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addCollapseArrow(this);
@@ -4556,7 +4558,9 @@ Util.Objects["collapseHeader"] = new function() {
 			}
 			else {
 				u.rc(this.div, "open");
-				u.as(this.div, "height", this.offsetHeight+"px");
+				u.ass(this.div, {
+					height: this.offsetHeight+"px"
+				});
 				this.div._toggle_is_closed = true;
 				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addExpandArrow(this);
@@ -4566,7 +4570,6 @@ Util.Objects["collapseHeader"] = new function() {
 			}
 		}
 		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true, "ignore_classnames":"open"});
-		console.log("state:" + state + ", " + typeof(state));
 		if(!state) {
 			div._toggle_header.clicked();
 		}
@@ -4583,7 +4586,7 @@ u.addExpandArrow = function(node) {
 	if(node.collapsearrow) {
 		u.bug("remove collapsearrow");
 		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
-		node.collapsearrow = false;
+		delete node.collapsearrow;
 	}
 	node.expandarrow = u.svgIcons("expandarrow", node);
 }
@@ -4591,18 +4594,20 @@ u.addCollapseArrow = function(node) {
 	if(node.expandarrow) {
 		u.bug("remove expandarrow");
 		node.expandarrow.parentNode.removeChild(node.expandarrow);
-		node.expandarrow = false;
+		delete node.expandarrow;
 	}
 	node.collapsearrow = u.svgIcons("collapsearrow", node);
 }
 u.defaultFilters = function(div) {
 	div._filter = u.ie(div, "div", {"class":"filter"});
 	div._filter.div = div;
-	var i, node;
-	for(i = 0; node = div.nodes[i]; i++) {
+	var i, node, j, text_node;
+	for(i = 0; i < div.nodes.length; i++) {
+		node = div.nodes[i];
 		node._c = "";
 		var text_nodes = u.qsa("h2,h3,h4,h5,p,ul.info,dl,li.tag", node);
-		for(j = 0; text_node = text_nodes[j]; j++) {
+		for(j = 0; j < text_nodes.length; j++) {
+			text_node = text_nodes[j];
 			node._c += u.text(text_node).toLowerCase() + ";"; 
 		}
 	}
@@ -4610,14 +4615,16 @@ u.defaultFilters = function(div) {
 	if(tags) {
 		var tag, li, used_tags = [];
 		div._filter._tags = u.ie(div._filter, "ul", {"class":"tags"});
-		for(i = 0; node = tags[i]; i++) {
+		for(i = 0; i < tags.length; i++) {
+			node = tags[i];
 			tag = u.text(node);
 			if(used_tags.indexOf(tag) == -1) {
 				used_tags.push(tag);
 			}
 		}
 		used_tags.sort();
-		for(i = 0; tag = used_tags[i]; i++) {
+		for(i = 0; i < used_tags.length; i++) {
+			tag = used_tags[i];
 			li = u.ae(div._filter._tags, "li", {"html":tag});
 			li.tag = tag.toLowerCase();
 			li._filter = div._filter;
@@ -4661,20 +4668,24 @@ u.defaultFilters = function(div) {
 		var query = this._input.val().toLowerCase();
 		if(this.current_filter != query+","+this.selected_tags.join(",")) {
 			this.current_filter = query + "," + this.selected_tags.join(",");
-			for(i = 0; node = this.div.nodes[i]; i++) {
+			for(i = 0; i < this.div.nodes.length; i++) {
+				node = this.div.nodes[i];
 				if(node._c.match(query) && this.checkTags(node)) {
 					node._hidden = false;
-					u.rc(node, "hidden");
+					u.rc(node, "hidden", false);
 					u.as(node, "display", "block", false);
 				}
 				else {
 					node._hidden = true;
-					u.ac(node, "hidden");
+					u.ac(node, "hidden", false);
 					u.as(node, "display", "none", false);
 				}
 			}
 		}
 		u.rc(this, "filtering");
+		if(typeof(this.div.filtered) == "function") {
+			this.div.filtered();
+		}
 	}
 }
 u.defaultSortableList = function(list) {
@@ -4913,6 +4924,360 @@ u.svgIcons = function(icon, node) {
 			]
 		});
 	}
+}
+
+
+/*u-request.js*/
+Util.createRequestObject = function() {
+	return new XMLHttpRequest();
+}
+Util.request = function(node, url, _options) {
+	var request_id = u.randomString(6);
+	node[request_id] = {};
+	node[request_id].request_url = url;
+	node[request_id].request_method = "GET";
+	node[request_id].request_async = true;
+	node[request_id].request_data = "";
+	node[request_id].request_headers = false;
+	node[request_id].request_credentials = false;
+	node[request_id].response_type = false;
+	node[request_id].callback_response = "response";
+	node[request_id].callback_error = "responseError";
+	node[request_id].jsonp_callback = "callback";
+	node[request_id].request_timeout = false;
+	if(typeof(_options) == "object") {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "method"				: node[request_id].request_method			= _options[argument]; break;
+				case "params"				: node[request_id].request_data				= _options[argument]; break;
+				case "data"					: node[request_id].request_data				= _options[argument]; break;
+				case "async"				: node[request_id].request_async			= _options[argument]; break;
+				case "headers"				: node[request_id].request_headers			= _options[argument]; break;
+				case "credentials"			: node[request_id].request_credentials		= _options[argument]; break;
+				case "responseType"			: node[request_id].response_type			= _options[argument]; break;
+				case "callback"				: node[request_id].callback_response		= _options[argument]; break;
+				case "error_callback"		: node[request_id].callback_error			= _options[argument]; break;
+				case "jsonp_callback"		: node[request_id].jsonp_callback			= _options[argument]; break;
+				case "timeout"				: node[request_id].request_timeout			= _options[argument]; break;
+			}
+		}
+	}
+	if(node[request_id].request_method.match(/GET|POST|PUT|PATCH/i)) {
+		node[request_id].HTTPRequest = this.createRequestObject();
+		node[request_id].HTTPRequest.node = node;
+		node[request_id].HTTPRequest.request_id = request_id;
+		if(node[request_id].response_type) {
+			node[request_id].HTTPRequest.responseType = node[request_id].response_type;
+		}
+		if(node[request_id].request_async) {
+			node[request_id].HTTPRequest.statechanged = function() {
+				if(this.readyState == 4 || this.IEreadyState) {
+					u.validateResponse(this);
+				}
+			}
+			if(typeof(node[request_id].HTTPRequest.addEventListener) == "function") {
+				u.e.addEvent(node[request_id].HTTPRequest, "readystatechange", node[request_id].HTTPRequest.statechanged);
+			}
+		}
+		try {
+			if(node[request_id].request_method.match(/GET/i)) {
+				var params = u.JSONtoParams(node[request_id].request_data);
+				node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
+				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(node[request_id].request_timeout) {
+					node[request_id].HTTPRequest.timeout = node[request_id].request_timeout;
+				}
+				if(node[request_id].request_credentials) {
+					node[request_id].HTTPRequest.withCredentials = true;
+				}
+				if(typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"])) {
+					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				}
+				if(typeof(node[request_id].request_headers) == "object") {
+					var header;
+					for(header in node[request_id].request_headers) {
+						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
+					}
+				}
+				node[request_id].HTTPRequest.send("");
+			}
+			else if(node[request_id].request_method.match(/POST|PUT|PATCH/i)) {
+				var params;
+				if(typeof(node[request_id].request_data) == "object" && node[request_id].request_data.constructor.toString().match(/function Object/i)) {
+					params = JSON.stringify(node[request_id].request_data);
+				}
+				else {
+					params = node[request_id].request_data;
+				}
+				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(node[request_id].request_timeout) {
+					node[request_id].HTTPRequest.timeout = node[request_id].request_timeout;
+				}
+				if(node[request_id].request_credentials) {
+					node[request_id].HTTPRequest.withCredentials = true;
+				}
+				if(!params.constructor.toString().match(/FormData/i) && (typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"]))) {
+					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				}
+				if(typeof(node[request_id].request_headers) == "object") {
+					var header;
+					for(header in node[request_id].request_headers) {
+						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
+					}
+				}
+				node[request_id].HTTPRequest.send(params);
+			}
+		}
+		catch(exception) {
+			node[request_id].HTTPRequest.exception = exception;
+			u.validateResponse(node[request_id].HTTPRequest);
+			return;
+		}
+		if(!node[request_id].request_async) {
+			u.validateResponse(node[request_id].HTTPRequest);
+		}
+	}
+	else if(node[request_id].request_method.match(/SCRIPT/i)) {
+		if(node[request_id].request_timeout) {
+			node[request_id].timedOut = function(requestee) {
+				this.status = 0;
+				delete this.timedOut;
+				delete this.t_timeout;
+				Util.validateResponse({node: requestee.node, request_id: requestee.request_id});
+			}
+			node[request_id].t_timeout = u.t.setTimer(node[request_id], "timedOut", node[request_id].request_timeout, {node: node, request_id: request_id});
+		}
+		var key = u.randomString();
+		document[key] = new Object();
+		document[key].key = key;
+		document[key].node = node;
+		document[key].request_id = request_id;
+		document[key].responder = function(response) {
+			var response_object = new Object();
+			response_object.node = this.node;
+			response_object.request_id = this.request_id;
+			response_object.responseText = response;
+			u.t.resetTimer(this.node[this.request_id].t_timeout);
+			delete this.node[this.request_id].timedOut;
+			delete this.node[this.request_id].t_timeout;
+			u.qs("head").removeChild(this.node[this.request_id].script_tag);
+			delete this.node[this.request_id].script_tag;
+			delete document[this.key];
+			u.validateResponse(response_object);
+		}
+		var params = u.JSONtoParams(node[request_id].request_data);
+		node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
+		node[request_id].request_url += (!node[request_id].request_url.match(/\?/g) ? "?" : "&") + node[request_id].jsonp_callback + "=document."+key+".responder";
+		node[request_id].script_tag = u.ae(u.qs("head"), "script", ({"type":"text/javascript", "src":node[request_id].request_url}));
+	}
+	return request_id;
+}
+Util.JSONtoParams = function(json) {
+	if(typeof(json) == "object") {
+		var params = "", param;
+		for(param in json) {
+			params += (params ? "&" : "") + param + "=" + json[param];
+		}
+		return params
+	}
+	var object = u.isStringJSON(json);
+	if(object) {
+		return u.JSONtoParams(object);
+	}
+	return json;
+}
+Util.evaluateResponseText = function(responseText) {
+	var object;
+	if(typeof(responseText) == "object") {
+		responseText.isJSON = true;
+		return responseText;
+	}
+	else {
+		var response_string;
+		if(responseText.trim().substr(0, 1).match(/[\"\']/i) && responseText.trim().substr(-1, 1).match(/[\"\']/i)) {
+			response_string = responseText.trim().substr(1, responseText.trim().length-2);
+		}
+		else {
+			response_string = responseText;
+		}
+		var json = u.isStringJSON(response_string);
+		if(json) {
+			return json;
+		}
+		var html = u.isStringHTML(response_string);
+		if(html) {
+			return html;
+		}
+		return responseText;
+	}
+}
+Util.validateResponse = function(HTTPRequest){
+	var object = false;
+	if(HTTPRequest) {
+		var node = HTTPRequest.node;
+		var request_id = HTTPRequest.request_id;
+		var request = node[request_id];
+		delete request.HTTPRequest;
+		if(request.finished) {
+			return;
+		}
+		request.finished = true;
+		try {
+			request.status = HTTPRequest.status;
+			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/403|404|500/)) {
+				object = u.evaluateResponseText(HTTPRequest.responseText);
+			}
+			else if(HTTPRequest.responseText) {
+				object = u.evaluateResponseText(HTTPRequest.responseText);
+			}
+		}
+		catch(exception) {
+			request.exception = exception;
+		}
+	}
+	else {
+		console.log("Lost track of this request. There is no way of routing it back to requestee.")
+		return;
+	}
+	if(object !== false) {
+		if(typeof(request.callback_response) == "function") {
+			request.callback_response(object, request_id);
+		}
+		else if(typeof(node[request.callback_response]) == "function") {
+			node[request.callback_response](object, request_id);
+		}
+	}
+	else {
+		if(typeof(request.callback_error) == "function") {
+			request.callback_error({error:true}, request_id);
+		}
+		else if(typeof(node[request.callback_error]) == "function") {
+			node[request.callback_error]({error:true}, request_id);
+		}
+		else if(typeof(request.callback_response) == "function") {
+			request.callback_response({error:true}, request_id);
+		}
+		else if(typeof(node[request.callback_response]) == "function") {
+			node[request.callback_response]({error:true}, request_id);
+		}
+	}
+}
+
+
+/*u-string.js*/
+Util.cutString = function(string, length) {
+	var matches, match, i;
+	if(string.length <= length) {
+		return string;
+	}
+	else {
+		length = length-3;
+	}
+	matches = string.match(/\&[\w\d]+\;/g);
+	if(matches) {
+		for(i = 0; match = matches[i]; i++){
+			if(string.indexOf(match) < length){
+				length += match.length-1;
+			}
+		}
+	}
+	return string.substring(0, length) + (string.length > length ? "..." : "");
+}
+Util.prefix = function(string, length, prefix) {
+	string = string.toString();
+	prefix = prefix ? prefix : "0";
+	while(string.length < length) {
+		string = prefix + string;
+	}
+	return string;
+}
+Util.randomString = function(length) {
+	var key = "", i;
+	length = length ? length : 8;
+	var pattern = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+	for(i = 0; i < length; i++) {
+		key += pattern[u.random(0,35)];
+	}
+	return key;
+}
+Util.uuid = function() {
+	var chars = '0123456789abcdef'.split('');
+	var uuid = [], rnd = Math.random, r, i;
+	uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+	uuid[14] = '4';
+	for(i = 0; i < 36; i++) {
+		if(!uuid[i]) {
+			r = 0 | rnd()*16;
+			uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
+		}
+ 	}
+	return uuid.join('');
+}
+Util.stringOr = u.eitherOr = function(value, replacement) {
+	if(value !== undefined && value !== null) {
+		return value;
+	}
+	else {
+		return replacement ? replacement : "";
+	}	
+}
+Util.getMatches = function(string, regex) {
+	var match, matches = [];
+	while(match = regex.exec(string)) {
+		matches.push(match[1]);
+	}
+	return matches;
+}
+Util.upperCaseFirst = u.ucfirst = function(string) {
+	return string.replace(/^(.){1}/, function($1) {return $1.toUpperCase()});
+}
+Util.lowerCaseFirst = u.lcfirst = function(string) {
+	return string.replace(/^(.){1}/, function($1) {return $1.toLowerCase()});
+}
+Util.normalize = function(string) {
+	string = string.toLowerCase();
+	string = string.replace(/[^a-z0-9\_]/g, '-');
+	string = string.replace(/-+/g, '-');
+	string = string.replace(/^-|-$/g, '');
+	return string;
+}
+Util.pluralize = function(count, singular, plural) {
+	if(count != 1) {
+		return count + " " + plural;
+	}
+	return count + " " + singular;
+}
+Util.isStringJSON = function(string) {
+	if(string.trim().substr(0, 1).match(/[\{\[]/i) && string.trim().substr(-1, 1).match(/[\}\]]/i)) {
+		try {
+			var test = JSON.parse(string);
+			if(typeof(test) == "object") {
+				test.isJSON = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
+}
+Util.isStringHTML = function(string) {
+	if(string.trim().substr(0, 1).match(/[\<]/i) && string.trim().substr(-1, 1).match(/[\>]/i)) {
+		try {
+			var test = document.createElement("div");
+			test.innerHTML = string;
+			if(test.childNodes.length) {
+				var body_class = string.match(/<body class="([a-z0-9A-Z_: ]+)"/);
+				test.body_class = body_class ? body_class[1] : "";
+				var head_title = string.match(/<title>([^$]+)<\/title>/);
+				test.head_title = head_title ? head_title[1] : "";
+				test.isHTML = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
 }
 
 
@@ -7419,6 +7784,128 @@ u.notifier = function(node) {
 }
 
 
+/*beta-u-notifier.js*/
+u.notifier = function(node) {
+	var notifications = u.qs("div.notifications", node);
+	if(!notifications) {
+		node.notifications = u.ae(node, "div", {"id":"notifications"});
+	}
+	node.notifications.hide_delay = 4500;
+	node.notifications.hide = function() {
+		u.a.transition(this, "all 0.5s ease-in-out");
+		u.a.translate(this, 0, -this.offsetHeight);
+	}
+	node.notify = function(response, _options) {
+		var class_name = "message";
+		if(typeof(_options) == "object") {
+			var argument;
+			for(argument in _options) {
+				switch(argument) {
+					case "class"	: class_name	= _options[argument]; break;
+				}
+			}
+		}
+		var output;
+		if(typeof(response) == "object" && response.isJSON) {
+			var message = response.cms_message;
+			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
+			if(typeof(message) == "object") {
+				for(type in message) {
+					if(typeof(message[type]) == "string") {
+						output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]});
+					}
+					else if(typeof(message[type]) == "object" && message[type].length) {
+						var node, i;
+						for(i = 0; _message = message[type][i]; i++) {
+							output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message});
+						}
+					}
+				}
+			}
+			else if(typeof(message) == "string") {
+				output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message});
+			}
+			if(typeof(this.notifications.show) == "function") {
+				this.notifications.show();
+			}
+		}
+		else if(typeof(response) == "object" && response.isHTML) {
+			var login = u.qs(".scene.login form", response);
+			var messages = u.qsa(".scene div.messages p", response);
+			if(login && !u.qs("#login_overlay")) {
+				// 
+				// 
+				this.autosave_disabled = true;
+				if(page.t_autosave) {
+					u.t.resetTimer(page.t_autosave);
+				}
+				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
+				overlay.node = this;
+				u.ae(overlay, login);
+				u.as(document.body, "overflow", "hidden");
+				var relogin = u.ie(login, "h1", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.overlay = overlay;
+				u.ae(login, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
+				u.f.init(login);
+				login.fields["username"].focus();
+				login.submitted = function() {
+					this.response = function(response) {
+						if(response.isJSON && response.cms_status == "success") {
+							var csrf_token = response.cms_object["csrf-token"];
+							var data_vars = u.qsa("[data-csrf-token]", page);
+							var input_vars = u.qsa("[name=csrf-token]", page);
+							var dom_vars = u.qsa("*", page);
+							var i, node;
+							for(i = 0; node = data_vars[i]; i++) {
+								node.setAttribute("data-csrf-token", csrf_token);
+							}
+							for(i = 0; node = input_vars[i]; i++) {
+								node.value = csrf_token;
+							}
+							for(i = 0; node = dom_vars[i]; i++) {
+								if(node.csrf_token) {
+									node.csrf_token = csrf_token;
+								}
+							}
+							this.overlay.parentNode.removeChild(this.overlay);
+							var multiple_overlays = u.qsa("#login_overlay");
+							if(multiple_overlays) {
+								for(i = 0; overlay = multiple_overlays[i]; i++) {
+									overlay.parentNode.removeChild(overlay);
+								}
+							}
+							u.as(document.body, "overflow", "auto");
+							this.overlay.node.autosave_disabled = false;
+							if(this.overlay.node._autosave_node && this.overlay.node._autosave_interval) {
+								u.t.setTimer(this.overlay.node._autosave_node, "autosave", this.overlay.node._autosave_interval);
+							}
+						}
+						else {
+							this.fields["username"].focus();
+							this.fields["password"].val("");
+							var error_message = u.qs(".errormessage", response);
+							if(error_message) {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":error_message.innerHTML});
+							}
+							else {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":"An error occured"});
+							}
+						}
+					}
+					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+				}
+			}
+			else if(messages) {
+				for(i = 0; message = messages[i]; i++) {
+					output = u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML});
+				}
+			}
+		}
+		u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay);
+	}
+}
+
+
 /*i-page.js*/
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
@@ -7426,9 +7913,8 @@ Util.Objects["page"] = new function() {
 		u.bug("init page:" + page)
 		window.page = page;
 		u.bug_force = true;
-		u.bug("This site is built using Manipulator, Janitor and Detector");
-		u.bug("Visit http://parentnode.dk for more information");
-		u.bug("Free lunch for new contributers ;-)");
+		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
+		u.bug("Visit https://parentnode.dk for more information");
 		u.bug_force = false;
 		var i, node;
 		page.hN = u.qs("#header", page);
@@ -7872,6 +8358,9 @@ Util.Objects["defaultList"] = new function() {
 		}
 		if(u.hc(div, "filters")) {
 			u.defaultFilters(div);
+			div.filtered = function() {
+				this.scrolled();
+			}
 		}
 		if(u.hc(div, "sortable")) {
 			u.defaultSortableList(div.list);
@@ -7887,6 +8376,10 @@ Util.Objects["defaultEdit"] = new function() {
 		div._item_id = u.cv(div, "item_id");
 		var form = u.qs("form", div);
 		form.div = div;
+		var autosave_setting = u.cv(div, "autosave");
+		if(autosave_setting == "off") {
+			page.autosave_disabled = true;
+		}
 		u.f.init(form);
 		form.submitted = function(iN) {
 			u.t.resetTimer(page.t_autosave);
@@ -7936,6 +8429,91 @@ Util.Objects["defaultEdit"] = new function() {
 		u.e.addEvent(document.body, "keydown", form.cancelBackspace);
 	}
 }
+Util.Objects["newSystemMessage"] = new function() {
+	this.init = function(div) {
+		var form = u.qs("form", div);
+		form.div = div;
+		form.ul_actions = u.qs("ul.actions", form);
+		var fieldset = u.qs("fieldset.values", form);
+		fieldset.h3_span = u.qs("h3 span.recipient", fieldset);
+		fieldset.h3_span.innerHTML = "?";
+		u.f.init(form);
+		form.fields["recipients"].keyup = function(event) {
+			var recipients = this.val().replace(/,/g, ";").split(";");
+			var fieldsets = u.qsa("fieldset.values", this._form);
+			var i, recipient, inputs, input, labels, label, fieldset;
+			if(event.key == "," || event.key == "," || event.key == "Delete" || event.key == "Backspace") {
+				if(recipients.length < fieldsets.length && fieldsets.length > 1) {
+					fieldsets[0].parentNode.removeChild(fieldsets[fieldsets.length-1]);
+					fieldsets = u.qsa("fieldset.values", this._form);
+				}
+				else if(recipients.length > fieldsets.length) {
+					fieldset = fieldsets[0].parentNode.insertBefore(fieldsets[0].cloneNode(true), this._form.ul_actions);
+					fieldset.h3_span = u.qs("h3 span.recipient", fieldset);
+					fieldsets = u.qsa("fieldset.values", this._form);
+					inputs = u.qsa("input[type=text]", fieldset);
+					for(i = 0; i < inputs.length; i++) {
+						input = inputs[i];
+						input.value = "";
+						input.name = input.name.replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]");
+						input.id = input.id.replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]");
+					}
+					labels = u.qsa("label", fieldset);
+					for(i = 0; i < labels.length; i++) {
+						label = labels[i];
+						label.setAttribute("for", label.getAttribute("for").replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]"));
+					}
+					u.f.init(this._form);
+				}
+			}
+			for(i = 0; i < recipients.length; i++) {
+				recipient = recipients[i];
+				fieldsets[i].h3_span.innerHTML = recipient;
+			}
+		}
+		u.e.addEvent(form.fields["recipients"], "keyup", form.fields["recipients"].keyup);
+		form.submitted = function(iN) {
+			u.ac(this, "submitting");
+			this.response = function(response) {
+				u.rc(this, "submitting");
+				if(response.cms_status == "success") {
+					var div_receipt = u.ae(this.div, "div", {class:"receipt"});
+					u.ae(div_receipt, "p", {html:"Mail was successfully sent to:"});
+					var ul_receipt = u.ae(div_receipt, "ul", {class:"receipt"});
+					var i;
+					for(i = 0; i < response.cms_object.length; i++) {
+						u.ae(ul_receipt, "li", {html:response.cms_object[i]})
+					}
+					this.parentNode.replaceChild(div_receipt, this);
+				}
+				page.notify(response);
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
+		}
+	}
+}
+Util.Objects["sendMessage"] = new function() {
+	this.init = function(div) {
+		var form = u.qs("form", div);
+		form.div = div;
+		u.f.init(form);
+		form.div_message_form = u.qs("div.item.message form");
+		form.submitted = function(iN) {
+			if(this.fields["recipients"].val() || this.fields["maillist_id"].val()) {
+				this.div_message_form.submit();
+				this.response = function(response) {
+					page.notify(response);
+				}
+				u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
+			}
+			else {
+				u.f.fieldError(this.fields["recipients"]);
+				u.f.fieldError(this.fields["maillist_id"]);
+			}
+		}
+	}
+}
+
 
 /*i-default_new.js*/
 Util.Objects["defaultNew"] = new function() {
@@ -9153,11 +9731,11 @@ Util.Objects["editAddress"] = new function() {
 		}
 	}
 }
-Util.Objects["newsletters"] = new function() {
+Util.Objects["maillists"] = new function() {
 	this.init = function(div) {
 		var i, node;
-		div.newsletters = u.qsa("ul.newsletters > li", div);
-		for(i = 0; node = div.newsletters[i]; i++) {
+		div.maillists = u.qsa("ul.maillists > li", div);
+		for(i = 0; node = div.maillists[i]; i++) {
 			node.li_unsubscribe = u.qs("li.unsubscribe", node);
 			node.li_subscribe = u.qs("li.subscribe", node);
 			if(node.li_unsubscribe) {
@@ -9654,18 +10232,18 @@ Util.Objects["addressProfile"] = new function() {
 		}
 	}
 }
-Util.Objects["newslettersProfile"] = new function() {
+Util.Objects["maillistsProfile"] = new function() {
 	this.init = function(div) {
 		var i, node;
-		div.newsletters = u.qsa("ul.newsletters > li", div);
-		for(i = 0; node = div.newsletters[i]; i++) {
+		div.maillists = u.qsa("ul.maillists > li", div);
+		for(i = 0; node = div.maillists[i]; i++) {
 			node.li_unsubscribe = u.qs("li.unsubscribe", node);
 			node.li_subscribe = u.qs("li.subscribe", node);
 			if(node.li_unsubscribe) {
 				node.li_unsubscribe.node = node;
 				node.li_unsubscribe.confirmed = function(response) {
 					if(response.cms_status == "success") {
-						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Unsubscribed from newsletter"});
+						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Unsubscribed from maillist"});
 						u.rc(this.node, "subscribed");
 					}
 					else {
@@ -9678,10 +10256,10 @@ Util.Objects["newslettersProfile"] = new function() {
 				node.li_subscribe.confirmed = function(response) {
 					if(response.cms_status == "success") {
 						u.ac(this.node, "subscribed");
-						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Subscribed to newsletter"});
+						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Subscribed to maillist"});
 					}
 					else {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Could not subscribe to newsletter"});
+						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Could not subscribe to maillist"});
 					}
 				}
 			}

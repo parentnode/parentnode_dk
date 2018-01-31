@@ -4492,7 +4492,9 @@ Util.Objects["collapseHeader"] = new function() {
 		div._toggle_header.clicked = function() {
 			if(this.div._toggle_is_closed) {
 				u.ac(this.div, "open");
-				u.as(this.div, "height", "auto");
+				u.ass(this.div, {
+					height: "auto"
+				});
 				this.div._toggle_is_closed = false;
 				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addCollapseArrow(this);
@@ -4502,7 +4504,9 @@ Util.Objects["collapseHeader"] = new function() {
 			}
 			else {
 				u.rc(this.div, "open");
-				u.as(this.div, "height", this.offsetHeight+"px");
+				u.ass(this.div, {
+					height: this.offsetHeight+"px"
+				});
 				this.div._toggle_is_closed = true;
 				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addExpandArrow(this);
@@ -4512,7 +4516,6 @@ Util.Objects["collapseHeader"] = new function() {
 			}
 		}
 		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true, "ignore_classnames":"open"});
-		console.log("state:" + state + ", " + typeof(state));
 		if(!state) {
 			div._toggle_header.clicked();
 		}
@@ -4529,7 +4532,7 @@ u.addExpandArrow = function(node) {
 	if(node.collapsearrow) {
 		u.bug("remove collapsearrow");
 		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
-		node.collapsearrow = false;
+		delete node.collapsearrow;
 	}
 	node.expandarrow = u.svgIcons("expandarrow", node);
 }
@@ -4537,18 +4540,20 @@ u.addCollapseArrow = function(node) {
 	if(node.expandarrow) {
 		u.bug("remove expandarrow");
 		node.expandarrow.parentNode.removeChild(node.expandarrow);
-		node.expandarrow = false;
+		delete node.expandarrow;
 	}
 	node.collapsearrow = u.svgIcons("collapsearrow", node);
 }
 u.defaultFilters = function(div) {
 	div._filter = u.ie(div, "div", {"class":"filter"});
 	div._filter.div = div;
-	var i, node;
-	for(i = 0; node = div.nodes[i]; i++) {
+	var i, node, j, text_node;
+	for(i = 0; i < div.nodes.length; i++) {
+		node = div.nodes[i];
 		node._c = "";
 		var text_nodes = u.qsa("h2,h3,h4,h5,p,ul.info,dl,li.tag", node);
-		for(j = 0; text_node = text_nodes[j]; j++) {
+		for(j = 0; j < text_nodes.length; j++) {
+			text_node = text_nodes[j];
 			node._c += u.text(text_node).toLowerCase() + ";"; 
 		}
 	}
@@ -4556,14 +4561,16 @@ u.defaultFilters = function(div) {
 	if(tags) {
 		var tag, li, used_tags = [];
 		div._filter._tags = u.ie(div._filter, "ul", {"class":"tags"});
-		for(i = 0; node = tags[i]; i++) {
+		for(i = 0; i < tags.length; i++) {
+			node = tags[i];
 			tag = u.text(node);
 			if(used_tags.indexOf(tag) == -1) {
 				used_tags.push(tag);
 			}
 		}
 		used_tags.sort();
-		for(i = 0; tag = used_tags[i]; i++) {
+		for(i = 0; i < used_tags.length; i++) {
+			tag = used_tags[i];
 			li = u.ae(div._filter._tags, "li", {"html":tag});
 			li.tag = tag.toLowerCase();
 			li._filter = div._filter;
@@ -4607,20 +4614,24 @@ u.defaultFilters = function(div) {
 		var query = this._input.val().toLowerCase();
 		if(this.current_filter != query+","+this.selected_tags.join(",")) {
 			this.current_filter = query + "," + this.selected_tags.join(",");
-			for(i = 0; node = this.div.nodes[i]; i++) {
+			for(i = 0; i < this.div.nodes.length; i++) {
+				node = this.div.nodes[i];
 				if(node._c.match(query) && this.checkTags(node)) {
 					node._hidden = false;
-					u.rc(node, "hidden");
+					u.rc(node, "hidden", false);
 					u.as(node, "display", "block", false);
 				}
 				else {
 					node._hidden = true;
-					u.ac(node, "hidden");
+					u.ac(node, "hidden", false);
 					u.as(node, "display", "none", false);
 				}
 			}
 		}
 		u.rc(this, "filtering");
+		if(typeof(this.div.filtered) == "function") {
+			this.div.filtered();
+		}
 	}
 }
 u.defaultSortableList = function(list) {
@@ -7381,9 +7392,8 @@ Util.Objects["page"] = new function() {
 	this.init = function(page) {
 		window.page = page;
 		u.bug_force = true;
-		u.bug("This site is built using Manipulator, Janitor and Detector");
-		u.bug("Visit http://parentnode.dk for more information");
-		u.bug("Free lunch for new contributers ;-)");
+		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
+		u.bug("Visit https://parentnode.dk for more information");
 		u.bug_force = false;
 		page.hN = u.qs("#header");
 		page.hN.service = u.qs(".servicenavigation", page.hN);
@@ -7513,6 +7523,7 @@ Util.Objects["page"] = new function() {
 				}
 				u.ie(page.nN.list, u.qs("li.front", page.hN.service));
 			}
+			u.ae(page.nN.list, u.qs("li.copyright", page.nN.list));
 			u.ass(page.nN, {
 				"width": (page.offsetWidth - page.bn_nav.offsetWidth) + "px",
 				"height": (window.innerHeight) + "px"
@@ -7734,6 +7745,10 @@ Util.Objects["defaultEdit"] = new function() {
 		div._item_id = u.cv(div, "item_id");
 		var form = u.qs("form", div);
 		form.div = div;
+		var autosave_setting = u.cv(div, "autosave");
+		if(autosave_setting == "off") {
+			page.autosave_disabled = true;
+		}
 		u.f.init(form);
 		form.submitted = function(iN) {
 			u.t.resetTimer(page.t_autosave);
@@ -7783,6 +7798,91 @@ Util.Objects["defaultEdit"] = new function() {
 		u.e.addEvent(document.body, "keydown", form.cancelBackspace);
 	}
 }
+Util.Objects["newSystemMessage"] = new function() {
+	this.init = function(div) {
+		var form = u.qs("form", div);
+		form.div = div;
+		form.ul_actions = u.qs("ul.actions", form);
+		var fieldset = u.qs("fieldset.values", form);
+		fieldset.h3_span = u.qs("h3 span.recipient", fieldset);
+		fieldset.h3_span.innerHTML = "?";
+		u.f.init(form);
+		form.fields["recipients"].keyup = function(event) {
+			var recipients = this.val().replace(/,/g, ";").split(";");
+			var fieldsets = u.qsa("fieldset.values", this._form);
+			var i, recipient, inputs, input, labels, label, fieldset;
+			if(event.key == "," || event.key == "," || event.key == "Delete" || event.key == "Backspace") {
+				if(recipients.length < fieldsets.length && fieldsets.length > 1) {
+					fieldsets[0].parentNode.removeChild(fieldsets[fieldsets.length-1]);
+					fieldsets = u.qsa("fieldset.values", this._form);
+				}
+				else if(recipients.length > fieldsets.length) {
+					fieldset = fieldsets[0].parentNode.insertBefore(fieldsets[0].cloneNode(true), this._form.ul_actions);
+					fieldset.h3_span = u.qs("h3 span.recipient", fieldset);
+					fieldsets = u.qsa("fieldset.values", this._form);
+					inputs = u.qsa("input[type=text]", fieldset);
+					for(i = 0; i < inputs.length; i++) {
+						input = inputs[i];
+						input.value = "";
+						input.name = input.name.replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]");
+						input.id = input.id.replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]");
+					}
+					labels = u.qsa("label", fieldset);
+					for(i = 0; i < labels.length; i++) {
+						label = labels[i];
+						label.setAttribute("for", label.getAttribute("for").replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]"));
+					}
+					u.f.init(this._form);
+				}
+			}
+			for(i = 0; i < recipients.length; i++) {
+				recipient = recipients[i];
+				fieldsets[i].h3_span.innerHTML = recipient;
+			}
+		}
+		u.e.addEvent(form.fields["recipients"], "keyup", form.fields["recipients"].keyup);
+		form.submitted = function(iN) {
+			u.ac(this, "submitting");
+			this.response = function(response) {
+				u.rc(this, "submitting");
+				if(response.cms_status == "success") {
+					var div_receipt = u.ae(this.div, "div", {class:"receipt"});
+					u.ae(div_receipt, "p", {html:"Mail was successfully sent to:"});
+					var ul_receipt = u.ae(div_receipt, "ul", {class:"receipt"});
+					var i;
+					for(i = 0; i < response.cms_object.length; i++) {
+						u.ae(ul_receipt, "li", {html:response.cms_object[i]})
+					}
+					this.parentNode.replaceChild(div_receipt, this);
+				}
+				page.notify(response);
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
+		}
+	}
+}
+Util.Objects["sendMessage"] = new function() {
+	this.init = function(div) {
+		var form = u.qs("form", div);
+		form.div = div;
+		u.f.init(form);
+		form.div_message_form = u.qs("div.item.message form");
+		form.submitted = function(iN) {
+			if(this.fields["recipients"].val() || this.fields["maillist_id"].val()) {
+				this.div_message_form.submit();
+				this.response = function(response) {
+					page.notify(response);
+				}
+				u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
+			}
+			else {
+				u.f.fieldError(this.fields["recipients"]);
+				u.f.fieldError(this.fields["maillist_id"]);
+			}
+		}
+	}
+}
+
 
 /*i-default_new.js*/
 Util.Objects["defaultNew"] = new function() {
@@ -9000,11 +9100,11 @@ Util.Objects["editAddress"] = new function() {
 		}
 	}
 }
-Util.Objects["newsletters"] = new function() {
+Util.Objects["maillists"] = new function() {
 	this.init = function(div) {
 		var i, node;
-		div.newsletters = u.qsa("ul.newsletters > li", div);
-		for(i = 0; node = div.newsletters[i]; i++) {
+		div.maillists = u.qsa("ul.maillists > li", div);
+		for(i = 0; node = div.maillists[i]; i++) {
 			node.li_unsubscribe = u.qs("li.unsubscribe", node);
 			node.li_subscribe = u.qs("li.subscribe", node);
 			if(node.li_unsubscribe) {
@@ -9501,18 +9601,18 @@ Util.Objects["addressProfile"] = new function() {
 		}
 	}
 }
-Util.Objects["newslettersProfile"] = new function() {
+Util.Objects["maillistsProfile"] = new function() {
 	this.init = function(div) {
 		var i, node;
-		div.newsletters = u.qsa("ul.newsletters > li", div);
-		for(i = 0; node = div.newsletters[i]; i++) {
+		div.maillists = u.qsa("ul.maillists > li", div);
+		for(i = 0; node = div.maillists[i]; i++) {
 			node.li_unsubscribe = u.qs("li.unsubscribe", node);
 			node.li_subscribe = u.qs("li.subscribe", node);
 			if(node.li_unsubscribe) {
 				node.li_unsubscribe.node = node;
 				node.li_unsubscribe.confirmed = function(response) {
 					if(response.cms_status == "success") {
-						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Unsubscribed from newsletter"});
+						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Unsubscribed from maillist"});
 						u.rc(this.node, "subscribed");
 					}
 					else {
@@ -9525,10 +9625,10 @@ Util.Objects["newslettersProfile"] = new function() {
 				node.li_subscribe.confirmed = function(response) {
 					if(response.cms_status == "success") {
 						u.ac(this.node, "subscribed");
-						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Subscribed to newsletter"});
+						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Subscribed to maillist"});
 					}
 					else {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Could not subscribe to newsletter"});
+						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Could not subscribe to maillist"});
 					}
 				}
 			}

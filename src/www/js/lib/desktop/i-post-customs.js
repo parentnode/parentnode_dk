@@ -1,3 +1,4 @@
+// DEPRECATED in favour of the more flexible dynamicVariablesPost
 Util.Objects["ubuntuSetupPost"] = new function() {
 	this.init = function(post) {
 
@@ -39,7 +40,7 @@ Util.Objects["dynamicVariablesPost"] = new function() {
 		var extension_start = u.qs(".extension_start", post);
 
 		var form = u.f.addForm(post, {"class":"labelstyle:inject dynamicVariablesPost"});
-		var extension_text = u.ae(form, "p", {"html":"To make the following commands C/P ready, enter your information here:"});
+		var extension_text = u.ae(form, "p", {"html":"To make the following commands Copy/Paste ready, enter your information here:"});
 
 		var fieldset = u.f.addFieldset(form);
 
@@ -51,7 +52,7 @@ Util.Objects["dynamicVariablesPost"] = new function() {
 		var i, dyn_var, label;
 		for(i = 0; dyn_var = dyn_vars[i]; i++) {
 			dyn_var.var_name = dyn_var.className.replace(/(dynvar|[ ]|label\:[^$ ]+)/g, "");
-			console.log(dyn_var.var_name);
+//			console.log(dyn_var.var_name);
 
 			// did we already find a label? (label doesn't have to be stated on each an every occurence – just once)
 			if(!var_labels[dyn_var.var_name]) {
@@ -74,7 +75,7 @@ Util.Objects["dynamicVariablesPost"] = new function() {
 
 
 		for(i = 0; dyn_var_name = var_names[i]; i++) {
-			u.bug("dyn_var_name:" + dyn_var_name);
+//			u.bug("dyn_var_name:" + dyn_var_name);
 
 			label = var_labels[dyn_var_name] ? decodeURI(var_labels[dyn_var_name]) : u.qs("span.dynvar."+dyn_var_name).innerHTML;
 //			if(!var_names[dyn_var.var_name]) {

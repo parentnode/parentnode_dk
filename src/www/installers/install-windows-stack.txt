@@ -14,16 +14,13 @@ echo
 echo "Preparing for installation ..."
 echo
 
-#echo "Install method seems to work"
 
-# TODO: Update to powershell check and git check
-# macports_ok=$(sudo port -version exit 2>/dev/null || echo "")
+# DOES TOOLS ALREADY EXIST - DELETE THEM AND CLONE AGAIN
+if [ -d "/srv/tools" ]; then
 
-# if [ -z "$macports_ok" ]; then
-#
-# 	echo "You need to install PowerShell"
-#
-# fi
+	sudo rm -R /srv/tools
+
+fi
 
 echo
 echo

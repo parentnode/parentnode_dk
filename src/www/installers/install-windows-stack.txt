@@ -1,5 +1,5 @@
 #!/bin/bash -e
-# bash <(curl -s http://test.parentnode.dk/sh/install-windows-stack.txt)
+# bash <(curl -s https://test.parentnode.dk/sh/install-windows-stack.txt)
 
 
 echo 
@@ -14,7 +14,7 @@ echo
 echo "Preparing for installation ..."
 echo
 
-echo "Install method seems to work"
+#echo "Install method seems to work"
 
 # TODO: Update to powershell check and git check
 # macports_ok=$(sudo port -version exit 2>/dev/null || echo "")
@@ -25,20 +25,19 @@ echo "Install method seems to work"
 #
 # fi
 
+echo
+echo
+echo "Cloning install tools"
+echo
+# CLONE THE FULL WINDOWS INSTALL AND TOOLS FROM GITHUB
+git clone https://github.com/parentnode/windows_environment /mnt/c/srv/tools
 
-# echo
-# echo
-# echo "Cloning install tools"
-# echo
-# # CLONE THE FULL WINDOWS INSTALL AND TOOLS FROM GITHUB
-# git clone https://github.com/parentnode/windows_environment /srv/sites/parentnode/windows_environment
-#
-#
-# echo
-# echo
-# echo "Running installer"
-# echo
-# # RUN INSTALL SCRIPT
-# /srv/sites/parentnode/windows_environment/install.sh
-#
+
+echo
+echo
+echo "Running installer"
+echo
+# RUN INSTALL SCRIPT
+#/srv/tools/_tools/install.sh
+
 

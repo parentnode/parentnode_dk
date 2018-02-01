@@ -16,9 +16,9 @@ echo
 
 
 # DOES TOOLS ALREADY EXIST - DELETE THEM AND CLONE AGAIN
-if [ -d "/srv/tools" ]; then
+if [ -d "/mnt/c/srv/tools" ]; then
 
-	sudo rm -R /srv/tools
+	sudo rm -R /mnt/c/srv/tools
 
 fi
 

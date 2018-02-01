@@ -14,6 +14,25 @@ echo
 echo "Preparing for installation ..."
 echo
 
+# FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
+sudo ls &>/dev/null
+
+
+if grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null ; then
+
+	echo
+	echo "Windows 10 Bash: OK"
+	echo
+
+else
+
+	echo
+	echo "ERROR: Linux Bash for Windows does not exist"
+	echo "Install Linux Bash for Windows and try again"
+	exit 1
+
+fi
+
 
 # DOES TOOLS ALREADY EXIST - DELETE THEM AND CLONE AGAIN
 if [ -d "/mnt/c/srv/tools" ]; then

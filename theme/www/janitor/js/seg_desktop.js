@@ -5125,10 +5125,15 @@ Util.validateResponse = function(HTTPRequest){
 		request.finished = true;
 		try {
 			request.status = HTTPRequest.status;
-			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/403|404|500/)) {
-				object = u.evaluateResponseText(HTTPRequest.responseText);
+			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/[45][\d]{2}/)) {
+				if(HTTPRequest.responseType && HTTPRequest.response) {
+					object = HTTPRequest.response;
+				}
+				else if(HTTPRequest.responseText) {
+					object = u.evaluateResponseText(HTTPRequest.responseText);
+				}
 			}
-			else if(HTTPRequest.responseText) {
+			else if(HTTPRequest.responseText && typeof(HTTPRequest.status) == "undefined") {
 				object = u.evaluateResponseText(HTTPRequest.responseText);
 			}
 		}
@@ -5150,16 +5155,16 @@ Util.validateResponse = function(HTTPRequest){
 	}
 	else {
 		if(typeof(request.callback_error) == "function") {
-			request.callback_error({error:true}, request_id);
+			request.callback_error({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(node[request.callback_error]) == "function") {
-			node[request.callback_error]({error:true}, request_id);
+			node[request.callback_error]({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(request.callback_response) == "function") {
-			request.callback_response({error:true}, request_id);
+			request.callback_response({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(node[request.callback_response]) == "function") {
-			node[request.callback_response]({error:true}, request_id);
+			node[request.callback_response]({error:true,status:request.status}, request_id);
 		}
 	}
 }
@@ -5257,7 +5262,9 @@ Util.isStringJSON = function(string) {
 				return test;
 			}
 		}
-		catch(exception) {}
+		catch(exception) {
+			console.log(exception)
+		}
 	}
 	return false;
 }

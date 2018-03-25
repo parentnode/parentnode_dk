@@ -79,6 +79,7 @@ Util.Objects["page"] = new function() {
 
 			// refresh DOM
 			page.offsetHeight;
+
 		}
 
 		// global scroll handler 
@@ -157,7 +158,12 @@ Util.Objects["page"] = new function() {
 				u.e.addEvent(window, "scroll", page.scrolled);
 
 
-				u.notifier(this);
+				if(typeof(u.notifier) == "function") {
+					u.notifier(this);
+				}
+				if(typeof(u.smartphoneSwitch) == "object") {
+					u.smartphoneSwitch.init(this);
+				}
 
 				this.initHeader();
 

@@ -107,7 +107,13 @@ Util.Objects["page"] = new function() {
 				u.e.addEvent(window, "orientationchange", page.orientationchanged);
 
 
-				u.notifier(this);
+				if(typeof(u.notifier) == "function") {
+					u.notifier(this);
+				}
+				if(u.getCookie("smartphoneSwitch") == "on") {
+					console.log("Back to desktop")
+					u.ae(document.body, "div", {id:"desktop_switch", html:"Back to desktop"});
+				}
 
 
 				this.initNavigation();

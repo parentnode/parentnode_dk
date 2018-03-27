@@ -4,6 +4,8 @@ document.write('<script type="text/javascript" src="/js/lib/u-settings.js"></scr
 document.write('<script type="text/javascript" src="http://parentnode.local/js/global/u-basics.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-googleanalytics.js"></script>');
 
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/src/u-cookie.js"></script>');
+
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-form-geolocation.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-form-htmleditor.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/beta-u-animation-to.js"></script>');

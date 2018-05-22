@@ -1,14 +1,14 @@
 #!/bin/bash -e
-# bash <(curl -s http://test.parentnode.dk/sh/install-ubuntu-stack.txt)
+# bash <(curl -s http://test.parentnode.dk/sh/install-ubuntu-server-stack.txt)
 
-# curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt | bash
+# curl -L http://test.parentnode.dk/sh/install-ubuntu-server-stack.txt | bash
 
 
 echo 
 echo 
 echo 
 echo "                    Welcome to the          "
-echo "           parentNode/Ubuntu stack installer"
+echo "           parentNode/Ubuntu Server stack installer"
 echo
 echo "--------------------------------------------------------"
 echo
@@ -73,6 +73,6 @@ echo
 echo "Running installer"
 echo
 # RUN INSTALL SCRIPT
-sudo /srv/tools/scripts/install.sh
+sudo /srv/tools/scripts/install-server.sh
 
 

@@ -82,6 +82,6 @@ echo
 echo "Running installer"
 echo
 # RUN INSTALL SCRIPT
-sudo php /srv/tools/_tools/install.php
+sudo php /srv/tools/scripts/install.php
 
 

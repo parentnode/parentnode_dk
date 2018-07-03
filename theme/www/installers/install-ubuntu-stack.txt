@@ -73,6 +73,6 @@ echo
 echo "Running installer"
 echo
 # RUN INSTALL SCRIPT
-sudo /srv/tools/scripts/install-client.sh
+sudo /srv/tools/scripts/install_client.sh
 
 

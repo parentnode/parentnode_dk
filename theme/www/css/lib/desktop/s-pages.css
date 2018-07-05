@@ -10,3 +10,9 @@
 #content .scene.manifest ul.manifest li {padding: 0 0 15px;} 
 #content .scene.manifest ul.manifest li h3,
 #content .scene.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}
+
+
+/* DEMOS */
+#content .scene.demos {}
+#content .scene.demos div.article div.articlebody ul.demos {list-style: none; padding: 40px 0 0; margin: 0;}
+#content .scene.demos div.article div.articlebody ul.demos > li {padding-bottom: 40px;}

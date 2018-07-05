@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2018-02-12 18:12:58
+js-merged @ 2018-07-05 17:41:47
 */
 
 /*seg_tablet_include.js*/
@@ -4455,8 +4455,87 @@ u.txt["relogin"] = "Your session timed out - please login to continue.";
 u.txt["terms-headline"] = "We love <br />cookies and privacy";
 u.txt["terms-accept"] = "Accept";
 u.txt["terms-details"] = "Details";
+u.txt["smartphone-switch-headline"] = "Hello curious";
+u.txt["smartphone-switch-text"] = [
+	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
+	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized experience with a small footprint, but it doesn't come with all sizes included.",
+	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
+];
+u.txt["smartphone-switch-bn-hide"] = "Hide";
+u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
+
 
 /*u-basics.js*/
+u.smartphoneSwitch = new function() {
+	this.state = 0;
+	this.init = function(node) {
+		this.callback_node = node;
+		this.event_id = u.e.addWindowEvent(this, "resize", this.resized);
+		this.resized();
+	}
+	this.resized = function() {
+		if(u.browserW() < 500 && !this.state) {
+			this.switchOn();
+		}
+		else if(u.browserW() > 500 && this.state) {
+			this.switchOff();
+		}
+	}
+	this.switchOn = function() {
+		if(!this.panel) {
+			this.state = true;
+			this.panel = u.ae(document.body, "div", {"id":"smartphone_switch"});
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			u.ae(this.panel, "h1", {html:u.stringOr(u.txt["smartphone-switch-headline"], "Hello curious")});
+			if(u.txt["smartphone-switch-text"].length) {
+				for(i = 0; i < u.txt["smartphone-switch-text"].length; i++) {
+					u.ae(this.panel, "p", {html:u.txt["smartphone-switch-text"][i]});
+				}
+			}
+			var ul_actions = u.ae(this.panel, "ul", {class:"actions"});
+			var li; 
+			li = u.ae(ul_actions, "li", {class:"hide"});
+			var bn_hide = u.ae(li, "a", {class:"hide button", html:u.txt["smartphone-switch-bn-hide"]});
+			li = u.ae(ul_actions, "li", {class:"switch"});
+			var bn_switch = u.ae(li, "a", {class:"switch button primary", html:u.txt["smartphone-switch-bn-switch"]});
+			u.e.click(bn_switch);
+			bn_switch.clicked = function() {
+				u.saveCookie("smartphoneSwitch", "on");
+				location.href = location.href + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+			}
+			u.e.click(bn_hide);
+			bn_hide.clicked = function() {
+				u.e.removeWindowEvent(u.smartphoneSwitch, "resize", u.smartphoneSwitch.event_id);
+				u.smartphoneSwitch.switchOff();
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 1
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOn) == "function") {
+				this.callback_node.smartphoneSwitchedOn();
+			}
+		}
+	}
+	this.switchOff = function() {
+		if(this.panel) {
+			this.state = false;
+			this.panel.transitioned = function() {
+				this.parentNode.removeChild(this);
+				delete u.smartphoneSwitch.panel;
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOff) == "function") {
+				this.callback_node.smartphoneSwitchedOff();
+			}
+		}
+	}
+}
 
 
 /*u-googleanalytics.js*/
@@ -4524,6 +4603,169 @@ if(u.ga_account) {
 			return u.cutString(u.text(node).trim(), 20) + "(<"+node.nodeName+">)";
 		}
 	}
+}
+
+
+/*u-cookie.js*/
+Util.saveCookie = function(name, value, _options) {
+	var expires = true;
+	var path = false;
+	var force = false;
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "expires"	: expires	= _options[_argument]; break;
+				case "path"		: path		= _options[_argument]; break;
+				case "force"	: force		= _options[_argument]; break;
+			}
+		}
+	}
+	if(!force && typeof(window.localStorage) == "object" && typeof(window.sessionStorage) == "object") {
+		if(expires === true) {
+			window.sessionStorage.setItem(name, value);
+		}
+		else {
+			window.localStorage.setItem(name, value);
+		}
+		return;
+	}
+	if(expires === false) {
+		expires = ";expires=Mon, 04-Apr-2020 05:00:00 GMT";
+	}
+	else if(typeof(expires) === "string") {
+		expires = ";expires="+expires;
+	}
+	else {
+		expires = "";
+	}
+	if(typeof(path) === "string") {
+		path = ";path="+path;
+	}
+	else {
+		path = "";
+	}
+	document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + path + expires;
+}
+Util.getCookie = function(name) {
+	var matches;
+	if(typeof(window.sessionStorage) == "object" && window.sessionStorage.getItem(name)) {
+		return window.sessionStorage.getItem(name)
+	}
+	else if(typeof(window.localStorage) == "object" && window.localStorage.getItem(name)) {
+		return window.localStorage.getItem(name)
+	}
+	return (matches = document.cookie.match(encodeURIComponent(name) + "=([^;]+)")) ? decodeURIComponent(matches[1]) : false;
+}
+Util.deleteCookie = function(name, _options) {
+	var path = false;
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "path"	: path	= _options[_argument]; break;
+			}
+		}
+	}
+	if(typeof(window.sessionStorage) == "object") {
+		window.sessionStorage.removeItem(name);
+	}
+	if(typeof(window.localStorage) == "object") {
+		window.localStorage.removeItem(name);
+	}
+	if(typeof(path) === "string") {
+		path = ";path="+path;
+	}
+	else {
+		path = "";
+	}
+	document.cookie = encodeURIComponent(name) + "=" + path + ";expires=Thu, 01-Jan-70 00:00:01 GMT";
+}
+Util.saveNodeCookie = function(node, name, value, _options) {
+	var ref = u.cookieReference(node, _options);
+	var mem = JSON.parse(u.getCookie("man_mem"));
+	if(!mem) {
+		mem = {};
+	}
+	if(!mem[ref]) {
+		mem[ref] = {};
+	}
+	mem[ref][name] = (value !== false && value !== undefined) ? value : "";
+	u.saveCookie("man_mem", JSON.stringify(mem), {"path":"/"});
+}
+Util.getNodeCookie = function(node, name, _options) {
+	var ref = u.cookieReference(node, _options);
+	var mem = JSON.parse(u.getCookie("man_mem"));
+	if(mem && mem[ref]) {
+		if(name) {
+			return mem[ref][name] ? mem[ref][name] : "";
+		}
+		else {
+			return mem[ref];
+		}
+	}
+	return false;
+}
+Util.deleteNodeCookie = function(node, name, _options) {
+	var ref = u.cookieReference(node, _options);
+	var mem = JSON.parse(u.getCookie("man_mem"));
+	if(mem && mem[ref]) {
+		if(name) {
+			delete mem[ref][name];
+		}
+		else {
+			delete mem[ref];
+		}
+	}
+	u.saveCookie("man_mem", JSON.stringify(mem), {"path":"/"});
+}
+Util.cookieReference = function(node, _options) {
+	var ref;
+	var ignore_classnames = false;
+	var ignore_classvars = false;
+	if(typeof(_options) == "object") {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "ignore_classnames"	: ignore_classnames	= _options[_argument]; break;
+				case "ignore_classvars" 	: ignore_classvars	= _options[_argument]; break;
+			}
+		}
+	}
+	if(node.id) {
+		ref = node.nodeName + "#" + node.id;
+	}
+	else {
+		var node_identifier = "";
+		if(node.name) {
+			node_identifier = node.nodeName + "["+node.name+"]";
+		}
+		else if(node.className) {
+			var classname = node.className;
+			if(ignore_classnames) {
+				var regex = new RegExp("(^| )("+ignore_classnames.split(",").join("|")+")($| )", "g");
+				classname = classname.replace(regex, " ").replace(/[ ]{2,4}/, " ");
+			}
+			if(ignore_classvars) {
+				classname = classname.replace(/(^| )[a-zA-Z_]+\:[\?\=\w\/\\#~\:\.\,\+\&\%\@\!\-]+(^| )/g, " ").replace(/[ ]{2,4}/g, " ");
+			}
+			node_identifier = node.nodeName+"."+classname.trim().replace(/ /g, ".");
+		}
+		else {
+			node_identifier = node.nodeName
+		}
+		var id_node = node;
+		while(!id_node.id) {
+			id_node = id_node.parentNode;
+		}
+		if(id_node.id) {
+			ref = id_node.nodeName + "#" + id_node.id + " " + node_identifier;
+		}
+		else {
+			ref = node_identifier;
+		}
+	}
+	return ref;
 }
 
 
@@ -6870,7 +7112,12 @@ Util.Objects["page"] = new function() {
 				this.is_ready = true;
 				u.e.addEvent(window, "resize", page.resized);
 				u.e.addEvent(window, "scroll", page.scrolled);
-				u.notifier(this);
+				if(typeof(u.notifier) == "function") {
+					u.notifier(this);
+				}
+				if(typeof(u.smartphoneSwitch) == "object") {
+					u.smartphoneSwitch.init(this);
+				}
 				this.initHeader();
 				this.initNavigation();
 				this.initFooter();

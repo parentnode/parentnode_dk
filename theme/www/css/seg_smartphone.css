@@ -68,6 +68,9 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 }
 #page #notifications div {padding: 10px 20px; color: #ffffff;}
 #page #notifications .error {background: #df0000;}
+#desktop_switch {z-index: 11000; position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.9); text-align: center;
+}
+#desktop_switch {padding: 40px 20px; font-size: 36px;}
 
 
 /*s-header.css*/
@@ -713,4 +716,6 @@ body {}
 #content .scene.manifest ul.manifest li {padding: 0 0 15px;} 
 #content .scene.manifest ul.manifest li h3,
 #content .scene.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}
-
+#content .scene.demos {}
+#content .scene.demos div.article div.articlebody ul.demos {list-style: none; padding: 30px 0 0; margin: 0;}
+#content .scene.demos div.article div.articlebody ul.demos > li {padding-bottom: 30px;}

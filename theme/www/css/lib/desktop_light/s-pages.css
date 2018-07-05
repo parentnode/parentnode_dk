@@ -13,3 +13,9 @@
 /* MANIFEST */
 #content div.manifest ul.manifest {padding-top: 25px;}
 #content div.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;} 
+
+
+/* DEMOS */
+#content .demos {}
+#content .demos div.article div.articlebody ul.demos {list-style: none; padding-top: 40px; margin: 0;}
+#content .demos div.article div.articlebody ul.demos > li {padding-bottom: 40px;}

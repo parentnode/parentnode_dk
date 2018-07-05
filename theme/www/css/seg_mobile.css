@@ -363,7 +363,9 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content div.manifest ul.manifest li {padding: 0 0 15px; font-size: 16px;} 
 #content div.manifest ul.manifest li h3,
 #content div.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}
-
+#content .demos {}
+#content .demos div.article div.articlebody ul.demos {list-style: none; padding: 20px 0 0; margin: 0;}
+#content .demos div.article div.articlebody ul.demos > li {padding-bottom: 20px;}
 
 /*s-colorscheme.css*/
 * {color: #034769;}

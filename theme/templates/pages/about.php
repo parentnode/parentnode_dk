@@ -68,6 +68,7 @@ if($page_item) {
 			<dt class="social">Social media</dt>
 			<dd class="social">
 				<ul>
+					<li class="meetup"><a href="https://www.meetup.com/parentNode-copenhagen">Meetup</a></li>
 					<li class="facebook"><a href="https://facebook.com/parentnode">Facebook</a></li>
 					<li class="linkedin"><a href="https://www.linkedin.com/company/parentnode">LinkedIn</a></li>
 				</ul>

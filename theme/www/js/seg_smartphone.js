@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2018-07-05 17:41:47
+js-merged @ 2018-07-07 10:45:52
 */
 
 /*seg_smartphone_include.js*/
@@ -4458,7 +4458,7 @@ u.txt["terms-details"] = "Details";
 u.txt["smartphone-switch-headline"] = "Hello curious";
 u.txt["smartphone-switch-text"] = [
 	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
-	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized experience with a small footprint, but it doesn't come with all sizes included.",
+	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized user experience with a smaller footprint, because it doesn't come with all sizes included.",
 	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
 ];
 u.txt["smartphone-switch-bn-hide"] = "Hide";
@@ -4503,7 +4503,7 @@ u.smartphoneSwitch = new function() {
 			u.e.click(bn_switch);
 			bn_switch.clicked = function() {
 				u.saveCookie("smartphoneSwitch", "on");
-				location.href = location.href + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
 			}
 			u.e.click(bn_hide);
 			bn_hide.clicked = function() {
@@ -6840,22 +6840,32 @@ Util.Objects["page"] = new function() {
 		page.fN = u.qs("#footer");
 		page.fN.service = u.qs(".servicenavigation", page.fN);
 		page.resized = function() {
-			page.browser_h = u.browserH();
-			page.browser_w = u.browserW();
-			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
-			u.as(page.cN, "min-height", "auto", false);
-			if(page.available_height >= page.cN.offsetHeight) {
-				u.as(page.cN, "min-height", page.available_height+"px", false);
+			this.browser_h = u.browserH();
+			this.browser_w = u.browserW();
+			this.available_height = this.browser_h - this.hN.offsetHeight - this.fN.offsetHeight;
+			u.as(this.cN, "min-height", "auto", false);
+			if(this.available_height >= this.cN.offsetHeight) {
+				u.as(this.cN, "min-height", this.available_height+"px", false);
 			}
-			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
-				page.cN.scene.resized();
+			if(this.cN && this.cN.scene && typeof(this.cN.scene.resized) == "function") {
+				this.cN.scene.resized();
 			}
-			page.offsetHeight;
+			this.offsetHeight;
+		}
+		page.fixiOSScroll = function() {
+			u.ass(this.hN, {
+				"position":"absolute",
+			});
+			u.ass(this.hN, {
+				"position":"fixed",
+			});
 		}
 		page.scrolled = function() {
-			page.scrolled_y = u.scrollY();
-			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
-				page.cN.scene.scrolled();
+			u.t.resetTimer(this.t_fix);
+			this.t_fix = u.t.setTimer(this, "fixiOSScroll", 200);
+			this.scrolled_y = u.scrollY();
+			if(this.cN && this.cN.scene && typeof(this.cN.scene.scrolled) == "function") {
+				this.cN.scene.scrolled();
 			}
 		}
 		page.orientationchanged = function() {
@@ -6869,15 +6879,20 @@ Util.Objects["page"] = new function() {
 		page.ready = function() {
 			if(!this.is_ready) {
 				this.is_ready = true;
-				u.e.addEvent(window, "resize", page.resized);
-				u.e.addEvent(window, "scroll", page.scrolled);
-				u.e.addEvent(window, "orientationchange", page.orientationchanged);
+				u.e.addWindowEvent(this, "resize", this.resized);
+				u.e.addWindowEvent(this, "scroll", this.scrolled);
+				u.e.addWindowEvent(this, "orientationchange", this.orientationchanged);
 				if(typeof(u.notifier) == "function") {
 					u.notifier(this);
 				}
 				if(u.getCookie("smartphoneSwitch") == "on") {
 					console.log("Back to desktop")
-					u.ae(document.body, "div", {id:"desktop_switch", html:"Back to desktop"});
+					var bn_switch = u.ae(document.body, "div", {id:"desktop_switch", html:"Back to desktop"});
+					u.ce(bn_switch);
+					bn_switch.clicked = function() {
+						u.saveCookie("smartphoneSwitch", "off");
+						location.href = location.href.replace(/[&]segment\=smartphone|segment\=smartphone[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=desktop";
+					}
 				}
 				this.initNavigation();
 				this.resized();
@@ -6909,7 +6924,7 @@ Util.Objects["page"] = new function() {
 			}
 		}
 		page.initNavigation = function() {
-			page.nN.list = u.qs("ul.navigation", page.nN);
+			this.nN.list = u.qs("ul.navigation", this.nN);
 			this.bn_nav = u.qs(".servicenavigation li.navigation", this.hN);
 			if(this.bn_nav) {
 				u.ae(this.bn_nav, "div");

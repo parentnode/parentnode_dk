@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2018-07-05 17:41:47
+js-merged @ 2018-07-07 10:45:51
 */
 
 /*seg_tablet_include.js*/
@@ -4458,7 +4458,7 @@ u.txt["terms-details"] = "Details";
 u.txt["smartphone-switch-headline"] = "Hello curious";
 u.txt["smartphone-switch-text"] = [
 	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
-	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized experience with a small footprint, but it doesn't come with all sizes included.",
+	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized user experience with a smaller footprint, because it doesn't come with all sizes included.",
 	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
 ];
 u.txt["smartphone-switch-bn-hide"] = "Hide";
@@ -4503,7 +4503,7 @@ u.smartphoneSwitch = new function() {
 			u.e.click(bn_switch);
 			bn_switch.clicked = function() {
 				u.saveCookie("smartphoneSwitch", "on");
-				location.href = location.href + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
 			}
 			u.e.click(bn_hide);
 			bn_hide.clicked = function() {

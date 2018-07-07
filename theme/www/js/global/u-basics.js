@@ -62,7 +62,7 @@ u.smartphoneSwitch = new function() {
 			u.e.click(bn_switch);
 			bn_switch.clicked = function() {
 				u.saveCookie("smartphoneSwitch", "on");
-				location.href = location.href + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
 			}
 
 			u.e.click(bn_hide);

@@ -43,32 +43,51 @@ Util.Objects["page"] = new function() {
 		page.resized = function() {
 //			u.bug("page resized")
 
-			page.browser_h = u.browserH();
-			page.browser_w = u.browserW();
+			this.browser_h = u.browserH();
+			this.browser_w = u.browserW();
 
 			// adjust content height
-			page.available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
-			u.as(page.cN, "min-height", "auto", false);
-			if(page.available_height >= page.cN.offsetHeight) {
-				u.as(page.cN, "min-height", page.available_height+"px", false);
+			this.available_height = this.browser_h - this.hN.offsetHeight - this.fN.offsetHeight;
+			u.as(this.cN, "min-height", "auto", false);
+			if(this.available_height >= this.cN.offsetHeight) {
+				u.as(this.cN, "min-height", this.available_height+"px", false);
 			}
 
 			// forward resize event to current scene
-			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
-				page.cN.scene.resized();
+			if(this.cN && this.cN.scene && typeof(this.cN.scene.resized) == "function") {
+				this.cN.scene.resized();
 			}
 
-			page.offsetHeight;
+			this.offsetHeight;
+		}
+
+		// iOS scroll fix 
+		page.fixiOSScroll = function() {
+
+			u.ass(this.hN, {
+				"position":"absolute",
+			});
+
+
+			u.ass(this.hN, {
+				"position":"fixed",
+			});
+
 		}
 
 		// global scroll handler 
 		page.scrolled = function() {
 
-			page.scrolled_y = u.scrollY();
+			// Fix issue with fixed element after scroll
+			u.t.resetTimer(this.t_fix);
+			this.t_fix = u.t.setTimer(this, "fixiOSScroll", 200);
+
+
+			this.scrolled_y = u.scrollY();
 
 			// forward scroll event to current scene
-			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
-				page.cN.scene.scrolled();
+			if(this.cN && this.cN.scene && typeof(this.cN.scene.scrolled) == "function") {
+				this.cN.scene.scrolled();
 			}
 
 		}
@@ -100,11 +119,11 @@ Util.Objects["page"] = new function() {
 				this.is_ready = true;
 
 				// set resize handler
-				u.e.addEvent(window, "resize", page.resized);
+				u.e.addWindowEvent(this, "resize", this.resized);
 				// set scroll handler
-				u.e.addEvent(window, "scroll", page.scrolled);
+				u.e.addWindowEvent(this, "scroll", this.scrolled);
 				// set orientation change handler
-				u.e.addEvent(window, "orientationchange", page.orientationchanged);
+				u.e.addWindowEvent(this, "orientationchange", this.orientationchanged);
 
 
 				if(typeof(u.notifier) == "function") {
@@ -112,7 +131,12 @@ Util.Objects["page"] = new function() {
 				}
 				if(u.getCookie("smartphoneSwitch") == "on") {
 					console.log("Back to desktop")
-					u.ae(document.body, "div", {id:"desktop_switch", html:"Back to desktop"});
+					var bn_switch = u.ae(document.body, "div", {id:"desktop_switch", html:"Back to desktop"});
+					u.ce(bn_switch);
+					bn_switch.clicked = function() {
+						u.saveCookie("smartphoneSwitch", "off");
+						location.href = location.href.replace(/[&]segment\=smartphone|segment\=smartphone[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=desktop";
+					}
 				}
 
 
@@ -167,7 +191,7 @@ Util.Objects["page"] = new function() {
 		page.initNavigation = function() {
 
 
-			page.nN.list = u.qs("ul.navigation", page.nN);
+			this.nN.list = u.qs("ul.navigation", this.nN);
 
 
 			// create burger menu

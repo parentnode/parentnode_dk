@@ -155,6 +155,75 @@ global $model;
 					</div>
 				</li>
 				<li>
+					<h2>Digital vælgererklæring - Alternativet</h2>
+					<ul class="actions">
+						<li><a href="http://demo-alternativet.parentnode.dk" target="_blank" class="hardlink">http://demo-alternativet.parentnode.dk</a></li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "mobile"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							Online voter declaration system for new political green party, Alternativet. Used by the party
+							to collect the 20.600 signed voter declarations, which are required to run for Parliament in
+							Denmark. In total the party collected more than 50.000 signatures over 5 months and was voted
+							into Parliament at the next election.
+						</p>
+						<p>
+							A few months earlier, we had developed the first ever digital voter declaration system in
+							Denmark as a contribution to Dukke Partiet (the puppet party), upon which this solution 
+							is based.
+						</p>
+						<p>
+							Produced in 2014 in collaboration with Alternativet.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9, Janitor v0.7, Templator v1.0 and Detector v2.0.</p>
+					</div>
+				</li>
+				<li>
+					<h2>Dukkepartiet</h2>
+					<ul class="actions">
+						<li><a href="http://demo-dukkepartiet.parentnode.dk" target="_blank" class="hardlink">http://demo-dukkepartiet.parentnode.dk</a></li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "mobile"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							Web site for protest party / political satire group, Dukke Partiet (the puppet party). 
+							Support for Desktop, tablet and smartphone (limited content). All content editable via 
+							backend and integration of YouTube videos.
+						</p>
+						<p>
+							In the spirit of the project we decided to challenge the system and build the first ever
+							digital voter declaration system, essentially to make it easier for new parties to collect
+							the signatures required to run for Parliament. The system was officially approved by the
+							Ministry of Interior (Indenrigsministeriet), and shortly after adopted by new green party, 
+							Alternativet.
+						</p>
+						<p>
+							Produced in 2014 in collaboration with e-Types and Dukke Partiet.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9, Janitor v0.7, Templator v1.0 and Detector v2.0.</p>
+					</div>
+				</li>
+				<li>
 					<h2>OeO - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-oeo.parentnode.dk" target="_blank" class="hardlink">http://demo-oeo.parentnode.dk</a></li>

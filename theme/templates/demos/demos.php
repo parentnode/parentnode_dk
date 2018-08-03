@@ -33,17 +33,19 @@ global $model;
 
 		<div class="articlebody" itemprop="articleBody">
 			<p>
-				We are webdevelopers. Frontend specialists, with backend skills.
+				We are web developers. Frontend specialists with backend skills.
 				Here is a small collection of demos of some of the work we've done over the years. 
 			</p>
 			<h2>
 				How do you show off code?
 			</h2>
 			<p>
-				We figured it wouldn't make sense to show a bunch of screenshot, since we didn't make the design anyway. 
-				Well, in some cases we did, but don't tell anyone. We are not a designers. We just make things work.
-				But the point is, you kinda have to see the sites running in a browser to get a sense of what we did and
-				the web is a living organism, so most of the sites listed below are no longer online in their original form. 
+				We figured it wouldn't make sense to show a bunch of screenshots, since we didn't make the design anyway. 
+				Well, in some cases we did, but don't tell anyone. We are not designers; we just make things work.
+				But the point is, you kinda have to see the sites running in a browser to get a sense of what we did. 
+			</p>
+			<p>	
+				The web is a living organism, so most of the sites listed below are no longer online in their original form. 
 				That is why we made these custom demo versions, where some functionality may be disabled.
 			</p>
 			<p>
@@ -56,7 +58,7 @@ global $model;
 
 			<ul class="demos">
 				<li>
-					<h2>L&aring;n &amp; Spar Bank - Targeted mini survey</h2>
+					<h2>L&aring;n &amp; Spar Bank – Targeted mini survey</h2>
 					<ul class="actions">
 						<li><a href="http://demo-lsb-survey.parentnode.dk" target="_blank" class="hardlink">http://demo-lsb-survey.parentnode.dk</a></li>
 					</ul>
@@ -73,18 +75,17 @@ global $model;
 								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
 							}
 						?>
+						<p>Part of a series of campaign websites for L&aring;n &amp; Spar Bank.	</p>
 						<p>
-							Series of campaign website for L&aring;n &amp; Spar Bank. Desktop, tablet and Smartphone.
-							Survey with 10 questions targeted towards a specific group - teachers, nurses, academicians and masters. 
-							Instant statistical visual feedback based on the total sum of answers from all participants.
+							Survey with 10 questions targeted towards teachers, nurses, and academics. Desktop, tablet and smartphone. Instant statistical visual feedback based on the total sum of answers from all participants.
 							Backend for collecting answers and signups.
 						</p>
 						<p>
-							The page had intregrated device detection and it was able to route internal links to either the desktop or smartphone
-							version respectively, which in their case is two different urls. It was built to work as a take-over, directly extending a page
-							in the banks main CMS. This allowed the marketing department to edit the texts as needed, while all campaign
-							material and data collection endpoints was hosted on a separate server, giving me full development control.
-							This was done to avoid dependencies to their own IT department.
+							The page had integrated device detection, and it was able to route internal links to either the desktop or smartphone
+							version respectively, which in this case were two different urls. We built the page to work as a take-over, directly extending a page
+							in the bank's main CMS. This allowed the marketing department to edit the texts as needed, while all campaign
+							material and data collection endpoints were hosted on a separate server, giving us full development control.
+							This was done to avoid dependencies to L&aring;n &amp; Spar Bank's own IT department.
 						</p>
 						<p>
 							Produced in 2017 in collaboration with Lån &amp; Spar Bank and We❤︎People.<br />
@@ -94,7 +95,7 @@ global $model;
 					</div>
 				</li>
 				<li>
-					<h2>Stofa - Valget er dit</h2>
+					<h2>Stofa – Valget er dit</h2>
 					<ul class="actions">
 						<li><a href="http://demo-valgeterdit.parentnode.dk" target="_blank" class="hardlink">http://demo-valgeterdit.parentnode.dk</a></li>
 					</ul>
@@ -112,8 +113,8 @@ global $model;
 							}
 						?>
 						<p>
-							Campaign website for Stofa. Desktop, tablet and Smartphone.
-							Quiz with 6 rounds - a new round automatically launching every Monday. A couple of months later
+							Campaign website for Stofa. Desktop, tablet and smartphone.
+							Quiz with 6 rounds – a new round automatically launching every Monday. A couple of months later
 							we did a fully reskinned version 2. Backend for validating and collecting
 							user answers and signups.
 						</p>
@@ -125,7 +126,7 @@ global $model;
 					</div>
 				</li>
 				<li>
-					<h2>Distortion - Gadearmbånd</h2>
+					<h2>Distortion – Gadearmbånd</h2>
 					<ul class="actions">
 						<li><a href="http://demo-gaadearmbaand.parentnode.dk" target="_blank" class="hardlink">http://demo-gaadearmbaand.parentnode.dk</a></li>
 					</ul>
@@ -155,7 +156,7 @@ global $model;
 					</div>
 				</li>
 				<li>
-					<h2>Digital vælgererklæring - Alternativet</h2>
+					<h2>Digital vælgererklæring – Alternativet</h2>
 					<ul class="actions">
 						<li><a href="http://demo-alternativet.parentnode.dk" target="_blank" class="hardlink">http://demo-alternativet.parentnode.dk</a></li>
 					</ul>
@@ -173,7 +174,7 @@ global $model;
 						<p>
 							Online voter declaration system for new political green party, Alternativet. Used by the party
 							to collect the 20.600 signed voter declarations, which are required to run for Parliament in
-							Denmark. In total the party collected more than 50.000 signatures over 5 months and was voted
+							Denmark. In total, the party collected more than 50.000 signatures over 5 months and was voted
 							into Parliament at the next election.
 						</p>
 						<p>
@@ -205,8 +206,8 @@ global $model;
 							}
 						?>
 						<p>
-							Web site for protest party / political satire group, Dukke Partiet (the puppet party). 
-							Support for Desktop, tablet and smartphone (limited content). All content editable via 
+							Web site for protest party / political satire group, Dukkepartiet (The Puppet Party). 
+							Support for desktop, tablet and smartphone (limited content). All content editable via 
 							backend and integration of YouTube videos.
 						</p>
 						<p>
@@ -217,7 +218,7 @@ global $model;
 							Alternativet.
 						</p>
 						<p>
-							Produced in 2014 in collaboration with e-Types and Dukke Partiet.<br />
+							Produced in 2014 in collaboration with e-Types and Dukkepartiet.<br />
 							Technologies: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
 						</p>
 						<p class="note">Built using Manipulator v0.9, Janitor v0.7, Templator v1.0 and Detector v2.0.</p>
@@ -242,9 +243,10 @@ global $model;
 							}
 						?>
 						<p>
-							Corporate website for design agency OeO. Desktop and tablet. Simple contact page for smartphone visitors.
-							Pushing the performance limits of the iPad to the max. 
-							Probably overdoing it a little for the time. Backend for everything.
+							Corporate website for design agency OeO. Desktop and tablet. Simple contact page for smartphone visitors. Backend for everything.
+						</p>
+						<p>
+							We pushed the performance limits of the iPad to the max on this one – probably overdoing it a little for the time. 
 						</p>
 						<p>
 							Produced in 2014 in collaboration with e-Types.<br />
@@ -263,11 +265,11 @@ global $model;
 						<p>
 							Corporate website for the design and identity agency, e-Types. Made for all browser segments (desktop, 
 							desktop_light, smartphone, tablet, mobile), so it works in anything from the newest 
-							Chrome to Internet Explorer 6, from the newest iPhones to the oldest Nokia feature
+							Chrome to Internet Explorer 6; from the newest iPhones to the oldest Nokia feature
 							phones.
 						</p>
 						<p>
-							In the desktop version the frontpage contains a scalable pixel perfect custom grid, with 3 intervals,
+							In the desktop version the frontpage contains a scalable pixel perfect custom grid, with three intervals,
 							which was particularly difficult to make due to it's non-gridish nature. The rest of the
 							pages are also highly customized, with complex scaling rules.
 						</p>
@@ -302,8 +304,8 @@ global $model;
 							}
 						?>
 						<p>
-							HTML5 WebApp demo made primarily to demonstrate animation performance and Native appearance
-							of WebApps as a response to the AppStore/Native app frenzy.
+							HTML5 WebApp demo made primarily to demonstrate animation performance and "native" appearance
+							of WebApps as a response to the AppStore/native app frenzy.
 						</p>
 						<p>
 							Produced in 2013.<br />
@@ -337,7 +339,7 @@ global $model;
 							This demo is only showcasing potential offline functionality in a pure WebApp, 
 							which was unheard off in 2012. Huh. It still is.
 							In the process, Hemocue was bought by 
-							Radiometer and the project was cancelled before we really got started.
+							Radiometer, and the project was cancelled before we really got started.
 						</p>
 						<p>
 							Produced in 2012.<br />
@@ -363,7 +365,7 @@ global $model;
 							}
 						?>
 						<p>
-							Small temporary website for Wibroe, Duckert &amp; Partners (WDP), while transitioning to new 
+							Small temporary website for Wibroe, Duckert &amp; Partners (WDP), while they transitioned to a new 
 							organisation structure. Desktop, tablet and 
 							smartphone.
 						</p>
@@ -391,7 +393,7 @@ global $model;
 							}
 						?>
 						<p>
-							Small temporary website for Partners production, while transitioning to new organisation structure. Desktop, tablet and 
+							Small temporary website for Partners production, while they transitioned to a new organisation structure. Desktop, tablet and 
 							smartphone. Mostly just an online business card.
 						</p>
 						<p>
@@ -417,7 +419,7 @@ global $model;
 								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
 							}
 						?>
-						<p>Corporate website for Tuborg with heavy use of animations for the time. Desktop and tablet.</p>
+						<p>Corporate website for Tuborg with a, for the time, heavy use of animations. Desktop and tablet.</p>
 						<p>
 							Produced in 2012 in collaboration with Netpeople/WDP.<br />
 							Technologies: JavaScript, HTML5, CSS3, Ruby on Rails.
@@ -471,7 +473,7 @@ global $model;
 						?>
 						<p>
 							Corporate website for Netpeople. Desktop and tablet. This was a subdivision site and part of a range of sites for 
-							the entire PeopleGroup organisation. The individual mail site wes inverted, as can be seen
+							the entire PeopleGroup organisation. The main site was inverted, as can be seen
 							above in the PeopleGroup demo. The subdivision sites offered a couple of sections more than the main
 							site.
 						</p>
@@ -485,7 +487,7 @@ global $model;
 				<li>
 					<h2>Microsoft, Windows 8 - Responsive HTML5 banners</h2>
 					<ul class="actions">
-						<li><a href="http://demo-win8-parentnode.kaestel.dk" target="_blank" class="hardlink">http://demo-win8-parentnode.kaestel.dk</a></li>
+						<li><a href="http://demo-win8.parentnode.dk" target="_blank" class="hardlink">http://demo-win8.parentnode.dk</a></li>
 					</ul>
 
 					<div class="info">
@@ -507,7 +509,7 @@ global $model;
 						</p>
 						<p>
 							Super-optimized preloading, ensuring a minimal initial load as required for banners, no overhead across 
-							devices and smooth playback. This was something else back in 2012, when HTML banners were just bare beginning
+							devices and smooth playback. This was something else back in 2012, when HTML banners were just barely beginning
 							to be supported by the banner systems.
 						</p>
 						<p>
@@ -679,8 +681,8 @@ global $model;
 							}
 						?>
 						<p>
-							Non flash version of Fri for mobberi, primarily for the iPad where there is no Flash plugin. Includes a lot
-							of fanzy stuff for the time, like CSS animations and a jumping game with cute sounds. The best part was clearly
+							Non flash version of Fri for mobberi, primarily for the iPad where there is no Flash plugin. Included a lot
+							of fancy stuff for the time, like CSS animations and a jumping game with cute sounds. The best part was clearly
 							failing the game. 
 						</p>
 						<p>
@@ -691,7 +693,7 @@ global $model;
 					</div>
 				</li>
 				<li>
-					<h2>Amgen, Aranesp - Product presentation for iPad</h2>
+					<h2>Amgen, Aranesp – Product presentation for iPad</h2>
 					<ul class="actions">
 						<li><a href="http://demo-aranesp.parentnode.dk" target="_blank" class="hardlink">http://demo-aranesp.parentnode.dk</a></li>
 					</ul>
@@ -955,10 +957,10 @@ global $model;
 
 			<h2>Is that really all?</h2>
 			<p>
-				No. Some of my work cannot be showcased as it's deeply integrated with other systems. In other cases, I simply 
-				deemed it too much work to make a demo. Or it was too boring (sorry clients). And then of course, there is all the stuff I don't have the source-code for
-				anymore. I especially regret not having any of the really, really old stuff – but who could have known
-				I'd survive this long.
+				No. Some of our work cannot be showcased as it's deeply integrated with other systems. In other cases, we simply 
+				deemed it too much work to make a demo. Or it was too boring (sorry clients). And then of course, there is all the stuff we don't have the source-code for
+				anymore. Says our founder, <a href="http://kaestel.dk" target="_blank">Martin</a>: "I especially regret not having any of the really, really old stuff – but who could have known
+				I'd survive this long?"
 			</p>
 		</div>
 	</div>

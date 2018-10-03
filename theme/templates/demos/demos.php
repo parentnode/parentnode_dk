@@ -55,12 +55,23 @@ global $model;
 			<p>
 				So, take a look. And remember, we did all the stuff you can't really see, unless you look under the hood :-)
 			</p>
-
+		</div>	
+		<div class="i:demos articlebody demos">
 			<ul class="demos">
-				<li>
+				<li class="demo">
 					<h2>L&aring;n &amp; Spar Bank – Targeted mini survey</h2>
 					<ul class="actions">
 						<li><a href="http://demo-lsb-survey.parentnode.dk" target="_blank" class="hardlink">http://demo-lsb-survey.parentnode.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>javascript</li>
+						<li>html</li>
+						<li>css</li>
+						<li>websites</li>
+						<li>web apps</li>
+						<li>banners</li>
+						<li>games</li>
 					</ul>
 
 					<div class="info">
@@ -94,10 +105,20 @@ global $model;
 						<p class="note">Built using Manipulator v0.9.2, Janitor v0.7.7, Templator v2.0 and Detector v3.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Stofa – Valget er dit</h2>
 					<ul class="actions">
 						<li><a href="http://demo-valgeterdit.parentnode.dk" target="_blank" class="hardlink">http://demo-valgeterdit.parentnode.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>peter</li>
+						<li>søren</li>
+						<li>martin</li>
+						<li>websites</li>
+						<li>web apps</li>
+						<li>banners</li>
+						<li>games</li>
 					</ul>
 
 					<div class="info">
@@ -125,7 +146,7 @@ global $model;
 						<p class="note">Built using Manipulator v0.9.2, Janitor v0.7.7, Templator v2.0 and Detector v3.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Distortion – Gadearmbånd</h2>
 					<ul class="actions">
 						<li><a href="http://demo-gaadearmbaand.parentnode.dk" target="_blank" class="hardlink">http://demo-gaadearmbaand.parentnode.dk</a></li>
@@ -155,7 +176,7 @@ global $model;
 						<p class="note">Built using Manipulator v0.9.1, Janitor v0.7.6, Templator v2.0 and Detector v3.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Digital vælgererklæring – Alternativet</h2>
 					<ul class="actions">
 						<li><a href="http://demo-alternativet.parentnode.dk" target="_blank" class="hardlink">http://demo-alternativet.parentnode.dk</a></li>
@@ -189,7 +210,7 @@ global $model;
 						<p class="note">Built using Manipulator v0.9, Janitor v0.7, Templator v1.0 and Detector v2.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Dukkepartiet</h2>
 					<ul class="actions">
 						<li><a href="http://demo-dukkepartiet.parentnode.dk" target="_blank" class="hardlink">http://demo-dukkepartiet.parentnode.dk</a></li>
@@ -224,7 +245,7 @@ global $model;
 						<p class="note">Built using Manipulator v0.9, Janitor v0.7, Templator v1.0 and Detector v2.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>OeO - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-oeo.parentnode.dk" target="_blank" class="hardlink">http://demo-oeo.parentnode.dk</a></li>
@@ -255,7 +276,7 @@ global $model;
 						<p class="note">Built using Manipulator v0.8, Janitor v0.7, Templator v1.0 and Detector v1.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>e-Types.com - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-e-types.parentnode.dk" target="_blank" class="hardlink">http://demo-e-types.parentnode.dk</a></li>
@@ -283,7 +304,7 @@ global $model;
 						<p class="note">Built using Manipulator v0.8, Janitor v0.7, Templator v1.0 and Detector v1.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>HTML5 WebApp</h2>
 					<ul class="actions">
 						<li><a href="http://demo-html5-app.parentnode.dk" target="_blank" class="hardlink">http://demo-html5-app.parentnode.dk</a></li>
@@ -314,7 +335,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.7 and Templator v1.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Hemocue WebApp</h2>
 					<ul class="actions">
 						<li><a href="http://demo-hemocue.parentnode.dk" target="_blank" class="hardlink">http://demo-hemocue.parentnode.dk</a></li>
@@ -348,7 +369,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.7 and Templator v1.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Wibroe, Duckert &amp; Partners - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-wdp.parentnode.dk" target="_blank" class="hardlink">http://demo-wdp.parentnode.dk</a></li>
@@ -376,7 +397,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.7 and Templator v1.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Partnersproduction - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-partnersproduction.parentnode.dk" target="_blank" class="hardlink">http://demo-partnersproduction.parentnode.dk</a></li>
@@ -403,7 +424,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.7 and Templator v1.0.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>tuborg.dk - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-tuborg.parentnode.dk" target="_blank" class="hardlink">http://demo-tuborg.parentnode.dk</a></li>
@@ -427,7 +448,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>peoplegroup.dk - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-peoplegroup.parentnode.dk" target="_blank" class="hardlink">http://demo-peoplegroup.parentnode.dk</a></li>
@@ -455,7 +476,7 @@ global $model;
 						<p class="note">Built using	Manipulator 0.5.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>netpeople.dk - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-netpeople.parentnode.dk" target="_blank" class="hardlink">http://demo-netpeople.parentnode.dk</a></li>
@@ -484,7 +505,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Microsoft, Windows 8 - Responsive HTML5 banners</h2>
 					<ul class="actions">
 						<li><a href="http://demo-win8.parentnode.dk" target="_blank" class="hardlink">http://demo-win8.parentnode.dk</a></li>
@@ -519,7 +540,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.6.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Whil.com - Pitch website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-whil.parentnode.dk" target="_blank" class="hardlink">http://demo-whil.parentnode.dk</a></li>
@@ -546,7 +567,7 @@ global $model;
 						</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Novo - Mobile website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-novo-mobile.parentnode.dk" target="_blank" class="hardlink">http://demo-novo-mobile.parentnode.dk</a></li>
@@ -577,7 +598,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Vestas online - Frontend HTML templates and JavaScript framework</h2>
 					<ul class="actions">
 						<li><a href="http://demo-vestas.parentnode.dk" target="_blank" class="hardlink">http://demo-vestas.parentnode.dk</a></li>
@@ -605,7 +626,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>BR, GakGak - HTML5 game for Danish carnival</h2>
 					<ul class="actions">
 						<li><a href="http://demo-gakgak.parentnode.dk" target="_blank" class="hardlink">http://demo-gakgak.parentnode.dk</a></li>
@@ -633,7 +654,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>MCreative Group - Website</h2>
 					<ul class="actions">
 						<li><a href="http://demo-mcreativegroup.parentnode.dk" target="_blank" class="hardlink">http://demo-mcreativegroup.parentnode.dk</a></li>
@@ -658,7 +679,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Fri for mobberi - HTML5 version of existing Flash site</h2>
 					<ul class="actions">
 						<li><a href="http://demo-friformobberi.parentnode.dk" target="_blank" class="hardlink">http://demo-friformobberi.parentnode.dk</a></li>
@@ -692,7 +713,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.3.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Amgen, Aranesp – Product presentation for iPad</h2>
 					<ul class="actions">
 						<li><a href="http://demo-aranesp.parentnode.dk" target="_blank" class="hardlink">http://demo-aranesp.parentnode.dk</a></li>
@@ -730,7 +751,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.4.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Amgen, Mimpara - Product presentation for iPad</h2>
 					<ul class="actions">
 						<li><a href="http://demo-mimpara.parentnode.dk" target="_blank" class="hardlink">http://demo-mimpara.parentnode.dk</a></li>
@@ -768,7 +789,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.4.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Amgen, Neulasta - Product presentation for iPad</h2>
 					<ul class="actions">
 						<li><a href="http://demo-neulasta.parentnode.dk" target="_blank" class="hardlink">http://demo-neulasta.parentnode.dk</a></li>
@@ -806,7 +827,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.4.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Sanofi/Avensis - Product presentation for iPad</h2>
 					<ul class="actions">
 						<li><a href="http://demo-sanofi.parentnode.dk" target="_blank" class="hardlink">http://demo-sanofi.parentnode.dk</a></li>
@@ -849,7 +870,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.4.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Nomeco - Warehouse packing status monitor</h2>
 					<ul class="actions">
 						<li><a href="http://demo-nomeco.parentnode.dk" target="_blank" class="hardlink">http://demo-nomeco.parentnode.dk</a></li>
@@ -878,7 +899,7 @@ global $model;
 						<p class="note">Built using Manipulator 0.3.</p>
 					</div>
 				</li>
-				<li>
+				<li class="demo">
 					<h2>mst.dk</h2>
 					<ul class="actions">
 						<li><a href="http://demo-mst.parentnode.dk" target="_blank" class="hardlink">http://demo-mst.parentnode.dk</a></li>
@@ -916,7 +937,7 @@ global $model;
 					</div>
 
 				</li>
-				<li>
+				<li class="demo">
 					<h2>Elsparefonden.dk</h2>
 					<ul class="actions">
 						<li><a href="http://demo-elsparefonden.parentnode.dk" target="_blank" class="hardlink">http://demo-elsparefonden.parentnode.dk</a></li>

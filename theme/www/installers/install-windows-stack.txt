@@ -17,6 +17,11 @@ echo
 # FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
 sudo ls &>/dev/null
 
+echo ""
+echo ""
+echo "--- Confirming Windows environment ---"
+echo ""
+echo ""
 
 if grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null ; then
 

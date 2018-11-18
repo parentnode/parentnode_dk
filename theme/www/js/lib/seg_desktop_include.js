@@ -11,3 +11,4 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/g
 
 
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-post-customs.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/desktop/i-demos.js"></script>');

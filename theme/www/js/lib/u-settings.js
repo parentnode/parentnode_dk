@@ -6,7 +6,6 @@ u.ga_account = 'UA-49720985-1';
 u.ga_domain = 'parentnode.dk';
 
 // dynamic text
-u.txt = {};
 u.txt["share"] = "Share";
 u.txt["share-info-headline"] = "(How do I share?)";
 u.txt["share-info-txt"] = "We have not includered social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";

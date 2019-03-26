@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-asset-builder @ 2019-03-26 19:20:34
+asset-builder @ 2019-03-26 19:21:41
 */
 
 /*seg_smartphone_include.js*/
@@ -4793,104 +4793,6 @@ u.txt["smartphone-switch-bn-hide"] = "Hide";
 u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
 
 
-/*i-login.js*/
-Util.Objects["login"] = new function() {
-	this.init = function(scene) {
-		u.bug("scene init:", scene);
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			this._form = u.qs("form", this);
-			u.f.init(this._form);
-			this._form.fields["username"].focus();
-			page.cN.scene = this;
-			u.showScene(this);
-			page.resized();
-		}
-		scene.ready();
-	}
-}
-
-
-/*i-signup.js*/
-Util.Objects["signup"] = new function() {
-	this.init = function(scene) {
-		scene.resized = function() {
-		}
-		scene.scrolled = function() {
-		}
-		scene.ready = function() {
-			page.cN.scene = this;
-			var signup_form = u.qs("form.signup", this);
-			var place_holder = u.qs("div.articlebody .placeholder.signup", this);
-			if(signup_form && place_holder) {
-				place_holder.parentNode.replaceChild(signup_form, place_holder);
-			}
-			if(signup_form) {
-				u.f.init(signup_form);
-				signup_form.submitted = function() {
-					var data = u.f.getParams(this); 
-					this.response = function(response) {
-						if (u.qs("form.verify_code", response)) {
-							scene.initVerify(response);
-							u.h.navigate("/signup/verify", false, true);
-						}
-						else {
-							scene.showMessage(this, response);
-						}
-					}
-					u.request(this, this.action, {"data":data, "method":"POST"});
-				}
-			}
-			page.acceptCookies();
-			u.showScene(this);
-			page.resized();
-		}
-		scene.initVerify = function(response) {
-			var verify_scene = scene.replaceScene(response);
-			if(verify_scene) {
-				var verify_form = u.qs("form.verify_code", verify_scene);
-				u.f.init(verify_form);
-			}
-			verify_form.submitted = function() {
-				data = u.f.getParams(this);
-				this.response = function(response) {
-					if (u.qs(".login", response)) {
-						location.href = "/login";
-					}
-					else if (u.qs(".confirmed", response)) {
-						u.showScene(scene.replaceScene(response));
-						u.h.navigate("/signup/confirm/receipt", false, true);
-					}
-					else {
-						scene.showMessage(this, response);
-					}
-				}
-				u.request(this, this.action, {"data":data, "method":"POST", "responseType":"document"});
-			}
-			u.showScene(verify_scene);
-		}
-		scene.replaceScene = function(response) {
-			var current_scene = u.qs(".scene", page);
-			var new_scene = u.qs(".scene", response);
-			page.cN.replaceChild(new_scene, current_scene); 
-			return new_scene;
-		}
-		scene.showMessage = function(form, response) {
-			var new_error = (u.qs("p.errormessage", response) || u.qs("p.error", response));
-			var current_error = (u.qs("p.errormessage", form) || u.qs("p.error", form));
-			if (!current_error) {
-				u.ie(form, new_error);
-			}
-			else {
-				form.replaceChild(new_error, current_error);
-			}
-		}
-		scene.ready();
-	}
-}
 
 
 /*u-geolocation.js*/

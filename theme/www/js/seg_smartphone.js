@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2018-08-20 11:14:24
+js-merged @ 2019-03-15 11:15:31
 */
 
 /*seg_smartphone_include.js*/
@@ -4611,7 +4611,7 @@ Util.saveCookie = function(name, value, _options) {
 	var expires = true;
 	var path = false;
 	var force = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4621,7 +4621,7 @@ Util.saveCookie = function(name, value, _options) {
 			}
 		}
 	}
-	if(!force && typeof(window.localStorage) == "object" && typeof(window.sessionStorage) == "object") {
+	if(!force && obj(window.localStorage) && obj(window.sessionStorage)) {
 		if(expires === true) {
 			window.sessionStorage.setItem(name, value);
 		}
@@ -4633,13 +4633,13 @@ Util.saveCookie = function(name, value, _options) {
 	if(expires === false) {
 		expires = ";expires=Mon, 04-Apr-2020 05:00:00 GMT";
 	}
-	else if(typeof(expires) === "string") {
+	else if(str(expires)) {
 		expires = ";expires="+expires;
 	}
 	else {
 		expires = "";
 	}
-	if(typeof(path) === "string") {
+	if(str(path)) {
 		path = ";path="+path;
 	}
 	else {
@@ -4649,17 +4649,17 @@ Util.saveCookie = function(name, value, _options) {
 }
 Util.getCookie = function(name) {
 	var matches;
-	if(typeof(window.sessionStorage) == "object" && window.sessionStorage.getItem(name)) {
+	if(obj(window.sessionStorage) && window.sessionStorage.getItem(name)) {
 		return window.sessionStorage.getItem(name)
 	}
-	else if(typeof(window.localStorage) == "object" && window.localStorage.getItem(name)) {
+	else if(obj(window.localStorage) && window.localStorage.getItem(name)) {
 		return window.localStorage.getItem(name)
 	}
 	return (matches = document.cookie.match(encodeURIComponent(name) + "=([^;]+)")) ? decodeURIComponent(matches[1]) : false;
 }
 Util.deleteCookie = function(name, _options) {
 	var path = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4667,13 +4667,13 @@ Util.deleteCookie = function(name, _options) {
 			}
 		}
 	}
-	if(typeof(window.sessionStorage) == "object") {
+	if(obj(window.sessionStorage)) {
 		window.sessionStorage.removeItem(name);
 	}
-	if(typeof(window.localStorage) == "object") {
+	if(obj(window.localStorage)) {
 		window.localStorage.removeItem(name);
 	}
-	if(typeof(path) === "string") {
+	if(str(path)) {
 		path = ";path="+path;
 	}
 	else {
@@ -4723,7 +4723,7 @@ Util.cookieReference = function(node, _options) {
 	var ref;
 	var ignore_classnames = false;
 	var ignore_classvars = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4747,7 +4747,7 @@ Util.cookieReference = function(node, _options) {
 				classname = classname.replace(regex, " ").replace(/[ ]{2,4}/, " ");
 			}
 			if(ignore_classvars) {
-				classname = classname.replace(/(^| )[a-zA-Z_]+\:[\?\=\w\/\\#~\:\.\,\+\&\%\@\!\-]+(^| )/g, " ").replace(/[ ]{2,4}/g, " ");
+				classname = classname.replace(/\b[a-zA-Z_]+\:[\?\=\w\/\\#~\:\.\,\+\&\%\@\!\-]+\b/g, "").replace(/[ ]{2,4}/g, " ");
 			}
 			node_identifier = node.nodeName+"."+classname.trim().replace(/ /g, ".");
 		}
@@ -6423,7 +6423,7 @@ u.notifier = function(node) {
 	}
 	node.notify = function(response, _options) {
 		var class_name = "message";
-		if(typeof(_options) == "object") {
+		if(obj(_options)) {
 			var argument;
 			for(argument in _options) {
 				switch(argument) {
@@ -6432,30 +6432,31 @@ u.notifier = function(node) {
 			}
 		}
 		var output = [];
-		if(typeof(response) == "object") {
+		if(obj(response) && response.isJSON) {
 			var message = response.cms_message;
 			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
-			if(typeof(message) == "object") {
+			if(obj(message)) {
 				for(type in message) {
-					if(typeof(message[type]) == "string") {
+					if(str(message[type])) {
 						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
 					}
-					else if(typeof(message[type]) == "object" && message[type].length) {
+					else if(obj(message[type]) && message[type].length) {
 						var node, i;
-						for(i = 0; _message = message[type][i]; i++) {
+						for(i = 0; i < message[type].length; i++) {
+							_message = message[type][i];
 							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
 						}
 					}
 				}
 			}
-			else if(typeof(message) == "string") {
+			else if(str(message)) {
 				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
 			}
-			if(typeof(this.notifications.show) == "function") {
+			if(fun(this.notifications.show)) {
 				this.notifications.show();
 			}
 		}
-		else if(typeof(response) == "object" && response.isHTML) {
+		else if(obj(response) && response.isHTML) {
 			var login = u.qs(".scene.login form", response);
 			var messages = u.qsa(".scene div.messages p", response);
 			if(login && !u.qs("#login_overlay")) {
@@ -6482,13 +6483,16 @@ u.notifier = function(node) {
 							var input_vars = u.qsa("[name=csrf-token]", page);
 							var dom_vars = u.qsa("*", page);
 							var i, node;
-							for(i = 0; node = data_vars[i]; i++) {
+							for(i = 0; i < data_vars.length; i++) {
+								node = data_vars[i];
 								node.setAttribute("data-csrf-token", csrf_token);
 							}
-							for(i = 0; node = input_vars[i]; i++) {
+							for(i = 0; i < input_vars.length; i++) {
+								node = input_vars[i];
 								node.value = csrf_token;
 							}
-							for(i = 0; node = dom_vars[i]; i++) {
+							for(i = 0; i < dom_vars.length; i++) {
+								node = dom_vars[i];
 								if(node.csrf_token) {
 									node.csrf_token = csrf_token;
 								}
@@ -6496,7 +6500,8 @@ u.notifier = function(node) {
 							this.overlay.parentNode.removeChild(this.overlay);
 							var multiple_overlays = u.qsa("#login_overlay");
 							if(multiple_overlays) {
-								for(i = 0; overlay = multiple_overlays[i]; i++) {
+								for(i = 0; i < multiple_overlays.length; i++) {
+									overlay = multiple_overlays[i];
 									overlay.parentNode.removeChild(overlay);
 								}
 							}
@@ -6522,7 +6527,8 @@ u.notifier = function(node) {
 				}
 			}
 			else if(messages) {
-				for(i = 0; message = messages[i]; i++) {
+				for(i = 0; i < messages.length; i++) {
+					message = messages[i];
 					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
 				}
 			}
@@ -6541,7 +6547,7 @@ u.sortable = function(scope, _options) {
 	scope.targets;	
 	scope.layout;
 	scope.allow_nesting = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -6583,7 +6589,7 @@ u.sortable = function(scope, _options) {
 				d_node._event_move_id = u.e.addWindowMoveEvent(d_node, d_node.scope._sortabledrag);
 				d_node._event_end_id = u.e.addWindowEndEvent(d_node, d_node.scope._sortabledrop);
 				d_node.parentNode.insertBefore(d_node.scope.tN, d_node);
-				if(typeof(d_node.scope[d_node.scope.callback_picked]) == "function") {
+				if(fun(d_node.scope[d_node.scope.callback_picked])) {
 					d_node.scope[d_node.scope.callback_picked](event);
 				}
 			}
@@ -6611,7 +6617,7 @@ u.sortable = function(scope, _options) {
 				u.as(this, "bottom", "auto");
 				this.scope.detectAndInject(event_x, event_y);
 		}
-		if(typeof(this.scope[this.scope.callback_moved]) == "function") {
+		if(fun(this.scope[this.scope.callback_moved])) {
 			this.scope[this.scope.callback_moved](event);
 		}
 	}
@@ -6634,7 +6640,7 @@ u.sortable = function(scope, _options) {
 		else {
 			this.scope.draggable_nodes = u.qsa("."+this.scope.draggables, this.scope);
 		}
-		if(typeof(this.scope[this.scope.callback_dropped]) == "function") {
+		if(fun(this.scope[this.scope.callback_dropped])) {
 			this.scope[this.scope.callback_dropped](event);
 		}
 		this.rel_ox = u.absX(this) - u.relX(this);
@@ -6643,7 +6649,8 @@ u.sortable = function(scope, _options) {
 		this.scope._dragged = false;
 	}
 	scope.detectAndInject = function(event_x, event_y) {
-		for(i = this.draggable_nodes.length-1; node = this.draggable_nodes[i]; i--) {
+		for(i = this.draggable_nodes.length-1; i >= 0; i--) {
+			node = this.draggable_nodes[i];
 			if(node != this._dragged && node != this.tN && (!this.targets || u.hc(node.parentNode, this.targets))) {
 				if(this.layout == "vertical") {
 					var o_top = u.absY(node);
@@ -6723,8 +6730,9 @@ u.sortable = function(scope, _options) {
 		}
 		var structure = [];
 		var i, node, id, relation, position;
-		for(i = 0; node = this.draggable_nodes[i]; i++) {
-			id = u.cv(node, "node_id");
+		for(i = 0; i < this.draggable_nodes.length; i++) {
+			node = this.draggable_nodes[i];
+			id = u.cv(node, "item_id");
 			relation = this.getRelation(node);
 			position = this.getPositionInList(node);
 			structure.push({"id":id, "relation":relation, "position":position});
@@ -6744,7 +6752,7 @@ u.sortable = function(scope, _options) {
 		if(!node.parentNode.relation_id) {
 			var li_relation = u.pn(node, {"include":"li"});
 			if(u.inNodeList(li_relation, this.draggable_nodes)) {
-				node.parentNode.relation_id = u.cv(li_relation, "id");
+				node.parentNode.relation_id = u.cv(li_relation, "item_id");
 			}
 			else {
 				node.parentNode.relation_id = 0;
@@ -6778,7 +6786,8 @@ u.sortable = function(scope, _options) {
 			var temp_scope = scope.target_nodes;
 			scope.target_nodes = [scope];
 			var target_node;
-			for(i = 0; target_node = temp_scope[i]; i++) {
+			for(i = 0; i < temp_scope.length; i++) {
+				target_node = temp_scope[i];
 				scope.target_nodes.push(target_node);
 			} 
 		}
@@ -6789,7 +6798,8 @@ u.sortable = function(scope, _options) {
 	if(!scope.layout && scope.draggable_nodes.length) {
 		scope.layout = scope.offsetWidth < scope.draggable_nodes[0].offsetWidth*2 ? "vertical" : "horizontal";
 	}
-	for(i = 0; d_node = scope.draggable_nodes[i]; i++) {
+	for(i = 0; i < scope.draggable_nodes.length; i++) {
+		d_node = scope.draggable_nodes[i];
 		d_node.scope = scope;
 		d_node.dragme = true;
 		d_node.rel_ox = u.absX(d_node) - u.relX(d_node);
@@ -6801,7 +6811,8 @@ u.sortable = function(scope, _options) {
 		d_node.drag.d_node = d_node;
 		var drag_children = u.qsa("*", d_node.drag);
 		if(drag_children) {
-			for(j = 0; child = drag_children[j]; j++) {
+			for(j = 0; j < drag_children.length; j++) {
+				child = drag_children[j];
 				child.d_node = d_node;
 			}
 		}

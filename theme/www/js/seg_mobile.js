@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2018-08-20 11:14:24
+js-merged @ 2019-03-15 11:15:31
 */
 
 /*seg_mobile_include.js*/

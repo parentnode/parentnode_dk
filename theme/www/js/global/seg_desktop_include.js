@@ -13,7 +13,7 @@ document.write('<script type="text/javascript" src="http://parentnode.local/js/m
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-form-geolocation.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-form-htmleditor.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/beta-u-animation-to.js"></script>');
-document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/beta-u-fontsReady.js"></script>');
+document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/beta-u-fontsready.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/beta-u-notifier.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-sortable.js"></script>');
 document.write('<script type="text/javascript" src="http://parentnode.local/js/manipulator/v0_9_2/src/u-date.js"></script>');

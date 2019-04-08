@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-js-merged @ 2018-08-20 11:14:24
+js-merged @ 2019-03-15 11:15:31
 */
 
 /*seg_tablet_include.js*/
@@ -4611,7 +4611,7 @@ Util.saveCookie = function(name, value, _options) {
 	var expires = true;
 	var path = false;
 	var force = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4621,7 +4621,7 @@ Util.saveCookie = function(name, value, _options) {
 			}
 		}
 	}
-	if(!force && typeof(window.localStorage) == "object" && typeof(window.sessionStorage) == "object") {
+	if(!force && obj(window.localStorage) && obj(window.sessionStorage)) {
 		if(expires === true) {
 			window.sessionStorage.setItem(name, value);
 		}
@@ -4633,13 +4633,13 @@ Util.saveCookie = function(name, value, _options) {
 	if(expires === false) {
 		expires = ";expires=Mon, 04-Apr-2020 05:00:00 GMT";
 	}
-	else if(typeof(expires) === "string") {
+	else if(str(expires)) {
 		expires = ";expires="+expires;
 	}
 	else {
 		expires = "";
 	}
-	if(typeof(path) === "string") {
+	if(str(path)) {
 		path = ";path="+path;
 	}
 	else {
@@ -4649,17 +4649,17 @@ Util.saveCookie = function(name, value, _options) {
 }
 Util.getCookie = function(name) {
 	var matches;
-	if(typeof(window.sessionStorage) == "object" && window.sessionStorage.getItem(name)) {
+	if(obj(window.sessionStorage) && window.sessionStorage.getItem(name)) {
 		return window.sessionStorage.getItem(name)
 	}
-	else if(typeof(window.localStorage) == "object" && window.localStorage.getItem(name)) {
+	else if(obj(window.localStorage) && window.localStorage.getItem(name)) {
 		return window.localStorage.getItem(name)
 	}
 	return (matches = document.cookie.match(encodeURIComponent(name) + "=([^;]+)")) ? decodeURIComponent(matches[1]) : false;
 }
 Util.deleteCookie = function(name, _options) {
 	var path = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4667,13 +4667,13 @@ Util.deleteCookie = function(name, _options) {
 			}
 		}
 	}
-	if(typeof(window.sessionStorage) == "object") {
+	if(obj(window.sessionStorage)) {
 		window.sessionStorage.removeItem(name);
 	}
-	if(typeof(window.localStorage) == "object") {
+	if(obj(window.localStorage)) {
 		window.localStorage.removeItem(name);
 	}
-	if(typeof(path) === "string") {
+	if(str(path)) {
 		path = ";path="+path;
 	}
 	else {
@@ -4723,7 +4723,7 @@ Util.cookieReference = function(node, _options) {
 	var ref;
 	var ignore_classnames = false;
 	var ignore_classvars = false;
-	if(typeof(_options) == "object") {
+	if(obj(_options)) {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
@@ -4747,7 +4747,7 @@ Util.cookieReference = function(node, _options) {
 				classname = classname.replace(regex, " ").replace(/[ ]{2,4}/, " ");
 			}
 			if(ignore_classvars) {
-				classname = classname.replace(/(^| )[a-zA-Z_]+\:[\?\=\w\/\\#~\:\.\,\+\&\%\@\!\-]+(^| )/g, " ").replace(/[ ]{2,4}/g, " ");
+				classname = classname.replace(/\b[a-zA-Z_]+\:[\?\=\w\/\\#~\:\.\,\+\&\%\@\!\-]+\b/g, "").replace(/[ ]{2,4}/g, " ");
 			}
 			node_identifier = node.nodeName+"."+classname.trim().replace(/ /g, ".");
 		}
@@ -6524,77 +6524,7 @@ u.f.textEditor = function(field) {
 
 
 /*beta-u-fontsReady.js*/
-u.fontsReady = function(node, fonts, _options) {
-	var callback_loaded = "fontsLoaded";
-	var callback_timeout = "fontsNotLoaded";
-	var max_time = 3000;
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "callback"					: callback_loaded		= _options[_argument]; break;
-				case "timeout"					: callback_timeout		= _options[_argument]; break;
-				case "max"						: max_time				= _options[_argument]; break;
-			}
-		}
-	}
-	var font, node, i;
-	var loadkey = u.randomString(8);
-	if(typeof(fonts.length) == "undefined") {
-		font = fonts;
-		fonts = new Array();
-		fonts.push(font);
-	}
-	window["_man_fonts_"+loadkey] = u.ae(document.body, "div");
-	window["_man_fonts_"+loadkey].nodes = [];
-	window["_man_fonts_"+loadkey].font_style_weight = {};
-	window["_man_fonts_"+loadkey].callback_node = node;
-	window["_man_fonts_"+loadkey].callback_name = callback_loaded;
-	window["_man_fonts_"+loadkey].callback_timeout = callback_timeout;
-	window["_man_fonts_"+loadkey].max_time = max_time;
-	window["_man_fonts_"+loadkey].start_time = new Date().getTime();
-	for(i = 0; font = fonts[i]; i++) {
-		font.style = font.style ? font.style : "normal";
-		font.weight = font.weight ? font.weight : "400";
-		if(!window["_man_fonts_"+loadkey].font_style_weight[font.style+font.weight]) {
-			window["_man_fonts_"+loadkey].font_style_weight[font.style+font.weight] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: 20px !important; line-height: 1em !important; opacity: 0 !important;"});
-		}
-		node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!+?","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: 20px !important; line-height: 1em !important; opacity: 0 !important;"});
-		node._family = font.family;
-		node._weight = font.weight;
-		node._style = font.style;
-		window["_man_fonts_"+loadkey].nodes.push(node);
-	}
-	window["_man_fonts_"+loadkey].checkfonts = function() {
-		var basenode, i, node, loaded = 0;
-		for(i = 0; node = this.nodes[i]; i++) {
-			basenode = this.font_style_weight[node._style+node._weight];
-			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
-				loaded++;
-			}
-		}
-		if(loaded == this.nodes.length) {
-			if(typeof(this.callback_node[this.callback_name]) == "function") {
-				this.callback_node[this.callback_name]();
-			}
-			this.parentNode.removeChild(this);
-		}
-		else {
-			if(this.start_time + this.max_time > new Date().getTime()) {
-				u.t.setTimer(this, "checkfonts", 30);
-			}
-			else {
-				if(typeof(this.callback_node[this.callback_timeout]) == "function") {
-					this.callback_node[this.callback_timeout]();
-				}
-				else if(typeof(this.callback_node[this.callback_name]) == "function") {
-					this.callback_node[this.callback_name]();
-				}
-			}
-		}
-	}
-	window["_man_fonts_"+loadkey].checkfonts();
-}
+
 
 /*beta-u-notifier.js*/
 u.notifier = function(node) {

@@ -15,67 +15,20 @@ $page->bodyClass("signup");
 $page->pageTitle("Signup");
 
 
-if(is_array($action) && count($action)) {
-
-	// /signup/receipt
-	if($action[0] == "receipt") {
-
-		$page->page(array(
-			"templates" => "signup/receipt.php"
-		));
-		exit();
-	}
-
-	// /signup/confirm/email|mobile/#email|mobile#/#verification_code#
-	else if($action[0] == "confirm" && count($action) == 4) {
-
-		$username = $action[1];
-		$verification_code = $action[2];
-
-		if($model->confirmUsername($username, $verification_code)) {
-
-			// redirect to leave POST state
-			header("Location: /signup/confirm/receipt");
-			exit();
-
-		}
-		else {
-
-			// redirect to leave POST state
-			header("Location: /signup/confirm/error");
-			exit();
-
-		}
-		exit();
-	}
-	else if($action[0] == "confirm" && $action[1] == "receipt") {
-
-		$page->page(array(
-			"templates" => "signup/confirmed.php"
-		));
-		exit();
-	}
-	else if($action[0] == "confirm" && $action[1] == "error") {
-
-		$page->page(array(
-			"templates" => "signup/confirmation_failed.php"
-		));
-		exit();
-	}
+// Account creation flow
+if($action) {
 
 	// /signup/save
-	else if($action[0] == "save" && $page->validateCsrfToken()) {
+	if($action[0] == "save" && $page->validateCsrfToken()) {
 
 		// create new user
 		$user = $model->newUser(array("newUser"));
 
 		// successful creation
 		if(isset($user["user_id"])) {
-
 			// redirect to leave POST state
-			header("Location: receipt");
+			header("Location: /verify");
 			exit();
-
 		}
 
 		// user exists
@@ -90,6 +43,7 @@ if(is_array($action) && count($action)) {
 	}
 
 	// post username, maillist_id and verification_token
+	// signup/unsubscribe
 	else if($action[0] == "unsubscribe" && $page->validateCsrfToken()) {
 
 		// successful creation
@@ -128,6 +82,8 @@ if(is_array($action) && count($action)) {
 
 }
 
+
+
 // plain signup directly
 // /signup
 $page->page(array(
@@ -135,3 +91,4 @@ $page->page(array(
 ));
 
 ?>
+

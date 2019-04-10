@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-10 12:55:29
+asset-builder @ 2019-04-10 14:40:51
 */
 
 /*seg_desktop_light_include.css*/
@@ -345,6 +345,9 @@ div.field.focus div.hint {display: block;}
 #content .scene .usedby ul li.lsb {background-image: url(../img/logos/lsb.png);}
 #content .scene .usedby ul li.punkt1 {background-image: url(../img/logos/punkt1.png);}
 
+
+/*s-comments.css*/
+#content .scene div.comments {display: none;}
 
 /*s-fonts-desktop_light.css*/
 @font-face {

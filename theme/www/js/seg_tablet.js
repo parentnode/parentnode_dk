@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-asset-builder @ 2019-04-10 13:02:02
+asset-builder @ 2019-04-10 14:40:51
 */
 
 /*seg_tablet_include.js*/

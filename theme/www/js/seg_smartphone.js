@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-asset-builder @ 2019-04-01 16:10:28
+asset-builder @ 2019-04-10 12:55:29
 */
 
 /*seg_smartphone_include.js*/
@@ -964,13 +964,81 @@ u.easings = new function() {
 	this["ease-in-fast"] = function(progress) {
 		return Math.pow((progress), 4);
 	}
+	this["easeOutQuad"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		t /= d;
+		return -c * t*(t-2) + b;
+	};
+	this["easeOutCubic"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		t /= d;
+		t--;
+		return c*(t*t*t + 1) + b;
+	};
+	this["easeOutQuint"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		t /= d;
+		t--;
+		return c*(t*t*t*t*t + 1) + b;
+	};
+	this["easeInOutSine"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b;
+	};
+	this["easeInOutElastic"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		var s=1.70158;var p=0;var a=c;
+		if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
+		if (a < Math.abs(c)) { a=c; var s=p/4; }
+		else var s = p/(2*Math.PI) * Math.asin (c/a);
+		if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+		return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )*.5 + c + b;
+	}
+	this["easeOutBounce"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+			if ((t/=d) < (1/2.75)) {
+				return c*(7.5625*t*t) + b;
+			} else if (t < (2/2.75)) {
+				return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+			} else if (t < (2.5/2.75)) {
+				return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+			} else {
+				return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+			}
+	}
+	this["easeInBack"] = function (progress) {
+		var s = 1.70158;
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+			return c*(t/=d)*t*((s+1)*t - s) + b;
+	}
 }
 Util.Events = u.e = new function() {
 	this.event_pref = typeof(document.ontouchmove) == "undefined" || (navigator.maxTouchPoints > 1 && navigator.userAgent.match(/Windows/i)) ? "mouse" : "touch";
-    if (navigator.userAgent.match(/Windows/i) && ((obj(document.ontouchmove) && obj(document.ontouchmove)) || (fun(document.ontouchmove) && fun(document.ontouchmove)))) {
-        this.event_support = "multi";
-    }
-    else if (obj(document.ontouchmove) || fun(document.ontouchmove)) {
+	if (navigator.userAgent.match(/Windows/i) && ((obj(document.ontouchmove) && obj(document.onmousemove)) || (fun(document.ontouchmove) && fun(document.onmousemove)))) {
+		this.event_support = "multi";
+	}
+	else if (obj(document.ontouchmove) || fun(document.ontouchmove)) {
 		this.event_support = "touch";
 	}
 	else {
@@ -1755,7 +1823,6 @@ u.e._drop_out = function(event) {
 	u.e.addEvent(document, "mouseup", document["_DroppedOutEnd" + this._drop_out_id]);
 }
 u.e.setDragBoundaries = function(node, boundaries) {
-	u.bug("initDragBoundaries", node, boundaries);
 	if((boundaries.constructor && boundaries.constructor.toString().match("Array")) || (boundaries.scopeName && boundaries.scopeName != "HTML")) {
 		node.start_drag_x = Number(boundaries[0]);
 		node.start_drag_y = Number(boundaries[1]);
@@ -3384,6 +3451,7 @@ Util.validateResponse = function(HTTPRequest){
 		var node = HTTPRequest.node;
 		var request_id = HTTPRequest.request_id;
 		var request = node[request_id];
+		request.response_url = HTTPRequest.responseURL || request.request_url;
 		delete request.HTTPRequest;
 		if(request.finished) {
 			return;
@@ -4706,13 +4774,6 @@ Util.Objects["article"] = new function() {
 		}
 	}
 }
-u.f.fixFieldHTML = function(field) {
-	u.bug("fixFieldHTML");
-	var label = u.qs("label", field);
-	if(label) {
-		u.ae(label, field._indicator);
-	}
-}
 u.injectGeolocation = function(node) {
 	node.geolocation.node = node;
 	u.bug("node.geolocation:" + node.geolocation);
@@ -4821,33 +4882,43 @@ Util.Objects["signup"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			var signup_form = u.qs("form.signup", this);
+			var form_signup = u.qs("form.signup", this);
 			var place_holder = u.qs("div.articlebody .placeholder.signup", this);
-			if(signup_form && place_holder) {
-				place_holder.parentNode.replaceChild(signup_form, place_holder);
+			if(form_signup && place_holder) {
+				place_holder.parentNode.replaceChild(form_signup, place_holder);
 			}
-			if(signup_form) {
-				u.f.init(signup_form);
+			if(form_signup) {
+				u.f.init(form_signup);
 			}
-			signup_form.submitted = function() {
-				var data = u.f.getParams(this); 
-				this.response = function(response) {
+			form_signup.submitted = function() {
+				var data = u.f.getParams(this);
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["signup"], "disabled");
+				this.response = function(response, request_id) {
 					if (u.qs(".scene.verify", response)) {
-						scene.initVerify(response);
-						u.h.navigate("/verify", false, true);
+						u.bug(response);
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
 					}
 					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["signup"], "disabled");
+						}
 						if (this.error) {
 							this.error.parentNode.removeChild(this.error);
 						}
 						this.error = scene.showMessage(this, response);
 						u.ass(this.error, {
-							transform:"translate3d(0, -15px, 0)",
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
 							opacity:0
 						});
-						u.a.transition(this.error, "all .5s ease-out");
+						u.a.transition(this.error, "all .6s ease");
 						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0)",
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
 							opacity:1
 						});
 					}
@@ -4858,16 +4929,11 @@ Util.Objects["signup"] = new function() {
 			u.showScene(this);
 			page.resized();
 		}
-		scene.initVerify = function(response) {
-			var verify_scene = scene.replaceScene(response);
-			if(verify_scene) {
-				u.init();
-			}
-		}
 		scene.replaceScene = function(response) {
 			var current_scene = u.qs(".scene", page);
 			var new_scene = u.qs(".scene", response);
 			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
 			return new_scene;
 		}
 		scene.showMessage = function(form, response) {
@@ -4895,22 +4961,33 @@ Util.Objects["verify"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			var verify_form = u.qs("form.verify_code", this);
-			if(verify_form) {
-				u.f.init(verify_form);
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.f.init(form_verify);
 			}
-			verify_form.submitted = function() {
-				data = u.f.getParams(this);
-				this.response = function(response) {
+			form_verify.submitted = function() {
+				var data = u.f.getParams(this);
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+				this.response = function(response, request_id) {
 					if (u.qs(".scene.login", response)) {
-						u.showScene(scene.replaceScene(response));
+						scene.replaceScene(response);
 						u.h.navigate("/login", false, true);
 					}
 					else if (u.qs(".scene.confirmed", response)) {
-						u.showScene(scene.replaceScene(response));
-						u.h.navigate("/verify/receipt", false, true);
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
 					}
 					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
 						if (this.error) {
 							this.error.parentNode.removeChild(this.error);
 						}
@@ -4936,6 +5013,7 @@ Util.Objects["verify"] = new function() {
 			var current_scene = u.qs(".scene", page);
 			var new_scene = u.qs(".scene", response);
 			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
 			return new_scene;
 		}
 		scene.showMessage = function(form, response) {

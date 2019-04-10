@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-asset-builder @ 2019-04-01 16:10:28
+asset-builder @ 2019-04-10 12:55:28
 */
 
 /*seg_desktop_include.js*/
@@ -999,13 +999,81 @@ u.easings = new function() {
 	this["ease-in-fast"] = function(progress) {
 		return Math.pow((progress), 4);
 	}
+	this["easeOutQuad"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		t /= d;
+		return -c * t*(t-2) + b;
+	};
+	this["easeOutCubic"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		t /= d;
+		t--;
+		return c*(t*t*t + 1) + b;
+	};
+	this["easeOutQuint"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		t /= d;
+		t--;
+		return c*(t*t*t*t*t + 1) + b;
+	};
+	this["easeInOutSine"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b;
+	};
+	this["easeInOutElastic"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+		var s=1.70158;var p=0;var a=c;
+		if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
+		if (a < Math.abs(c)) { a=c; var s=p/4; }
+		else var s = p/(2*Math.PI) * Math.asin (c/a);
+		if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+		return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )*.5 + c + b;
+	}
+	this["easeOutBounce"] = function (progress) {
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+			if ((t/=d) < (1/2.75)) {
+				return c*(7.5625*t*t) + b;
+			} else if (t < (2/2.75)) {
+				return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+			} else if (t < (2.5/2.75)) {
+				return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+			} else {
+				return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+			}
+	}
+	this["easeInBack"] = function (progress) {
+		var s = 1.70158;
+		d = 1;
+		b = 0;
+		c = progress;
+		t = progress;
+			return c*(t/=d)*t*((s+1)*t - s) + b;
+	}
 }
 Util.Events = u.e = new function() {
 	this.event_pref = typeof(document.ontouchmove) == "undefined" || (navigator.maxTouchPoints > 1 && navigator.userAgent.match(/Windows/i)) ? "mouse" : "touch";
-    if (navigator.userAgent.match(/Windows/i) && ((obj(document.ontouchmove) && obj(document.ontouchmove)) || (fun(document.ontouchmove) && fun(document.ontouchmove)))) {
-        this.event_support = "multi";
-    }
-    else if (obj(document.ontouchmove) || fun(document.ontouchmove)) {
+	if (navigator.userAgent.match(/Windows/i) && ((obj(document.ontouchmove) && obj(document.onmousemove)) || (fun(document.ontouchmove) && fun(document.onmousemove)))) {
+		this.event_support = "multi";
+	}
+	else if (obj(document.ontouchmove) || fun(document.ontouchmove)) {
 		this.event_support = "touch";
 	}
 	else {
@@ -3037,6 +3105,7 @@ Util.validateResponse = function(HTTPRequest){
 		var node = HTTPRequest.node;
 		var request_id = HTTPRequest.request_id;
 		var request = node[request_id];
+		request.response_url = HTTPRequest.responseURL || request.request_url;
 		delete request.HTTPRequest;
 		if(request.finished) {
 			return;
@@ -4282,6 +4351,76 @@ u.notifier = function(node) {
 		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
 	}
 }
+u.smartphoneSwitch = new function() {
+	this.state = 0;
+	this.init = function(node) {
+		this.callback_node = node;
+		this.event_id = u.e.addWindowEvent(this, "resize", this.resized);
+		this.resized();
+	}
+	this.resized = function() {
+		if(u.browserW() < 520 && !this.state) {
+			this.switchOn();
+		}
+		else if(u.browserW() > 520 && this.state) {
+			this.switchOff();
+		}
+	}
+	this.switchOn = function() {
+		if(!this.panel) {
+			this.state = true;
+			this.panel = u.ae(document.body, "div", {"id":"smartphone_switch"});
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			u.ae(this.panel, "h1", {html:u.stringOr(u.txt("smartphone-switch-headline"), "Hello curious")});
+			if(u.txt("smartphone-switch-text").length) {
+				for(i = 0; i < u.txt("smartphone-switch-text").length; i++) {
+					u.ae(this.panel, "p", {html:u.txt("smartphone-switch-text")[i]});
+				}
+			}
+			var ul_actions = u.ae(this.panel, "ul", {class:"actions"});
+			var li; 
+			li = u.ae(ul_actions, "li", {class:"hide"});
+			var bn_hide = u.ae(li, "a", {class:"hide button", html:u.txt("smartphone-switch-bn-hide")});
+			li = u.ae(ul_actions, "li", {class:"switch"});
+			var bn_switch = u.ae(li, "a", {class:"switch button primary", html:u.txt("smartphone-switch-bn-switch")});
+			u.e.click(bn_switch);
+			bn_switch.clicked = function() {
+				u.saveCookie("smartphoneSwitch", "on");
+				location.href = location.href.replace(/[&]segment\=desktop|segment\=desktop[&]?/, "") + (location.href.match(/\?/) ? "&" : "?") + "segment=smartphone";
+			}
+			u.e.click(bn_hide);
+			bn_hide.clicked = function() {
+				u.e.removeWindowEvent(u.smartphoneSwitch, "resize", u.smartphoneSwitch.event_id);
+				u.smartphoneSwitch.switchOff();
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 1
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOn) == "function") {
+				this.callback_node.smartphoneSwitchedOn();
+			}
+		}
+	}
+	this.switchOff = function() {
+		if(this.panel) {
+			this.state = false;
+			this.panel.transitioned = function() {
+				this.parentNode.removeChild(this);
+				delete u.smartphoneSwitch.panel;
+			}
+			u.a.transition(this.panel, "all 0.5s ease-in-out");
+			u.ass(this.panel, {
+				opacity: 0
+			});
+			if(this.callback_node && typeof(this.callback_node.smartphoneSwitchedOff) == "function") {
+				this.callback_node.smartphoneSwitchedOff();
+			}
+		}
+	}
+}
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
@@ -4699,399 +4838,6 @@ u.txt["smartphone-switch-bn-hide"] = "Hide";
 u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
 
 
-/*u-events-movements.js*/
-u.e.resetDragEvents = function(node) {
-	node._moves_pick = 0;
-	this.removeEvent(node, "mousemove", this._pick);
-	this.removeEvent(node, "touchmove", this._pick);
-	this.removeEvent(node, "mousemove", this._drag);
-	this.removeEvent(node, "touchmove", this._drag);
-	this.removeEvent(node, "mouseup", this._drop);
-	this.removeEvent(node, "touchend", this._drop);
-	this.removeEvent(node, "mouseout", this._drop_out);
-	this.removeEvent(node, "mouseover", this._drop_over);
-	this.removeEvent(node, "mousemove", this._scrollStart);
-	this.removeEvent(node, "touchmove", this._scrollStart);
-	this.removeEvent(node, "mousemove", this._scrolling);
-	this.removeEvent(node, "touchmove", this._scrolling);
-	this.removeEvent(node, "mouseup", this._scrollEnd);
-	this.removeEvent(node, "touchend", this._scrollEnd);
-}
-u.e.overlap = function(node, boundaries, strict) {
-	if(boundaries.constructor.toString().match("Array")) {
-		var boundaries_start_x = Number(boundaries[0]);
-		var boundaries_start_y = Number(boundaries[1]);
-		var boundaries_end_x = Number(boundaries[2]);
-		var boundaries_end_y = Number(boundaries[3]);
-	}
-	else if(boundaries.constructor.toString().match("HTML")) {
-		var boundaries_start_x = u.absX(boundaries) - u.absX(node);
-		var boundaries_start_y =  u.absY(boundaries) - u.absY(node);
-		var boundaries_end_x = Number(boundaries_start_x + boundaries.offsetWidth);
-		var boundaries_end_y = Number(boundaries_start_y + boundaries.offsetHeight);
-	}
-	var node_start_x = Number(node._x);
-	var node_start_y = Number(node._y);
-	var node_end_x = Number(node_start_x + node.offsetWidth);
-	var node_end_y = Number(node_start_y + node.offsetHeight);
-	if(strict) {
-		if(node_start_x >= boundaries_start_x && node_start_y >= boundaries_start_y && node_end_x <= boundaries_end_x && node_end_y <= boundaries_end_y) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	} 
-	else if(node_end_x < boundaries_start_x || node_start_x > boundaries_end_x || node_end_y < boundaries_start_y || node_start_y > boundaries_end_y) {
-		return false;
-	}
-	return true;
-}
-u.e.drag = function(node, boundaries, _options) {
-	node.e_drag_options = _options ? _options : {};
-	node.e_drag = true;
-	if(node.childNodes.length < 2 && node.innerHTML.trim() == "") {
-		node.innerHTML = "&nbsp;";
-	}
-	node.distance_to_pick = 2;
-	node.drag_strict = true;
-	node.drag_overflow = false;
-	node.drag_elastica = 0;
-	node.drag_dropout = true;
-	node.show_bounds = false;
-	node.callback_ready = "ready";
-	node.callback_picked = "picked";
-	node.callback_moved = "moved";
-	node.callback_dropped = "dropped";
-	if(obj(_options)) {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "strict"			: node.drag_strict			= _options[_argument]; break;
-				case "overflow"			: node.drag_overflow		= _options[_argument]; break;
-				case "elastica"			: node.drag_elastica		= Number(_options[_argument]); break;
-				case "dropout"			: node.drag_dropout			= _options[_argument]; break;
-				case "show_bounds"		: node.show_bounds			= _options[_argument]; break; 
-				case "vertical_lock"	: node.vertical_lock		= _options[_argument]; break;
-				case "horizontal_lock"	: node.horizontal_lock		= _options[_argument]; break;
-				case "callback_picked"	: node.callback_picked		= _options[_argument]; break;
-				case "callback_moved"	: node.callback_moved		= _options[_argument]; break;
-				case "callback_dropped"	: node.callback_dropped		= _options[_argument]; break;
-			}
-		}
-	}
-	u.e.setDragBoundaries(node, boundaries);
-	u.e.addStartEvent(node, this._inputStart);
-	if(fun(node[node.callback_ready])) {
-		node[node.callback_ready](event);
-	}
-}
-u.e._pick = function(event) {
-	var init_speed_x = Math.abs(this.start_event_x - u.eventX(event));
-	var init_speed_y = Math.abs(this.start_event_y - u.eventY(event));
-	if(
-		(init_speed_x > init_speed_y && this.only_horizontal) || 
-		(init_speed_x < init_speed_y && this.only_vertical) ||
-		(!this.only_vertical && !this.only_horizontal)) {
-		if((init_speed_x > this.distance_to_pick || init_speed_y > this.distance_to_pick)) {
-			u.e.resetNestedEvents(this);
-			u.e.kill(event);
-			if(u.hasFixedParent(this)) {
-				this.has_fixed_parent = true;
-			}
-			else {
-				this.has_fixed_parent = false;
-			}
-			this.move_timestamp = event.timeStamp;
-			this.move_last_x = this._x;
-			this.move_last_y = this._y;
-			if(u.hasFixedParent(this)) {
-				this.start_input_x = u.eventX(event) - this._x - u.scrollX(); 
-				this.start_input_y = u.eventY(event) - this._y - u.scrollY();
-			}
-			else {
-				this.start_input_x = u.eventX(event) - this._x; 
-				this.start_input_y = u.eventY(event) - this._y;
-			}
-			this.current_xps = 0;
-			this.current_yps = 0;
-			u.a.transition(this, "none");
-			u.e.addMoveEvent(this, u.e._drag);
-			u.e.addEndEvent(this, u.e._drop);
-			if(fun(this[this.callback_picked])) {
-				this[this.callback_picked](event);
-			}
-			if(this.drag_dropout && event.type.match(/mouse/)) {
-				// 	
-				// 	
-				// 	
-				// 	
-				// 	
-				// 
-				// 
-				// 	
-				this._dropOutDrag = u.e._drag;
-				this._dropOutDrop = u.e._drop;
-				u.e.addOutEvent(this, u.e._drop_out);
-			}
-		}
-	}
-}
-u.e._drag = function(event) {
-	if(this.has_fixed_parent) {
-		this.current_x = u.eventX(event) - this.start_input_x - u.scrollX();
-		this.current_y = u.eventY(event) - this.start_input_y - u.scrollY();
-	}
-	else {
-		this.current_x = u.eventX(event) - this.start_input_x;
-		this.current_y = u.eventY(event) - this.start_input_y;
-	}
-	this.current_xps = Math.round(((this.current_x - this.move_last_x) / (event.timeStamp - this.move_timestamp)) * 1000);
-	this.current_yps = Math.round(((this.current_y - this.move_last_y) / (event.timeStamp - this.move_timestamp)) * 1000);
-	this.move_timestamp = event.timeStamp;
-	this.move_last_x = this.current_x;
-	this.move_last_y = this.current_y;
-	if(!this.locked && this.only_vertical) {
-		this._y = this.current_y;
-	}
-	else if(!this.locked && this.only_horizontal) {
-		this._x = this.current_x;
-	}
-	else if(!this.locked) {
-		this._x = this.current_x;
-		this._y = this.current_y;
-	}
-	if(this.e_swipe) {
-		if(this.only_horizontal) {
-			if(this.current_xps < 0) {
-				this.swiped = "left";
-			}
-			else {
-				this.swiped = "right";
-			}
-		}
-		else if(this.only_vertical) {
-			if(this.current_yps < 0) {
-				this.swiped = "up";
-			}
-			else {
-				this.swiped = "down";
-			}
-		}
-		else {
-			if(Math.abs(this.current_xps) > Math.abs(this.current_yps)) {
-				if(this.current_xps < 0) {
-					this.swiped = "left";
-				}
-				else {
-					this.swiped = "right";
-				}
-			}
-			else if(Math.abs(this.current_xps) < Math.abs(this.current_yps)) {
-				if(this.current_yps < 0) {
-					this.swiped = "up";
-				}
-				else {
-					this.swiped = "down";
-				}
-			}
-		}
-	}
-	if(!this.locked) {
-		if(u.e.overlap(this, [this.start_drag_x, this.start_drag_y, this.end_drag_x, this.end_drag_y], true)) {
-			u.a.translate(this, this._x, this._y);
-		}
-		else if(this.drag_elastica) {
-			this.swiped = false;
-			this.current_xps = 0;
-			this.current_yps = 0;
-			var offset = false;
-			if(!this.only_vertical && this._x < this.start_drag_x) {
-				offset = this._x < this.start_drag_x - this.drag_elastica ? - this.drag_elastica : this._x - this.start_drag_x;
-				this._x = this.start_drag_x;
-				this.current_x = this._x + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else if(!this.only_vertical && this._x + this.offsetWidth > this.end_drag_x) {
-				offset = this._x + this.offsetWidth > this.end_drag_x + this.drag_elastica ? this.drag_elastica : this._x + this.offsetWidth - this.end_drag_x;
-				this._x = this.end_drag_x - this.offsetWidth;
-				this.current_x = this._x + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else {
-				this.current_x = this._x;
-			}
-			if(!this.only_horizontal && this._y < this.start_drag_y) {
-				offset = this._y < this.start_drag_y - this.drag_elastica ? - this.drag_elastica : this._y - this.start_drag_y;
-				this._y = this.start_drag_y;
-				this.current_y = this._y + offset + (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else if(!this.horizontal && this._y + this.offsetHeight > this.end_drag_y) {
-				offset = (this._y + this.offsetHeight > this.end_drag_y + this.drag_elastica) ? this.drag_elastica : (this._y + this.offsetHeight - this.end_drag_y);
-				this._y = this.end_drag_y - this.offsetHeight;
-				this.current_y = this._y + offset - (Math.round(Math.pow(offset, 2)/this.drag_elastica));
-			}
-			else {
-				this.current_y = this._y;
-			}
-			if(offset) {
-				u.a.translate(this, this.current_x, this.current_y);
-			}
-		}
-		else {
-			this.swiped = false;
-			this.current_xps = 0;
-			this.current_yps = 0;
-			if(this._x < this.start_drag_x) {
-				this._x = this.start_drag_x;
-			}
-			else if(this._x + this.offsetWidth > this.end_drag_x) {
-				this._x = this.end_drag_x - this.offsetWidth;
-			}
-			if(this._y < this.start_drag_y) {
-				this._y = this.start_drag_y;
-			}
-			else if(this._y + this.offsetHeight > this.end_drag_y) { 
-				this._y = this.end_drag_y - this.offsetHeight;
-			}
-			u.a.translate(this, this._x, this._y);
-		}
-	}
-	if(fun(this[this.callback_moved])) {
-		this[this.callback_moved](event);
-	}
-}
-u.e._drop = function(event) {
-	u.e.resetEvents(this);
-	if(this.e_swipe && this.swiped) {
-		this.e_swipe_options.eventAction = "Swiped "+ this.swiped;
-		u.stats.event(this, this.e_swipe_options);
-		if(this.swiped == "left" && fun(this.swipedLeft)) {
-			this.swipedLeft(event);
-		}
-		else if(this.swiped == "right" && fun(this.swipedRight)) {
-			this.swipedRight(event);
-		}
-		else if(this.swiped == "down" && fun(this.swipedDown)) {
-			this.swipedDown(event);
-		}
-		else if(this.swiped == "up" && fun(this.swipedUp)) {
-			this.swipedUp(event);
-		}
-	}
-	else if(!this.drag_strict && !this.locked) {
-		this.current_x = Math.round(this._x + (this.current_xps/2));
-		this.current_y = Math.round(this._y + (this.current_yps/2));
-		if(this.only_vertical || this.current_x < this.start_drag_x) {
-			this.current_x = this.start_drag_x;
-		}
-		else if(this.current_x + this.offsetWidth > this.end_drag_x) {
-			this.current_x = this.end_drag_x - this.offsetWidth;
-		}
-		if(this.only_horizontal || this.current_y < this.start_drag_y) {
-			this.current_y = this.start_drag_y;
-		}
-		else if(this.current_y + this.offsetHeight > this.end_drag_y) {
-			this.current_y = this.end_drag_y - this.offsetHeight;
-		}
-		this.transitioned = function() {
-			if(fun(this.projected)) {
-				this.projected(event);
-			}
-		}
-		if(this.current_xps || this.current_yps) {
-			u.a.transition(this, "all 1s cubic-bezier(0,0,0.25,1)");
-		}
-		else {
-			u.a.transition(this, "none");
-		}
-		u.a.translate(this, this.current_x, this.current_y);
-	}
-	if(this.e_drag && !this.e_swipe) {
-		this.e_drag_options.eventAction = u.stringOr(this.e_drag_options.eventAction, "Dropped");
-		u.stats.event(this, this.e_drag_options);
-	}
-	if(fun(this[this.callback_dropped])) {
-		this[this.callback_dropped](event);
-	}
-}
-u.e._drop_out = function(event) {
-	this._drop_out_id = u.randomString();
-	document["_DroppedOutNode" + this._drop_out_id] = this;
-	eval('document["_DroppedOutMove' + this._drop_out_id + '"] = function(event) {document["_DroppedOutNode' + this._drop_out_id + '"]._dropOutDrag(event);}');
-	eval('document["_DroppedOutOver' + this._drop_out_id + '"] = function(event) {u.e.removeEvent(document, "mousemove", document["_DroppedOutMove' + this._drop_out_id + '"]);u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd' + this._drop_out_id + '"]);u.e.removeEvent(document["_DroppedOutNode' + this._drop_out_id + '"], "mouseover", document["_DroppedOutOver' + this._drop_out_id + '"]);}');
-	eval('document["_DroppedOutEnd' + this._drop_out_id + '"] = function(event) {u.e.removeEvent(document, "mousemove", document["_DroppedOutMove' + this._drop_out_id + '"]);u.e.removeEvent(document, "mouseup", document["_DroppedOutEnd' + this._drop_out_id + '"]);u.e.removeEvent(document["_DroppedOutNode' + this._drop_out_id + '"], "mouseover", document["_DroppedOutOver' + this._drop_out_id + '"]);document["_DroppedOutNode' + this._drop_out_id + '"]._dropOutDrop(event);}');
-	u.e.addEvent(document, "mousemove", document["_DroppedOutMove" + this._drop_out_id]);
-	u.e.addEvent(this, "mouseover", document["_DroppedOutOver" + this._drop_out_id]);
-	u.e.addEvent(document, "mouseup", document["_DroppedOutEnd" + this._drop_out_id]);
-}
-u.e.setDragBoundaries = function(node, boundaries) {
-	u.bug("initDragBoundaries", node, boundaries);
-	if((boundaries.constructor && boundaries.constructor.toString().match("Array")) || (boundaries.scopeName && boundaries.scopeName != "HTML")) {
-		node.start_drag_x = Number(boundaries[0]);
-		node.start_drag_y = Number(boundaries[1]);
-		node.end_drag_x = Number(boundaries[2]);
-		node.end_drag_y = Number(boundaries[3]);
-	}
-	else if((boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
-		if(node.drag_overflow == "scroll") {
-			node.start_drag_x = node.offsetWidth > boundaries.offsetWidth ? boundaries.offsetWidth - node.offsetWidth : 0;
-			node.start_drag_y = node.offsetHeight > boundaries.offsetHeight ? boundaries.offsetHeight - node.offsetHeight : 0;
-			node.end_drag_x = node.offsetWidth > boundaries.offsetWidth ? node.offsetWidth : boundaries.offsetWidth;
-			node.end_drag_y = node.offsetHeight > boundaries.offsetHeight ? node.offsetHeight : boundaries.offsetHeight;
-		}
-		else {
-			node.start_drag_x = u.absX(boundaries) - u.absX(node);
-			node.start_drag_y = u.absY(boundaries) - u.absY(node);
-			node.end_drag_x = node.start_drag_x + boundaries.offsetWidth;
-			node.end_drag_y = node.start_drag_y + boundaries.offsetHeight;
-		}
-	}
-	if(node.show_bounds) {
-		var debug_bounds = u.ae(document.body, "div", {"class":"debug_bounds"})
-		debug_bounds.style.position = "absolute";
-		debug_bounds.style.background = "red"
-		debug_bounds.style.left = (u.absX(node) + node.start_drag_x - 1) + "px";
-		debug_bounds.style.top = (u.absY(node) + node.start_drag_y - 1) + "px";
-		debug_bounds.style.width = (node.end_drag_x - node.start_drag_x) + "px";
-		debug_bounds.style.height = (node.end_drag_y - node.start_drag_y) + "px";
-		debug_bounds.style.border = "1px solid white";
-		debug_bounds.style.zIndex = 9999;
-		debug_bounds.style.opacity = .5;
-		if(document.readyState && document.readyState == "interactive") {
-			debug_bounds.innerHTML = "WARNING - injected on DOMLoaded"; 
-		}
-		u.bug("node: "+u.nodeId(node)+" in (" + u.absX(node) + "," + u.absY(node) + "), (" + (u.absX(node)+node.offsetWidth) + "," + (u.absY(node)+node.offsetHeight) +")");
-		u.bug("boundaries: (" + node.start_drag_x + "," + node.start_drag_y + "), (" + node.end_drag_x + ", " + node.end_drag_y + ")");
-	}
-	node._x = node._x ? node._x : 0;
-	node._y = node._y ? node._y : 0;
-	if(node.drag_overflow == "scroll" && (boundaries.constructor && boundaries.constructor.toString().match("HTML")) || (boundaries.scopeName && boundaries.scopeName == "HTML")) {
-		node.locked = ((node.end_drag_x - node.start_drag_x <= boundaries.offsetWidth) && (node.end_drag_y - node.start_drag_y <= boundaries.offsetHeight));
-		node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x <= boundaries.offsetWidth));
-		node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y <= boundaries.offsetHeight));
-	}
-	else {
-		node.locked = ((node.end_drag_x - node.start_drag_x == node.offsetWidth) && (node.end_drag_y - node.start_drag_y == node.offsetHeight));
-		node.only_vertical = (node.vertical_lock || (!node.locked && node.end_drag_x - node.start_drag_x == node.offsetWidth));
-		node.only_horizontal = (node.horizontal_lock || (!node.locked && node.end_drag_y - node.start_drag_y == node.offsetHeight));
-	}
-}
-u.e.setDragPosition = function(node, x, y) {
-	node.current_xps = 0;
-	node.current_yps = 0;
-	node._x = x;
-	node._y = y;
-	u.a.translate(node, node._x, node._y);
-	if(fun(node[node.callback_moved])) {
-		node[node.callback_moved](event);
-	}
-}
-u.e.swipe = function(node, boundaries, _options) {
-	node.e_swipe_options = _options ? _options : {};
-	node.e_swipe = true;
-	u.e.drag(node, boundaries, _options);
-}
-
-
 /*beta-u-animation-to.js*/
 	u.a.parseSVGPolygon = function(value) {
 		var pairs = value.trim().split(" ");
@@ -5208,6 +4954,47 @@ u.e.swipe = function(node, boundaries, _options) {
 		u.a.requestAnimationFrame(node, "transitionTo", node.duration);
 	}
 
+
+/*i-dynamic-variables-post.js*/
+Util.Objects["dynamicVariablesPost"] = new function() {
+	this.init = function(post) {
+		var extension_start = u.qs(".extension_start", post);
+		var form = u.f.addForm(post, {"class":"labelstyle:inject dynamicVariablesPost"});
+		var extension_text = u.ae(form, "p", {"html":"To make the following commands Copy/Paste ready, enter your information here:"});
+		var fieldset = u.f.addFieldset(form);
+		var var_names = [];
+		var var_labels = {};
+		var dyn_vars = u.qsa("span.dynvar");
+		var i, dyn_var, label;
+		for(i = 0; dyn_var = dyn_vars[i]; i++) {
+			dyn_var.var_name = dyn_var.className.replace(/(dynvar|[ ]|label\:[^$ ]+)/g, "");
+			if(!var_labels[dyn_var.var_name]) {
+				label = u.cv(dyn_var, "label");
+				if(label) {
+					var_labels[dyn_var.var_name] = label.replace(/_/, " ");
+				}
+			}
+			if(var_names.indexOf(dyn_var.var_name) == -1) {
+				var_names.push(dyn_var.var_name);
+			}
+		}
+		for(i = 0; dyn_var_name = var_names[i]; i++) {
+			label = var_labels[dyn_var_name] ? decodeURI(var_labels[dyn_var_name]) : u.qs("span.dynvar."+dyn_var_name).innerHTML;
+				u.f.addField(fieldset, {"label":label, "name":dyn_var_name, "class":dyn_var_name+"_master"});
+		}
+		u.f.init(form);
+		for(i = 0; dyn_var = dyn_vars[i]; i++) {
+			form.fields[dyn_var.var_name].placeholders = u.qsa("span.dynvar."+dyn_var.var_name, post);
+			form.fields[dyn_var.var_name].updated = function() {
+				var i, placeholder;
+				for(i = 0; placeholder = this.placeholders[i]; i++) {
+					placeholder.innerHTML = this.val();
+				}
+			}
+		}
+		extension_start.parentNode.insertBefore(form, extension_start);
+	}
+}
 
 /*i-article_mini_list.js*/
 Util.Objects["articleMiniList"] = new function() {
@@ -5348,33 +5135,43 @@ Util.Objects["signup"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			var signup_form = u.qs("form.signup", this);
+			var form_signup = u.qs("form.signup", this);
 			var place_holder = u.qs("div.articlebody .placeholder.signup", this);
-			if(signup_form && place_holder) {
-				place_holder.parentNode.replaceChild(signup_form, place_holder);
+			if(form_signup && place_holder) {
+				place_holder.parentNode.replaceChild(form_signup, place_holder);
 			}
-			if(signup_form) {
-				u.f.init(signup_form);
+			if(form_signup) {
+				u.f.init(form_signup);
 			}
-			signup_form.submitted = function() {
-				var data = u.f.getParams(this); 
-				this.response = function(response) {
+			form_signup.submitted = function() {
+				var data = u.f.getParams(this);
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["signup"], "disabled");
+				this.response = function(response, request_id) {
 					if (u.qs(".scene.verify", response)) {
-						scene.initVerify(response);
-						u.h.navigate("/verify", false, true);
+						u.bug(response);
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
 					}
 					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["signup"], "disabled");
+						}
 						if (this.error) {
 							this.error.parentNode.removeChild(this.error);
 						}
 						this.error = scene.showMessage(this, response);
 						u.ass(this.error, {
-							transform:"translate3d(0, -15px, 0)",
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
 							opacity:0
 						});
-						u.a.transition(this.error, "all .5s ease-out");
+						u.a.transition(this.error, "all .6s ease");
 						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0)",
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
 							opacity:1
 						});
 					}
@@ -5385,16 +5182,11 @@ Util.Objects["signup"] = new function() {
 			u.showScene(this);
 			page.resized();
 		}
-		scene.initVerify = function(response) {
-			var verify_scene = scene.replaceScene(response);
-			if(verify_scene) {
-				u.init();
-			}
-		}
 		scene.replaceScene = function(response) {
 			var current_scene = u.qs(".scene", page);
 			var new_scene = u.qs(".scene", response);
 			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
 			return new_scene;
 		}
 		scene.showMessage = function(form, response) {
@@ -5422,22 +5214,33 @@ Util.Objects["verify"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
-			var verify_form = u.qs("form.verify_code", this);
-			if(verify_form) {
-				u.f.init(verify_form);
+			var form_verify = u.qs("form.verify_code", this);
+			if(form_verify) {
+				u.f.init(form_verify);
 			}
-			verify_form.submitted = function() {
-				data = u.f.getParams(this);
-				this.response = function(response) {
+			form_verify.submitted = function() {
+				var data = u.f.getParams(this);
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+				this.response = function(response, request_id) {
 					if (u.qs(".scene.login", response)) {
-						u.showScene(scene.replaceScene(response));
+						scene.replaceScene(response);
 						u.h.navigate("/login", false, true);
 					}
 					else if (u.qs(".scene.confirmed", response)) {
-						u.showScene(scene.replaceScene(response));
-						u.h.navigate("/verify/receipt", false, true);
+						scene.replaceScene(response);
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+						u.h.navigate(url_actions, false, true);
 					}
 					else {
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
 						if (this.error) {
 							this.error.parentNode.removeChild(this.error);
 						}
@@ -5463,6 +5266,7 @@ Util.Objects["verify"] = new function() {
 			var current_scene = u.qs(".scene", page);
 			var new_scene = u.qs(".scene", response);
 			page.cN.replaceChild(new_scene, current_scene); 
+			u.init();
 			return new_scene;
 		}
 		scene.showMessage = function(form, response) {
@@ -5926,73 +5730,6 @@ u.addNextArrow = function(node) {
 	});
 }
 
-
-/*i-post-customs.js*/
-Util.Objects["ubuntuSetupPost"] = new function() {
-	this.init = function(post) {
-		var extension_start = u.qs(".extension_start", post);
-		var form = u.f.addForm(post, {"class":"labelstyle:inject ubuntuSetupPost"});
-		var extension_text = u.ae(form, "p", {"html":"To make the following commands C/P ready, enter your information here:"});
-		var fieldset = u.f.addFieldset(form);
-		u.f.addField(fieldset, {"label":"IP address", "name":"ip", "class":"ip_master"});
-		u.f.addField(fieldset, {"label":"Username", "name":"username", "class":"username_master"});
-		u.f.init(form);
-		form.fields["ip"].ips = u.qsa("span.ip", post);
-		form.fields["ip"].updated = function() {
-			var i, ip;
-			for(i = 0; ip = this.ips[i]; i++) {
-				ip.innerHTML = this.val();
-			}
-		}
-		form.fields["username"].usernames = u.qsa("span.username", post);
-		form.fields["username"].updated = function() {
-			var i, username;
-			for(i = 0; username = this.usernames[i]; i++) {
-				username.innerHTML = this.val();
-			}
-		}
-		extension_start.parentNode.insertBefore(form, extension_start);
-	}
-}
-Util.Objects["dynamicVariablesPost"] = new function() {
-	this.init = function(post) {
-		var extension_start = u.qs(".extension_start", post);
-		var form = u.f.addForm(post, {"class":"labelstyle:inject dynamicVariablesPost"});
-		var extension_text = u.ae(form, "p", {"html":"To make the following commands Copy/Paste ready, enter your information here:"});
-		var fieldset = u.f.addFieldset(form);
-		var var_names = [];
-		var var_labels = {};
-		var dyn_vars = u.qsa("span.dynvar");
-		var i, dyn_var, label;
-		for(i = 0; dyn_var = dyn_vars[i]; i++) {
-			dyn_var.var_name = dyn_var.className.replace(/(dynvar|[ ]|label\:[^$ ]+)/g, "");
-			if(!var_labels[dyn_var.var_name]) {
-				label = u.cv(dyn_var, "label");
-				if(label) {
-					var_labels[dyn_var.var_name] = label.replace(/_/, " ");
-				}
-			}
-			if(var_names.indexOf(dyn_var.var_name) == -1) {
-				var_names.push(dyn_var.var_name);
-			}
-		}
-		for(i = 0; dyn_var_name = var_names[i]; i++) {
-			label = var_labels[dyn_var_name] ? decodeURI(var_labels[dyn_var_name]) : u.qs("span.dynvar."+dyn_var_name).innerHTML;
-				u.f.addField(fieldset, {"label":label, "name":dyn_var_name, "class":dyn_var_name+"_master"});
-		}
-		u.f.init(form);
-		for(i = 0; dyn_var = dyn_vars[i]; i++) {
-			form.fields[dyn_var.var_name].placeholders = u.qsa("span.dynvar."+dyn_var.var_name, post);
-			form.fields[dyn_var.var_name].updated = function() {
-				var i, placeholder;
-				for(i = 0; placeholder = this.placeholders[i]; i++) {
-					placeholder.innerHTML = this.val();
-				}
-			}
-		}
-		extension_start.parentNode.insertBefore(form, extension_start);
-	}
-}
 
 /*i-demos.js*/
 Util.Objects["demos"] = new function() {

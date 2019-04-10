@@ -16,32 +16,49 @@ Util.Objects["verify"] = new function() {
 
 			page.cN.scene = this;
 
-			var verify_form = u.qs("form.verify_code", this);
+			var form_verify = u.qs("form.verify_code", this);
 
-			if(verify_form) {
-				u.f.init(verify_form);
+			if(form_verify) {
+				u.f.init(form_verify);
 			}
 
 			// Using the new verify form
-			verify_form.submitted = function() {
-				data = u.f.getParams(this);
+			form_verify.submitted = function() {
+				var data = u.f.getParams(this);
 
-				this.response = function(response) {
+				// submit state
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["verify"], "disabled");
+				u.ac(this.actions["skip"], "disabled");
+
+				this.response = function(response, request_id) {
 					// User is already verified
 					if (u.qs(".scene.login", response)) {
-						u.showScene(scene.replaceScene(response));
+						scene.replaceScene(response);
 						u.h.navigate("/login", false, true);
 					}
 					// Verification success
 					else if (u.qs(".scene.confirmed", response)) {
 						// Update scene
-						u.showScene(scene.replaceScene(response));
+						scene.replaceScene(response);
+
+						// Get returned actions only
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
 
 						// Update url
-						u.h.navigate("/verify/receipt", false, true);
+						u.h.navigate(url_actions, false, true);
 					}
 					// Error
 					else {
+						// Remove submit state if present
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["verify"], "disabled");
+							u.rc(this.actions["skip"], "disabled");
+						}
+
 						// Remove past error from DOM
 						if (this.error) {
 							this.error.parentNode.removeChild(this.error);
@@ -81,6 +98,9 @@ Util.Objects["verify"] = new function() {
 			var current_scene = u.qs(".scene", page);
 			var new_scene = u.qs(".scene", response);
 			page.cN.replaceChild(new_scene, current_scene); // Replace current scene with response scene
+
+			// Initialize new scene
+			u.init();
 
 			return new_scene;
 		}

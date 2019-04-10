@@ -16,33 +16,51 @@ Util.Objects["signup"] = new function() {
 
 			page.cN.scene = this;
 
-			var signup_form = u.qs("form.signup", this);
+			var form_signup = u.qs("form.signup", this);
 			var place_holder = u.qs("div.articlebody .placeholder.signup", this);
 
-			if(signup_form && place_holder) {
-				place_holder.parentNode.replaceChild(signup_form, place_holder);
+			if(form_signup && place_holder) {
+				place_holder.parentNode.replaceChild(form_signup, place_holder);
 			}
 
-			if(signup_form) {
-				u.f.init(signup_form);
+			if(form_signup) {
+				u.f.init(form_signup);
 			}
 
 			// Ajax janitor signup flow
-			signup_form.submitted = function() {
-				var data = u.f.getParams(this); // Get input
+			form_signup.submitted = function() {
+				var data = u.f.getParams(this);
+
+				// submit state
+				this.is_submitting = true; 
+				u.ac(this, "submitting");
+				u.ac(this.actions["signup"], "disabled");
 
 				// signup controller
-				this.response = function(response) {
+				this.response = function(response, request_id) {
+
 					// Success
 					if (u.qs(".scene.verify", response)) {
+						u.bug(response);
+
 						// Update scene
-						scene.initVerify(response);
-						
+						scene.replaceScene(response);
+
+						// Get returned actions only
+						var url_actions = this[request_id].response_url.replace(location.protocol + "://" + document.domain, "");
+
 						// Update url
-						u.h.navigate("/verify", false, true);
+						u.h.navigate(url_actions, false, true);
 					}
 					// Error
 					else {
+						// Remove submit state if present
+						if (this.is_submitting) {
+							this.is_submitting = false; 
+							u.rc(this, "submitting");
+							u.rc(this.actions["signup"], "disabled");
+						}
+
 						// Remove past error from DOM
 						if (this.error) {
 							this.error.parentNode.removeChild(this.error);
@@ -53,14 +71,14 @@ Util.Objects["signup"] = new function() {
 
 						// Set inital state before animating
 						u.ass(this.error, {
-							transform:"translate3d(0, -15px, 0)",
+							transform:"translate3d(0, -20px, 0) rotate3d(-1, 0, 0, 90deg)",
 							opacity:0
 						});
 
 						// Animate error
-						u.a.transition(this.error, "all .5s ease-out");
+						u.a.transition(this.error, "all .6s ease");
 						u.ass(this.error, {
-							transform:"translate3d(0, 0, 0)",
+							transform:"translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)",
 							opacity:1
 						});
 					}
@@ -78,23 +96,13 @@ Util.Objects["signup"] = new function() {
 			page.resized();
 		}
 
-
-		scene.initVerify = function(response) {
-
-			// Change scene to verify
-			var verify_scene = scene.replaceScene(response);
-
-			if(verify_scene) {
-				// Initialize verify form
-				u.init();
-			}
-
-		}
-
 		scene.replaceScene = function(response) {
 			var current_scene = u.qs(".scene", page);
 			var new_scene = u.qs(".scene", response);
 			page.cN.replaceChild(new_scene, current_scene); // Replace current scene with response scene
+
+			// Initialize new scene
+			u.init();
 
 			return new_scene;
 		}

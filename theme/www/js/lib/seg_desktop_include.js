@@ -15,6 +15,7 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/u-sharing.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/u-checkmark.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/u-expandarrow.js"></script>');
+document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/lib/desktop/u-form-builder.js"></script>');
 
 
 document.write('<script type="text/javascript" src="/js/lib/desktop/i-demos.js"></script>');

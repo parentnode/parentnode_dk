@@ -59,6 +59,34 @@ global $model;
 		<div class="i:demos articlebody demos">
 			<ul class="demos">
 				<li class="demo">
+					<h2>Himmelmakanik.dk – New album by Marc Facchini</h2>
+					<ul class="actions">
+						<li><a href="http://demo-himmelmakanik.parentnode.dk" target="_blank" class="hardlink">http://demo-himmelmakanik.parentnode.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>javascript</li>
+						<li>html</li>
+						<li>css</li>
+						<li>websites</li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "tablet_light" ||
+								$this->segment() == "mobile" ||
+								$this->segment() == "mobile_light"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p></p>
+					</div>
+				</li>
+				<li class="demo">
 					<h2>L&aring;n &amp; Spar Bank – Targeted mini survey</h2>
 					<ul class="actions">
 						<li><a href="http://demo-lsb-survey.parentnode.dk" target="_blank" class="hardlink">http://demo-lsb-survey.parentnode.dk</a></li>

@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2017, https://.parentnode.dk
-asset-builder @ 2019-04-12 12:16:57
+asset-builder @ 2019-04-23 23:27:41
 */
 
 /*seg_desktop_include.js*/
@@ -2305,7 +2305,7 @@ Util.Form = u.f = new function() {
 				min = Number(u.cv(iN.field, "min"));
 				max = Number(u.cv(iN.field, "max"));
 				min = min ? min : 8;
-				max = max ? max : 20;
+				max = max ? max : 255;
 				pattern = iN.getAttribute("pattern");
 				compare_to = iN.getAttribute("data-compare-to");
 				if(
@@ -5384,6 +5384,7 @@ Util.Objects["login"] = new function() {
 			this._form.fields["username"].focus();
 			page.cN.scene = this;
 			u.showScene(this);
+			page.acceptCookies();
 			page.resized();
 		}
 		scene.ready();

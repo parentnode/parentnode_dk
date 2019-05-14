@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-04-23 23:27:41
+asset-builder @ 2019-05-14 12:28:12
 */
 
 /*seg_tablet_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2019-04-23 23:27:41
 /*seg_tablet.css*/
 /*
 MIT license, 2019 parentNode.dk
-asset-builder @ 2019-04-18 08:54:59
+asset-builder @ 2019-05-13 22:10:14
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -310,21 +310,30 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene a:active {text-decoration: underline;}
 .terms_notification .accept:active,
 .terms_notification .details:active {text-decoration: underline;}
-#content ul.actions input.button:active,
+ul.actions input.button:active,
+ul.actions a.button:active,
 #content ul.actions a.button:active {background-color: #bebebe;}
-#content ul.actions input.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #313942;}
-#content ul.actions input.button.secondary:active,
-#content ul.actions a.button.secondary:active {background-color: #313942;}
-#content .field.html ul.options li:active {background-color: #64ad8e;}
-#content .field.html .editor div.tag:active .drag {display: block;}
-#content .field.html .editor div.tag:active .remove {display: block;}
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active {background-color: #313942;}
+ul.actions input.button.secondary:active,
+ul.actions a.button.secondary:active {background-color: #313942;}
+ul.actions a.button.disabled:active,
+ul.actions input.button.disabled:active {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
+div.field.html ul.options li:active {background-color: #64ad8e;}
+div.field.html .editor div.tag:active .drag {display: block;}
+div.field.html .editor div.tag:active .remove {display: block;}
 body #selection_options ul.actions input.button:active,
 body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene.docsindex .search .results .function:active {background: #ededed;}
 #content .scene div.readstate:active p {color: #000000;}
-#content .scene div.comments h2:active {color: #888888;}
-#content .scene div.comments h2:active svg.arrow line {stroke: #888888;}
+#content .scene div.comments h2:active,
+#content .scene div.qnas h2:active {color: #888888;}
+#content .scene div.comments h2:active svg.arrow line,
+#content .scene div.qnas h2:active svg.arrow line {stroke: #888888;}
+#content .scene ul.geo.active li.location:active {text-decoration: underline;}
+#content .scene .pagination .next:active,
+#content .scene .pagination .previous:active {background-color: #313942;}
+#content .scene div.image p a:active {text-decoration: none;}
 
 
 /*s-form.css*/
@@ -471,9 +480,7 @@ ul.actions a.button.primary {background-color: #8c9399; color: #ffffff;}
 ul.actions input.button.secondary,
 ul.actions a.button.secondary {background-color: #8c9399; color: #ffffff;}
 ul.actions a.button.disabled,
-ul.actions input.button.disabled,
-ul.actions a.button.disabled:hover,
-ul.actions input.button.disabled:hover {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
+ul.actions input.button.disabled {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
 div.field div.help {position: absolute; left: 475px; top: 6px; width: 200px;}
 div.field.files div.help {left: 404px;}
 div.field div.error,
@@ -673,9 +680,8 @@ ul.actions a.button.primary,
 
 /*s-pages-active.css*/
 #content ul.actions input.button.primary:active,
-#content ul.actions a.button.primary:active
-#header ul.servicenavigation li.github:active {background-color: #034769;}
-#content .scene .article ul.tags a:active {color: #63add0;}
-#content .scene div.comments h2:active {color: #63add0;}
-#content .scene div.comments h2:active svg.arrow line {stroke: #63add0;}
+#content ul.actions a.button.primary:active,
+#content .scene .pagination .next:active,
+#content .scene .pagination .previous:active {background-color: #034769;}
+#content .scene ul.tags a:active {color: #63add0;}
 

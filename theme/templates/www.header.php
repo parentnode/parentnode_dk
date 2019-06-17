@@ -35,6 +35,7 @@
 	<div id="header">
 		<ul class="servicenavigation">
 			<li class="keynav navigation nofollow"><a href="#navigation">To navigation</a></li>
+			<li class="keynav contact"><a href="/contact">Contact</a></li>
 <? if(session()->value("user_id") && session()->value("user_group_id") == 2): ?>
 			<li class="keynav admin nofollow"><a href="/janitor/admin/profile">Account</a></li>
 <? elseif(session()->value("user_id") && session()->value("user_group_id") > 2): ?>

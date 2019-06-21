@@ -13,7 +13,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 
 
 ?>
-<div class="scene contact i:scene">
+<div class="scene contact i:contact i:scene">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
@@ -60,6 +60,12 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 			<? foreach($items as $item): 
 				$media = $IC->sliceMedia($item); ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
+
+				<?	if($media): ?>
+				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+					<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
+				</div>
+				<?	endif; ?>
 
 				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
 				<ul class="info">

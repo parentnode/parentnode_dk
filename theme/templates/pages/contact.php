@@ -13,7 +13,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 
 
 ?>
-<div class="scene contact i:scene">
+<div class="scene contact i:contact i:scene">
 
 <? if($page_item && $page_item["status"]): 
 	$media = $IC->sliceMedia($page_item); ?>
@@ -57,15 +57,19 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 	<div class="teams">
 		<h2>Behind the scenes</h2>
 		<ul class="items people">
-			
 			<? foreach($items as $item): 
-				// print_r($item);
 				$media = $IC->sliceMedia($item); ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
 
+				<?	if($media): ?>
+				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+					<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
+				</div>
+				<?	endif; ?>
+
 				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
 				<ul class="info">
-					<li itemprop="affiliation" class="affiliation">parentNode</li>
+					<li itemprop="affiliation" class="affiliation">think.dk</li>
 					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
 					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
 					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
@@ -75,32 +79,13 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 					<?= $item["html"] ?>
 				</div>
 				<? endif; ?>
-				<? if($item["job_title"]): ?>
-				<div class="job_title" itemprop="job_title">
-					<dl>
-						<dt>Job title</dt>
-						<dl><?= $item["job_title"] ?></dl>
-					</dl>	
-				</div>
-				<div class="email" itemprop="email">
-					<dl>
-						<dt>Email</dt>
-						<dl><?= $item["email"] ?></dl>
-					</dl>	
-				</div>
-				<div class="tel" itemprop="tel">
-					<dl>
-						<dt>Telephone</dt>
-						<dl><?= $item["tel"] ?></dl>
-					</dl>	
-				</div>
-				<? endif; ?>
 
 			</li>
 			<? endforeach; ?>
 		</ul>
 	</div>
 <? endif; ?>
+
 
 	<div itemtype="http://schema.org/Organization" itemscope class="vcard company">
 		<h2 class="name fn org" itemprop="name">parentNode Aps</h2>

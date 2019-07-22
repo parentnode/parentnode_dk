@@ -21,8 +21,8 @@
 	<link type="text/css" rel="stylesheet" media="all" href="/css/lib/seg_<?= $this->segment() ?>_include.css" />
 	<script type="text/javascript" src="/js/lib/seg_<?= $this->segment() ?>_include.js"></script>
 <? } else { ?>
-	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css?rev=20190423-232741" />
-	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js?rev=20190423-232741"></script>
+	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css?rev=20190617-082600" />
+	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js?rev=20190617-082600"></script>
 <? } ?>
 
 	<?= $this->headerIncludes() ?>
@@ -35,6 +35,7 @@
 	<div id="header">
 		<ul class="servicenavigation">
 			<li class="keynav navigation nofollow"><a href="#navigation">To navigation</a></li>
+			<li class="keynav contact"><a href="/contact">Contact</a></li>
 <? if(session()->value("user_id") && session()->value("user_group_id") == 2): ?>
 			<li class="keynav admin nofollow"><a href="/janitor/admin/profile">Account</a></li>
 <? elseif(session()->value("user_id") && session()->value("user_group_id") > 2): ?>

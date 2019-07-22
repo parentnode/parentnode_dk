@@ -17,3 +17,10 @@
 #content .scene.demos {}
 #content .scene.demos div.article div.articlebody ul.demos {list-style: none; padding: 30px 0 0; margin: 0;}
 #content .scene.demos div.article div.articlebody ul.demos > li {padding-bottom: 30px;}
+
+/* CONTACT */
+#content .scene.contact ul.people {padding-bottom: 30px;}
+#content .scene.contact ul.people li.person {padding-bottom: 10px;}
+#content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0 20px 20px;}
+#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
+#content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}

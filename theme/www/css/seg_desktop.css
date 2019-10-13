@@ -1,13 +1,13 @@
 /*
-asset-builder @ 2019-06-17 08:26:00
+asset-builder @ 2019-10-13 19:49:22
 */
 
 /*seg_desktop_include.css*/
 
 /*seg_desktop.css*/
 /*
-MIT license, 2019 parentNode.dk
-asset-builder @ 2019-05-13 22:10:14
+MIT license, 2002-2019 parentNode.dk
+asset-builder @ 2019-10-13 18:58:25
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -70,9 +70,9 @@ h2 {padding: 0 70px 30px; font-size: 30px; line-height: 1.1em;
 	font-family: "PT Serif", Times, serif;
 }
 h3 {padding: 0 70px 10px; font-size: 20px; line-height: 1.25em;}
-h4 {padding: 0 70px 5px; font-size: 14px; line-height: 1em; font-weight: bold;}
-h5 {padding: 0 70px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
-h6 {padding: 0 70px 2px; font-size: 14px; line-height: 1em; font-weight: bold;}
+h4 {padding: 0 70px 5px; font-size: 17px; line-height: 1.2em; font-weight: bold;}
+h5 {padding: 0 70px 2px; font-size: 14px; line-height: 1.2em; font-weight: bold;}
+h6 {padding: 0 70px 2px; font-size: 14px; line-height: 1em; font-weight: normal; font-style: italic;}
 p {padding: 0 70px 20px; font-size: 14px; line-height: 1.38em;}
 ul,
 ol {font-size: 0;}
@@ -162,9 +162,9 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene ul.items li.item {display: block; padding-top: 20px; padding-bottom: 30px; border-top: 1px solid #dedede; position: relative;}
 #content .scene ul.items li.item h2 {position: relative; z-index: 1;}
 #content .scene dl {padding: 0 70px 15px; width: 500px;}
-#content .scene dt {width: 100px; text-align: right; padding: 0 5px 6px 0; color: #999999;}
+#content .scene dt {width: 115px; text-align: right; padding: 0 5px 6px 0; color: #999999;}
 #content .scene dt:after {content: ":";}
-#content .scene dd {padding: 0 0 6px; width: 394px;}
+#content .scene dd {padding: 0 0 6px; width: 380px;}
 #content .scene dt span {text-transform: none;}
 #content .scene dl dl {padding: 0 0 10px; margin-left: -30px; width: 425px;}
 #content .scene dl dl dt {width: 80px;}
@@ -357,7 +357,8 @@ div.field select option {padding: 5px 3px 2px 6px;}
 div.field textarea {width: 372px; height: 100px; overflow: auto; padding: 6px 0 2px 6px;}
 div.field.short textarea {height: 40px;}
 div.field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
-div.field .pseudolabel {position: absolute; font-size: 14px; display: inline-block; padding: 5px 6px; z-index: 2;}
+div.field .pseudolabel {z-index: 2; display: none; position: absolute; font-size: 14px; padding: 2px 5px 2px; margin: 3px 2px; background-color: #ffffff;}
+div.field input.default ~ .pseudolabel {display: inline-block;}
 div.field.checkbox,
 div.field.boolean {}
 div.field.checkbox input,
@@ -381,8 +382,17 @@ div.field input[type="number"]::-webkit-outer-spin-button {margin: 0;
 	-webkit-appearance: none;
 }
 div.field.files {border: 3px dashed #dedede; display: block; width: 378px; border-radius: 5px; position: relative; margin: 2px 68px 17px; padding: 0;}
-div.field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;}
-div.field.files label {color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
+div.field.files input[type=file] {opacity: 0; width: 360px; height: 49px; margin: 0; border: 0;
+}
+div.field.files label {
+	color: #333333; font-size: 14px; display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;
+}
+div.field.files ul.filelist {
+	color: #333333; 
+	font-size: 14px; 
+	display: block; 
+	position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 16px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;
+}
 div.field.files.loading label {display: none;}
 div.field.files.loading {background: transparent url(../assets/parentnode-skin-default/img/gx_loader.gif) no-repeat center center;}
 div.field.location {}
@@ -684,6 +694,9 @@ body #selection_options ul.actions a.button {background-color: #8c9399; color: #
 #content .scene.contact ul.items.people li.item.person .description h6, 
 #content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
 #content .scene.contact ul.items.people li.item.person .description p {font-size: 13px;}
+#content .scene.contact ul.items.people li.item.person .image {}
+#content .scene.contact ul.items.people li.item.person .image img {margin: 0; width: 100%; border-radius: 0;}
+#content .scene.contact ul.items.people li.item.person .image p {display: none;}
 
 
 /*s-colorscheme.css*/

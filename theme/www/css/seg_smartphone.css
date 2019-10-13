@@ -1,13 +1,13 @@
 /*
-asset-builder @ 2019-06-17 08:26:00
+asset-builder @ 2019-10-13 19:49:22
 */
 
 /*seg_smartphone_include.css*/
 
 /*seg_smartphone.css*/
 /*
-MIT license, 2019 parentNode.dk
-asset-builder @ 2019-05-13 22:10:14
+MIT license, 2002-2019 parentNode.dk
+asset-builder @ 2019-10-13 18:58:25
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -230,7 +230,7 @@ dd {display: block; vertical-align: top; font-size: 13px; line-height: 1.25em;}
 #content .scene ul.offer li.description {padding-top: 4px; display: block;}
 #content .scene ul.offer li.description ul {list-style: disc;}
 #content .scene ul.offer li.description ul li {display: list-item; padding: 0 0 3px; font-size: 13px;}
-#content .scene code {color: #333333; padding: 10px 20px; margin: 0 0 15px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap;
+#content .scene code {color: #333333; padding: 10px 20px; margin: 0 0 15px; background-color: #ededed; font-size: 11px; display: block; overflow: hidden; white-space: pre-wrap; word-break: break-all;
 	font-family: "Monaco", "Courier New", "Courier";
 	-webkit-tab-size: 4;
 	-moz-tab-size: 4;
@@ -320,7 +320,8 @@ div.field select option {padding: 2px 3px 2px 6px;}
 div.field textarea {width: calc(100% - 18px); height: 100px; overflow: auto; padding: 6px 6px 2px 6px;}
 div.field.short textarea {height: 40px;}
 div.field textarea.autoexpand {width: calc(100% - 24px); padding: 6px 6px 2px; overflow: hidden;}
-div.field .pseudolabel {position: absolute; font-size: 14px; display: inline-block; padding: 5px 6px; z-index: 2;}
+div.field .pseudolabel {z-index: 2; display: none; position: absolute; font-size: 14px; padding: 2px 5px 2px; margin: 3px 2px; background-color: #ffffff;}
+div.field input.default ~ .pseudolabel {display: inline-block;}
 div.field.checkbox,
 div.field.boolean {}
 div.field.checkbox input,

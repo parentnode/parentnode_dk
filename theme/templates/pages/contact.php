@@ -16,7 +16,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 <div class="scene contact i:contact i:scene">
 
 <? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMedia($page_item); ?>
+	$media = $IC->sliceMediae($page_item); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -58,7 +58,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 		<h2>Behind the scenes</h2>
 		<ul class="items people">
 			<? foreach($items as $item): 
-				$media = $IC->sliceMedia($item); ?>
+				$media = $IC->sliceMediae($item); ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
 
 				<?	if($media): ?>

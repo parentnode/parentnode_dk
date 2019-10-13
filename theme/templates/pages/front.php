@@ -11,7 +11,7 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 <div class="scene front i:scene i:front">
 
 <? if($page_item && $page_item["status"]): 
-	$media = $IC->sliceMedia($page_item); ?>
+	$media = $IC->sliceMediae($page_item); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -51,7 +51,7 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 		<h2>Latest news</h2>
 		<ul class="items articles">
 		<? foreach($post_items as $item): 
-			$media = $IC->sliceMedia($item); ?>
+			$media = $IC->sliceMediae($item); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>

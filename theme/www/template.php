@@ -972,8 +972,8 @@ player.load("/media/audio/audio_1.mp3");</code>
 			<?= $model->inputLocation("location", "latitude", "longitude", array("type" => "location", "label_loc" => "Location", "label_lat" => "Latitude", "label_lon" => "Longitude", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
 			<?= $model->inputLocation("location_required", "latitude_required", "longitude_required", array("type" => "location", "label_loc" => "Location required", "label_lat" => "Latitude required", "label_lon" => "Longitude required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
 
-			<?= $model->inputHTML("html", array("type" => "html", "allowed_tags" => "p,h2,h3,h4,ul,ol,code,download,jpg,png", "label" => "HTML", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
-			<?= $model->inputHTML("html_required", array("type" => "html", "allowed_tags" => "p,h2,h3,h4,ul,ol,code,download,jpg,png", "label" => "HTML required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("html", array("type" => "html", "allowed_tags" => "p,h2,h3,h4,ul,ol,code,download,jpg,png", "label" => "HTML", "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
+			<?= $model->input("html_required", array("type" => "html", "allowed_tags" => "p,h2,h3,h4,ul,ol,code,download,jpg,png", "label" => "HTML required", "required" => true, "hint_message" => "Hint message example which might collide", "error_message" => "Error message which might visually collide with hint message or other error messages")) ?>
 
 		</fieldset>
 

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-10-13 19:49:35
+asset-builder @ 2019-11-05 02:33:24
 */
 
 /*seg_smartphone_include.js*/
@@ -759,7 +759,7 @@ Util.clickableElement = u.ce = function(node, _options) {
 				if(fun(node.preClicked)) {
 					node.preClicked();
 				}
-				if(event && (event.metaKey || event.ctrlKey)) {
+				if(event && (event.metaKey || event.ctrlKey || (this._a && this._a.target))) {
 					window.open(this.url);
 				}
 				else {
@@ -5121,17 +5121,27 @@ Util.History = u.h = new function() {
 	this.is_listening = false;
 	this.navigate = function(url, node, silent) {
 		silent = silent || false;
-		if(this.popstate) {
-			history.pushState({}, url, url);
-			if(!silent) {
-				this.callback(url);
+		if((!url.match(/^http[s]?\:\/\//) || url.match(document.domain)) && (!node || !node._a || !node._a.target)) {
+			if(this.popstate) {
+				history.pushState({}, url, url);
+				if(!silent) {
+					this.callback(url);
+				}
+			}
+			else {
+				if(silent) {
+					this.next_hash_is_silent = true;
+				}
+				location.hash = u.h.getCleanUrl(url);
 			}
 		}
 		else {
-			if(silent) {
-				this.next_hash_is_silent = true;
+			if(!node || !node._a || !node._a.target) {
+				location.href = url;
 			}
-			location.hash = u.h.getCleanUrl(url);
+			else {
+				window.open(this.url);
+			}
 		}
 	}
 	this.callback = function(url) {
@@ -5221,7 +5231,7 @@ Util.History = u.h = new function() {
 		this.trail.push({"url":url, "node":node});
 	}
 	this.getCleanUrl = function(string, levels) {
-		string = string.replace(location.protocol+"//"+document.domain, "").match(/[^#$]+/)[0];
+		string = string.replace(location.protocol+"//"+document.domain, "") ? string.replace(location.protocol+"//"+document.domain, "").match(/[^#$]+/)[0] : "/";
 		if(!levels) {
 			return string;
 		}
@@ -8968,8 +8978,8 @@ Util.Objects["sendMessage"] = new function() {
 				u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
 			}
 			else {
-				u.f.fieldError(this.inputs["recipients"]);
-				u.f.fieldError(this.inputs["maillist_id"]);
+				u.f.inputHasError(this.inputs["recipients"]);
+				u.f.inputHasError(this.inputs["maillist_id"]);
 			}
 		}
 	}
@@ -9675,7 +9685,7 @@ Util.Objects["defaultSubscriptionmethod"] = new function() {
 		div.csrf_token = div.getAttribute("data-csrf-token");
 		div._sm_form = u.qs("form", div);
 		div._sm_change_div = u.qs("div.change_subscription_method", div);
-		div._sm_setting = u.qs("dl.settings dd.subscription_method", div);
+		div._sm_setting = u.qs("dl.info dd.subscription_method", div);
 		if(div._sm_form) {
 			div._sm_form.div = div;
 			div.actions_change = u.ae(div, "ul", {"class":"actions change"});
@@ -9817,27 +9827,38 @@ Util.Objects["usernames"] = new function() {
 		var indicators = u.qsa(".indicator", form);
 		u.ass(indicators[0], {"display":"none"});
 		u.ass(indicators[1], {"display":"none"});
+		var latest_verification_link = u.qs("div.email .send_verification_link p.reminded_at", div);
+		latest_verification_link.date_time = u.qs("span.date_time", latest_verification_link);
 		var send_verification_link = u.qs("li.send_verification_link", div);
-		send_verification_link.form = u.qs("form", send_verification_link);
-		send_verification_link.input = send_verification_link.form.lastChild;
+		if(send_verification_link) {
+			send_verification_link.form = u.qs("form", send_verification_link);
+			send_verification_link.input = send_verification_link.form.lastChild;
+		}
+		else {
+			u.as(latest_verification_link, "display", "none");
+		}
 		form.inputs.email.saved_email = form.inputs.email.val();
 		form.inputs.verification_status.saved_status = form.inputs.verification_status.val();
 		form.inputs.verification_status.current_status = form.inputs.verification_status.val();
-		var latest_verification_link = u.qs("div.email .send_verification_link p.reminded_at", div);
-		latest_verification_link.date_time = u.qs("span.date_time", latest_verification_link);
 		if(u.hc(latest_verification_link.date_time, "never")) {
 			u.ass(latest_verification_link, {"display":"none"});
 		}
 		if (!form.inputs.email.saved_email) {
 			form.inputs.verification_status.disabled = true;
-			u.ac(send_verification_link.input, "disabled");
+			if(send_verification_link) {
+				u.ac(send_verification_link.input, "disabled");
+			}
 		}
 		else if( form.inputs["verification_status"].val()) {
-			u.ac(send_verification_link.input, "disabled");
+			if(send_verification_link) {
+				u.ac(send_verification_link.input, "disabled");
+			}
 		}
 		else {
 			form.inputs.verification_status.disabled = false;
-			u.rc(send_verification_link.input, "disabled");
+			if(send_verification_link) {
+				u.rc(send_verification_link.input, "disabled");
+			}
 		}
 		form.inputs.email.updated = function() {
 			if(this.val() != this.saved_email) {
@@ -9871,19 +9892,21 @@ Util.Objects["usernames"] = new function() {
 				u.ac(this._form.actions["save"], "disabled");
 			}
 		}
-		send_verification_link.confirmed = function(response) {
-			if(!latest_verification_link) {
-				latest_verification_link = u.qs("div.email .send_verification_link p.reminded_at", div);
-				latest_verification_link.date_time = u.qs("span.date_time", latest_verification_link);
+		if(send_verification_link) {
+			send_verification_link.confirmed = function(response) {
+				if(!latest_verification_link) {
+					latest_verification_link = u.qs("div.email .send_verification_link p.reminded_at", div);
+					latest_verification_link.date_time = u.qs("span.date_time", latest_verification_link);
+				}
+				latest_verification_link.date_time.textContent = response.cms_object.reminded_at;
+				u.ass(latest_verification_link, {"display":"block"});
+				u.rc(send_verification_link, "invite");
+				u.rc(send_verification_link.input, "invite");
+				u.ac(send_verification_link, "reminder");
+				u.ac(send_verification_link.input, "reminder");
+				send_verification_link.input.value = "Send reminder";
+				send_verification_link.form[1].value = "signup_reminder";
 			}
-			latest_verification_link.date_time.textContent = response.cms_object.reminded_at;
-			u.ass(latest_verification_link, {"display":"block"});
-			u.rc(send_verification_link, "invite");
-			u.rc(send_verification_link.input, "invite");
-			u.ac(send_verification_link, "reminder");
-			u.ac(send_verification_link.input, "reminder");
-			send_verification_link.input.value = "Send reminder";
-			send_verification_link.form[1].value = "signup_reminder";
 		}
 		form.submitted = function(iN) {
 			if(!latest_verification_link) {
@@ -9891,7 +9914,7 @@ Util.Objects["usernames"] = new function() {
 			}
 			this.response = function(response) {
 				if(response.cms_status == "error") {
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else {
 					this.inputs.email.saved_email = this.inputs.email.val();
@@ -9946,7 +9969,7 @@ Util.Objects["usernames"] = new function() {
 			this.response = function(response) {
 				page.notify(response);
 				if(response.cms_status == "error") {
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
@@ -10504,11 +10527,11 @@ Util.Objects["usernamesProfile"] = new function() {
 			this.response = function(response) {
 				if(response.cms_object && response.cms_object.status == "USER_EXISTS") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Email already exists"]});
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else if(response.cms_status == "error") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Email could not be updated"]});
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
@@ -10526,11 +10549,11 @@ Util.Objects["usernamesProfile"] = new function() {
 			this.response = function(response) {
 				if(response.cms_object && response.cms_object.status == "USER_EXISTS") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Mobile already exists"]});
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else if(response.cms_status == "error") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Mobile could not be updated"]});
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
@@ -10678,7 +10701,7 @@ Util.Objects["cancellationProfile"] = new function() {
 			div.form.div = div;
 			u.f.init(div.form);
 			div.form.actions["cancelaccount"].org_value = div.form.actions["cancelaccount"].value;
-			div.form.actions["cancelaccount"].confirm_value = "Cancelling you account cannot be undone. OK?";
+			div.form.actions["cancelaccount"].confirm_value = "Cancelling your account cannot be undone. OK?";
 			div.form.actions["cancelaccount"].submit_value = "Confirm";
 			div.form.inputs["password"].updated = function() {
 				u.bug("typing password")

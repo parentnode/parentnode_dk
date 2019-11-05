@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-10-13 19:49:22
+asset-builder @ 2019-11-05 02:33:17
 */
 
 /*seg_mobile_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2019-10-13 19:49:22
 /*seg_mobile.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2019-10-13 18:58:25
+asset-builder @ 2019-11-05 02:28:03
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -324,8 +324,6 @@ body {}
 #content .scene div.categories ul.tags li.selected a {color: #034769;}
 #footer {border-color: #cccccc;}
 #footer p {color: #034769;}
-.front #navigation .front,
-.blog #navigation ul li.blog,
-.manifest #navigation ul li.manifest,
-.about #navigation ul li.about {color: #034769;}
+.front #header .logo,
+#navigation ul li.selected {color: #034769;}
 

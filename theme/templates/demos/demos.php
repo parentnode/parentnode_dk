@@ -56,6 +56,7 @@ global $model;
 				So, take a look. And remember, we did all the stuff you can't really see, unless you look under the hood :-)
 			</p>
 		</div>	
+
 		<div class="i:demos articlebody demos">
 			<ul class="demos">
 				<li class="demo">

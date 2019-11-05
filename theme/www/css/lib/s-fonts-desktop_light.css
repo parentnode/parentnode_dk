@@ -1,0 +1,11 @@
+@font-face {
+	font-family: 'PT Serif';
+	src: url('../fonts/pt_serif_caption/pt_serif_caption-regular-webfont.eot');
+	src: url('../fonts/pt_serif_caption/pt_serif_caption-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/pt_serif_caption/pt_serif_caption-regular-webfont.woff2') format('woff2'),
+		 url('../fonts/pt_serif_caption/pt_serif_caption-regular-webfont.woff') format('woff'),
+		 url('../fonts/pt_serif_caption/pt_serif_caption-regular-webfont.ttf') format('truetype'),
+		 url('../fonts/pt_serif_caption/pt_serif_caption-regular-webfont.svg#PTSerifCaption') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}

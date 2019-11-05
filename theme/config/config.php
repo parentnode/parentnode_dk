@@ -18,7 +18,7 @@ define("SITE_EMAIL", "info@parentnode.dk");
 /**
 * Optional constants
 */
-define("DEFAULT_PAGE_DESCRIPTION", "");
+define("DEFAULT_PAGE_DESCRIPTION", "Delivering long lasting, easily maintainable, search engine optimized, energy efficient and fully backwards compatible websites, -services and -applications.");
 define("DEFAULT_PAGE_IMAGE", "/img/logo-large.png");
 
 define("DEFAULT_LANGUAGE_ISO", "EN");

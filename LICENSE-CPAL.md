@@ -205,7 +205,7 @@ The Initial Developer of the Original Code is Martin Kaestel Nielsen. All portio
 
 #EXHIBIT B. Attribution Information
 
-Attribution Copyright Notice: Copyright 2016, parentNode.dk
+Attribution Copyright Notice: Copyright 2016-2019, parentNode.dk
 Attribution URL: parentnode.dk
 
 Display of Attribution Information is required in Larger Works which are defined in the CPAL as a work which combines Covered Code or portions thereof with code not governed by the terms of the CPAL.

@@ -3,6 +3,7 @@
 @import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-used_by.css);
 @import url(../../assets/parentnode-skin-default/css/lib/desktop_light/s-comments.css);
 
+@import url(/css/lib/s-fonts.css);
 @import url(/css/lib/desktop_light/s-pages.css);
 @import url(/css/lib/desktop_light/s-colorscheme.css);
 @import url(/css/lib/tablet_light/s-pages-active.css);

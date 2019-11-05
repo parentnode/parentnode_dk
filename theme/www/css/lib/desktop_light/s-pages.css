@@ -1,3 +1,10 @@
+#header .logo,
+#navigation ul li,
+#intro .logo_chars span,
+#content .scene div.company h2.name {
+	font-family: "PT Serif Caption", Times, serif;
+}
+
 #content .scene ul.info {display: none;}
 
 
@@ -19,3 +26,8 @@
 #content .demos {}
 #content .demos div.article div.articlebody ul.demos {list-style: none; padding-top: 40px; margin: 0;}
 #content .demos div.article div.articlebody ul.demos > li {padding-bottom: 40px;}
+
+
+#content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
+#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px; line-height: 16px;}
+#content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}

@@ -3,6 +3,10 @@ global $action;
 global $IC;
 global $itemtype;
 
+$page_item = $IC->getItem(array("tags" => "page:blog", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+if($page_item) {
+	$this->sharingMetaData($page_item);
+}
 
 // get post tags for listing
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
@@ -11,11 +15,50 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 ?>
 
 <div class="scene posts i:scene">
+
+
+<? if($page_item): 
+	$media = $IC->sliceMediae($page_item, "single_media"); ?>
+	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
+
+		<? if($media): ?>
+		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
+		<? endif; ?>
+
+
+		<?= $HTML->articleTags($page_item, [
+			"context" => false
+		]) ?>
+
+
+		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
+
+		<? if($page_item["subheader"]): ?>
+		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
+		<? endif; ?>
+
+
+		<?= $HTML->articleInfo($page_item, "/blog", [
+			"media" => $media,
+		]) ?>
+
+
+		<? if($page_item["html"]): ?>
+		<div class="articlebody" itemprop="articleBody">
+			<?= $page_item["html"] ?>
+		</div>
+		<? endif; ?>
+	</div>
+
+<? else: ?>
+
 	<h1>bLog</h1>
 	<p>
-		Tech stuff all over. It's not really a Blog. <br />
+		Tech stuff all over. It's not really a (we)Blog. <br />
 		You'll figure it out, otherwise read the <a href="http://google.com/search?q=manual" target="_blank">manual</a>.
 	</p>
+
+<? endif; ?>
 
 
 <? if($categories): ?>
@@ -33,7 +76,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 <? if($items): ?>
 	<ul class="articles i:articleMiniList">
 		<? foreach($items as $item):
-			$media = $IC->sliceMediae($item); ?>
+			$media = $IC->sliceMediae($item, "mediae"); ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 			data-readstate="<?= $item["readstate"] ?>"
 			>

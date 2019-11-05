@@ -58,16 +58,7 @@ Util.Objects["demos"] = new function() {
 					"html":global_tags[k]
 				})
 			}
-		}	
+		}
+
 	}
-
-
-
-
-
-	//spørg om søge-tagget findes i de "små" demo-arrays
-
-	//TODO til dokumentation af form: 
-	// - addAction skal føjes til Form, ikke til Field.
-	// - Class bruges typisk som et link til styling
 }

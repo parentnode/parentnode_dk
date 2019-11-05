@@ -11,6 +11,9 @@ Util.Objects["contact"] = new function() {
 		scene.ready = function() {
 			// u.bug("scene.ready:", this);
 
+			page.cN.scene = this;
+
+
 			var nodes = u.qsa("li.item", scene);
 			if(nodes) {
 
@@ -69,8 +72,8 @@ Util.Objects["contact"] = new function() {
 
 		}
 
-		// Register scene
-		page.cN.scene = scene;
+		// scene is ready
+		scene.ready();
 
 	}
 }

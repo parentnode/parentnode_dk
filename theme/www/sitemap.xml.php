@@ -13,8 +13,8 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <?
-// Platform PAGE
-$item = $IC->getItem(array("tags" => "page:platform"));
+// Front PAGE
+$item = $IC->getItem(array("tags" => "page:front"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/</loc>
@@ -22,15 +22,19 @@ $item = $IC->getItem(array("tags" => "page:platform"));
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
+<?
+// Blog PAGE
+$item = $IC->getItem(array("tags" => "page:blog"));
+?>
 	<url>
-		<loc><?= SITE_URL ?>/blog/</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/posts.php")) ?></lastmod>
+		<loc><?= SITE_URL ?>/blog</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1</priority>
 	</url>
 <?
 // POST ITEMS
-$items = $IC->getItems(array("itemtype" => "post", "status" => 1)); 
+$items = $IC->getItems(array("itemtype" => "post", "status" => 1, "order" => "modified_at DESC")); 
 foreach($items as $item):
 ?>
 	<url>
@@ -41,7 +45,7 @@ foreach($items as $item):
 	</url>
 <? endforeach; ?>
 <?
-// Platform PAGE
+// Tools PAGE
 $item = $IC->getItem(array("tags" => "page:tools"));
 ?>
 	<url>
@@ -50,15 +54,43 @@ $item = $IC->getItem(array("tags" => "page:tools"));
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
+<?
+// Contact PAGE
+$item = $IC->getItem(array("tags" => "page:contact"));
+?>
 	<url>
-		<loc><?= SITE_URL ?>/manifest</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/manifest.php")) ?></lastmod>
+		<loc><?= SITE_URL ?>/contact</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
+<?
+// Manifest PAGE
+$item = $IC->getItem(array("tags" => "page:manifest"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/manifest</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+<?
+// About PAGE
+$item = $IC->getItem(array("tags" => "page:about"));
+?>
 	<url>
 		<loc><?= SITE_URL ?>/about</loc>
-		<lastmod><?= date("Y-m-d", filemtime(LOCAL_PATH."/templates/pages/about.php")) ?></lastmod>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+<?
+// Terms PAGE
+$item = $IC->getItem(array("tags" => "page:terms"));
+?>
+	<url>
+		<loc><?= SITE_URL ?>/terms</loc>
+		<lastmod><?= date("Y-m-d", strtotime($item["modified_at"])) ?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>

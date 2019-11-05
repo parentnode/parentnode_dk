@@ -8,9 +8,9 @@ if($page_item) {
 
 $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
 ?>
-<div class="scene front i:scene i:front">
+<div class="scene front i:front">
 
-<? if($page_item]): 
+<? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
@@ -51,7 +51,7 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 		<h2>Latest news</h2>
 		<ul class="items articles">
 		<? foreach($post_items as $item): 
-			$media = $IC->sliceMediae($item); ?>
+			$media = $IC->sliceMediae($item, "mediae"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>
@@ -68,8 +68,7 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 
 
 				<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
-					"media" => $media, 
-					"sharing" => true
+					"media" => $media
 				]) ?>
 
 
@@ -90,11 +89,11 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 	<div class="usedby">
 		<h2>Selected clients</h2>
 		<ul>
-			<li class="distortion" title="Distortion">Distortion</li>
+			<li class="greenspeak" title="Torvehallerne">GreenSpeak</li>
 			<li class="lsb" title="Lån & Spar Bank">Lån &amp; Spar Bank</li>
-			<li class="torvehallerne" title="Torvehallerne">Torvehallerne</li>
-			<li class="punkt1" title="Punkt1">Punkt1</li>
-			<li class="metro" title="Copenhagen Metro">Copenhagen Metro</li>
+			<li class="kbhff" title="Københavns Fødevarefællesskab">KBHFF</li>
+			<li class="tuborg" title="Punkt1">Tuborg</li>
+			<li class="urbangreen" title="Urban Green">Urban Green</li>
 		</ul>
 	</div>
 </div>

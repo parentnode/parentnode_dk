@@ -45,17 +45,23 @@ if($page_item) {
 <? endif; ?>
 
 	<div itemtype="http://schema.org/Organization" itemscope class="vcard company">
-		<h2 class="name fn org" itemprop="name">parentNode.dk</h2>
+		<h2 class="name fn org" itemprop="name">parentNode ApS</h2>
 
 		<dl class="info basic">
-			<dt class="address">Address</dt>
-			<dd class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-				<ul>
-					<li itemprop="streetAddress">Æbeløgade 4</li>
-					<li><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
+			<dt class="location">Address</dt>
+			<dd class="location" itemprop="location" itemscope itemtype="http://schema.org/Place">
+				<ul class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+					<li class="streetaddress" itemprop="streetAddress">Æbeløgade 4b</li>
+					<li class="city"><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
+				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+					<li class="latitude" itemprop="latitude" content="55.711510"></li>
+					<li class="longitude" itemprop="longitude" content="12.564495"></li>
+				</ul>
 			</dd>
+			<dt class="cvr">CVR</dt>
+			<dd class="cvr" itemprop="taxID">DK-39757613</dd>
 		</dl>
 
 		<dl class="info contact">
@@ -63,16 +69,31 @@ if($page_item) {
 			<dd class="contact">
 				<ul>
 					<li class="email"><a href="mailto:info@parentnode.dk" itemprop="email" content="info@parentnode.dk">info@parentnode.dk</a></li>
+					<li itemprop="telephone" class="tel" content="+4520742819">+45 2074 2819</li>
 				</ul>
 			</dd>
 			<dt class="social">Social media</dt>
 			<dd class="social">
 				<ul>
-					<li class="meetup"><a href="https://www.meetup.com/parentNode-copenhagen">Meetup</a></li>
-					<li class="facebook"><a href="https://facebook.com/parentnode">Facebook</a></li>
-					<li class="linkedin"><a href="https://www.linkedin.com/company/parentnode">LinkedIn</a></li>
+					<li class="facebook"><a href="https://facebook.com/parentnode" target="_blank">Facebook</a></li>
+					<li class="linkedin"><a href="https://www.linkedin.com/company/parentnode" target="_blank">LinkedIn</a></li>
+					<li class="meetup"><a href="https://www.meetup.com/parentNode-copenhagen" target="_blank">Meetup</a></li>
 				</ul>
 			</dd>
+		</dl>
+
+		<dl class="info financial">
+			<dt class="bank">Bank</dt>
+			<dd class="bank"><a href="http://faelleskassen.dk" target="_blank">Fælleskassen</a></dd>
+
+			<dt class="account">Account no</dt>
+			<dd class="account">8411 2034764</dd>
+
+			<dt class="account">IBAN</dt>
+			<dd class="account">DK3184110002034764</dd>
+
+			<dt class="account">SWIFT/BIC</dt>
+			<dd class="account">FAELDKK1</dd>
 		</dl>
 
 	</div>

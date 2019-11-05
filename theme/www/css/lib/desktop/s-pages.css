@@ -1,6 +1,38 @@
+/* SPECIAL FONT FOR LOGO TYPE AND NAVIGATION */
+#header .logo,
+#navigation ul li,
+#intro .logo_chars span,
+#content .scene div.company h2.name {
+	font-family: "PT Serif Caption", Times, serif;
+}
+
+#header .svglogo {position: absolute; top: 40px; left: 13px;}
+#header svg.svglogo {stroke-width: 2px; fill: transparent;}
+#intro svg.svglogo {stroke-width: 4px; fill: transparent;}
+
+.front #header svg.svglogo,
+#intro svg.svglogo {stroke: #034769;}
+#header svg.svglogo {stroke: #63add0;}
+
+.front #header {opacity: 0;}
+.front #footer {opacity: 0;}
+.front #navigation {opacity: 0;}
+
+
+#intro {z-index: 100; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffffff;}
+#intro .wrapper {position: absolute; top: 50%; margin-top: -100px; left: 50%; margin-left: -250px; width: 500px; text-align: center;}
+#intro .logo_chars {height: 100px; overflow: hidden; display: inline-block; vertical-align: top; font-size: 0;}
+#intro .logo_chars span {font-size: 70px; line-height: 100px; opacity: 0; display: inline-block; vertical-align: top;}
+#intro .logo_symbol {height: 100px; display: inline-block; vertical-align: top; margin-top: -26px; text-align: center; font-size: 0;}
+#intro .logo_symbol svg {display: inline-block; vertical-align: top;}
+
+/* MOVE SCENE CONTENT FURTHER DOWN DUE TO LARGER LOGO */
+#content .scene {padding-top: 80px;}
+
+/* GENERALLY HIDE INFO */
 #content .scene ul.info {display: none;}
 
-/* POST ARTICLE */
+/* SHOW INFO FOR POSTS */
 #content .scene.post div.article ul.info {display: block;}
 #content .scene.template div.article ul.info {display: block;}
 
@@ -21,19 +53,15 @@
 #content .scene.contact div.teams {}
 #content .scene.contact div.teams h2 {padding-top: 20px;}
 
-#content .scene.contact ul.people {padding: 0 70px 30px; padding-right: calc(100% - 570px); border-top: 1px solid #dedede;}
-#content .scene.contact ul.items.people li.item.person {width: 230px; padding: 20px 20px 20px 0; display: inline-block; vertical-align: top; border: none;}
+#content .scene.contact ul.people {padding: 0 70px 30px; padding-right: calc(100% - 610px); border-top: 1px solid #dedede;}
+#content .scene.contact ul.items.people li.item.person {width: 230px; padding: 20px 40px 20px 0; display: inline-block; vertical-align: top; border: none;}
 #content .scene.contact ul.items.people li.item.person h3 {width: auto; padding-left: 0; padding-right: 0;}
 #content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0 0 20px;}
-#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
+#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px; line-height: 15px;}
 #content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}
-#content .scene.contact ul.items.people li.item.person .description h2, 
 #content .scene.contact ul.items.people li.item.person .description h3, 
-#content .scene.contact ul.items.people li.item.person .description h4, 
-#content .scene.contact ul.items.people li.item.person .description h5, 
-#content .scene.contact ul.items.people li.item.person .description h6, 
 #content .scene.contact ul.items.people li.item.person .description p {padding-left: 0; padding-right: 0; width: auto;}
 #content .scene.contact ul.items.people li.item.person .description p {font-size: 13px;}
-#content .scene.contact ul.items.people li.item.person .image {}
-#content .scene.contact ul.items.people li.item.person .image img {margin: 0; width: 100%; border-radius: 0;}
+#content .scene.contact ul.items.people li.item.person .image {margin: 0 -10px;}
+#content .scene.contact ul.items.people li.item.person .image img {margin: 0 0 10px; width: 100%; cursor: default;}
 #content .scene.contact ul.items.people li.item.person .image p {display: none;}

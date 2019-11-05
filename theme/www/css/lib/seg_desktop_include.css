@@ -3,7 +3,9 @@
 @import url(../../assets/parentnode-skin-default/css/lib/desktop/s-sharing.css);
 @import url(../../assets/parentnode-skin-default/css/lib/desktop/s-used_by.css);
 @import url(../../assets/parentnode-skin-default/css/lib/desktop/s-comments.css);
+@import url(../../assets/parentnode-skin-default/css/lib/desktop/s-readstate.css);
 
+@import url(/css/lib/s-fonts.css);
 @import url(/css/lib/desktop/s-pages.css);
 @import url(/css/lib/desktop/s-colorscheme.css);
 @import url(/css/lib/desktop/s-pages-hovers.css);

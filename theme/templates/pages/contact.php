@@ -9,11 +9,11 @@ if($page_item) {
 }
 
 $itemtype = "person";
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
 
 ?>
-<div class="scene contact i:contact i:scene">
+<div class="scene contact i:contact">
 
 <? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
@@ -55,10 +55,10 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 
 <? if($items): ?>
 	<div class="teams">
-		<h2>Behind the scenes</h2>
+		<h2>We, the people</h2>
 		<ul class="items people">
 			<? foreach($items as $item): 
-				$media = $IC->sliceMediae($item); ?>
+				$media = $IC->sliceMediae($item, "single_media"); ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
 
 				<?	if($media): ?>
@@ -88,13 +88,13 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 
 
 	<div itemtype="http://schema.org/Organization" itemscope class="vcard company">
-		<h2 class="name fn org" itemprop="name">parentNode Aps</h2>
+		<h2 class="name fn org" itemprop="name">parentNode ApS</h2>
 
 		<dl class="info basic">
 			<dt class="location">Address</dt>
 			<dd class="location" itemprop="location" itemscope itemtype="http://schema.org/Place">
 				<ul class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-					<li class="streetaddress" itemprop="streetAddress">Æbeløgade 4</li>
+					<li class="streetaddress" itemprop="streetAddress">Æbeløgade 4b</li>
 					<li class="city"><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
@@ -104,7 +104,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>
-			<dd class="cvr" itemprop="taxID">39 75 76 13</dd>
+			<dd class="cvr" itemprop="taxID">DK-39757613</dd>
 		</dl>
 
 		<dl class="info contact">
@@ -120,7 +120,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 				<ul>
 					<li class="facebook"><a href="https://facebook.com/parentnode" target="_blank">Facebook</a></li>
 					<li class="linkedin"><a href="https://www.linkedin.com/company/parentnode" target="_blank">LinkedIn</a></li>
-					<li class="meetup"><a href="https://www.meetup.com/parentNode-copenhagen	" target="_blank">Meetup</a></li>
+					<li class="meetup"><a href="https://www.meetup.com/parentNode-copenhagen" target="_blank">Meetup</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -130,10 +130,10 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 			<dd class="bank"><a href="http://faelleskassen.dk" target="_blank">Fælleskassen</a></dd>
 
 			<dt class="account">Account no</dt>
-			<dd class="account">8411 4145172</dd>
+			<dd class="account">8411 2034764</dd>
 
 			<dt class="account">IBAN</dt>
-			<dd class="account">DK3184110004145172</dd>
+			<dd class="account">DK3184110002034764</dd>
 
 			<dt class="account">SWIFT/BIC</dt>
 			<dd class="account">FAELDKK1</dd>

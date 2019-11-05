@@ -29,7 +29,6 @@ body {}
 
 /* LOCAL */
 .front #header .logo,
-.blog #navigation ul li.blog a,
-.manifest #navigation ul li.manifest a,
-.about #navigation ul li.about a {color: #034769;}
+#navigation ul li.selected {color: #034769;}
+
 

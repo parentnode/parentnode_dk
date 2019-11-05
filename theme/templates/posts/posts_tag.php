@@ -56,7 +56,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <?	if($items): ?>
 	<ul class="items articles i:articleMiniList">
 		<? foreach($items as $item):
-			$media = $IC->sliceMediae($item); ?>
+			$media = $IC->sliceMediae($item, "mediae"); ?>
 		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 			data-readstate="<?= $item["readstate"] ?>"
 			>
@@ -73,8 +73,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 
 			<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
-				"media" => $media, 
-				"sharing" => true
+				"media" => $media
 			]) ?>
 
 

@@ -5,7 +5,7 @@ $page_item = $IC->getItem(array("tags" => "page:tools", "status" => 1, "extend" 
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
-	
+
 ?>
 <div class="scene tools i:scene">
 

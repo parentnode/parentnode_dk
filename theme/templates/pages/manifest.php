@@ -9,7 +9,7 @@ if($page_item) {
 ?>
 <div class="scene manifest i:scene">
 
-<? if($page_item]): 
+<? if($page_item): 
 	$media = $IC->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 

@@ -1,3 +1,11 @@
+#header .logo,
+#navigation ul li,
+#intro .logo_chars span,
+#content .scene div.company h2.name {
+	font-family: "PT Serif Caption", Times, serif;
+}
+
+
 #content .scene ul.info {display: none;}
 
 
@@ -20,7 +28,11 @@
 
 /* CONTACT */
 #content .scene.contact ul.people {padding-bottom: 30px;}
-#content .scene.contact ul.people li.person {padding-bottom: 10px;}
+#content .scene.contact ul.people li.person {padding-bottom: 20px; padding-top: 0;}
 #content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0 20px 20px;}
-#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px;}
+#content .scene.contact ul.items.people li.item.person ul.info li {display: block; color: #777777; padding-bottom: 2px; line-height: 16px;}
 #content .scene.contact ul.items.people li.item.person ul.info li.affiliation {display: none;}
+#content .scene.contact ul.items.people li.item.person .image {padding-bottom: 0;}
+#content .scene.contact ul.items.people li.item.person .image img {cursor: default;}
+#content .scene.contact ul.items.people li.item.person .image p {display: none;}
+#content .scene.contact ul.items.people li.item.person h3 {padding-top: 20px;}

@@ -38,7 +38,7 @@ Util.Objects["front"] = new function() {
 		scene.initIntro = function() {
 			// u.bug("initIntro");
 
-			// u.saveCookie("intro_shown", 1);
+			u.saveCookie("intro_shown", 1);
 
 			u.ass(document.body, {
 				"overflow": "hidden"

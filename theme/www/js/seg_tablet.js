@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2008-2019, https://manipulator.parentnode.dk
-asset-builder @ 2019-11-05 02:33:17
+asset-builder @ 2019-11-05 19:51:03
 */
 
 /*seg_tablet_include.js*/
@@ -6409,6 +6409,7 @@ Util.Objects["front"] = new function() {
 			}
 		}
 		scene.initIntro = function() {
+			u.saveCookie("intro_shown", 1);
 			u.ass(document.body, {
 				"overflow": "hidden"
 			});

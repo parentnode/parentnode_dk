@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<?= $this->language() ?>">
 <head>
-	<!-- (c) & (p) think.dk 2002-2018 -->
+	<!-- (c) & (p) think.dk 2002-2019 -->
 	<!-- For detailed copyright license, see /terms -->
 	<!-- If you want to use or contribute to this code, visit https://parentnode.dk -->
 	<title><?= $this->pageTitle() ?></title>
@@ -21,8 +21,8 @@
 	<link type="text/css" rel="stylesheet" media="all" href="/css/lib/seg_<?= $this->segment() ?>_include.css" />
 	<script type="text/javascript" src="/js/lib/seg_<?= $this->segment() ?>_include.js"></script>
 <? } else { ?>
-	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css?rev=20191105-023317" />
-	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js?rev=20191105-023317"></script>
+	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css?rev=20191105-195103" />
+	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js?rev=20191105-195103"></script>
 <? } ?>
 
 	<?= $this->headerIncludes() ?>

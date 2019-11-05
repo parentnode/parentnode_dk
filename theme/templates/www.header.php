@@ -14,8 +14,9 @@
 
 	<?= $this->sharingMetaData() ?>
 
-	<link rel="apple-touch-icon" href="/touchicon.png">
-	<link rel="icon" href="/favicon.png">
+	<link rel="canonical" href="<?= SITE_URL . $this->url ?>" />
+	<link rel="apple-touch-icon" href="/touchicon.png" />
+	<link rel="icon" href="/favicon.png" />
 
 <? if(session()->value("dev")) { ?>
 	<link type="text/css" rel="stylesheet" media="all" href="/css/lib/seg_<?= $this->segment() ?>_include.css" />

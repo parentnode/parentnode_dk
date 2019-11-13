@@ -11,14 +11,15 @@ u.pagePreloader = function() {
 
 }
 
+
 u.logoInjected = function() {
 
 	// create base svg (animation placeholder)
 	page.logoSvg = u.svg({
 		"node":page.logo,
 		"class":"svglogo",
-		"width":178,
-		"height":60
+		"width":40,
+		"height":40
 	});
 
 	// Handle page scrolling
@@ -60,6 +61,24 @@ u.logoInjected = function() {
 // Animation parts
 u.logoAnimationParts = [
 	[
+		{type:"line", x1: 31, y1: 0, x2: 25, y2: 8}
+	],
+	[
+		{type:"circle", cx: 23, cy: 12, r:5, cx1: 27, cy1: 8}
+	],
+	[
+		{type:"line", x1: 18, y1: 15, x2: 11, y2: 21},
+		{type:"line", x1: 25, y1: 17, x2: 31, y2: 28}
+	],
+	[
+		{type:"circle", cx: 8, cy: 24, r: 5, cx1: 7, cy1: 22},
+		{type:"circle", cx: 33, cy: 32, r: 5, cx1: 33, cy1: 27}
+	]
+];
+
+// Animation parts
+u.logoAnimationPartsIntro = [
+	[
 		{type:"line", x1: 130, y1: 0, x2: 123, y2: 11}
 	],
 	[
@@ -72,33 +91,6 @@ u.logoAnimationParts = [
 	[
 		{type:"circle", cx: 96, cy: 31, r: 7, cx1: 103, cy1: 27},
 		{type:"circle", cx: 132, cy: 45, r: 7, cx1: 129, cy1: 38}
-	]
-];
-
-// Animation parts
-u.logoAnimationPartsIntro = [
-	[
-		// {type:"line", x1: 130, y1: 0, x2: 123, y2: 11}
-		{type:"line", x1: 305, y1: 0, x2: 289, y2: 25}
-		// calc factor:0,4375
-	],
-	[
-		// {type:"circle", cx: 119, cy: 17, r:7, cx1: 123, cy1: 11}
-		{type:"circle", cx: 279, cy: 40, r:17, cx1: 289, cy1: 25}
-	],
-	[
-		// {type:"line", x1: 112, y1: 21, x2: 103, y2: 27},
-		{type:"line", x1: 263, y1: 49, x2: 242, y2: 63},
-
-		// {type:"line", x1: 121, y1: 24, x2: 129, y2: 38}
-		{type:"line", x1: 284, y1: 56, x2: 303, y2: 89}
-	],
-	[
-		// {type:"circle", cx: 96, cy: 31, r: 17, cx1: 103, cy1: 27},
-		{type:"circle", cx: 225, cy: 73, r: 17, cx1: 242, cy1: 63},
-
-		// {type:"circle", cx: 132, cy: 45, r: 17, cx1: 129, cy1: 38}
-		{type:"circle", cx: 310, cy: 106, r: 17, cx1: 303, cy1: 89}
 	]
 ];
 

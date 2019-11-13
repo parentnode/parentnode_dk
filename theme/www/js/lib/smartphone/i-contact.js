@@ -5,13 +5,11 @@ Util.Objects["contact"] = new function() {
 		}
 
 		scene.scrolled = function() {
-			// u.bug("scrolled:", this);
+			// u.bug("scene.scrolled:", this);
 		}
 
 		scene.ready = function() {
 			// u.bug("scene.ready:", this);
-
-			page.cN.scene = this;
 
 
 			var nodes = u.qsa("li.item", scene);
@@ -72,8 +70,8 @@ Util.Objects["contact"] = new function() {
 
 		}
 
-		// scene is ready
-		scene.ready();
+		// Register scene
+		page.cN.scene = scene;
 
 	}
 }

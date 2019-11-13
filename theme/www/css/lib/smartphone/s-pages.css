@@ -4,6 +4,31 @@
 #content .scene div.company h2.name {
 	font-family: "PT Serif Caption", Times, serif;
 }
+#header {overflow: visible;}
+#header .logo {
+	font-size: 22px; padding: 15px 20px;
+}
+
+
+#header .svglogo {position: absolute; top: 36px; left: 84px;}
+#header svg.svglogo {stroke-width: 2px; fill: transparent;}
+#intro svg.svglogo {stroke-width: 2px; fill: transparent;}
+
+.front #header svg.svglogo,
+#intro svg.svglogo {stroke: #034769;}
+#header svg.svglogo {stroke: #63add0;}
+
+.front #header {opacity: 0;}
+.front #footer {opacity: 0;}
+.front #navigation {opacity: 0;}
+
+
+#intro {z-index: 100; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffffff;}
+#intro .wrapper {position: absolute; top: 50%; margin-top: -100px; left: 50%; margin-left: -100px; width: 200px; text-align: center;}
+#intro .logo_chars {height: 100px; overflow: hidden; display: inline-block; vertical-align: top; font-size: 0;}
+#intro .logo_chars span {font-size: 30px; line-height: 100px; opacity: 0; display: inline-block; vertical-align: top;}
+#intro .logo_symbol {height: 100px; display: inline-block; vertical-align: top; margin-top: -40px; text-align: center; font-size: 0;}
+#intro .logo_symbol svg {display: inline-block; vertical-align: top;}
 
 
 #content .scene ul.info {display: none;}

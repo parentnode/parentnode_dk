@@ -1,4 +1,6 @@
-#header .logo,
+#header .logo {text-indent: -9999px; height: 88px;
+	background: transparent url(/img/logo-fallback.gif) no-repeat center center;
+}
 #navigation ul li,
 #intro .logo_chars span,
 #content .scene div.company h2.name {

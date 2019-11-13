@@ -68,6 +68,7 @@ Util.Objects["front"] = new function() {
 					"width":this.div_logo_chars.offsetWidth + "px",
 					"height":125
 				});
+				u.bug("this.logoSvg", this.logoSvg);
 
 				// Copy animation properties
 				u.logoAP = JSON.parse(JSON.stringify(u.logoAnimationPartsIntro));
@@ -197,6 +198,7 @@ Util.Objects["front"] = new function() {
 			else {
 				page.scrolled();
 			}
+
 			page.acceptCookies();
 
 		}

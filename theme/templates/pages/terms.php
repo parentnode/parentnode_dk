@@ -2,7 +2,7 @@
 global $action;
 global $IC;
 
-$page_item = $IC->getItem(array("tags" => "page:terms", "status" => 1, "extend" => array("mediae" => true, "tags" => true)));
+$page_item = $IC->getItem(array("tags" => "page:terms", "status" => 1, "extend" => array("mediae" => true, "tags" => true, "user" => true)));
 
 if($page_item) {
 	$this->sharingMetaData($page_item);

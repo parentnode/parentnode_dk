@@ -12,7 +12,7 @@ body {}
 #navigation ul li {color: #63add0;}
 
 #content .scene a,
-#content .scene ul.geo.active li.location {color: #63add0;}
+#content .scene .article ul.geo.active li.name {color: #63add0;}
 
 #content .scene hr {border-color: #cccccc;}
 

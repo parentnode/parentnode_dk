@@ -77,7 +77,7 @@ if($page_item) {
 				<ul>
 					<li class="facebook"><a href="https://facebook.com/parentnode" target="_blank">Facebook</a></li>
 					<li class="linkedin"><a href="https://www.linkedin.com/company/parentnode" target="_blank">LinkedIn</a></li>
-					<li class="meetup"><a href="https://www.meetup.com/parentNode-copenhagen" target="_blank">Meetup</a></li>
+					<li class="meetup"><a href="https://www.meetup.com/parentNode" target="_blank">Meetup</a></li>
 				</ul>
 			</dd>
 		</dl>

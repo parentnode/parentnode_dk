@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-11-05 19:51:03
+asset-builder @ 2019-11-13 02:22:50
 */
 
 /*seg_desktop_light_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2019-11-05 19:51:03
 /*seg_desktop_light.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2019-11-05 02:28:03
+asset-builder @ 2019-11-13 02:19:48
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -376,7 +376,9 @@ div.field.focus div.hint {display: block;}
 
 
 /*s-pages.css*/
-#header .logo,
+#header .logo {text-indent: -9999px; height: 88px;
+	background: transparent url(../img/logo-fallback.gif) no-repeat center center;
+}
 #navigation ul li,
 #intro .logo_chars span,
 #content .scene div.company h2.name {

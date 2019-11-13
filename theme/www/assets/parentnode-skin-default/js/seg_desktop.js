@@ -1,6 +1,6 @@
 /*
 MIT license, 2019 parentNode.dk
-asset-builder @ 2019-11-05 02:28:03
+asset-builder @ 2019-11-13 02:19:48
 */
 
 /*seg_desktop_include.js*/
@@ -4601,7 +4601,6 @@ u.smartphoneSwitch = new function() {
 /*i-page.js*/
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
-		window.page = page;
 		u.bug_force = true;
 		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
 		if(document.domain !== "parentnode.dk") {
@@ -4748,9 +4747,6 @@ Util.Objects["page"] = new function() {
 			page.logo.top_offset = u.absY(page.nN) + parseInt(u.gcs(page.nN, "padding-top"));
 			page.style_tag.sheet.insertRule("#header a.logo {}", 0);
 			page.logo.css_rule = page.style_tag.sheet.cssRules[0];
-			if(fun(u.logoInjected)) {
-				u.logoInjected();
-			}
 		}
 		page.initNavigation = function() {
 			var i, node, nodes;
@@ -4827,6 +4823,9 @@ Util.Objects["page"] = new function() {
 			if(u.github_fork) {
 				var github = u.ae(page.hN.service, "li", {"html":'<a href="'+u.github_fork.url+'">'+u.github_fork.text+'</a>', "class":"github"});
 				u.ce(github, {"type":"link"});
+			}
+			if(fun(u.logoInjected)) {
+				u.logoInjected();
 			}
 		}
 		page.initFooter = function() {}

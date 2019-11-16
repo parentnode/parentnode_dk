@@ -89,10 +89,10 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 	<div class="usedby">
 		<h2>Selected clients</h2>
 		<ul>
-			<li class="greenspeak" title="Torvehallerne">GreenSpeak</li>
+			<li class="greenspeak" title="GreenSpeak">GreenSpeak</li>
 			<li class="lsb" title="Lån & Spar Bank">Lån &amp; Spar Bank</li>
 			<li class="kbhff" title="Københavns Fødevarefællesskab">KBHFF</li>
-			<li class="tuborg" title="Punkt1">Tuborg</li>
+			<li class="tuborg" title="Tuborg">Tuborg</li>
 			<li class="urbangreen" title="Urban Green">Urban Green</li>
 		</ul>
 	</div>

@@ -55,7 +55,7 @@ class HTML extends HTMLCore {
 		$_ .= '<ul class="info">';
 		$_ .= '	<li class="published_at" itemprop="datePublished" content="'. date("Y-m-d", strtotime($item["published_at"])) .'">'. date("Y-m-d, H:i", strtotime($item["published_at"])) .'</li>';
 		$_ .= '	<li class="modified_at" itemprop="dateModified" content="'. date("Y-m-d", strtotime($item["modified_at"])) .'"></li>';
-		$_ .= '	<li class="author" itemprop="author">'. $item["user_nickname"] .'</li>';
+		$_ .= '	<li class="author" itemprop="author">'. (isset($item["user_nickname"]) ? $item["user_nickname"] : SITE_NAME) .'</li>';
 		$_ .= '	<li class="main_entity'. ($sharing ? ' share' : '') .'" itemprop="mainEntityOfPage" content="'. SITE_URL.$url .'"></li>';
 		$_ .= '	<li class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">';
 		$_ .= '		<ul class="publisher_info">';
@@ -84,7 +84,7 @@ class HTML extends HTMLCore {
 		if(isset($item["location"]) && $item["location"] && $item["latitude"] && $item["longitude"]):
 			$_ .= '	<li class="place" itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">';
 			$_ .= '		<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">';
-			$_ .= '			<li class="location" itemprop="name">'.$item["location"].'</li>';
+			$_ .= '			<li class="name" itemprop="name">'.$item["location"].'</li>';
 			$_ .= '			<li class="latitude" itemprop="latitude" content="'.round($item["latitude"], 5).'"></li>';
 			$_ .= '			<li class="longitude" itemprop="longitude" content="'.round($item["longitude"], 5).'"></li>';
 			$_ .= '		</ul>';
@@ -136,20 +136,20 @@ class HTML extends HTMLCore {
 		if($item["tags"] && $editing):
 			$editing_tag = arrayKeyValue($item["tags"], "context", "editing");
 			if($editing_tag !== false):
-				$_ .= '	<li class="editing" title="This post is work in progress">'.($item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"]).'</li>';
+				$_ .= '<li class="editing" title="This post is work in progress">'.($item["tags"][$editing_tag]["value"] == "true" ? "Still editing" : $item["tags"][$editing_tag]["value"]).'</li>';
 			endif;
 		endif;
 
 		// default tag
 		if(is_array($default)):
-			$_ .= '	<li><a href="'.$default[0].'">'.$default[1].'</a></li>';
+			$_ .= '<li><a href="'.$default[0].'">'.$default[1].'</a></li>';
 		endif;
 
 		// item tag list
 		if($item["tags"] && $context):
 			foreach($item["tags"] as $item_tag):
 				if(array_search($item_tag["context"], $context) !== false):
-					$_ .= '	<li'.($schema ? ' itemprop="'.$schema.'"' : '').'>';
+					$_ .= '<li'.($schema ? ' itemprop="'.$schema.'"' : '').'>';
 					if($url):
 						$_ .= '<a href="'.$url."/".urlencode($item_tag["value"]).'">';
 					endif;

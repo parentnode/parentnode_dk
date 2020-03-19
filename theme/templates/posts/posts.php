@@ -3,18 +3,62 @@ global $action;
 global $IC;
 global $itemtype;
 
-$page_item = $IC->getItem(array("tags" => "page:blog", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+
+// List extension (page > 1)
+if(count($action) === 2) {
+	$page = $action[1];
+	$page_item = false;
+}
+// Default list
+else {
+	$page = false;
+	$page_item = $IC->getItem([
+		"tags" => "page:Posts", 
+		"status" => 1, 
+		"extend" => [
+			"user" => true, 
+			"mediae" => true, 
+			"tags" => true
+		]
+	]);
+}
+
+
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-// get post tags for listing
+$pagination_pattern = [
+	"pattern" => [
+		"itemtype" => $itemtype, 
+		"status" => 1, 
+		"extend" => [
+			"tags" => true, 
+			"user" => true, 
+			"mediae" => true,
+			"readstate" => true
+		]
+	],
+	"page" => $page,
+	"limit" => 5
+];
+
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true)));
+
+// Get posts
+$items = $IC->paginate($pagination_pattern);
+
+// $page_item = $IC->getItem(array("tags" => "page:blog", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+// if($page_item) {
+// 	$this->sharingMetaData($page_item);
+// }
+
+// get post tags for listing
+// $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true)));
 
 ?>
 
-<div class="scene posts i:scene">
+<div class="scene posts i:columns">
 
 
 <? if($page_item): 
@@ -52,64 +96,97 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" =>
 
 <? else: ?>
 
-	<h1>bLog</h1>
-	<p>
-		Tech stuff all over. It's not really a (we)Blog. <br />
-		You'll figure it out, otherwise read the <a href="http://google.com/search?q=manual" target="_blank">manual</a>.
-	</p>
+	<div class="article">
+		<h1>bLog</h1>
+		<p>
+			Tech stuff all over. It's not really a (we)Blog. <br />
+			You'll figure it out, otherwise read the <a href="http://google.com/search?q=manual" target="_blank">manual</a>.
+		</p>
+	</div>
 
 <? endif; ?>
 
 
 <? if($categories): ?>
 	<div class="categories">
+		<h2>Categories</h2>
 		<ul class="tags">
-			<li class="selected"><a href="/blog">All posts</a></li>
 			<? foreach($categories as $tag): ?>
 			<li><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 			<? endforeach; ?>
+			<li class="all selected"><a href="/details/posts">All postings</a></li>
 		</ul>
 	</div>
 <? endif; ?>
 
 
+	<?= $HTML->search("/blog/search", [
+		"headline" => "Search posts",
+		"pattern" => $pagination_pattern["pattern"]
+	]) ?>
+
+
+	<div class="articles">
+
 <? if($items): ?>
-	<ul class="articles i:articleMiniList">
-		<? foreach($items as $item):
-			$media = $IC->sliceMediae($item, "mediae"); ?>
-		<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
-			data-readstate="<?= $item["readstate"] ?>"
-			>
+
+		<h2>All posts</h2>
+
+		<?= $HTML->pagination($items, [
+			"base_url" => "/blog", 
+			"direction" => "prev",
+			"show_total" => false,
+			"labels" => ["prev" => "Previous posts"]
+		]) ?>
+
+		<ul class="articles articlePreviewList i:articlePreviewList">
+			<? foreach($items["range_items"] as $item):
+				$media = $IC->sliceMediae($item, "mediae"); ?>
+			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
+				data-readstate="<?= $item["readstate"] ?>"
+				>
+
+				<? if($media): ?>
+				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
+				<? endif; ?>
+
+				<?= $HTML->articleTags($item, [
+					"context" => [$itemtype],
+					"url" => "/blog/tag",
+					"default" => ["/blog", "Posts"]
+				]) ?>
 
 
-			<?= $HTML->articleTags($item, [
-				"context" => [$itemtype],
-				"url" => "/blog/tag",
-				"default" => ["/blog", "Posts"]
-			]) ?>
+				<h3 itemprop="headline"><a href="/blog/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
 
 
-			<h3 itemprop="headline"><a href="/blog/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+				<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
+					"media" => $media, 
+					"sharing" => true
+				]) ?>
 
 
-			<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
-				"media" => $media, 
-				"sharing" => true
-			]) ?>
+				<? if($item["description"]): ?>
+				<div class="description" itemprop="description">
+					<p><?= nl2br($item["description"]) ?></p>
+				</div>
+				<? endif; ?>
 
+			</li>
+			<? endforeach; ?>
+		</ul>
 
-			<? if($item["description"]): ?>
-			<div class="description" itemprop="description">
-				<p><?= nl2br($item["description"]) ?></p>
-			</div>
-			<? endif; ?>
+		<?= $HTML->pagination($items, [
+			"base_url" => "/blog",
+			"direction" => "next",
+			"show_total" => false,
+			"labels" => ["next" => "Next posts"]
+		]) ?>
 
-		</li>
-		<? endforeach; ?>
-	</ul>
-	
 <? else: ?>
-	<p>No posts</p>
+		<p>No posts</p>
 <? endif; ?>
+
+	</div>
 
 </div>

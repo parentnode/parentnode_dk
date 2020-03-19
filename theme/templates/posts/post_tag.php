@@ -1,15 +1,17 @@
 <?php
 global $IC;
 global $action;
-global $itemtype;
 
-$sindex = $action[0];
+$itemtype = "post";
 
+$sindex = $action[2];
+$selected_tag = urldecode($action[1]);
 
 $pagination_pattern = [
 	"pattern" => [
 		"itemtype" => $itemtype, 
 		"status" => 1, 
+		"tags" => $itemtype.":".addslashes($selected_tag), 
 		"extend" => [
 			"tags" => true, 
 			"user" => true, 
@@ -21,7 +23,6 @@ $pagination_pattern = [
 	"sindex" => $sindex,
 	"limit" => 1
 ];
-
 
 // Get posts
 $pagination_items = $IC->paginate($pagination_pattern);
@@ -57,10 +58,9 @@ $related_items = $IC->getRelatedItems($related_pattern);
 // Get post tags for listing
 $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
-
 ?>
 
-<div class="scene post i:columns">
+<div class="scene post tag i:columns">
 
 
 <? if($item):
@@ -119,10 +119,11 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 	<?= $HTML->pagination($pagination_items, [
 		"class" => "pagination i:pagination",
 		"type" => "sindex",
-		"base_url" => "/blog", 
+		"base_url" => "/blog/tag/".urlencode($selected_tag), 
 		"show_total" => false,
 		"labels" => ["prev" => "{name}", "next" => "{name}"]
 	]) ?>
+
 
 
 <? else: ?>
@@ -147,6 +148,13 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 				data-readstate="<?= $related_item["readstate"] ?>"
 				>
 
+<?				if($media): ?>
+				<div class="image item_id:<?= $related_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
+					<p>Image: <a href="/images/<?= $related_item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
+				</div>
+<?				endif; ?>
+
+
 				<?= $HTML->articleTags($related_item, [
 					"context" => [$itemtype],
 					"url" => "/blog/tag",
@@ -154,7 +162,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 				]) ?>
 
 
-				<h3 itemprop="headline"><a href="/blog/<?= $related_item["sindex"] ?>"><?= $related_item["name"] ?></a></h3>
+				<h3 itemprop="headline"><a href="/blog/<?= $related_item["sindex"] ?>"><?= strip_tags($related_item["name"]) ?></a></h3>
 
 
 				<?= $HTML->articleInfo($related_item, "/blog/".$related_item["sindex"], [
@@ -175,7 +183,6 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <? endif; ?>
 
 
-
 	<?= $HTML->search("/blog/search", [
 		"headline" => "Search posts",
 		"pattern" => $pagination_pattern["pattern"],
@@ -186,7 +193,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 	<div class="categories">
 		<h2>Categories</h2>
 		<ul class="tags">
-		<? foreach($categories as $tag): ?>
+		<? foreach($categories as $tag):?>
 			<li <?= ($item["tags"] && array_search($tag, $item["tags"]) !== false) ? ' class="selected"' : "" ?>><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
 		<? endforeach; ?>
 			<li class="all"><a href="/blog">All postings</a></li>

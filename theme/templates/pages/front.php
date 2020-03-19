@@ -49,12 +49,16 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 <? if($post_items): ?>
 	<div class="news">
 		<h2>Latest news</h2>
-		<ul class="items articles">
+		<ul class="items articles i:articlePreviewList articlePreviewList">
 		<? foreach($post_items as $item): 
 			$media = $IC->sliceMediae($item, "mediae"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>
+
+				<? if($media): ?>
+				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
+				<? endif; ?>
 
 
 				<?= $HTML->articleTags($item, [

@@ -1,4 +1,4 @@
-Util.Objects["demos"] = new function() {
+Util.Modules["demos"] = new function() {
 	this.init = function(demos) {
 
 		// Insert DIV with form field 

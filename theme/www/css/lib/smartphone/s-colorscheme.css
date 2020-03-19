@@ -22,12 +22,28 @@ body {}
 #content ul.actions input.button.primary,
 #content ul.actions a.button.primary {background-color: #63add0;}
 #content ul.actions input.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #034769;}
+#content ul.actions a.button.primary:active,
 #content .scene div.article ul.tags li a:active,
-#content .scene ul.articles li.article ul.tags li a:active {color: #63add0;}
+#content .scene ul.articles li.article ul.tags li a:active {color: #034769;}
 
-#content .scene div.categories ul.tags li.selected a,
-#content .scene div.categories ul.tags li.selected:before {color: #034769;}
+#content .scene .pagination li.next a,
+#content .scene .pagination li.previous a {background-color: #ffffff; color: #034769;}
+#content .scene .pagination li.next a:active,
+#content .scene .pagination li.previous a:active {background-color: #034769; color: #ffffff;}
+
+body > div.pagination li.next > svg.arrow line,
+body > div.pagination li.previous > svg.arrow line {stroke: #034769;}
+body > div.pagination li.previous,
+body > div.pagination li.next {border-color: #034769; color: #034769; background-color: #ffffff;}
+body > div.pagination li.previous:active,
+body > div.pagination li.next:active {background-color: #034769; color: #ffffff;}
+body > div.pagination li.previous:active > svg.arrow line,
+body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
+
+
+
+#content .scene div.categories ul.tags li.selected a {background-color: #034769;}
+#content .scene div.categories ul.tags li a:active {background-color: #63add0; color: #ffffff;}
 
 #footer {border-color: #cccccc;}
 #footer a {color: #63add0;}

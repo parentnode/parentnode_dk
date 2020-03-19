@@ -1,4 +1,4 @@
-Util.Objects["contact"] = new function() {
+Util.Modules["contact"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 			// u.bug("scene.resized:", this);

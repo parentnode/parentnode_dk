@@ -1,4 +1,4 @@
-Util.Objects["front"] = new function() {
+Util.Modules["front"] = new function() {
 	this.init = function(scene) {
 		// u.bug("scene init:", scene);
 
@@ -68,6 +68,7 @@ Util.Objects["front"] = new function() {
 					"width":this.div_logo_chars.offsetWidth + "px",
 					"height":125
 				});
+				u.bug("this.logoSvg", this.logoSvg);
 
 				// Copy animation properties
 				u.logoAP = JSON.parse(JSON.stringify(u.logoAnimationPartsIntro));
@@ -167,7 +168,7 @@ Util.Objects["front"] = new function() {
 
 		// Show header, navigation and footer (hidden for frontpage)
 		scene.revealPage = function() {
-			u.bug("scene.revealPage");
+			// u.bug("scene.revealPage");
 
 			u.a.transition(page.hN, "all 0.3s ease-in");
 			u.ass(page.hN, {
@@ -197,6 +198,7 @@ Util.Objects["front"] = new function() {
 			else {
 				page.scrolled();
 			}
+
 			page.acceptCookies();
 
 		}

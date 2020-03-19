@@ -102,6 +102,10 @@ u.animateLogo = function(svg) {
 		// Get next part
 		var next_part = u.logoAP.shift();
 
+		u.ass(svg, {
+			display: "block"
+		});
+
 		var i;
 		// Part can be more than one element
 		for(i = 0; i < next_part.length; i++) {
@@ -134,6 +138,12 @@ u.withdrawLogo = function(svg) {
 			element.transitioned = function() {
 				delete this.transitioned;
 				this.svg.removeChild(this);
+
+				if(u.qsa("svg", this.svg.parentNode).length == 1) {
+					u.ass(this.svg, {
+						display: "none"
+					});
+				}
 			}
 			u.a.to(element, "all 300ms ease-in-out", {"r": 0});
 		}
@@ -148,6 +158,12 @@ u.withdrawLogo = function(svg) {
 			element.transitioned = function() {
 				delete this.transitioned;
 				this.svg.removeChild(this);
+
+				if(u.qsa("svg", this.svg.parentNode).length == 1) {
+					u.ass(this.svg, {
+						display: "none"
+					});
+				}
 			}
 			u.a.to(element, "all 300ms ease-in-out", {"x1": end_x, "x2": end_x, "y1": end_y, "y2": end_y});
 		}

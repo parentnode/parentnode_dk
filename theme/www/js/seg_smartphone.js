@@ -1,6 +1,6 @@
 /*
-parentNode, Copyright 2008-2019, https://manipulator.parentnode.dk
-asset-builder @ 2019-11-18 21:43:03
+parentNode, Copyright 2008-2020, https://manipulator.parentnode.dk
+asset-builder @ 2020-03-19 21:50:49
 */
 
 /*seg_smartphone_include.js*/
@@ -2127,6 +2127,7 @@ Util.Form = u.f = new function() {
 				field.filelist.field = field;
 				field.uploaded_files = u.qsa("li.uploaded", field.filelist);
 				this._update_filelist.bind(field.input)();
+				u.e.addEvent(field.input, "change", this._update_filelist);
 				u.e.addEvent(field.input, "change", this._updated);
 				u.e.addEvent(field.input, "change", this._changed);
 				if(u.e.event_support != "touch") {
@@ -2134,7 +2135,6 @@ Util.Form = u.f = new function() {
 					u.e.addEvent(field.input, "dragleave", this._blur);
 					u.e.addEvent(field.input, "drop", this._blur);
 				}
-				u.e.addEvent(field.input, "change", this._update_filelist);
 				this.activateInput(field.input);
 			}
 			else {
@@ -2338,6 +2338,9 @@ Util.Form = u.f = new function() {
 					u.ae(this.field.filelist, this.field.uploaded_files[i]);
 				}
 			}
+			else {
+				this.field.uploaded_files = [];
+			}
 		}
 		else if(this.field.uploaded_files && this.field.uploaded_files.length) {
 			u.rc(this.field, "has_new_files");
@@ -2504,7 +2507,7 @@ Util.Form = u.f = new function() {
 				}
 			}
 		}
-		var action_name = action.name ? action.name : (action.parentNode.className ? u.normalize(action.parentNode.className) : (action.value ? u.normalize(action.value) : u.normalize(u.text(action))));
+		var action_name = action.name ? action.name : (action.parentNode.className ? u.superNormalize(action.parentNode.className) : (action.value ? u.superNormalize(action.value) : u.superNormalize(u.text(action))));
 		if(action_name && !action._form.actions[action_name]) {
 			action._form.actions[action_name] = action;
 		}
@@ -3128,17 +3131,17 @@ Util.pageScrollX = u.scrollX = function() {
 Util.pageScrollY = u.scrollY = function() {
 	return window.pageYOffset;
 }
-Util.Objects = u.o = new Object();
+Util.Modules = u.m = new Object();
 Util.init = function(scope) {
-	var i, node, nodes, object;
+	var i, node, nodes, module;
 	scope = scope && scope.nodeName ? scope : document;
 	nodes = u.ges("i\:([_a-zA-Z0-9])+", scope);
 	for(i = 0; i < nodes.length; i++) {
 		node = nodes[i];
-		while((object = u.cv(node, "i"))) {
-			u.rc(node, "i:"+object);
-			if(object && obj(u.o[object])) {
-				u.o[object].init(node);
+		while((module = u.cv(node, "i"))) {
+			u.rc(node, "i:"+module);
+			if(module && obj(u.m[module])) {
+				u.m[module].init(node);
 			}
 		}
 	}
@@ -3387,9 +3390,10 @@ Util.request = function(node, url, _options) {
 						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
 					}
 				}
+				node[request_id].HTTPRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 				node[request_id].HTTPRequest.send("");
 			}
-			else if(node[request_id].request_method.match(/POST|PUT|PATCH/i)) {
+			else if(node[request_id].request_method.match(/POST|PUT|PATCH|DELETE/i)) {
 				var params;
 				if(obj(node[request_id].request_data) && node[request_id].request_data.constructor.toString().match(/function Object/i)) {
 					params = JSON.stringify(node[request_id].request_data);
@@ -3416,6 +3420,7 @@ Util.request = function(node, url, _options) {
 						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
 					}
 				}
+				node[request_id].HTTPRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 				node[request_id].HTTPRequest.send(params);
 			}
 		}
@@ -3751,11 +3756,89 @@ Util.lowerCaseFirst = u.lcfirst = function(string) {
 	return string.replace(/^(.){1}/, function($1) {return $1.toLowerCase()});
 }
 Util.normalize = function(string) {
+	var table = {
+		'À':'A',  'à':'a',
+		'Á':'A',  'á':'a',
+		'Â':'A',  'â':'a',
+		'Ã':'A',  'ã':'a',
+		'Ä':'A',  'ä':'a',
+		'Å':'Aa', 'å':'aa',
+		'Æ':'Ae', 'æ':'ae',
+		'Ç':'C',  'ç':'c',
+		'Č':'C',  'ć':'c',
+		'Ć':'C',  'č':'c',
+		'Đ':'D',  'đ':'d',  'ð':'d',
+		'È':'E',  'è':'e',
+		'É':'E',  'é':'e',
+		'Ê':'E',  'ê':'e',
+		'Ë':'E',  'ë':'e',
+		'Ģ':'G',  'ģ':'g',
+		'Ğ':'G',  'ğ':'g',
+		'Ì':'I',  'ì':'i',
+		'Í':'I',  'í':'i',
+		'Î':'I',  'î':'i',
+		'Ï':'I',  'ï':'i',
+		'Ī':'I',  'ī':'i',
+		'Ķ':'K',  'ķ':'k',
+		'Ļ':'L',  'ļ':'l',
+		'Ñ':'N',  'ñ':'n',
+		'Ņ':'N',  'ņ':'n',
+		'Ò':'O',  'ò':'o',
+		'Ó':'O',  'ó':'o',
+		'Ô':'O',  'ô':'o',
+		'Õ':'O',  'õ':'o',
+		'Ö':'O',  'ö':'o',
+		'Ō':'O',  'ō':'o',
+		'Ø':'Oe', 'ø':'oe',
+		'Ŕ':'R',  'ŕ':'r',
+		'Š':'S',  'š':'s',
+		'Ş':'S',  'ş':'s',
+		'Ṩ':'S',  'ṩ':'s',
+		'Ù':'U',  'ù':'u',
+		'Ú':'U',  'ú':'u',
+		'Û':'U',  'û':'u',
+		'Ü':'U',  'ü':'u',
+		'Ū':'U',  'ū':'u',
+		'Ų':'U',  'ų':'u',
+		'Ŭ':'U',  'ŭ':'u',
+		'Ý':'Y',  'ý':'y',
+		'Ÿ':'Y',  'ÿ':'y',
+		'Ž':'Z',  'ž':'z',
+		'Þ':'B',  'þ':'b',
+		'ß':'Ss',
+		'@':' at ',
+		'&':'and',
+		'%':' percent',
+		'\\$':'USD',
+		'¥':'JPY',
+		'€':'EUR',
+		'£':'GBP',
+		'™':'trademark',
+		'©':'copyright',
+		'§':'s',
+		'\\*':'x',
+		'×':'x'
+	}
+	var char, regex;
+	for(char in table) {
+		regex = new RegExp(char, "g");
+		string = string.replace(regex, table[char]);
+	}
+	return string;
+}
+Util.superNormalize = function(string) {
+	string = u.normalize(string);
 	string = string.toLowerCase();
+	string = u.stripTags(string);
 	string = string.replace(/[^a-z0-9\_]/g, '-');
 	string = string.replace(/-+/g, '-');
 	string = string.replace(/^-|-$/g, '');
 	return string;
+}
+Util.stripTags = function(string) {
+	var node = document.createElement("div");
+	node.innerHTML = string;
+	return u.text(node);
 }
 Util.pluralize = function(count, singular, plural) {
 	if(count != 1) {
@@ -4480,11 +4563,13 @@ u.txt["share"] = "Share this page";
 u.txt["share-info-headline"] = "(How do I share?)";
 u.txt["share-info-txt"] = "We have not included social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
 u.txt["share-info-ok"] = "OK";
-u.txt["readmore"] = "Read more.";
+u.txt["readmore"] = "Read more ...";
 u.txt["readstate-not_read"] = "Click to mark as read";
 u.txt["readstate-read"] = "Read";
 u.txt["add_comment"] = "Add comment";
 u.txt["comment"] = "Comment";
+u.txt["add_question"] = "Send question";
+u.txt["question"] = "Ask a question. Try to be precise :-)";
 u.txt["cancel"] = "Cancel";
 u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
 u.txt["relogin"] = "Your session timed out - please login to continue.";
@@ -4542,7 +4627,7 @@ u.fontsReady = function(node, fonts, _options) {
 		font.weight = font.weight || "400";
 		font.size = font.size || "16px";
 		font.status = "waiting";
-		font.id = u.normalize(font.family+font.style+font.weight);
+		font.id = u.superNormalize(font.family+font.style+font.weight);
 		if(!window["_man_fonts_"].fonts[font.id]) {
 			window["_man_fonts_"].fonts[font.id] = font;
 		}
@@ -4550,8 +4635,8 @@ u.fontsReady = function(node, fonts, _options) {
 			node = {};
 		}
 		else {
-			if(!window["_man_fonts_"+loadkey].basenodes[u.normalize(font.style+font.weight)]) {
-				window["_man_fonts_"+loadkey].basenodes[u.normalize(font.style+font.weight)] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
+			if(!window["_man_fonts_"+loadkey].basenodes[u.superNormalize(font.style+font.weight)]) {
+				window["_man_fonts_"+loadkey].basenodes[u.superNormalize(font.style+font.weight)] = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
 			}
 			node = u.ae(window["_man_fonts_"+loadkey], "span", {"html":"I'm waiting for your fonts to load!","style":"font-family: '"+font.family+"', Times !important; font-style: "+font.style+" !important; font-weight: "+font.weight+" !important; font-size: "+font.size+" !important; line-height: 1em !important; opacity: 0 !important;"});
 		}
@@ -4590,7 +4675,7 @@ u.fontsReady = function(node, fonts, _options) {
 		var basenode, i, node;
 		for(i = 0; i < this.nodes.length; i++) {
 			node = this.nodes[i];
-			basenode = this.basenodes[u.normalize(node.font_style+node.font_weight)];
+			basenode = this.basenodes[u.superNormalize(node.font_style+node.font_weight)];
 			if(node.offsetWidth != basenode.offsetWidth || node.offsetHeight != basenode.offsetHeight) {
 				window["_man_fonts_"].fonts[node.font_id].status = "loaded";
 			}
@@ -4650,7 +4735,7 @@ u.f.fixFieldHTML = function(field) {
 		u.ae(field.label, field.indicator);
 	}
 }
-Util.Objects["page"] = new function() {
+Util.Modules["page"] = new function() {
 	this.init = function(page) {
 		u.bug_force = true;
 		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
@@ -4746,6 +4831,7 @@ Util.Objects["page"] = new function() {
 				this.initHeader();
 				this.initNavigation();
 				this.resized();
+				this.scrolled();
 				if(!fun(this.cN.scene.revealPage)) {
 					this.revealPage();
 				}
@@ -4928,7 +5014,7 @@ Util.Objects["page"] = new function() {
 	}
 }
 u.e.addDOMReadyEvent(u.init);
-Util.Objects["login"] = new function() {
+Util.Modules["login"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -4942,7 +5028,7 @@ Util.Objects["login"] = new function() {
 		page.cN.scene = scene;
 	}
 }
-Util.Objects["scene"] = new function() {
+Util.Modules["scene"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -4954,9 +5040,8 @@ Util.Objects["scene"] = new function() {
 		page.cN.scene = scene;
 	}
 }
-Util.Objects["article"] = new function() {
+Util.Modules["article"] = new function() {
 	this.init = function(article) {
-		u.bug("article init:", article);
 		article.csrf_token = article.getAttribute("data-csrf-token");
 		article.header = u.qs("h1,h2,h3", article);
 		article.header.article = article;
@@ -4996,6 +5081,56 @@ Util.Objects["article"] = new function() {
 		if(article.geolocation && typeof(u.injectGeolocation) == "function") {
 			u.injectGeolocation(article);
 		}
+	}
+}
+u.addCheckmark = function(node) {
+	node.checkmark = u.svg({
+		"name":"checkmark",
+		"node":node,
+		"class":"checkmark "+(node.current_readstate ? "read" : "not_read"),
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 8,
+				"x2": 7,
+				"y2": 15
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 15,
+				"x2": 12,
+				"y2": 2
+			}
+		]
+	});
+	node.checkmark.hint_txt = (node.current_readstate ? (u.txt["readstate-read"] + ", " + u.date("Y-m-d H:i:s", node.current_readstate)) : u.txt["readstate-not_read"]),
+	node.checkmark.node = node;
+	u.e.hover(node.checkmark);
+	node.checkmark.over = function(event) {
+		this.hint = u.ae(document.body, "div", {"class":"hint", "html":this.hint_txt});
+		u.ass(this.hint, {
+			"top":(u.absY(this.parentNode)+parseInt(u.gcs(this, "top"))+(Number(this.getAttribute("height")))) + "px",
+			"left":(u.absX(this.parentNode)+parseInt(u.gcs(this, "left"))+Number(this.getAttribute("width"))) + "px"
+		});
+	}
+	node.checkmark.out = function(event) {
+		if(this.hint) {
+			this.hint.parentNode.removeChild(this.hint);
+			delete this.hint;
+		}
+	}
+}
+u.removeCheckmark = function(node) {
+	if(node.checkmark.hint) {
+		node.checkmark.hint.parentNode.removeChild(node.checkmark.hint);
+	}
+	if(node.checkmark) {
+		node.checkmark.parentNode.removeChild(node.checkmark);
+		node.checkmark = false;
 	}
 }
 u.injectGeolocation = function(node) {
@@ -5054,28 +5189,74 @@ u.terms_version = "terms_v1";
 u.github_fork = {"url":"https://github.com/parentnode", "text":"parentNode on GitHub"};
 u.ga_account = 'UA-49720985-1';
 u.ga_domain = 'parentnode.dk';
-u.txt["share"] = "Share";
-u.txt["share-info-headline"] = "(How do I share?)";
-u.txt["share-info-txt"] = "We have not includered social media plugins on this site, because they are frequently abused to collect data about you. Also we don't want to promote some channels over others. Instead, just copy the link and share it wherever you find relevant.";
-u.txt["share-info-ok"] = "OK";
-u.txt["readstate-not_read"] = "Click to mark as read";
-u.txt["readstate-read"] = "Read";
-u.txt["add_comment"] = "Add comment";
-u.txt["comment"] = "Comment";
-u.txt["cancel"] = "Cancel";
-u.txt["login_to_comment"] = '<a href="/login">Login</a> or <a href="/signup">Sign up</a> to add comments.';
-u.txt["relogin"] = "Your session timed out - please login to continue.";
-u.txt["terms-headline"] = "We love <br />cookies and privacy";
-u.txt["terms-accept"] = "Accept";
-u.txt["terms-details"] = "Details";
-u.txt["smartphone-switch-headline"] = "Hello curious";
-u.txt["smartphone-switch-text"] = [
-	"If you are looking for a mobile version of this site, using an actual mobile phone is a better starting point.",
-	"We care about our endusers and <em>one-size fits one device</em>, the parentNode way, provides an optimized user experience with a smaller footprint, because it doesn't come with all sizes included.",
-	"But, since it is our mission to accommodate users, feel free to switch to the Smartphone segment and see if it serves your purpose better for the moment. We'll make sure to leave you with an option to return back to the Desktop segment.",
-];
-u.txt["smartphone-switch-bn-hide"] = "Hide";
-u.txt["smartphone-switch-bn-switch"] = "Go to Smartphone version";
+
+
+/*u-googleanalytics.js*/
+if(u.ga_account) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.defer=true;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', u.ga_account, u.ga_domain);
+    ga('send', 'pageview');
+	u.stats = new function() {
+		this.pageView = function(url) {
+			ga('send', 'pageview', url);
+		}
+		this.event = function(node, _options) {
+			var event = false;
+			var eventCategory = "Uncategorized";
+			var eventAction = null;
+			var eventLabel = null;
+			var eventValue = null;
+			var nonInteraction = false;
+			var hitCallback = null;
+			if(obj(_options)) {
+				var _argument;
+				for(_argument in _options) {
+					switch(_argument) {
+						case "event"				: event					= _options[_argument]; break;
+						case "eventCategory"		: eventCategory			= _options[_argument]; break;
+						case "eventAction"			: eventAction			= _options[_argument]; break;
+						case "eventLabel"			: eventLabel			= _options[_argument]; break;
+						case "eventValue"			: eventValue			= _options[_argument]; break;
+						case "nonInteraction"		: nonInteraction		= _options[_argument]; break;
+						case "hitCallback"			: hitCallback			= _options[_argument]; break;
+					}
+				}
+			}
+			if(!eventAction && event && event.type) {
+				eventAction = event.type;
+			}
+			else if(!eventAction) {
+				eventAction = "Unknown";
+			}
+			if(!eventLabel && event && event.currentTarget && event.currentTarget.url) {
+				eventLabel = event.currentTarget.url;
+			}
+			else if(!eventLabel) {
+				eventLabel = this.nodeSnippet(node);
+			}
+			ga('send', 'event', {
+				"eventCategory": eventCategory, 
+				"eventAction": eventAction,
+				"eventLabel": eventLabel,
+				"eventValue": eventValue,
+				"nonInteraction": nonInteraction,
+				"hitCallback": hitCallback
+			});
+		}
+		// 	
+		// 	//       slot,		
+		// 	//       name,		
+		// 	//       value,	
+		// 	//       scope		
+		// 	
+		this.nodeSnippet = function(node) {
+			return u.cutString(u.text(node).trim(), 20) + "(<"+node.nodeName+">)";
+		}
+	}
+}
 
 
 /*u-basics.js*/
@@ -5153,6 +5334,9 @@ u.logoAnimationPartsIntro = [
 u.animateLogo = function(svg) {
 	if(u.logoAP.length && !svg.hide) {
 		var next_part = u.logoAP.shift();
+		u.ass(svg, {
+			display: "block"
+		});
 		var i;
 		for(i = 0; i < next_part.length; i++) {
 			var element = next_part[i];
@@ -5176,6 +5360,11 @@ u.withdrawLogo = function(svg) {
 			element.transitioned = function() {
 				delete this.transitioned;
 				this.svg.removeChild(this);
+				if(u.qsa("svg", this.svg.parentNode).length == 1) {
+					u.ass(this.svg, {
+						display: "none"
+					});
+				}
 			}
 			u.a.to(element, "all 300ms ease-in-out", {"r": 0});
 		}
@@ -5189,6 +5378,11 @@ u.withdrawLogo = function(svg) {
 			element.transitioned = function() {
 				delete this.transitioned;
 				this.svg.removeChild(this);
+				if(u.qsa("svg", this.svg.parentNode).length == 1) {
+					u.ass(this.svg, {
+						display: "none"
+					});
+				}
 			}
 			u.a.to(element, "all 300ms ease-in-out", {"x1": end_x, "x2": end_x, "y1": end_y, "y2": end_y});
 		}
@@ -5342,8 +5536,761 @@ u.drawLogoCircle = function(svg, cx, cy, r, cx1, cy1) {
 	}
 
 
-/*i-signup.js*/
-Util.Objects["signup"] = new function() {
+/*u-form-builder.js*/
+u.f.customBuild = {};
+u.f.addForm = function(node, _options) {
+	var form_name = "js_form";
+	var form_action = "#";
+	var form_method = "post";
+	var form_class = "";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "name"			: form_name				= _options[_argument]; break;
+				case "action"		: form_action			= _options[_argument]; break;
+				case "method"		: form_method			= _options[_argument]; break;
+				case "class"		: form_class			= _options[_argument]; break;
+			}
+		}
+	}
+	var form = u.ae(node, "form", {"class":form_class, "name": form_name, "action":form_action, "method":form_method});
+	return form;
+}
+u.f.addFieldset = function(node, _options) {
+	var fieldset_class = "";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "class"			: fieldset_class			= _options[_argument]; break;
+			}
+		}
+	}
+	return u.ae(node, "fieldset", {"class":fieldset_class});
+}
+u.f.addField = function(node, _options) {
+	var field_name = "js_name";
+	var field_label = "Label";
+	var field_type = "string";
+	var field_value = "";
+	var field_options = [];
+	var field_checked = false;
+	var field_class = "";
+	var field_id = "";
+	var field_max = false;
+	var field_min = false;
+	var field_disabled = false;
+	var field_readonly = false;
+	var field_required = false;
+	var field_pattern = false;
+	var field_error_message = "There is an error in your input";
+	var field_hint_message = "";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "name"					: field_name			= _options[_argument]; break;
+				case "label"				: field_label			= _options[_argument]; break;
+				case "type"					: field_type			= _options[_argument]; break;
+				case "value"				: field_value			= _options[_argument]; break;
+				case "options"				: field_options			= _options[_argument]; break;
+				case "checked"				: field_checked			= _options[_argument]; break;
+				case "class"				: field_class			= _options[_argument]; break;
+				case "id"					: field_id				= _options[_argument]; break;
+				case "max"					: field_max				= _options[_argument]; break;
+				case "min"					: field_min				= _options[_argument]; break;
+				case "disabled"				: field_disabled		= _options[_argument]; break;
+				case "readonly"				: field_readonly		= _options[_argument]; break;
+				case "required"				: field_required		= _options[_argument]; break;
+				case "pattern"				: field_pattern			= _options[_argument]; break;
+				case "error_message"		: field_error_message	= _options[_argument]; break;
+				case "hint_message"			: field_hint_message	= _options[_argument]; break;
+			}
+		}
+	}
+	var custom_build;
+	if(field_type in u.f.customBuild) {
+		return u.f.customBuild[field_type](node, _options);
+	}
+	field_id = field_id ? field_id : "input_"+field_type+"_"+field_name;
+	field_disabled = !field_disabled ? (field_class.match(/(^| )disabled( |$)/) ? "disabled" : false) : "disabled";
+	field_readonly = !field_readonly ? (field_class.match(/(^| )readonly( |$)/) ? "readonly" : false) : "readonly";
+	field_required = !field_required ? (field_class.match(/(^| )required( |$)/) ? true : false) : true;
+	field_class += field_disabled ? (!field_class.match(/(^| )disabled( |$)/) ? " disabled" : "") : "";
+	field_class += field_readonly ? (!field_class.match(/(^| )readonly( |$)/) ? " readonly" : "") : "";
+	field_class += field_required ? (!field_class.match(/(^| )required( |$)/) ? " required" : "") : "";
+	field_class += field_min ? (!field_class.match(/(^| )min:[0-9]+( |$)/) ? " min:"+field_min : "") : "";
+	field_class += field_max ? (!field_class.match(/(^| )max:[0-9]+( |$)/) ? " max:"+field_max : "") : "";
+	if (field_type == "hidden") {
+		return u.ae(node, "input", {"type":"hidden", "name":field_name, "value":field_value, "id":field_id});
+	}
+	var field = u.ae(node, "div", {"class":"field "+field_type+" "+field_class});
+	var attributes = {};
+	if(field_type == "string") {
+		field_max = field_max ? field_max : 255;
+		attributes = {
+			"type":"text", 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "email" || field_type == "tel" || field_type == "password") {
+		field_max = field_max ? field_max : 255;
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "number" || field_type == "integer" || field_type == "date" || field_type == "datetime") {
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value, 
+			"name":field_name, 
+			"max":field_max, 
+			"min":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "checkbox") {
+		attributes = {
+			"type":field_type, 
+			"id":field_id, 
+			"value":field_value ? field_value : "true", 
+			"name":field_name, 
+			"disabled":field_disabled,
+			"checked":field_checked
+		};
+		u.ae(field, "input", {"name":field_name, "value":"false", "type":"hidden"});
+		u.ae(field, "input", u.f.verifyAttributes(attributes));
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+	}
+	else if(field_type == "text") {
+		attributes = {
+			"id":field_id, 
+			"html":field_value, 
+			"name":field_name, 
+			"maxlength":field_max, 
+			"minlength":field_min,
+			"pattern":field_pattern,
+			"readonly":field_readonly,
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "textarea", u.f.verifyAttributes(attributes));
+	}
+	else if(field_type == "select") {
+		attributes = {
+			"id":field_id, 
+			"name":field_name, 
+			"disabled":field_disabled
+		};
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		var select = u.ae(field, "select", u.f.verifyAttributes(attributes));
+		if(field_options) {
+			var i, option;
+			for(i = 0; i < field_options.length; i++) {
+				option = field_options[i];
+				if(option.value == field_value) {
+					u.ae(select, "option", {"value":option.value, "html":option.text, "selected":"selected"});
+				}
+				else {
+					u.ae(select, "option", {"value":option.value, "html":option.text});
+				}
+			}
+		}
+	}
+	else if(field_type == "radiobuttons") {
+		u.ae(field, "label", {"html":field_label});
+		if(field_options) {
+			var i, option;
+			for(i = 0; i < field_options.length; i++) {
+				option = field_options[i];
+				var div = u.ae(field, "div", {"class":"item"});
+				if(option.value == field_value) {
+					u.ae(div, "input", {"value":option.value, "id":field_id+"-"+i, "type":"radio", "name":field_name, "checked":"checked"});
+					u.ae(div, "label", {"for":field_id+"-"+i, "html":option.text});
+				}
+				else {
+					u.ae(div, "input", {"value":option.value, "id":field_id+"-"+i, "type":"radio", "name":field_name});
+					u.ae(div, "label", {"for":field_id+"-"+i, "html":option.text});
+				}
+			}
+		}
+	}
+	else if(field_type == "files") {
+		u.ae(field, "label", {"for":field_id, "html":field_label});
+		u.ae(field, "input", {"id":field_id, "name":field_name, "type":"file"});
+	}
+	else {
+		u.bug("input type not implemented")
+	}
+	if(field_hint_message || field_error_message) {
+		var help = u.ae(field, "div", {"class":"help"});
+		if (field_hint_message) {
+			u.ae(help, "div", { "class": "hint", "html": field_hint_message });
+		}
+		if(field_error_message) {
+			u.ae(help, "div", { "class": "error", "html": field_error_message });
+		}
+	}
+	return field;
+}
+u.f.verifyAttributes = function(attributes) {
+	for(attribute in attributes) {
+		if(attributes[attribute] === undefined || attributes[attribute] === false || attributes[attribute] === null) {
+			delete attributes[attribute];
+		}
+	}
+	return attributes;
+}
+u.f.addAction = function(node, _options) {
+	var action_type = "submit";
+	var action_name = "js_name";
+	var action_value = "";
+	var action_class = "";
+	if(obj(_options)) {
+		var _argument;
+		for(_argument in _options) {
+			switch(_argument) {
+				case "type"			: action_type			= _options[_argument]; break;
+				case "name"			: action_name			= _options[_argument]; break;
+				case "value"		: action_value			= _options[_argument]; break;
+				case "class"		: action_class			= _options[_argument]; break;
+			}
+		}
+	}
+	var p_ul = node.nodeName.toLowerCase() == "ul" ? node : u.pn(node, {"include":"ul.actions"});
+	if(!p_ul || !u.hc(p_ul, "actions")) {
+		if(node.nodeName.toLowerCase() == "form") {
+			p_ul = u.qs("ul.actions", node);
+		}
+		p_ul = p_ul ? p_ul : u.ae(node, "ul", {"class":"actions"});
+	}
+	var p_li = node.nodeName.toLowerCase() == "li" ? node : u.pn(node, {"include":"li"});
+	if(!p_li || p_ul != p_li.parentNode) {
+		p_li = u.ae(p_ul, "li", {"class":action_name});
+	}
+	else {
+		p_li = node;
+	}
+	var action = u.ae(p_li, "input", {"type":action_type, "class":action_class, "value":action_value, "name":action_name})
+	return action;
+}
+
+
+/*u-expandarrow.js*/
+u.addExpandArrow = function(node) {
+	if(node.collapsearrow) {
+		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
+		node.collapsearrow = false;
+	}
+	node.expandarrow = u.svg({
+		"name":"expandarrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 2,
+				"x2": 7,
+				"y2": 9
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 9,
+				"x2": 11,
+				"y2": 2
+			}
+		]
+	});
+}
+u.addCollapseArrow = function(node) {
+	if(node.expandarrow) {
+		node.expandarrow.parentNode.removeChild(node.expandarrow);
+		node.expandarrow = false;
+	}
+	node.collapsearrow = u.svg({
+		"name":"collapsearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 9,
+				"x2": 7,
+				"y2": 2
+			},
+			{
+				"type": "line",
+				"x1": 6,
+				"y1": 2,
+				"x2": 11,
+				"y2": 9
+			}
+		]
+	});
+}
+u.addPreviousArrow = function(node) {
+	node.arrow = u.svg({
+		"name":"prevearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 9,
+				"y1": 2,
+				"x2": 2,
+				"y2": 7
+			},
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 6,
+				"x2": 9,
+				"y2": 11
+			}
+		]
+	});
+}
+u.addNextArrow = function(node) {
+	node.arrow = u.svg({
+		"name":"nextearrow",
+		"node":node,
+		"class":"arrow",
+		"width":17,
+		"height":17,
+		"shapes":[
+			{
+				"type": "line",
+				"x1": 2,
+				"y1": 2,
+				"x2": 9,
+				"y2": 7
+			},
+			{
+				"type": "line",
+				"x1": 9,
+				"y1": 6,
+				"x2": 2,
+				"y2": 11
+			}
+		]
+	});
+}
+
+
+/*m-article_list.js*/
+Util.Modules["articleList"] = new function() {
+	this.init = function(list) {
+		list.articles = u.qsa("li.article", list);
+		list.resized = function() {
+			this.browser_h = u.browserH();
+			this.screen_middle = this.browser_h/2;
+		}
+		list.scrolled = function(event) {
+			u.t.resetTimer(this.t_init);
+			this.scroll_y = u.scrollY();
+			if(this._next_url) {
+				var i, node, node_y, list_y;
+				list_y = u.absY(this);
+				if(list_y + this.offsetHeight < this.scroll_y + (this.browser_h*2)) {
+					this.loadNext();
+				}
+			}
+			this.t_init = u.t.setTimer(this, this.initFocusedArticles, 500);
+		}
+		list.initFocusedArticles = function() {
+			var i, node, node_y;
+			for(i = 0; node = this.articles[i]; i++) {
+				if(!node.is_ready) {
+					node_y = u.absY(node);
+					if(node_y > this.scroll_y + this.browser_h) {
+						break;
+					}
+					else if(
+						(
+							node_y + node.offsetHeight > this.scroll_y && 
+							node_y + node.offsetHeight < this.scroll_y + this.browser_h
+						)
+						 || 
+						(
+							node_y > this.scroll_y &&
+							node_y < this.scroll_y + this.browser_h
+						)
+						 ||
+						(
+							node_y < this.scroll_y &&
+							node_y + node.offsetHeight > this.scroll_y + this.browser_h
+						)
+					) {
+						u.m.article.init(node);
+						node.is_ready = true;
+					}
+				}
+			}
+		}
+		list.correctScroll = function(div_image) {
+			if(this.scroll_y) {
+				var image_node_y = u.absY(div_image);
+				if(image_node_y < this.scroll_y + this.screen_middle) {
+					var new_scroll_y = this.scroll_y + (div_image.offsetHeight);
+					window.scrollTo(0, new_scroll_y);
+				}
+			}
+		}
+		var next = u.qs(".pagination li.next a", list.parentNode);
+		list._next_url = false;
+		if(next) {
+			u.ac(u.pn(next, {include:"div"}), "autoload");
+			list._next_url = next ? next.href : false;
+		}
+		list.loadNext = function() {
+			if(this._next_url) {
+				this.response = function(response) {
+					var articles = u.qsa("li.article", response);
+					var i, node;
+					for(i = 0; i < articles.length; i++) {
+						node = u.ae(this, articles[i]);
+						node.article_list = this;
+					}
+					var next = u.qs(".pagination li.next a", response);
+					this._next_url = next ? next.href : false;
+					this.articles = u.qsa("li.article", this);
+				}
+				u.request(this, this._next_url);
+				this._next_url = false;
+			}
+		}
+		var i, node;
+		for(i = 0; node = list.articles[i]; i++) {
+			node.article_list = list;
+		}
+		list.resized();
+		list.scrolled();
+		u.e.addWindowEvent(list, "resize", list.resized);
+		u.e.addWindowEvent(list, "scroll", list.scrolled);
+	}
+}
+
+
+/*m-article_preview_list.js*/
+Util.Modules["articlePreviewList"] = new function() {
+	this.init = function(list) {
+		list.articles = u.qsa("li.article", list);
+		list.initArticle = function(article) {
+			article._a = u.qs("h3 a", article);
+			if(article._a) {
+				article._link = article._a.href ? article._a.href : article._a.url;
+			}
+			article._description_p = u.qs("div.description p", article)
+			if(article._description_p && article._link) {
+				u.ae(article._description_p, "br");
+				u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
+			}
+			var i, image;
+			article._images = u.qsa("div.image,div.media", article);
+			for(i = 0; image = article._images[i]; i++) {
+				image.node = article;
+				image.caption = u.qs("p a", image);
+				if(image.caption) {
+					image.caption.removeAttribute("href");
+				}
+				image._id = u.cv(image, "item_id");
+				image._format = u.cv(image, "format");
+				image._variant = u.cv(image, "variant");
+				if(image._id && image._format) {
+					image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "540x." + image._format;
+					u.ass(image, {
+						"opacity": 0
+					});
+					image.loaded = function(queue) {
+						u.ac(this, "loaded");
+						this._image = u.ie(this, "img");
+						this._image.image = this;
+						this._image.src = queue[0].image.src;
+						if(this.node.article_list && fun(this.node.article_list.correctScroll)) {
+							this.node.article_list.correctScroll(this);
+						}
+						// 
+						// 	
+						// 	
+						// 		
+						// 		
+						// 		
+						// 			
+						// 			
+						u.a.transition(this, "all 0.5s ease-in-out");
+						u.ass(this, {
+							"opacity": 1
+						});
+					}
+					u.preloader(image, [image._image_src]);
+				}
+			}
+			var video;
+			article._videos = u.qsa("div.youtube, div.vimeo", article);
+			for (i = 0; video = article._videos[i]; i++) {
+				video._src = u.cv(video, "video_id");
+				video._type = video._src.match(/youtube|youtu\.be/) ? "youtube" : "vimeo";
+				if (video._type == "youtube") {
+					video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
+					video.iframe = u.ae(video, "iframe", {
+						src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
+						id: "ytplayer",
+						type: "text/html",
+						webkitallowfullscreen: true,
+						mozallowfullscreen: true,
+						allowfullscreen: true,
+						frameborder: 0,
+						allow: "autoplay",
+						sandbox:"allow-same-origin allow-scripts",
+						width: "100%",
+						height: 540 / 1.7777,
+					});
+				}
+				else {
+					video._id = video._src.split("/")[video._src.split("/").length-1];
+					video.iframe = u.ae(video, "iframe", {
+						src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
+						webkitallowfullscreen: true,
+						mozallowfullscreen: true,
+						allowfullscreen: true,
+						frameborder: 0,
+						sandbox:"allow-same-origin allow-scripts",
+						width: "100%",
+						height: 540 / 1.7777,
+					});
+				}
+			}
+			var header = u.qs("h2,h3", article);
+			header.current_readstate = article.getAttribute("data-readstate");
+			if(header.current_readstate) {
+				u.ac(header, "read");
+				u.addCheckmark(header);
+			}
+			article.geolocation = u.qs("ul.geo", article);
+			if(article.geolocation && typeof(u.injectGeolocation) == "function") {
+				u.injectGeolocation(article);
+			}
+		}
+		list.resized = function() {
+			this.browser_h = u.browserH();
+			this.screen_middle = this.browser_h/2;
+		}
+		list.scrolled = function(event) {
+			u.t.resetTimer(this.t_init);
+			this.scroll_y = u.scrollY();
+			if(this._next_url) {
+				var i, node, node_y, list_y;
+				list_y = u.absY(this);
+				if(list_y + this.offsetHeight < this.scroll_y + (this.browser_h*2)) {
+					this.loadNext();
+				}
+			}
+			this.t_init = u.t.setTimer(this, this.initFocusedArticles, 500);
+		}
+		list.initFocusedArticles = function() {
+			var i, node, node_y;
+			for(i = 0; node = this.articles[i]; i++) {
+				if(!node.is_ready) {
+					node_y = u.absY(node);
+					if(node_y > this.scroll_y + this.browser_h) {
+						break;
+					}
+					else if(
+						(
+							node_y + node.offsetHeight > this.scroll_y && 
+							node_y + node.offsetHeight < this.scroll_y + this.browser_h
+						)
+						 || 
+						(
+							node_y > this.scroll_y &&
+							node_y < this.scroll_y + this.browser_h
+						)
+						 ||
+						(
+							node_y < this.scroll_y &&
+							node_y + node.offsetHeight > this.scroll_y + this.browser_h
+						)
+					) {
+						this.initArticle(node);
+						node.is_ready = true;
+					}
+				}
+			}
+		}
+		list.correctScroll = function(div_image) {
+			if(this.scroll_y) {
+				var image_node_y = u.absY(div_image);
+				if(image_node_y < this.scroll_y + this.screen_middle) {
+					var new_scroll_y = this.scroll_y + (div_image.offsetHeight);
+					window.scrollTo(0, new_scroll_y);
+				}
+			}
+		}
+		var next = u.qs(".pagination li.next a", list.parentNode);
+		list._next_url = false;
+		if(next) {
+			u.ac(u.pn(next, {include:"div"}), "autoload");
+			list._next_url = next ? next.href : false;
+		}
+		list.loadNext = function() {
+			if(this._next_url) {
+				this.response = function(response) {
+					var articles = u.qsa("li.article", response);
+					var i, node;
+					for(i = 0; i < articles.length; i++) {
+						node = u.ae(this, articles[i]);
+						node.article_list = this;
+					}
+					var next = u.qs(".pagination li.next a", response);
+					this._next_url = next ? next.href : false;
+					this.articles = u.qsa("li.article", this);
+				}
+				u.request(this, this._next_url);
+				this._next_url = false;
+			}
+		}
+		var i, node;
+		for(i = 0; node = list.articles[i]; i++) {
+			node.article_list = list;
+		}
+		list.resized();
+		list.scrolled();
+		u.e.addWindowEvent(list, "resize", list.resized);
+		u.e.addWindowEvent(list, "scroll", list.scrolled);
+	}
+}
+
+
+/*m-pagination.js*/
+Util.Modules["pagination"] = new function() {
+	this.init = function(pagination) {
+		if(pagination) {
+			u.ae(document.body, pagination);
+			u.ac(page, "paginated");
+			var next = u.qs(".next", pagination);
+			if(next) {
+				u.addNextArrow(next);
+				next.a = u.qs("a", next);
+				u.ce(next, {"type":"link"});
+			}
+			var prev = u.qs(".previous", pagination);
+			if(prev) {
+				u.addPreviousArrow(prev);
+				prev.a = u.qs("a", prev);
+				u.ce(prev, {"type":"link"});
+			}
+		}
+	}
+}
+
+/*m-comments.js*/
+Util.Modules["comments"] = new function() {
+	this.init = function(div) {
+		div.item_id = u.cv(div, "item_id");
+		div.list = u.qs("ul.comments", div);
+		div.comments = u.qsa("li.comment", div.list);
+		div.initComment = function(node) {
+			node.div = this;
+		}
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.add_comment_url = div.getAttribute("data-comment-add");
+		if(div.add_comment_url && div.csrf_token) {
+			div.actions = u.ae(div, "ul", {"class":"actions"});
+			div.bn_comment = u.ae(u.ae(div.actions, "li", {"class":"add"}), "a", {"html":u.txt["add_comment"], "class":"button primary comment"});
+			div.bn_comment.div = div;
+			u.ce(div.bn_comment);
+			div.bn_comment.clicked = function() {
+				var actions, bn_add, bn_cancel;
+				u.as(this.div.actions, "display", "none");
+				this.div.form = u.f.addForm(this.div, {"action":this.div.add_comment_url+"/"+this.div.item_id, "class":"add labelstyle:inject"});
+				this.div.form.div = div;
+				u.ae(this.div.form, "input", {"type":"hidden","name":"csrf-token", "value":this.div.csrf_token});
+				u.f.addField(this.div.form, {"type":"text", "name":"item_comment", "label":u.txt["comment"]});
+				actions = u.ae(this.div.form, "ul", {"class":"actions"});
+				bn_add = u.f.addAction(actions, {"value":u.txt["add_comment"], "class":"button primary update", "name":"add"});
+				bn_add.div = div;
+				bn_cancel = u.f.addAction(actions, {"value":u.txt["cancel"], "class":"button cancel", "type":"button", "name":"cancel"});
+				bn_cancel.div = div;
+				u.f.init(this.div.form);
+				this.div.form.submitted = function() {
+					this.response = function(response) {
+						if(response.cms_status == "success" && response.cms_object) {
+							if(!div.list) {
+								var p = u.qs("p", div);
+								if(p) {
+									p.parentNode.removeChild(p);
+								}
+								div.list = u.ie(div, "ul", {"class":"comments"});
+								div.insertBefore(div.list, div.actions);
+							}
+							var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
+							var info = u.ae(comment_li, "ul", {"class":"info"});
+							u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
+							u.ae(info, "li", {"class":"author", "html":response.cms_object["nickname"]});
+							u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
+							this.div.initComment(comment_li);
+							this.parentNode.removeChild(this);
+							u.as(this.div.actions, "display", "");
+						}
+					}
+					u.request(this, this.action, {"method":"post", "data":this.getData()});
+				}
+				u.ce(bn_cancel);
+				bn_cancel.clicked = function(event) {
+					u.e.kill(event);
+					this.div.form.parentNode.removeChild(this.div.form);
+					u.as(this.div.actions, "display", "");
+				}
+			}
+		}
+		else {
+			u.ae(div, "p", {"html": (u.txt["login_to_comment"] ? u.txt["login_to_comment"] : "Login or signup to comment")});
+		}
+		var i, node;
+		for(i = 0; node = div.comments[i]; i++) {
+			div.initComment(node);
+		}
+	}
+}
+
+
+/*m-signup.js*/
+Util.Modules["signup"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -5419,8 +6366,8 @@ Util.Objects["signup"] = new function() {
 }
 
 
-/*i-verify.js*/
-Util.Objects["verify"] = new function() {
+/*m-verify.js*/
+Util.Modules["verify"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}
@@ -5499,59 +6446,225 @@ Util.Objects["verify"] = new function() {
 }
 
 
-/*u-geolocation.js*/
-u.injectGeolocation = function(node) {
-	node.geolocation.node = node;
-	u.bug("node.geolocation:" + node.geolocation);
-	var li_longitude = u.qs("li.longitude", node.geolocation);
-	var li_latitude = u.qs("li.latitude", node.geolocation);
-	if(li_longitude && li_latitude) {
-		node.geo_longitude = parseFloat(li_longitude.getAttribute("content"));
-		node.geo_latitude = parseFloat(li_latitude.getAttribute("content"));
-		node.showMap = function() {
-			if(!this.geomap) {
-				var injection_point = u.ns(u.qs("ul.info", this));
-				this.geomap = u.ae(this, "div", {"class":"geomap"});
-				if(injection_point) {
-					this.insertBefore(this.geomap, injection_point);
+/*m-article_preview_list.js*/
+Util.Modules["articlePreviewList"] = new function() {
+	this.init = function(list) {
+		list.articles = u.qsa("li.article", list);
+		list.initArticle = function(article) {
+			article._a = u.qs("h3 a", article);
+			if(article._a) {
+				article._link = article._a.href ? article._a.href : article._a.url;
+			}
+			article._description_p = u.qs("div.description p", article)
+			if(article._description_p && article._link) {
+				u.ae(article._description_p, "br");
+				u.ae(article._description_p, "a", {href: article._link, class:"readmore", html:u.txt("readmore")});
+			}
+			var i, image;
+			article._images = u.qsa("div.image,div.media", article);
+			for(i = 0; image = article._images[i]; i++) {
+				image.node = article;
+				image.caption = u.qs("p a", image);
+				if(image.caption) {
+					image.caption.removeAttribute("href");
+				}
+				image._id = u.cv(image, "item_id");
+				image._format = u.cv(image, "format");
+				image._variant = u.cv(image, "variant");
+				if(image._id && image._format) {
+					image._image_src = "/images/" + image._id + "/" + (image._variant ? image._variant+"/" : "") + "540x." + image._format;
+					u.ass(image, {
+						"opacity": 0
+					});
+					image.loaded = function(queue) {
+						u.ac(this, "loaded");
+						this._image = u.ie(this, "img");
+						this._image.image = this;
+						this._image.src = queue[0].image.src;
+						if(this.node.article_list && fun(this.node.article_list.correctScroll)) {
+							this.node.article_list.correctScroll(this);
+						}
+						// 
+						// 	
+						// 	
+						// 		
+						// 		
+						// 		
+						// 			
+						// 			
+						u.a.transition(this, "all 0.5s ease-in-out");
+						u.ass(this, {
+							"opacity": 1
+						});
+					}
+					u.preloader(image, [image._image_src]);
+				}
+			}
+			var video;
+			article._videos = u.qsa("div.youtube, div.vimeo", article);
+			for (i = 0; video = article._videos[i]; i++) {
+				video._src = u.cv(video, "video_id");
+				video._type = video._src.match(/youtube|youtu\.be/) ? "youtube" : "vimeo";
+				if (video._type == "youtube") {
+					video._id = video._src.match(/watch\?v\=/) ? video._src.split("?v=")[1] : video._src.split("/")[video._src.split("/").length-1];
+					video.iframe = u.ae(video, "iframe", {
+						src: 'https://www.youtube.com/embed/'+video._id+'?autoplay=false&loop=0&color=f0f0ee&modestbranding=1&rel=0&playsinline=1',
+						id: "ytplayer",
+						type: "text/html",
+						webkitallowfullscreen: true,
+						mozallowfullscreen: true,
+						allowfullscreen: true,
+						frameborder: 0,
+						allow: "autoplay",
+						sandbox:"allow-same-origin allow-scripts",
+						width: "100%",
+						height: 540 / 1.7777,
+					});
 				}
 				else {
-					this.appendChild(this.geomap);
+					video._id = video._src.split("/")[video._src.split("/").length-1];
+					video.iframe = u.ae(video, "iframe", {
+						src: 'https://player.vimeo.com/video/'+video._id+'?autoplay=false&loop=0&byline=0&portrait=0',
+						webkitallowfullscreen: true,
+						mozallowfullscreen: true,
+						allowfullscreen: true,
+						frameborder: 0,
+						sandbox:"allow-same-origin allow-scripts",
+						width: "100%",
+						height: 540 / 1.7777,
+					});
 				}
-				var maps_url = "https://maps.googleapis.com/maps/api/js" + (u.gapi_key ? "?key="+u.gapi_key : "");
-				var html = '<html><head>';
-				html += '<style type="text/css">body {margin: 0;}#map {height: 100%;}</style>';
-				html += '<script type="text/javascript" src="'+maps_url+'"></script>';
-				html += '<script type="text/javascript">';
-				html += 'var map, marker;';
-				html += 'var initialize = function() {';
-				html += '	window._map_loaded = true;';
-				html += '	var mapOptions = {center: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'),zoom: 12, scrollwheel: false, draggable: false};';
-				html += '	map = new google.maps.Map(document.getElementById("map"),mapOptions);';
-				html += '	marker = new google.maps.Marker({position: new google.maps.LatLng('+this.geo_latitude+', '+this.geo_longitude+'), draggable:true});';
-				html += '	marker.setMap(map);';
-				html += '};';
-				html += 'google.maps.event.addDomListener(window, "load", initialize);';
-				html += '</script>';
-				html += '</head><body><div id="map"></div></body></html>';
-				this.mapsiframe = u.ae(this.geomap, "iframe");
-				this.mapsiframe.doc = this.mapsiframe.contentDocument? this.mapsiframe.contentDocument: this.mapsiframe.contentWindow.document;
-				this.mapsiframe.doc.open();
-				this.mapsiframe.doc.write(html);
-				this.mapsiframe.doc.close();
+			}
+			var header = u.qs("h2,h3", article);
+			header.current_readstate = article.getAttribute("data-readstate");
+			if(header.current_readstate) {
+				u.ac(header, "read");
+				u.addCheckmark(header);
+			}
+			article.geolocation = u.qs("ul.geo", article);
+			if(article.geolocation && typeof(u.injectGeolocation) == "function") {
+				u.injectGeolocation(article);
 			}
 		}
-		node.geolocation.clicked = function() {
-			this.node.showMap();
+		list.resized = function() {
+			this.browser_h = u.browserH();
+			this.screen_middle = this.browser_h/2;
 		}
-		u.ce(node.geolocation);
-		u.ac(node.geolocation, "active");
+		list.scrolled = function(event) {
+			u.t.resetTimer(this.t_init);
+			this.scroll_y = u.scrollY();
+			if(this._next_url) {
+				var i, node, node_y, list_y;
+				list_y = u.absY(this);
+				if(list_y + this.offsetHeight < this.scroll_y + (this.browser_h*2)) {
+					this.loadNext();
+				}
+			}
+			this.t_init = u.t.setTimer(this, this.initFocusedArticles, 500);
+		}
+		list.initFocusedArticles = function() {
+			var i, node, node_y;
+			for(i = 0; node = this.articles[i]; i++) {
+				if(!node.is_ready) {
+					node_y = u.absY(node);
+					if(node_y > this.scroll_y + this.browser_h) {
+						break;
+					}
+					else if(
+						(
+							node_y + node.offsetHeight > this.scroll_y && 
+							node_y + node.offsetHeight < this.scroll_y + this.browser_h
+						)
+						 || 
+						(
+							node_y > this.scroll_y &&
+							node_y < this.scroll_y + this.browser_h
+						)
+						 ||
+						(
+							node_y < this.scroll_y &&
+							node_y + node.offsetHeight > this.scroll_y + this.browser_h
+						)
+					) {
+						this.initArticle(node);
+						node.is_ready = true;
+					}
+				}
+			}
+		}
+		list.correctScroll = function(div_image) {
+			if(this.scroll_y) {
+				var image_node_y = u.absY(div_image);
+				if(image_node_y < this.scroll_y + this.screen_middle) {
+					var new_scroll_y = this.scroll_y + (div_image.offsetHeight);
+					window.scrollTo(0, new_scroll_y);
+				}
+			}
+		}
+		var next = u.qs(".pagination li.next a", list.parentNode);
+		list._next_url = false;
+		if(next) {
+			u.ac(u.pn(next, {include:"div"}), "autoload");
+			list._next_url = next ? next.href : false;
+		}
+		list.loadNext = function() {
+			if(this._next_url) {
+				this.response = function(response) {
+					var articles = u.qsa("li.article", response);
+					var i, node;
+					for(i = 0; i < articles.length; i++) {
+						node = u.ae(this, articles[i]);
+						node.article_list = this;
+					}
+					var next = u.qs(".pagination li.next a", response);
+					this._next_url = next ? next.href : false;
+					this.articles = u.qsa("li.article", this);
+				}
+				u.request(this, this._next_url);
+				this._next_url = false;
+			}
+		}
+		var i, node;
+		for(i = 0; node = list.articles[i]; i++) {
+			node.article_list = list;
+		}
+		list.resized();
+		list.scrolled();
+		u.e.addWindowEvent(list, "resize", list.resized);
+		u.e.addWindowEvent(list, "scroll", list.scrolled);
 	}
 }
 
 
-/*i-front.js*/
-Util.Objects["front"] = new function() {
+/*m-search.js*/
+Util.Modules["search"] = new function() {
+	this.init = function(div) {
+		div.form = u.qs("form", div);
+		if(div.form) {
+			u.f.init(div.form);
+		}
+	}
+}
+
+
+/*m-columns.js*/
+Util.Modules["columns"] = new function() {
+	this.init = function(scene) {
+		scene.resized = function() {
+			this.offsetHeight;
+		}
+		scene.scrolled = function() {
+		}
+		scene.ready = function() {
+			u.showScene(this);
+		}
+		page.cN.scene = scene;
+	}
+}
+
+
+/*m-front.js*/
+Util.Modules["front"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function(event) {
 			if(page.intro) {
@@ -5655,7 +6768,6 @@ Util.Objects["front"] = new function() {
 			}
 		}
 		scene.revealPage = function() {
-			u.bug("scene.revealPage");
 			u.a.transition(page.hN, "all 0.3s ease-in");
 			u.ass(page.hN, {
 				"opacity":1,
@@ -5684,8 +6796,8 @@ Util.Objects["front"] = new function() {
 }
 
 
-/*i-contact.js*/
-Util.Objects["contact"] = new function() {
+/*m-contact.js*/
+Util.Modules["contact"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
 		}

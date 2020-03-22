@@ -63,17 +63,6 @@ $items = $IC->paginate($pagination_pattern);
 
 ?>
 
-<?php
-// global $action;
-// global $IC;
-// global $itemtype;
-//
-// $selected_tag = urldecode($action[1]);
-// $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "tags" => $itemtype.":".addslashes($selected_tag), "extend" => array("tags" => true, "user" => true, "readstate" => true)));
-//
-// $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
-
-?>
 
 <div class="scene posts tag i:columns">
 
@@ -86,6 +75,11 @@ $items = $IC->paginate($pagination_pattern);
 		<? endif; ?>
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
+
+		<? if($page_item["subheader"]): ?>
+		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
+		<? endif; ?>
+
 
 		<?= $HTML->articleInfo($page_item, "/blog/tag/".urlencode($selected_tag), [
 			"media" => $media,
@@ -136,9 +130,6 @@ $items = $IC->paginate($pagination_pattern);
 	</div>
 
 <? endif; ?>
-
-
-
 
 
 	<div class="articles">

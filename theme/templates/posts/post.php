@@ -27,12 +27,10 @@ $pagination_pattern = [
 $pagination_items = $IC->paginate($pagination_pattern);
 
 
-// $item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
 if($pagination_items && $pagination_items["range_items"]) {
+
 	$item = $pagination_items["range_items"][0];
 	$this->sharingMetaData($item);
-
-
 
 	// set related pattern
 	$related_pattern = array("itemtype" => $item["itemtype"], "tags" => $item["tags"], "exclude" => $item["id"]);
@@ -146,6 +144,11 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 			<li class="item article item_id:<?= $related_item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $related_item["readstate"] ?>"
 				>
+
+<?				if($media): ?>
+				<div class="image item_id:<?= $related_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
+<?				endif; ?>
+
 
 				<?= $HTML->articleTags($related_item, [
 					"context" => [$itemtype],

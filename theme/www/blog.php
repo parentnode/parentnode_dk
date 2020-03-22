@@ -60,7 +60,7 @@ if(is_array($action) && count($action)) {
 		# List by tag
 		# /posts/tag/#tag#
 		# /posts/tag/#tag#/page/#sindex#
-		else if((count($action) === 2) || (count($action) === 3 && $action[2] === "page")) {
+		else if((count($action) === 2) || (count($action) === 4 && $action[2] === "page")) {
 
 			$page->page([
 				"templates" => "posts/posts_tag.php"

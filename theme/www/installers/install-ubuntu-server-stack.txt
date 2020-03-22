@@ -15,7 +15,7 @@ echo
 echo 
 echo "Preparing for installation ..."
 echo
-
+echo "Test stack"
 # FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
 sudo ls &>/dev/null
 
@@ -26,7 +26,6 @@ echo "Updating LOCALE information (Adding en_GB.UTF-8)"
 echo
 sudo locale-gen en_GB.UTF-8 &>/dev/null
 export LC_ALL="en_GB.utf8" &>/dev/null
-
 
 echo
 echo
@@ -55,7 +54,7 @@ sudo apt install -y git
 
 # DOES TOOLS ALREADY EXIST - DELETE THEM AND CLONE AGAIN
 if [ -d "/srv/tools" ]; then
-
+	echo "removing existing tools"
 	sudo rm -R /srv/tools
 
 fi
@@ -65,7 +64,7 @@ echo
 echo "Cloning install tools"
 echo
 # CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
-sudo git clone https://github.com/parentnode/ubuntu_environment /srv/tools
+sudo git clone https://github.com/jessen1989/ubuntu_environment /srv/tools
 
 
 echo

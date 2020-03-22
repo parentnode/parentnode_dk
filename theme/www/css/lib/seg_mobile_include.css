@@ -1,4 +1,7 @@
 @import url(/assets/parentnode-skin-default/css/seg_mobile.css);
+
+@import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-articles.css);
+@import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-pagination.css);
 @import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-used_by.css);
 @import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-comments.css);
 @import url(/assets/parentnode-skin-default/css/optionals/lib/mobile/s-search.css);

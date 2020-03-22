@@ -15,13 +15,11 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-article_list.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-article_preview_list.js"></script>');
 
-
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-pagination.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-comments.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-signup.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-verify.js"></script>');
 
-document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-article_preview_list.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-search.js"></script>');
 document.write('<script type="text/javascript" src="/assets/parentnode-skin-default/js/optionals/lib/smartphone/m-columns.js"></script>');
 

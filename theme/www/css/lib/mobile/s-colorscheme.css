@@ -11,22 +11,26 @@ body {}
 #header .logo {color: #63add0;}
 #navigation ul {border-color: #cccccc;}
 #navigation ul li {color: #63add0;}
+.front #header .logo,
+#navigation ul li.selected,
+#navigation ul li.path {color: #034769;}
 
 #content .scene a {color: #63add0;}
 #content .scene hr {border-color: #cccccc;}
 
-#content ul.actions input.button.primary,
-#content ul.actions a.button.primary {background-color: #63add0;}
-#content ul.actions input.button.primary:active,
-#content ul.actions a.button.primary:active {background-color: #034769;}
+ul.actions input.button.primary,
+ul.actions a.button.primary,
+#content ul.actions a.button.primary,
+#content .scene .pagination .next a,
+#content .scene .pagination .previous a {background-color: #63add0; color: #ffffff;}
+
+ul.actions input.button.primary:active,
+ul.actions a.button.primary:active,
+#content ul.actions a.button.primary:active,
+#content .scene .pagination .next a:active,
+#content .scene .pagination .previous a:active {background-color: #034769;}
+
 #content .scene div.categories ul.tags li.selected {background-color: #034769;}
 
 #footer {border-color: #cccccc;}
 #footer p {color: #034769;}
-
-
-
-/* LOCAL */
-.front #header .logo,
-#navigation ul li.selected {color: #034769;}
-

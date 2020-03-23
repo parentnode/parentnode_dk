@@ -1,5 +1,6 @@
 #!/bin/bash -e
 # bash <(curl -s http://test.parentnode.dk/sh/install-ubuntu-stack.txt)
+#bash <(curl -s http://parentnode.local/installers/install-ubuntu-stack.txt)
 
 # curl -L http://test.parentnode.dk/sh/install-ubuntu-stack.txt | bash
 
@@ -18,8 +19,7 @@ echo
 
 # FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
 sudo ls &>/dev/null
-
-
+echo $USER
 echo
 echo
 echo "Updating LOCALE information (Adding en_GB.UTF-8)"
@@ -65,10 +65,10 @@ echo
 echo "Cloning install tools"
 echo
 # CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
-sudo git clone https://github.com/parentnode/ubuntu_environment /srv/tools
+sudo git clone https://github.com/jessen1989/ubuntu_environment /srv/tools
 
 
-echo
+#echo
 echo
 echo "Running installer"
 echo

@@ -14,6 +14,8 @@ body {}
 #navigation ul li {color: #63add0;}
 #navigation ul li.admin,
 #navigation ul li.user {border-color: #034769}
+#navigation ul li.selected,
+#navigation ul li.path {color: #034769;}
 
 #content .scene a,
 #content .scene .article ul.geo.active li.name {color: #63add0;}
@@ -34,11 +36,17 @@ body {}
 body > div.pagination li.next > svg.arrow line,
 body > div.pagination li.previous > svg.arrow line {stroke: #034769;}
 body > div.pagination li.previous,
-body > div.pagination li.next {border-color: #034769; color: #034769; background-color: #ffffff;}
+body > div.pagination li.next {border-color: #034769;}
+body > div.pagination li a {color: #034769;}
+
 body > div.pagination li.previous:active,
-body > div.pagination li.next:active {background-color: #034769; color: #ffffff;}
+body > div.pagination li.next:active {background-color: #34cc3d; color: #ffffff;}
+body > div.pagination li:active a {color: #ffffff;}
 body > div.pagination li.previous:active > svg.arrow line,
 body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
+
+
+.terms_notification {background: #26962d;}
 
 
 
@@ -47,13 +55,5 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 
 #footer {border-color: #cccccc;}
 #footer a {color: #63add0;}
-
-.terms_notification {background: #034769;}
-
-
-
-/* LOCAL */
-.front #header .logo,
-#navigation ul li.selected {color: #034769;}
 
 

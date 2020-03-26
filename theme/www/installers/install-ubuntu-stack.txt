@@ -65,7 +65,7 @@ echo
 echo "Cloning install tools"
 echo
 # CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
-sudo git clone https://github.com/parentnode/ubuntu_environment /srv/tools
+sudo git clone https://github.com/jessen1989/ubuntu_environment /srv/tools
 
 
 #echo

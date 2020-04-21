@@ -359,7 +359,7 @@ global $model;
 				<li class="demo">
 					<h2>Distortion – Gadearmbånd</h2>
 					<ul class="actions">
-						<li><a href="http://demo-gaadearmbaand.parentnode.dk" target="_blank" class="hardlink">http://demo-gaadearmbaand.parentnode.dk</a></li>
+						<li><a href="http://demo-gadearmbaand.parentnode.dk" target="_blank" class="hardlink">http://demo-gadearmbaand.parentnode.dk</a></li>
 					</ul>
 
 					<div class="info">

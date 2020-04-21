@@ -229,9 +229,9 @@ global $model;
 					</div>
 				</li>
 				<li class="demo">
-					<h2>Himmelmakanik.dk – New album by Marc Facchini</h2>
+					<h2>Himmelmekanik.dk – New album by Marc Facchini</h2>
 					<ul class="actions">
-						<li><a href="http://demo-himmelmakanik.parentnode.dk" target="_blank" class="hardlink">http://demo-himmelmakanik.parentnode.dk</a></li>
+						<li><a href="http://demo-himmelmekanik.parentnode.dk" target="_blank" class="hardlink">http://demo-himmelmekanik.parentnode.dk</a></li>
 					</ul>
 
 					<ul class="tags">

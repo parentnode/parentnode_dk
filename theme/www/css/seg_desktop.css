@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-03-23 12:18:19
+asset-builder @ 2020-04-21 18:55:22
 */
 
 /*seg_desktop_include.css*/
@@ -711,6 +711,8 @@ body > div.pagination li.next a {padding-right: 0;}
 #content .scene.demos {}
 #content .scene.demos div.article div.articlebody ul.demos {list-style: none; padding: 40px 0 0; margin: 0;}
 #content .scene.demos div.article div.articlebody ul.demos > li {padding-bottom: 40px;}
+#content .scene.demos div.article div.articlebody ul.demos > li ul.actions {padding-bottom: 20px;}
+#content .scene.demos div.article div.articlebody ul.demos ul.tags {display: none;}
 #content .scene.contact div.teams {}
 #content .scene.contact div.teams h2 {padding-top: 20px;}
 #content .scene.contact ul.people {padding: 0 70px 30px; padding-right: calc(100% - 610px); border-top: 1px solid #dedede;}

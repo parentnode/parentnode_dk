@@ -149,6 +149,43 @@ global $model;
 					</div>
 				</li>
 				<li class="demo">
+					<h2>Scor med Poulsen – Campaign website for Tuborg</h2>
+					<ul class="actions">
+						<li><a href="http://demo-scormedpoulsen.parentnode.dk" target="_blank" class="hardlink">http://demo-scormedpoulsen.parentnode.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>javascript</li>
+						<li>html</li>
+						<li>css</li>
+						<li>websites</li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "tablet_light" ||
+								$this->segment() == "mobile" ||
+								$this->segment() == "mobile_light"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							Campaign website for the Tuborg Breweries – based on over-the-edge pick-up lines. The website was launched alongside a TV, radio and print campaign
+							and allowed users to create the own pick-up Memes. The system included liking, admin moderation and a word
+							filter to minimize the potential absurdity of this campaign :-)
+						</p>
+						<p>
+							Produced in 2019 in collaboration with Animated and WDP.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, MariaDB, Apache and dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9.3, Janitor v0.7.7, Templator v3.0 and Detector v4.0.</p>
+					</div>
+				</li>
+				<li class="demo">
 					<h2>Sanctum Ananda – Bespoke luxury holiday retreats</h2>
 					<ul class="actions">
 						<li><a href="http://demo-sanctumananda.parentnode.dk" target="_blank" class="hardlink">http://demo-sanctumananda.parentnode.dk</a></li>

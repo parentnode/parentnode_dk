@@ -19,6 +19,37 @@ echo
 sudo ls &>/dev/null
 
 
+catalina='10.15.[0-9]'
+macos_version=$(sw_vers | grep -E "ProductVersion:" | cut -f2)
+macos_version_catalina=$(sw_vers | grep -E "ProductVersion:\t$catalina" | cut -f2)
+if [ "$macos_version" = "$macos_version_catalina" ]; then
+	echo "You are running MacOS Catalina"
+	if [ ! -d /srv/sites ]; then
+		echo "Setting your mac up to run the installation"
+		if [ ! -d /var/parentnode ]; then
+			echo -e 'srv\tvar/parentnode' | sudo tee -a /etc/synthetic.conf
+			sudo mkdir /var/parentnode
+			sudo chown $(logname):staff /var/parentnode
+			#sudo reboot
+			echo "It is ill advised to continue before a reboot is made"
+			echo 
+			echo "Please reboot and then try again"
+			exit
+		fi
+		if [ ! -d ~/Sites ]; then
+			mkdir ~/Sites
+			sudo chown $(logname):staff ~/Sites
+		fi
+		sudo ln -s ~/Sites /var/parentnode/sites
+	else
+		echo "You are free to proceed"
+	fi
+else 
+	echo "MacOS version: $macos_version"
+	echo "You are free to proceed"
+fi
+ 
+
 xcode_ok=$(xcodebuild -version exit 2>/dev/null || echo "")
 
 if [ -z "$xcode_ok" ]; then
@@ -72,16 +103,16 @@ echo
 echo
 echo "Cloning install tools"
 echo
-# CLONE THE FULL UBUNTU INSTALL AND TOOLS FROM GITHUB
-sudo git clone https://github.com/parentnode/mac_environment /srv/tools
+# CLONE THE FULL MAC INSTALL AND TOOLS FROM GITHUB
+sudo git clone https://github.com/jessen1989/mac_environment /srv/tools
 # temp dev option
-# sudo cp -R /srv/sites/parentnode/mac_environment /srv/tools
+# sudo cp -R /srv/sites/jessen1989/mac_environment /srv/tools
 
 echo
 echo
 echo "Running installer"
 echo
 # RUN INSTALL SCRIPT
-sudo php /srv/tools/scripts/install.php
+sudo bash /srv/tools/scripts/install.sh
 
 

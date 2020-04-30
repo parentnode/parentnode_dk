@@ -48,6 +48,9 @@
 #content .scene.demos {}
 #content .scene.demos div.article div.articlebody ul.demos {list-style: none; padding: 40px 0 0; margin: 0;}
 #content .scene.demos div.article div.articlebody ul.demos > li {padding-bottom: 40px;}
+#content .scene.demos div.article div.articlebody ul.demos > li ul.actions {padding-bottom: 20px;}
+#content .scene.demos div.article div.articlebody ul.demos ul.tags {display: none;}
+
 
 /* CONTACT */
 #content .scene.contact div.teams {}

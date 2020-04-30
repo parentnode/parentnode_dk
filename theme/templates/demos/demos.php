@@ -57,12 +57,12 @@ global $model;
 			</p>
 		</div>	
 
-		<div class="i:demos articlebody demos">
+		<div class="articlebody demos">
 			<ul class="demos">
 				<li class="demo">
-					<h2>Himmelmakanik.dk – New album by Marc Facchini</h2>
+					<h2>Mit GreenSpeak – Self-service application for charitable phone service provider, GreenSpeak</h2>
 					<ul class="actions">
-						<li><a href="http://demo-himmelmakanik.parentnode.dk" target="_blank" class="hardlink">http://demo-himmelmakanik.parentnode.dk</a></li>
+						<li><a href="https://mit.greenspeak.dk" target="_blank" class="hardlink">https://mit.greenspeak.dk</a></li>
 					</ul>
 
 					<ul class="tags">
@@ -84,7 +84,225 @@ global $model;
 								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
 							}
 						?>
-						<p></p>
+						<p>
+							<em>Note:</em> This is a "live"-demo. We didn't have time to make a full demo yet. We are busy doing real stuff :-)
+						</p>
+						<p>
+							Full self-service application for GreenSpeak subscribers, enabling them to maintain and modify
+							any aspect of their phone subscription from their phone or desktop computer.
+						</p>
+						<p>
+							This is the first of a series of self-service application we are developing and maintaining
+							for GreenSpeak. The goal is to ensure a complete suite of self-service applications, grating the
+							customer full control over their subscription(s), while still having access to a real-life, 
+							hands-on customer service.
+						</p>
+						<p>
+							Produced in 2019 in collaboration with GreenSpeak.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, Apache and dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9.3, Templator v3.0 and Detector v4.0.</p>
+					</div>
+				</li>
+				<li class="demo">
+					<h2>Boye & Spellerberg – corporate website for Ad- and communication agency, Boye & Spellerberg</h2>
+					<ul class="actions">
+						<li><a href="https://boyespellerberg.dk" target="_blank" class="hardlink">https://boyespellerberg.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>javascript</li>
+						<li>html</li>
+						<li>css</li>
+						<li>websites</li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "tablet_light" ||
+								$this->segment() == "mobile" ||
+								$this->segment() == "mobile_light"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							<em>Note:</em> This is a "live"-demo. We didn't have time to make a full demo yet. We are busy doing real stuff :-)
+						</p>
+						<p>
+							Corporate website for Ad- and communication agency, Boye & Spellerberg. The client wanted a fully
+							customized design, with a specific off-grid grid – and luckily that is what our platform has been designed 
+							to accommodate.
+						</p>
+						<p>
+							High resolution images and video, and a flexible project material viewer. Everything is editable by the client
+							but still kept in a tight design grip, to ensure long term compliance.
+						</p>
+						<p>
+							Produced in 2019 in collaboration with Boye & Spellerberg.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, MariaDB, Apache and dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9.3, Janitor v0.7.8, Templator v3.0 and Detector v4.0.</p>
+					</div>
+				</li>
+				<li class="demo">
+					<h2>Scor med Poulsen – Campaign website for Tuborg</h2>
+					<ul class="actions">
+						<li><a href="http://demo-scormedpoulsen.parentnode.dk" target="_blank" class="hardlink">http://demo-scormedpoulsen.parentnode.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>javascript</li>
+						<li>html</li>
+						<li>css</li>
+						<li>websites</li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "tablet_light" ||
+								$this->segment() == "mobile" ||
+								$this->segment() == "mobile_light"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							Campaign website for the Tuborg Breweries – based on over-the-edge pick-up lines. The website was launched alongside a TV, radio and print campaign
+							and allowed users to create the own pick-up Memes. The system included liking, admin moderation and a word
+							filter to minimize the potential absurdity of this campaign :-)
+						</p>
+						<p>
+							Produced in 2019 in collaboration with Animated and WDP.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, MariaDB, Apache and dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9.3, Janitor v0.7.7, Templator v3.0 and Detector v4.0.</p>
+					</div>
+				</li>
+				<li class="demo">
+					<h2>Sanctum Ananda – Bespoke luxury holiday retreats</h2>
+					<ul class="actions">
+						<li><a href="http://demo-sanctumananda.parentnode.dk" target="_blank" class="hardlink">http://demo-sanctumananda.parentnode.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>javascript</li>
+						<li>html</li>
+						<li>css</li>
+						<li>websites</li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "tablet_light" ||
+								$this->segment() == "mobile" ||
+								$this->segment() == "mobile_light"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							Concept website for Sanctum Ananda – an investment company working to establish co-owned 
+							luxury holiday retreats. The website is designed to explain the concept and to support
+							the process of attracting potential investors.
+						</p>
+						<p>
+							The project was re-designed in late 2019 (also implemented by us) and can also be seen in the
+							new colors here: https://sanctumananda.com/.
+						</p>
+						<p>
+							Produced in 2019 in collaboration with Sanctum Ananda.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, Apache and dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9.3, Janitor v0.7.8, Templator v3.0 and Detector v4.0.</p>
+					</div>
+				</li>
+				<li class="demo">
+					<h2>Er det J-dag? – Campaign website for Tuborg Julebryg</h2>
+					<ul class="actions">
+						<li><a href="http://demo-erdetjdag.parentnode.dk" target="_blank" class="hardlink">http://demo-erdetjdag.parentnode.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>javascript</li>
+						<li>html</li>
+						<li>css</li>
+						<li>websites</li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "tablet_light" ||
+								$this->segment() == "mobile" ||
+								$this->segment() == "mobile_light"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							Annually re-occurring campaign website for the infamous Tuborg Julebryg (Christmas beer). The beer is
+							released at a specified time every year and some people tend to gather in bars to get the first one of the year.
+						</p>
+						<p>
+							The current count-down site for 2020 can be seen live here: http://www.erdetjdag.dk/
+						</p>
+						<p>
+							Produced in 2018 in collaboration with Animated and WDP.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, Apache and dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9.3, Janitor v0.7.7, Templator v3.0 and Detector v3.0.</p>
+					</div>
+				</li>
+				<li class="demo">
+					<h2>Himmelmekanik.dk – New album by Marc Facchini</h2>
+					<ul class="actions">
+						<li><a href="http://demo-himmelmekanik.parentnode.dk" target="_blank" class="hardlink">http://demo-himmelmekanik.parentnode.dk</a></li>
+					</ul>
+
+					<ul class="tags">
+						<li>javascript</li>
+						<li>html</li>
+						<li>css</li>
+						<li>websites</li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "tablet_light" ||
+								$this->segment() == "mobile" ||
+								$this->segment() == "mobile_light"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							Album release project for Marc Facchini's new album – Himmelmekanik. We purposefully created "the
+							simplest and most difficult listening experience" (Gaffa, 2018), to challenge the non-attentive shallow
+							consumption of music.
+						</p>
+						<p>
+							The site was awarded an honorary mention by the Webby Awards and nominated for an International Music Award.
+						</p>
+						<p>
+							Produced in 2018 in collaboration with Marc Facchini, Christian Langballe and Bo Fløjborg.<br />
+							Technologies: JavaScript, HTML5, CSS3, PHP, Apache and dedicated hosting on Linux.
+						</p>
+						<p class="note">Built using Manipulator v0.9.2, Janitor v0.7.7, Templator v3.0 and Detector v3.0.</p>
 					</div>
 				</li>
 				<li class="demo">
@@ -165,7 +383,7 @@ global $model;
 						<p>
 							Campaign website for Stofa. Desktop, tablet and smartphone.
 							Quiz with 6 rounds – a new round automatically launching every Monday. A couple of months later
-							we did a fully reskinned version 2. Backend for validating and collecting
+							we did a fully re-skinned version 2. Backend for validating and collecting
 							user answers and signups.
 						</p>
 						<p>
@@ -178,7 +396,7 @@ global $model;
 				<li class="demo">
 					<h2>Distortion – Gadearmbånd</h2>
 					<ul class="actions">
-						<li><a href="http://demo-gaadearmbaand.parentnode.dk" target="_blank" class="hardlink">http://demo-gaadearmbaand.parentnode.dk</a></li>
+						<li><a href="http://demo-gadearmbaand.parentnode.dk" target="_blank" class="hardlink">http://demo-gadearmbaand.parentnode.dk</a></li>
 					</ul>
 
 					<div class="info">

@@ -7,7 +7,7 @@ echo
 echo 
 echo 
 echo "                    Welcome to the          "
-echo "           parentNode/Mac OS stack installer"
+echo "           parentNode WebStack installer for MacOS"
 echo
 echo "--------------------------------------------------------"
 echo
@@ -89,6 +89,8 @@ if [ ! -e "/opt/local/bin/port" ]; then
 	open https://macports.org
 	exit 1;
 
+else
+	sudo port selfupdate
 fi
 
 

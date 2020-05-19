@@ -16,7 +16,7 @@ echo "Preparing for installation ..."
 echo
 
 # FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
-sudo ls &>/dev/null
+
 shell=$(echo $SHELL)
 #echo "$shell"
 if [ "$shell" = "/bin/zsh" ]; then
@@ -30,6 +30,7 @@ if [ "$shell" = "/bin/zsh" ]; then
 	echo "Please restart your terminal"
 	exit 
 fi
+sudo ls &>/dev/null
 catalina='10.15.[0-9]'
 macos_version_minor=$(sw_vers | grep -E "ProductVersion:" | cut -f2)
 macos_version_major=$(sw_vers -productVersion | cut -d '.' -f1,2)
@@ -91,11 +92,8 @@ if [ -z "$xcode_cl_ok" ]; then
 
 fi
 
-#macports_ok=$(sudo port version exit 2>/dev/null || echo "")
-
-# Macports not installed yet
-if [ ! -e "/opt/local/bin/port" ]; then
-
+macports_ok=$(port version 2>&1 | grep ^"Version" || echo "")
+if [ -z "$macports_ok" ]; then
 	echo
 	echo "You need to install macports for macOS: v$macos_version_major before you can continue."
 	echo

@@ -17,15 +17,29 @@ echo
 
 # FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
 sudo ls &>/dev/null
-
-
+shell=$(echo $SHELL)
+#echo "$shell"
+if [ "$shell" = "/bin/zsh" ]; then
+	echo "Changing Terminal from zsh to bash $(chsh -s /bin/bash)"
+	echo 
+	echo
+	echo "If you want to go back to zsh you can do so by entering"
+	echo "chsh -s /bin/zsh"
+	echo
+	echo
+	echo "Please restart your terminal"
+	exit 
+fi
 catalina='10.15.[0-9]'
-macos_version=$(sw_vers | grep -E "ProductVersion:" | cut -f2)
+macos_version_minor=$(sw_vers | grep -E "ProductVersion:" | cut -f2)
+macos_version_major=$(sw_vers -productVersion | cut -d '.' -f1,2)
 macos_version_catalina=$(sw_vers | grep -E "ProductVersion:\t$catalina" | cut -f2)
-if [ "$macos_version" = "$macos_version_catalina" ]; then
-	echo "You are running MacOS Catalina"
+
+if [ "$macos_version_minor" = "$macos_version_catalina" ]; then
+	echo "You are running MacOS Catalina ($macos_version_major)"
+	echo "Additional setup needed to continue running the installer"
 	if [ ! -d /srv/sites ]; then
-		echo "Setting your mac up to run the installation"
+		echo "Setting up macOS: Catalina ($macos_version_major)"
 		if [ ! -d /var/parentnode ]; then
 			echo -e 'srv\tvar/parentnode' | sudo tee -a /etc/synthetic.conf
 			sudo mkdir /var/parentnode
@@ -41,11 +55,12 @@ if [ "$macos_version" = "$macos_version_catalina" ]; then
 			sudo chown $(logname):staff ~/Sites
 		fi
 		sudo ln -s ~/Sites /var/parentnode/sites
+		echo "Setting up macOS: Catalina ($macos_version_major) done"
 	else
-		echo "You are free to proceed"
+		echo "Setting up macOS: Catalina ($macos_version_major) done"
 	fi
 else 
-	echo "MacOS version: $macos_version"
+	echo "MacOS version: $macos_version_major"
 	echo "You are free to proceed"
 fi
  
@@ -82,11 +97,11 @@ fi
 if [ ! -e "/opt/local/bin/port" ]; then
 
 	echo
-	echo "You need to install macports before you can continue."
+	echo "You need to install macports for macOS: v$macos_version_major before you can continue."
 	echo
 	echo "NOTE: The terminal must be restarted, after installing MacPorts"
 	echo
-	open https://macports.org
+	open https://macports.org/install.php
 	exit 1;
 
 else

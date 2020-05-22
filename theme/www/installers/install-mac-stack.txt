@@ -103,7 +103,8 @@ if [ -z "$macports_ok" ]; then
 	exit 1;
 
 else
-	sudo port selfupdate
+	echo "Macports is installed"
+	sudo port selfupdate --no-sync
 fi
 
 
@@ -119,9 +120,9 @@ echo
 echo "Cloning install tools"
 echo
 # CLONE THE FULL MAC INSTALL AND TOOLS FROM GITHUB
-sudo git clone https://github.com/jessen1989/mac_environment /srv/tools
+sudo git clone https://github.com/parentnode/mac_environment /srv/tools
 # temp dev option
-# sudo cp -R /srv/sites/jessen1989/mac_environment /srv/tools
+# sudo cp -R /srv/sites/parentnode/mac_environment /srv/tools
 
 echo
 echo

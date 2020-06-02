@@ -79,7 +79,7 @@ if [ -z "$xcode_ok" ]; then
 fi
 
 
-xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables | grep ^"No\ receipt\ for" || echo "");
+xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>/dev/null | grep ^"No\ receipt\ for" || echo "");
 
 if [ -n "$xcode_cl_ok" ]; then
 

@@ -81,7 +81,7 @@ fi
 xcode_cl_ok=$(xcode-select -p)
 #xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>&1 | grep ^"No receipt for" || echo "");
 #echo "Test pkutil:  $xcode_cl_ok"
-if [ "$xcode_cl_ok" = /Applications/Xcode.app/Contents/Developer" ]; then
+if [ "$xcode_cl_ok" = "/Applications/Xcode.app/Contents/Developer" ]; then
 
 	echo ""
 	echo "Command line tools are installed"

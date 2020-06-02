@@ -78,9 +78,7 @@ if [ -z "$xcode_ok" ]; then
 
 fi
 
-xcode_cl_ok=$(xcode-select -p)
-#xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>&1 | grep ^"No receipt for" || echo "");
-#echo "Test pkutil:  $xcode_cl_ok"
+xcode_cl_ok=$(xcode-select -p 2>&1 | grep ^"/Applications/Xcode.app" || echo "")
 if [ "$xcode_cl_ok" = "/Applications/Xcode.app/Contents/Developer" ]; then
 
 	echo ""

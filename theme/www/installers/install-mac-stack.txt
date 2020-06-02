@@ -79,7 +79,7 @@ if [ -z "$xcode_ok" ]; then
 fi
 
 
-xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>/dev/null | grep "No receipt for 'com.apple.pkg.CLTools_Executables' found at '/'" || echo "");
+xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>&1 /dev/null | grep "No receipt for 'com.apple.pkg.CLTools_Executables' found at '/'" || echo "");
 
 if [ "$xcode_cl_ok" = "No receipt for 'com.apple.pkg.CLTools_Executables' found at '/'" ]; then
 

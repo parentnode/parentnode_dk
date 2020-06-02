@@ -81,7 +81,7 @@ fi
 
 xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>&1 | grep ^"No receipt for" || echo "");
 echo "Test pkutil:  $xcode_cl_ok"
-if [ -n "$xcode_cl_ok" = ^"No receipt for"]; then
+if [ "$xcode_cl_ok" = ^"No receipt for" ]; then
 
 	xcode-select --install
 

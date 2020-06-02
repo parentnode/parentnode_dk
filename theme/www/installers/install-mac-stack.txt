@@ -104,8 +104,8 @@ if [ -z "$macports_ok" ]; then
 	exit 1;
 
 else
-	echo "Macports is installed"
-	sudo port selfupdate --no-sync
+	echo "Macports is installed updating macports base"
+	sudo port selfupdate
 fi
 
 

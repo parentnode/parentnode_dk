@@ -83,7 +83,7 @@ xcode_cl_ok=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables exit 2>&1 | g
 echo "Test pkutil:  $xcode_cl_ok"
 if [ "$xcode_cl_ok" = "No receipt for".* ]; then
 
-	xcode-select --install
+	echo "$(xcode-select --install)"
 
 	echo
 	echo "Run the setup command again when the command line tools are installed. See you again."

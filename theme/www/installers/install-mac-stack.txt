@@ -65,17 +65,17 @@ else
 fi
  
 
-// xcode_ok=$(xcodebuild -version exit 2>/dev/null || echo "")
-//
-// if [ -z "$xcode_ok" ]; then
-//
-// 	echo
-// 	echo "You need to install Xcode before you can continue."
-// 	echo
-// 	open https://itunes.apple.com/gh/app/xcode/id497799835
-// 	exit 1;
-//
-// fi
+#xcode_ok=$(xcodebuild -version exit 2>/dev/null || echo "")
+
+#if [ -z "$xcode_ok" ]; then
+
+#	echo
+#	echo "You need to install Xcode before you can continue."
+#	echo
+#	open https://itunes.apple.com/gh/app/xcode/id497799835
+#	exit 1;
+
+#fi
 
 xcode_cl_ok=$(xcode-select -p 2>&1 | grep ^"/Applications/Xcode.app" || echo "")
 if [ "$xcode_cl_ok" = "/Applications/Xcode.app/Contents/Developer" ]; then

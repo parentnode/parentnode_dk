@@ -77,21 +77,21 @@ fi
 
 #fi
 
-xcode_cl_ok=$(xcode-select -p 2>&1 | grep ^"/Applications/Xcode.app" || echo "")
-if [ "$xcode_cl_ok" = "/Applications/Xcode.app/Contents/Developer" ]; then
+#xcode_cl_ok=$(xcode-select -p 2>&1 | grep ^"/Applications/Xcode.app" || echo "")
+#if [ "$xcode_cl_ok" = "/Applications/Xcode.app/Contents/Developer" ]; then
 
-	echo ""
-	echo "Command line tools are installed"
-	echo ""
+#	echo ""
+#	echo "Command line tools are installed"
+#	echo ""
 
-else
-	echo "$(xcode-select --install)"
+#else
+#	echo "$(xcode-select --install)"
 
-	echo
-	echo "Run the setup command again when the command line tools are installed. See you again."
-	echo
-	exit 1;
-fi
+#	echo
+#	echo "Run the setup command again when the command line tools are installed. See you again."
+#	echo
+#	exit 1;
+#fi
 
 macports_ok=$(port version 2>&1 | grep ^"Version" || echo "")
 if [ -z "$macports_ok" ]; then

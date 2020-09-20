@@ -20,7 +20,7 @@ echo
 # set bash as default terminal
 current_shell=$(dscl . -read ~/ UserShell | grep bash)
 if [ -z "$current_shell" ]; then
-	sudo chsh -s /bin/bash
+	sudo -u $(getUsername) chsh -s /bin/bash
 fi
 
 
@@ -100,7 +100,7 @@ if [ -n "$xcode_license" ]; then
 	echo "You must accept the Xcode license"
 	echo ""
 
-	sudo xcodebuild -license
+	sudo xcodebuild -license 2>&1
 
 fi
 

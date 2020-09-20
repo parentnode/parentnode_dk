@@ -99,7 +99,7 @@ if [ -n "$xcode_license" ]; then
 	echo "You must accept the Xcode license"
 	echo ""
 
-	sudo xcode-select --install
+	sudo xcodebuild -license
 
 fi
 

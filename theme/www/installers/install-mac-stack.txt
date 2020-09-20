@@ -2,6 +2,7 @@
 # bash <(curl -s http://test.parentnode.dk/installers/install-mac-stack.txt)
 # bash <(curl -s http://parentnode.local/installers/install-mac-stack.txt)
 
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 
 echo 
 echo 

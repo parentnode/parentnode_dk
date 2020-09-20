@@ -16,16 +16,18 @@ echo
 echo "Preparing for installation ..."
 echo
 
+# FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
+sudo ls &>/dev/null
+
 
 # set bash as default terminal
 current_shell=$(dscl . -read ~/ UserShell | grep bash)
 if [ -z "$current_shell" ]; then
+	echo "Changing default shell to bash"
 	sudo -u $(logname) chsh -s /bin/bash
 fi
 
 
-# FORCE USER TO ENTER PASSWORD IF IT IS NOT ALREADY STORED
-sudo ls &>/dev/null
 
 
 catalina='10.15.[0-9]'

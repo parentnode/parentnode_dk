@@ -96,11 +96,7 @@ fi
 xcode_license=$(gcc --version 2>&1 | grep "license")
 if [ -n "$xcode_license" ]; then
 
-	echo ""
-	echo "You must accept the Xcode license"
-	echo ""
-
-	sudo xcodebuild -license 2>&1
+	sudo xcodebuild -license accept
 
 fi
 

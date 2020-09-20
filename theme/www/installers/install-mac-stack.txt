@@ -62,6 +62,7 @@ else
 fi
  
 
+# Check xcode
 xcode_ok=$(xcodebuild -version exit 2>/dev/null || echo "")
 if [ -z "$xcode_ok" ]; then
 
@@ -74,21 +75,36 @@ if [ -z "$xcode_ok" ]; then
 fi
 
 
-#xcode_cl_ok=$(xcode-select -p 2>&1 | grep ^"/Applications/Xcode.app" || echo "")
-#if [ "$xcode_cl_ok" = "/Applications/Xcode.app/Contents/Developer" ]; then
+# Check commandline tools
+xcode_cl_ok=$(xcode-select -p 2>&1 | grep "Xcode.app/Contents/Developer" || echo "")
+if [ -z "$xcode_cl_ok" ]; then
 
-#	echo ""
-#	echo "Command line tools are installed"
-#	echo ""
+	echo ""
+	echo "Command line tools are installed"
+	echo ""
 
-#else
-#	echo "$(xcode-select --install)"
+else
+	xcode-select --install
 
-#	echo
-#	echo "Run the setup command again when the command line tools are installed. See you again."
-#	echo
-#	exit 1;
-#fi
+	echo
+	echo "Run the setup command again when the command line tools are installed. See you again."
+	echo
+	exit 1;
+fi
+
+
+# Check license
+xcode_license=$(gcc --version 2>&1 | grep "license")
+if [ -z "$xcode_license" ]; then
+
+	echo ""
+	echo "You must accept the Xcode license"
+	echo ""
+
+	sudo xcode-select --install
+
+fi
+
 
 macports_ok=$(port version 2>&1 | grep ^"Version" || echo "")
 if [ -z "$macports_ok" ]; then

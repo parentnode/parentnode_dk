@@ -76,14 +76,13 @@ fi
 
 
 # Check commandline tools
-xcode_cl_ok=$(xcode-select -p 2>&1 | grep "Xcode.app/Contents/Developer" || echo "")
+xcode_cl_ok=$(xcode-select -p 2>&1 | grep "Xcode.app/Contents/Developer")
 if [ -z "$xcode_cl_ok" ]; then
 
 	echo ""
-	echo "Command line tools are installed"
+	echo "You must install commandline tools"
 	echo ""
 
-else
 	xcode-select --install
 
 	echo

@@ -94,7 +94,7 @@ fi
 
 # Check license
 xcode_license=$(gcc --version 2>&1 | grep "license")
-if [ -z "$xcode_license" ]; then
+if [ -n "$xcode_license" ]; then
 
 	echo ""
 	echo "You must accept the Xcode license"

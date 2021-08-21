@@ -69,7 +69,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 
 				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
 				<ul class="info">
-					<li itemprop="affiliation" class="affiliation">think.dk</li>
+					<li itemprop="affiliation" class="affiliation">parentNode ApS</li>
 					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
 					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
 					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
@@ -94,13 +94,13 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 			<dt class="location">Address</dt>
 			<dd class="location" itemprop="location" itemscope itemtype="http://schema.org/Place">
 				<ul class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-					<li class="streetaddress" itemprop="streetAddress">Æbeløgade 4b</li>
-					<li class="city"><span class="postal" itemprop="postalCode">2100</span> <span class="locality" itemprop="addressLocality">København Ø</span></li>
+					<li class="streetaddress" itemprop="streetAddress">Ryesgade 15</li>
+					<li class="city"><span class="postal" itemprop="postalCode">2200</span> <span class="locality" itemprop="addressLocality">København N</span></li>
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
 				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-					<li class="latitude" itemprop="latitude" content="55.711510"></li>
-					<li class="longitude" itemprop="longitude" content="12.564495"></li>
+					<li class="latitude" itemprop="latitude" content="55.6912986"></li>
+					<li class="longitude" itemprop="longitude" content="12.5629007"></li>
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>

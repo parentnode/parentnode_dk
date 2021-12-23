@@ -1,5 +1,5 @@
 #!/bin/bash
-# bash <(curl -s http://test.parentnode.dk/installers/install-mac-stack.txt)
+# bash <(curl -s https://test.parentnode.dk/installers/install-mac-stack.txt)
 # bash <(curl -s http://parentnode.local/installers/install-mac-stack.txt)
 
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
@@ -46,6 +46,7 @@ if [ "$macos_version_minor" = "$macos_version_catalina" ]; then
 			sudo mkdir /var/parentnode
 			sudo chown $(logname):staff /var/parentnode
 			#sudo reboot
+			echo
 			echo "Please reboot to activate synthetic link and then run installer again"
 			exit
 		fi

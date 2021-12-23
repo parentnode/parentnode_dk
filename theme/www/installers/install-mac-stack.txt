@@ -30,16 +30,16 @@ fi
 
 
 
-catalina='10.15.[0-9]'
+catalina='10.15.[0-9]|1[1-9].[0-9]+'
 macos_version_minor=$(sw_vers | grep -E "ProductVersion:" | cut -f2)
 macos_version_major=$(sw_vers -productVersion | cut -d '.' -f1,2)
 macos_version_catalina=$(sw_vers | grep -E "ProductVersion:\t$catalina" | cut -f2)
 
 if [ "$macos_version_minor" = "$macos_version_catalina" ]; then
-	echo "You are running MacOS Catalina ($macos_version_major)"
+	echo "You are running MacOS Catalina or later ($macos_version_major)"
 	echo "Additional setup needed to continue running the installer"
 	if [ ! -d /srv/sites ]; then
-		echo "Setting up synthetic link on macOS: Catalina ($macos_version_major)"
+		echo "Setting up synthetic link on macOS: Catalina or later ($macos_version_major)"
 		echo 
 		if [ ! -d /var/parentnode ]; then
 			echo -e 'srv\tvar/parentnode' | sudo tee -a /etc/synthetic.conf
@@ -54,9 +54,9 @@ if [ "$macos_version_minor" = "$macos_version_catalina" ]; then
 			sudo chown $(logname):staff ~/Sites
 		fi
 		sudo ln -s ~/Sites /var/parentnode/sites
-		echo "Setting up macOS: Catalina ($macos_version_major) done"
+		echo "Setting up macOS: Post Catalina ($macos_version_major) done"
 	else
-		echo "Setting up macOS: Catalina ($macos_version_major) done"
+		echo "Setting up macOS: Post Catalina ($macos_version_major) done"
 	fi
 else 
 	echo "MacOS version: $macos_version_major"
@@ -94,8 +94,15 @@ if [ -z "$xcode_cl_ok" ]; then
 fi
 
 
+
 # Check license
-xcode_license=$(gcc --version 2>&1 | grep "license")
+# xcode_license=$(gcc --version 2>&1 | grep "license")
+# if [ -n "$xcode_license" ]; then
+#
+# 	sudo xcodebuild -license accept
+#
+# fi
+xcode_license=$(gcc --version 2>&1 | grep "license" || echo "" )
 if [ -n "$xcode_license" ]; then
 
 	sudo xcodebuild -license accept

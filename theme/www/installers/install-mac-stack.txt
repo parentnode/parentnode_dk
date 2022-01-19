@@ -7,10 +7,10 @@ export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 echo 
 echo 
 echo 
-echo "                    Welcome to the          "
-echo "           parentNode WebStack installer for MacOS"
+echo "                           Welcome to the          "
+echo "              parentNode WebStack installer for MacOS"
 echo
-echo "--------------------------------------------------------"
+echo "----------------------------------------------------------------------"
 echo
 echo 
 echo "Preparing for installation ..."

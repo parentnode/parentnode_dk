@@ -37,8 +37,8 @@ macos_version_catalina=$(sw_vers | grep -E "ProductVersion:\t$catalina" | cut -f
 
 if [ "$macos_version_minor" = "$macos_version_catalina" ]; then
 	echo "You are running MacOS Catalina or later ($macos_version_major)"
-	echo "Additional setup needed to continue running the installer"
 	if [ ! -d /srv/sites ]; then
+		echo "Additional setup needed to continue running the installer"
 		echo "Setting up synthetic link on macOS: Catalina or later ($macos_version_major)"
 		echo 
 		if [ ! -d /var/parentnode ]; then
@@ -61,7 +61,6 @@ if [ "$macos_version_minor" = "$macos_version_catalina" ]; then
 	fi
 else 
 	echo "MacOS version: $macos_version_major"
-	echo "You are free to proceed"
 fi
  
 

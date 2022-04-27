@@ -19,6 +19,11 @@ class TypeTimesheetUuid extends Itemtype {
 		$this->db = SITE_DB.".item_timesheetuuid";
 		$this->db_projects = SITE_DB.".item_timesheetuuid_projects";
 
+		$query = new Query();
+		$query->checkDbExistence($this->db);
+		$query->checkDbExistence($this->db_projects);
+
+
 		$IC = new Items();
 		$PC = $IC->typeObject("project");
 		$projects = $PC->getProjects();

@@ -7,3 +7,13 @@
 .awstats #content .scene h1 {padding-bottom: 74px; border-bottom: 1px solid #bbbbbb;}
 .awstats #content .scene ul {padding: 30px;}
 .awstats #content .scene ul li {display: block; font-size: 15px; padding: 0 0 7px;}
+
+
+/* TIMESHEETUUID PROJECTS */
+#content .scene.defaultEdit > div.projects {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
+#content .scene.defaultEdit > div.projects ul.projects {border-top: 1px solid #dedede; padding-bottom: 30px;}
+#content .scene.defaultEdit > div.projects form.projects {padding-bottom: 15px;}
+#content .scene.defaultEdit > div.projects ul.projects li.project h3 {font-size: 14px; text-transform: none;}
+#content .scene.scene.defaultEdit ul.items > li ul.actions li {
+    padding: 5px 0 5px 5px;
+}

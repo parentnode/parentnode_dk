@@ -2,10 +2,10 @@
 	
 
 
-class TimesheetGateway {
+class TimesheetsGateway {
 
 
-	// Payment gateway settings
+	// Settings
 	private $_settings;
 	private $adapter;
 
@@ -17,15 +17,14 @@ class TimesheetGateway {
 		// no adapter selected yet
 		$this->adapter = false;
 
-		// mailer connection info
+		// timesheets API connection info
 		@include_once("config/connect_timesheets.php");
-
+			
 	}
 
-	function timesheet_connection($_settings) {
+	function timesheets_connection($_settings) {
 
-		// set type to default, Stripe, if not defined in configs
-		$_settings["type"] = isset($_settings["type"]) ? $_settings["type"] : "toggl";
+		
 		$this->_settings = $_settings;
 
 	}
@@ -34,55 +33,45 @@ class TimesheetGateway {
 
 		if(!$this->adapter) {
 
-			if(preg_match("/^toggl$/i", $this->_settings["type"])) {
+			if($this->_settings["type"] == "toggl") {
 
 				@include_once("classes/adapters/timesheets/toggl.class.php");
 				$this->adapter = new JanitorToggl($this->_settings);
-
-			}
-			// Other options
-			else {
-
-
 			}
 
 		}
 
 	}
 
-	// Add Bridge functions
+	function getReports($_options = false) {
 
-	// Bridge functions work as a bridge between Janitor and the specific module
-	// They provide a unambiguous interface for Janitor, that allows you to use the same methods for
-	// all gateway providers, allowing you to easily switch between providers
-	
-	// In the Adapter class these methods are "mapped" to the Gateway API
-
-
-	function getTimeEntries($_options) {
-
-		// only load payment adapter when needed
 		$this->init_adapter();
 
-		// Only attempt with valid adapter
 		if($this->adapter) {
 
-			return $this->adapter->getTimeEntries($_options);
-
+			return $this->adapter->getReports($_options);
 		}
-
 	}
 
-}
+	function getProjects($_options = false) {
 
+		$this->init_adapter();
 
-$__ttt = false;
-function timesheets() {
-	global $__ttt;
-	if(!$__ttt) {
-		// include_once("classes/helpers/timesheets.class.php");
-		$__ttt = new TimesheetGateway();
+		if($this->adapter) {
 
+			return $this->adapter->getProjects($_options);
+		}
 	}
-	return $__ttt;
+
+	function getClients($_options = false) {
+
+		$this->init_adapter();
+
+		if($this->adapter) {
+
+			return $this->adapter->getClients($_options);
+		}
+	}
+
+	
 }

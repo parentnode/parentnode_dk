@@ -157,6 +157,7 @@ class TypeProject extends Itemtype {
 	function getProjects($_options = false) {
 
 		$query = new Query();
+		$query->checkDbExistence(SITE_DB.".item_timesheetuuid");
 		$query->checkDbExistence(SITE_DB.".item_timesheetuuid_projects");
 		$query->checkDbExistence(SITE_DB.".items_editors");
 

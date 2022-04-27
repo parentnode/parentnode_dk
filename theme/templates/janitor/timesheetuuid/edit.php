@@ -25,7 +25,7 @@ $project_count = $item_projects ? count($item_projects) : 0;
 			<? if($item_projects): ?>
 			<ul class="timesheetuuid items projects">
 				<? foreach($item_projects as $project): ?>
-				<li class="timesheetuuid project project_id:<?= $project["id"] ?>">
+				<li class="timesheetuuid project project_id:<?= $project["item_id"] ?>">
 					<h3><?= $project["name"] ?></h3>
 				</li>
 				<? endforeach; ?>

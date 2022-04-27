@@ -187,7 +187,7 @@ class TypeProject extends Itemtype {
 		FROM ".$this->db." ip 
 			JOIN ".SITE_DB.".items i ON i.id = ip.item_id
 			LEFT JOIN ".SITE_DB.".items_editors ie ON ie.item_id = ip.item_id
-			LEFT JOIN ".SITE_DB.".item_timesheetuuid_projects itp ON itp.item_project_id = ip.id
+			LEFT JOIN ".SITE_DB.".item_timesheetuuid_projects itp ON itp.item_project_id = ip.item_id
 			LEFT JOIN ".SITE_DB.".item_timesheetuuid it ON it.item_id = itp.item_timesheetuuid_id
 		WHERE	
 			i.status = 1
@@ -195,7 +195,7 @@ class TypeProject extends Itemtype {
 
 		if($project_id) {
 			
-			$sql .= " AND ip.id = $project_id";
+			$sql .= " AND ip.item_id = $project_id";
 
 		}
 		

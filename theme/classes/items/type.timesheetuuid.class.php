@@ -40,7 +40,7 @@ class TypeTimesheetUuid extends Itemtype {
 		// Project ID
 		$this->addToModel("project_id", array(
 			"type" => "select",
-			"options" => $this->toOptions($projects, "id", "name", ["add" => ["" => "Select project"]]),
+			"options" => $this->toOptions($projects, "item_id", "name", ["add" => ["" => "Select project"]]),
 			"label" => "Project ID from external service",
 			"hint_message" => "This project ID will be imported from the external service, currently Toggl.",
 			"error_message" => "Use a valid project ID."

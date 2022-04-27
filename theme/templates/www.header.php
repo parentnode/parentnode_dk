@@ -22,8 +22,8 @@
 	<link type="text/css" rel="stylesheet" media="all" href="/css/lib/seg_<?= $this->segment() ?>_include.css" />
 	<script type="text/javascript" src="/js/lib/seg_<?= $this->segment() ?>_include.js"></script>
 <? } else { ?>
-	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css?rev=20200421-185522" />
-	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js?rev=20200421-185522"></script>
+	<link type="text/css" rel="stylesheet" media="all" href="/css/seg_<?= $this->segment() ?>.css?rev=20220427-164445" />
+	<script type="text/javascript" src="/js/seg_<?= $this->segment() ?>.js?rev=20220427-164445"></script>
 <? } ?>
 
 	<?= $this->headerIncludes() ?>
@@ -43,9 +43,9 @@
 			<li class="keynav admin nofollow"><a href="/janitor">Janitor</a></li>
 <? endif; ?>
 <? if(session()->value("user_id") && session()->value("user_group_id") > 1): ?>
-			<li class="keynav user nofollow"><a href="?logoff=true">Logoff</a></li>
+			<li class="keynav user logoff nofollow"><a href="?logoff=true">Logoff</a></li>
 <? else: ?>
-			<li class="keynav user nofollow"><a href="/login">Login</a></li>
+			<li class="keynav user login nofollow"><a href="<?= SITE_LOGIN_URL ?>">Login</a></li>
 <? endif; ?>
 		</ul>
 	</div>

@@ -72,6 +72,9 @@ if [ -z "$xcode_ok" ]; then
 	echo "You need to install Xcode before you can continue."
 	echo
 	open https://itunes.apple.com/gh/app/xcode/id497799835
+	echo
+	echo "If you experience this issue repeatedly, and you believe you have already installed Xcode – then restart your computer and try again."
+	echo
 	exit 1;
 
 fi

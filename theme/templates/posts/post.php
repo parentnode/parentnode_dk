@@ -114,7 +114,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 	</div>
 
-	<?= $HTML->pagination($pagination_items, [
+	<?= $HTML->frontendPagination($pagination_items, [
 		"class" => "pagination i:pagination",
 		"type" => "sindex",
 		"base_url" => "/blog", 
@@ -179,7 +179,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 
 
-	<?= $HTML->search("/blog/search", [
+	<?= $HTML->searchBox("/blog/search", [
 		"headline" => "Search posts",
 		"pattern" => $pagination_pattern["pattern"],
 	]) ?>

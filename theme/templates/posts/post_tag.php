@@ -11,7 +11,6 @@ $pagination_pattern = [
 	"pattern" => [
 		"itemtype" => $itemtype, 
 		"status" => 1, 
-		"tags" => $itemtype.":".addslashes($selected_tag), 
 		"extend" => [
 			"tags" => true, 
 			"user" => true, 
@@ -20,6 +19,7 @@ $pagination_pattern = [
 			"comments" => true
 		]
 	],
+	"tags" => $itemtype.":".addslashes($selected_tag), 
 	"sindex" => $sindex,
 	"limit" => 1
 ];
@@ -116,7 +116,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 	</div>
 
-	<?= $HTML->pagination($pagination_items, [
+	<?= $HTML->frontendPagination($pagination_items, [
 		"class" => "pagination i:pagination",
 		"type" => "sindex",
 		"base_url" => "/blog/tag/".urlencode($selected_tag), 
@@ -183,9 +183,10 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 <? endif; ?>
 
 
-	<?= $HTML->search("/blog/search", [
+	<?= $HTML->searchBox("/blog/search", [
 		"headline" => "Search posts",
 		"pattern" => $pagination_pattern["pattern"],
+		"tags" => $itemtype.":".addslashes($selected_tag), 
 	]) ?>
 
 

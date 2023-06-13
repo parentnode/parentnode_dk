@@ -10,7 +10,7 @@ class HTML extends HTMLCore {
 		$_ = '';
 
 		$_ .= '<div class="comments i:comments item_id:'.$item["item_id"].'"';
-		$_ .= '	data-comment-add="'.$page->validPath($add_path).'"';
+		$_ .= '	data-comment-add="'.security()->validPath($add_path).'"';
 		$_ .= '	data-csrf-token="'.session()->value("csrf").'"';
 		$_ .= '	>';
 		$_ .= '	<h2 class="comments">Comments</h2>';
@@ -176,13 +176,14 @@ class HTML extends HTMLCore {
 	/**
 	* Create search input HTML snippet
 	*/
-	function search($url, $_options = false) {
+	function searchBox($url, $_options = false) {
 
 		$headline = "Search";
 		$pattern = false;
 		$label = "3 chars min.";
 		$button = "Search";
 		$query = "";
+		$tag = "";
 
 
 		if($_options !== false) {
@@ -191,6 +192,7 @@ class HTML extends HTMLCore {
 					case "headline"           : $headline             = $_value; break;
 					case "pattern"            : $pattern              = $_value; break;
 					case "query"              : $query                = $_value; break;
+					case "tag"                : $tag                  = $_value; break;
 
 					case "label"              : $label                = $_value; break;
 					case "button"             : $button               = $_value; break;
@@ -207,6 +209,7 @@ class HTML extends HTMLCore {
 		$_ .= '<h2>'.$headline.'</h2>';
 		$_ .= $this->formStart($url, ["class" => "labelstyle:inject"]);
 			$_ .= $this->input("pattern", ["type" => "hidden", "value" => ($pattern ? json_encode($pattern) : "")]);
+			$_ .= $this->input("tag", ["type" => "hidden", "value" => $tag]);
 			$_ .= '<fieldset>';
 				$_ .= $this->input("query", ["type" => "string", "label" => $label, "min" => 3, "required" => true, "value" => $query]);
 			$_ .= '</fieldset>';
@@ -221,7 +224,7 @@ class HTML extends HTMLCore {
 
 
 	// Create pagination element
-	function pagination($pagination_items, $_options = false) {
+	function frontendPagination($pagination_items, $_options = false) {
 
 
 		// Make links for page or sindex

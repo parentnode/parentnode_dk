@@ -45,7 +45,6 @@ $pagination_pattern = [
 	"pattern" => [
 		"itemtype" => $itemtype, 
 		"status" => 1, 
-		"tags" => $itemtype.":".addslashes($selected_tag), 
 		"extend" => [
 			"tags" => true, 
 			"user" => true, 
@@ -53,6 +52,7 @@ $pagination_pattern = [
 			"readstate" => true
 		]
 	],
+	"tags" => $itemtype.":".addslashes($selected_tag), 
 	"page" => $page,
 	"limit" => 5
 ];
@@ -138,7 +138,7 @@ $items = $IC->paginate($pagination_pattern);
 
 		<h2><?= $items["total"] ?> Posts</h2>
 
-		<?= $HTML->pagination($items, [
+		<?= $HTML->frontendPagination($items, [
 			"base_url" => "/blog/tag/".urlencode($selected_tag), 
 			"direction" => "prev",
 			"show_total" => false,
@@ -183,7 +183,7 @@ $items = $IC->paginate($pagination_pattern);
 			<? endforeach; ?>
 		</ul>
 
-		<?= $HTML->pagination($items, [
+		<?= $HTML->frontendPagination($items, [
 			"base_url" => "/blog/tag/".urlencode($selected_tag),
 			"direction" => "next",
 			"show_total" => false,
@@ -200,9 +200,10 @@ $items = $IC->paginate($pagination_pattern);
 
 
 
-	<?= $HTML->search("/blog/search", [
+	<?= $HTML->searchBox("/blog/search", [
 		"headline" => "Search posts",
-		"pattern" => $pagination_pattern["pattern"]
+		"pattern" => $pagination_pattern["pattern"],
+		"tag" => $itemtype.":".$selected_tag
 	]) ?>
 
 

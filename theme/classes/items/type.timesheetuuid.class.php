@@ -7,6 +7,11 @@
 
 class TypeTimesheetUuid extends Itemtype {
 
+
+	public $db;
+	public $db_projects;
+
+
 	/**
 	* Init, set varnames, validation rules
 	*/

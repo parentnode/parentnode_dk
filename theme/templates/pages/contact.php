@@ -94,13 +94,13 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 			<dt class="location">Address</dt>
 			<dd class="location" itemprop="location" itemscope itemtype="http://schema.org/Place">
 				<ul class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-					<li class="streetaddress" itemprop="streetAddress">Ryesgade 15</li>
-					<li class="city"><span class="postal" itemprop="postalCode">2200</span> <span class="locality" itemprop="addressLocality">København N</span></li>
+					<li class="streetaddress" itemprop="streetAddress">Mindehøjvej 4</li>
+					<li class="city"><span class="postal" itemprop="postalCode">4673</span> <span class="locality" itemprop="addressLocality">Rødvig Stevns</span></li>
 					<li class="country" itemprop="addressCountry">Denmark</li>
 				</ul>
 				<ul class="geo" itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-					<li class="latitude" itemprop="latitude" content="55.6912986"></li>
-					<li class="longitude" itemprop="longitude" content="12.5629007"></li>
+					<li class="latitude" itemprop="latitude" content="55.26796026700916"></li>
+					<li class="longitude" itemprop="longitude" content="12.341453787195988"></li>
 				</ul>
 			</dd>
 			<dt class="cvr">CVR</dt>

@@ -27,13 +27,23 @@ echo
 sudo locale-gen en_GB.UTF-8 &>/dev/null
 export LC_ALL="en_GB.utf8" &>/dev/null
 
+
+# DISABLE SCANNING/RESTART TOOL WHILE INSTALLING SERVER
+if [ -e "/etc/apt/apt.conf.d/99needrestart" ] ; then
+	mv "/etc/apt/apt.conf.d/99needrestart" "/srv/temp-99needrestart"
+	echo
+	echo "99needrestart moved temporarily"
+	echo
+fi
+
+
 echo
 echo
 echo "Updating package information"
 echo
 
 # UPDATE APT
-sudo apt update -y
+sudo apt update
 
 
 echo
@@ -41,7 +51,7 @@ echo
 echo "Upgrading packages"
 echo
 # UPGRADE ALL EXISTING SOFTWARE
-sudo apt full-upgrade -y
+sudo apt full-upgrade
 
 
 echo

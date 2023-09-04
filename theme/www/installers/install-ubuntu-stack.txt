@@ -30,9 +30,16 @@ export LC_ALL="en_GB.utf8" &>/dev/null
 
 # DISABLE SCANNING/RESTART TOOL WHILE INSTALLING SERVER
 if [ -e "/etc/apt/apt.conf.d/99needrestart" ] ; then
-	mv "/etc/apt/apt.conf.d/99needrestart" "/srv/temp-99needrestart"
+
+	sudo mkdir /etc/apt/disabled.apt.conf.d/
+	sudo dpkg-divert --divert /etc/apt/disabled.apt.conf.d/99needrestart  --rename /etc/apt/apt.conf.d/99needrestart
+	sudo dpkg-divert --divert /etc/apt/disabled.apt.conf.d/20auto-upgrades  --rename /etc/apt/apt.conf.d/20auto-upgrades
+	sudo dpkg-divert --divert /etc/apt/disabled.apt.conf.d/50unattended-upgrades  --rename /etc/apt/apt.conf.d/50unattended-upgrades
+
+	# mv "/etc/apt/apt.conf.d/99needrestart" "/srv/temp-99needrestart"
+
 	echo
-	echo "99needrestart moved temporarily"
+	echo "20auto-upgrades, 50unattended-upgrades and 99needrestart disbaled temporarily"
 	echo
 fi
 

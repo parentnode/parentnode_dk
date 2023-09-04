@@ -51,7 +51,7 @@ echo "Updating package information"
 echo
 
 # UPDATE APT
-sudo apt update
+sudo apt update -y
 
 
 echo
@@ -59,7 +59,7 @@ echo
 echo "Upgrading packages"
 echo
 # UPGRADE ALL EXISTING SOFTWARE
-sudo apt full-upgrade
+sudo apt full-upgrade -y
 
 
 echo

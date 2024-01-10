@@ -1184,6 +1184,35 @@ global $model;
 					</div>
 
 				</li>
+
+				<li class="demo">
+					<h2>mobil.3f.dk</h2>
+					<ul class="actions">
+						<li><a href="http://demo-3f.parentnode.dk" target="_blank" class="hardlink">http://demo-3f.parentnode.dk</a></li>
+					</ul>
+
+					<div class="info">
+						<?php
+							if(
+								$this->segment() == "seo" ||
+								$this->segment() == "desktop_light" ||
+								$this->segment() == "mobile" ||
+								$this->segment() == "mobile_light"
+							) {
+								print '<p class="invaliddevice">Your current browser cannot show this demo.</p>';
+							}
+						?>
+						<p>
+							To be written
+						</p>
+						<p>
+							Produced in 2009.<br />
+							Technologies: HTML, CSS and JavaScript.
+						</p>
+					</div>
+
+				</li>
+
 				<li class="demo">
 					<h2>Elsparefonden.dk</h2>
 					<ul class="actions">

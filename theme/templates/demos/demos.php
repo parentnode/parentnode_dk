@@ -94,8 +94,8 @@ $demos = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 	<div class="finalnote">
 		<h2>Is that really all?</h2>
 		<p>
-			No. Some of my work cannot be showcased as it's deeply integrated with other systems. In other cases, I simply 
-			deemed it too much work to make a demo. Or it was too boring (sorry clients). And then of course, there is all the stuff I don't have the source-code for
+			No, not even close. Some of my work cannot be showcased as it's deeply integrated with other systems. In other cases, I simply 
+			deemed it too much work to make a demo version. Or it was too boring (sorry clients). And then of course, there is all the stuff I don't have the source-code for
 			anymore. I especially regret not having any of the really, really old stuff – but who could have known
 			I'd survive this long?
 		</p>

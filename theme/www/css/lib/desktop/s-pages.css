@@ -46,10 +46,17 @@
 
 /* DEMOS */
 #content .scene.demos {}
-#content .scene.demos div.article div.articlebody ul.demos {list-style: none; padding: 40px 0 0; margin: 0;}
-#content .scene.demos div.article div.articlebody ul.demos > li {padding-bottom: 40px;}
-#content .scene.demos div.article div.articlebody ul.demos > li ul.actions {padding-bottom: 20px;}
-#content .scene.demos div.article div.articlebody ul.demos ul.tags {display: none;}
+#content .scene.demos ul.link {padding-bottom: 26px;}
+#content .scene.demos ul.demos {border-bottom: 1px solid #dedede;}
+#content .scene.demos ul.demos li.demo {padding-bottom: 26px;}
+#content .scene.demos ul.demos li.demo h2 {padding-top: 15px;}
+#content .scene.demos ul.demos li.demo ul.tags {display: none;}
+#content .scene.demos div.finalnote {padding-top: 35px;}
+
+#content .scene.demos div.filter {padding-top: 10px; background: rgba(255, 255, 255, 0.9); position: relative; z-index: 10;}
+#content .scene.demos div.filter ul.all_tags li {display: inline-block; vertical-align: top; border: 1px solid #034769; margin: 0 10px 10px 0; padding: 5px 10px; border-radius: 5px; cursor: pointer;}
+#content .scene.demos div.filter ul.all_tags li.selected {color: #ffffff; background-color: #034769;}
+
 
 
 /* CONTACT */

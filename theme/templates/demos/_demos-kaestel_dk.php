@@ -33,7 +33,7 @@ global $model;
 
 		<div class="articlebody" itemprop="articleBody">
 			<p>
-				I'm a webdeveloper. A sort of frontend specialist, with backend skills.
+				I'm (also) a webdeveloper. A sort of frontend specialist, with backend skills.
 				Here is a small collection of demos of some of the work I've done over the years. 
 			</p>
 			<h2>

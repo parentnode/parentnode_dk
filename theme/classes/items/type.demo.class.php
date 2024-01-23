@@ -45,14 +45,16 @@ class TypeDemo extends Itemtype {
 		$this->addToModel("unsupported_segments", array(
 			"type" => "string",
 			"label" => "Unsupported segments",
-			"hint_message" => "List segments that cannot show this demo. Separate multiple segments with a comma (\",\")."
+			"hint_message" => "List segments that cannot show this demo. Separate multiple segments with a comma (\",\").",
+			"error_message" => "Unsupported_segments is invalid.",
 		));
 
 		// Class
 		$this->addToModel("classname", array(
 			"type" => "string",
 			"label" => "CSS Class",
-			"hint_message" => "CSS class for custom styling. If you don't know what this is, just leave it empty."
+			"hint_message" => "CSS class for custom styling. If you don't know what this is, just leave it empty.",
+			"error_message" => "Classname is invalid.",
 		));
 
 		// Description

@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2008-2023, https://manipulator.parentnode.dk
-asset-builder @ 2023-06-27 09:26:27
+asset-builder @ 2024-01-23 13:10:00
 */
 
 /*seg_tablet_include.js*/
@@ -7132,52 +7132,100 @@ Util.Modules["contact"] = new function() {
 
 /*m-demos.js*/
 Util.Modules["demos"] = new function() {
-	this.init = function(demos) {
-		var div_demos = u.qs("div.articlebody.demos");
-		var div_filter = u.ie(div_demos, "div");
-		var form_filter = Util.Form.addForm(div_filter, {
-		});
-		var fieldset_filter = u.f.addFieldset(form_filter);
-		var field_filter = u.f.addField(fieldset_filter, {
-			"name":"filter",
-			"label":"Filter",
-			"hint_message":"Here's a hint"
-		});
-		var action_filter = u.f.addAction(form_filter, {
-			"value":"Filter",
-			"class":"button primary",
-		})
-		u.f.init(form_filter);
-		form_filter.submitted = function() {
-		};
-		field_filter.updated = function() {
-			if (field_filter._input.val().length >= 3) {
-				console.log("hej");
+	this.init = function(scene) {
+		scene.resized = function() {
+			if(this.div_filter) {
+				this.filter_top = u.absY(this.div_filter);
 			}
 		}
-		var demos = u.qsa("div.demos li.demo");
-		var global_tags = [];
-		for (i = 0; i < demos.length; i++) {
-			var tag_containers = u.qsa("ul.tags li", demos[i]);	
-			var local_tags = [];
-			for (j = 0; j < tag_containers.length; j++) {
-				var tag_text = u.text(tag_containers[j]);
-				local_tags.push(tag_text);
-				if(global_tags.indexOf(tag_text)===-1) {
-					global_tags.push(tag_text);
+		scene.scrolled = function() {
+			if(this.div_filter) {
+				if(this.filter_top - 50 < page.scrolled_y) {
+					u.ass(this.div_filter, {
+						"transform": "translate3d(0, "+ (page.scrolled_y - (this.filter_top - 50)) +"px, 0)",
+					});
+				}
+				else {
+					u.ass(this.div_filter, {
+						"transform": "translate3d(0, 0, 0)",
+					});
 				}
 			}
-			demos[i].local_tags = local_tags;
 		}
-		if(global_tags.length > 0) {
-			var global_tags_ul = u.ie(div_demos, "ul", {
-				"class":"tags"
-			})
-			for (k = 0; k < global_tags.length; k++) {
-				u.ie(global_tags_ul, "li", {
-					"html":global_tags[k]
-				})
+		scene.ready = function() {
+			this.div_demos = u.qs("div.demos", this);
+			if(this.div_demos) {
+				this.tags = [];
+				this.selected_tags = [];
+				this.demos = u.qsa("li.demo", this);
+				var i, demo, j, tag, tag_value;
+				for(i = 0; i < this.demos.length; i++) {
+					demo = this.demos[i];
+					demo.tags = u.qsa("ul.tags li", demo);
+					demo.tag_values = [];
+					for(j = 0; j < demo.tags.length; j++) {
+						tag = demo.tags[j];
+						tag_value = tag.innerHTML;
+						demo.tag_values.push(tag_value);
+						if(this.tags.indexOf(tag_value) === -1) {
+							this.tags.push(tag_value);
+						}
+					}
+				}
+				if(this.tags.length) {
+					this.div_filter = u.ie(this.div_demos, "div", {"class":"filter"});
+					u.ae(this.div_filter, "p", {"html": "Select tags to filter demos by topics"});
+					this.ul_tags = u.ae(this.div_filter, "ul", {"class":"all_tags"});
+					for(i = 0; i < this.tags.length; i++) {
+						tag_value = this.tags[i];
+						tag = u.ae(this.ul_tags, "li", {"html":tag_value});
+						tag.tag_value = tag_value;
+						u.ce(tag);
+						tag.div = this;
+						tag.clicked = function() {
+							if(this.div.selected_tags.indexOf(this.tag_value) === -1) {
+								this.div.selected_tags.push(this.tag_value);
+								u.ac(this, "selected");
+							}
+							else {
+								this.div.selected_tags.splice(this.div.selected_tags.indexOf(this.tag_value), 1);
+								u.rc(this, "selected");
+							}
+							this.div.filterTags();
+						}
+					}
+				}
 			}
+			this.filterTags = function() {
+				var i, demo, j, tag;
+				for(i = 0; i < this.demos.length; i++) {
+					demo = this.demos[i];
+					if(this.selected_tags) {
+						u.ass(demo, {
+							"display": "block"
+						});
+						for(j = 0; j < this.selected_tags.length; j++) {
+							tag = this.selected_tags[j];
+							u.bug(demo.tag_values, tag);
+							if(demo.tag_values.indexOf(tag) === -1) {
+								u.ass(demo, {
+									"display": "none"
+								});
+								break;
+							}
+						}
+					}
+					else {
+						u.ass(demo, {
+							"display": "block"
+						});
+					}
+				}
+			}
+			this.resized();
+			u.showScene(this);
 		}
+		page.cN.scene = scene;
 	}
 }
+

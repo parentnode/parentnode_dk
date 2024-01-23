@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-06-27 09:26:27
+asset-builder @ 2024-01-23 13:10:00
 */
 
 /*seg_smartphone_include.css*/
@@ -615,9 +615,14 @@ body > div.pagination li.next:active > svg.arrow line {stroke: #ffffff;}
 #content .scene.manifest ul.manifest li h3,
 #content .scene.manifest ul.manifest li p {padding-left: 0; padding-right: 0;}
 #content .scene.demos {}
-#content .scene.demos div.article div.articlebody ul.demos {list-style: none; padding: 30px 0 0; margin: 0;}
-#content .scene.demos div.article div.articlebody ul.demos > li {padding-bottom: 30px;}
-#content .scene.demos div.article div.articlebody ul.demos ul.tags {display: none;}
+#content .scene.demos ul.link {padding-bottom: 26px;}
+#content .scene.demos ul.demos {border-bottom: 1px solid #dedede;}
+#content .scene.demos ul.demos li.demo h2 {padding-top: 15px;}
+#content .scene.demos ul.demos li.demo ul.tags {display: none;}
+#content .scene.demos div.finalnote {padding-top: 35px;}
+#content .scene.demos div.filter {padding-top: 10px; background: rgba(255, 255, 255, 0.9); position: relative; z-index: 10;}
+#content .scene.demos div.filter ul.all_tags li {display: inline-block; vertical-align: top; border: 1px solid #034769; margin: 0 10px 10px 0; padding: 5px 10px; border-radius: 5px; cursor: pointer;}
+#content .scene.demos div.filter ul.all_tags li.selected {color: #ffffff; background-color: #034769;}
 #content .scene.contact ul.people {padding-bottom: 30px;}
 #content .scene.contact ul.people li.person {padding-bottom: 20px; padding-top: 0;}
 #content .scene.contact ul.items.people li.item.person ul.info {display: block; padding: 0 20px 20px;}

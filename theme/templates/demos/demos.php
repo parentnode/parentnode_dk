@@ -61,14 +61,14 @@ $demos = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 
 			<li class="demo item article i:article id:<?= $demo["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 				<h2 itemprop="headline"><?= $demo["name"] ?></h2>
-				<ul class="link">
-					<li><a href="<?= $demo["link"] ?>" target="_blank" class="hardlink"><?= $demo["link"] ?></a></li>
-				</ul>
 
 				<? if($media): ?>
 				<div class="image item_id:<?= $demo["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
 				<? endif; ?>
 
+				<ul class="link">
+					<li><a href="<?= $demo["link"] ?>" target="_blank" class="hardlink"><?= $demo["link"] ?></a></li>
+				</ul>
 
 				<?= $HTML->articleTags($demo, [
 					"context" => ["demo"]

@@ -593,7 +593,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2014 in collaboration with e-Types and Dukkepartiet.<br />
-							Technologies: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
+							Technologies and skills: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
 						</p>
 						<p class="note">Built using Manipulator v0.9, Janitor v0.7, Templator v1.0 and Detector v2.0.</p>
 					</div>
@@ -624,7 +624,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2014 in collaboration with e-Types.<br />
-							Technologies: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
+							Technologies and skills: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
 						</p>
 						<p class="note">Built using Manipulator v0.8, Janitor v0.7, Templator v1.0 and Detector v1.0.</p>
 					</div>
@@ -652,7 +652,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2013 in collaboration with and for e-Types.<br />
-							Technologies: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
+							Technologies and skills: JavaScript, HTML5, CSS3, PHP, MySQL, Apache, Dedicated hosting on Linux.
 						</p>
 						<p class="note">Built using Manipulator v0.8, Janitor v0.7, Templator v1.0 and Detector v1.0.</p>
 					</div>
@@ -683,7 +683,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2013.<br />
-							Technologies: HTML5, CSS3, JavaScript.
+							Technologies and skills: HTML5, CSS3, JavaScript.
 						</p>
 						<p class="note">Built using Manipulator 0.7 and Templator v1.0.</p>
 					</div>
@@ -717,7 +717,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012.<br />
-							Technologies: HTML5, CSS3, JavaScript.
+							Technologies and skills: HTML5, CSS3, JavaScript.
 						</p>
 						<p class="note">Built using Manipulator 0.7 and Templator v1.0.</p>
 					</div>
@@ -745,7 +745,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012 in collaboration with WDP/Netpeople/Peoplegroup.<br />
-							Technologies: HTML5, CSS3, JavaScript.
+							Technologies and skills: HTML5, CSS3, JavaScript.
 						</p>
 						<p class="note">Built using Manipulator 0.7 and Templator v1.0.</p>
 					</div>
@@ -772,7 +772,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012 in collaboration with WDP/Netpeople/Peoplegroup.<br />
-							Technologies: HTML5, CSS3, JavaScript.
+							Technologies and skills: HTML5, CSS3, JavaScript.
 						</p>
 						<p class="note">Built using Manipulator 0.7 and Templator v1.0.</p>
 					</div>
@@ -796,7 +796,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						<p>Corporate website for Tuborg with a, for the time, heavy use of animations. Desktop and tablet.</p>
 						<p>
 							Produced in 2012 in collaboration with Netpeople/WDP.<br />
-							Technologies: JavaScript, HTML5, CSS3, Ruby on Rails.
+							Technologies and skills: JavaScript, HTML5, CSS3, Ruby on Rails.
 						</p>
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
@@ -824,7 +824,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012 in collaboration with Netpeople/WDP.<br />
-							Technologies: JavaScript, HTML5, CSS3, Ruby on Rails.
+							Technologies and skills: JavaScript, HTML5, CSS3, Ruby on Rails.
 						</p>
 						<p class="note">Built using	Manipulator 0.5.</p>
 					</div>
@@ -853,7 +853,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012 in collaboration with Netpeople/WDP.<br />
-							Technologies: JavaScript, HTML5, CSS3, Ruby on Rails.
+							Technologies and skills: JavaScript, HTML5, CSS3, Ruby on Rails.
 						</p>
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
@@ -888,7 +888,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012 in collaboration with Wunderman.<br />
-							Technologies: HTML5, CSS3, JavaScript.
+							Technologies and skills: HTML5, CSS3, JavaScript.
 						</p>
 						<p class="note">Built using Manipulator 0.6.</p>
 					</div>
@@ -916,7 +916,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012 in collaboration with in2media (now Charlie-Tango).<br />
-							Technologies: HTML5, CSS3, jQuery.
+							Technologies and skills: HTML5, CSS3, jQuery.
 						</p>
 					</div>
 				</li>
@@ -946,7 +946,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012 in collaboration with Loft37.<br />
-							Technologies: HTML5, CSS3, JavaScript.
+							Technologies and skills: HTML5, CSS3, JavaScript.
 						</p>
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
@@ -974,7 +974,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2011 in collaboration with Invokers, Dwarf and Vestas IT.<br />
-							Technologies: JavaScript, HTML5, CSS3.
+							Technologies and skills: JavaScript, HTML5, CSS3.
 						</p>
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
@@ -1002,7 +1002,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2012 in collaboration with Advance.<br />
-							Technologies: JavaScript, HTML5, CSS3.
+							Technologies and skills: JavaScript, HTML5, CSS3.
 						</p>
 						<p class="note">Built using Manipulator 0.5.</p>
 					</div>
@@ -1061,7 +1061,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2011 in collaboration with Contentcube.<br />
-							Technologies: JavaScript, HTML5, CSS3.
+							Technologies and skills: JavaScript, HTML5, CSS3.
 						</p>
 						<p class="note">Built using Manipulator 0.3.</p>
 					</div>
@@ -1099,7 +1099,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2011 in collaboration with Agnitio.<br />
-							Technologies: HTML5, CSS3, JavaScript
+							Technologies and skills: HTML5, CSS3, JavaScript
 						</p>
 						<p class="note">Built using Manipulator 0.4.</p>
 					</div>
@@ -1137,7 +1137,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2011 in collaboration with Agnitio.<br />
-							Technologies: HTML5, CSS3, JavaScript
+							Technologies and skills: HTML5, CSS3, JavaScript
 						</p>
 						<p class="note">Built using Manipulator 0.4.</p>
 					</div>
@@ -1175,7 +1175,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2011 in collaboration with Agnitio.<br />
-							Technologies: HTML5, CSS3, JavaScript
+							Technologies and skills: HTML5, CSS3, JavaScript
 						</p>
 						<p class="note">Built using Manipulator 0.4.</p>
 					</div>
@@ -1218,7 +1218,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2010 in collaboration with Agnitio.<br />
-							Technologies: HTML5, CSS3, JavaScript
+							Technologies and skills: HTML5, CSS3, JavaScript
 						</p>
 						<p class="note">Built using Manipulator 0.4.</p>
 					</div>
@@ -1247,7 +1247,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2010 in collaboration with Lifted and Nomeco.<br />
-							Technologies: HTML5, CSS3, JavaScript.
+							Technologies and skills: HTML5, CSS3, JavaScript.
 						</p>
 						<p class="note">Built using Manipulator 0.3.</p>
 					</div>
@@ -1285,7 +1285,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2009 in collaboration with 1508 A/S.<br />
-							Technologies: HTML and CSS.
+							Technologies and skills: HTML and CSS.
 						</p>
 					</div>
 
@@ -1313,7 +1313,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2009.<br />
-							Technologies: HTML, CSS and JavaScript.
+							Technologies and skills: HTML, CSS and JavaScript.
 						</p>
 					</div>
 
@@ -1352,7 +1352,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 						</p>
 						<p>
 							Produced in 2007 in collaboration with Kring e-Business Consulting and Viegand Maagøe.<br />
-							Technologies: HTML, CSS, JavaScript.
+							Technologies and skills: HTML, CSS, JavaScript.
 						</p>
 					</div>
 				</li>

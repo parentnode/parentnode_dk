@@ -71,7 +71,7 @@ class TypeDemo extends Itemtype {
 		$this->addToModel("main_image", array(
 			"type" => "files",
 			"label" => "Add media here",
-			"allowed_sizes" => "960x540",
+			"allowed_sizes" => "960x520",
 			"max" => 1,
 			"allowed_formats" => "png,jpg",
 			"hint_message" => "Add single image by dragging it here. PNG or JPG allowed in 960x540.",

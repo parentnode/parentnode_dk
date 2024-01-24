@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2008-2023, https://manipulator.parentnode.dk
-asset-builder @ 2024-01-23 13:10:00
+asset-builder @ 2024-01-24 10:29:05
 */
 
 /*seg_mobile_include.js*/

@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2008-2023, https://manipulator.parentnode.dk
-asset-builder @ 2024-01-23 13:10:00
+asset-builder @ 2024-01-24 10:29:05
 */
 
 /*seg_smartphone_include.js*/
@@ -7002,6 +7002,9 @@ Util.Modules["demos"] = new function() {
 							"display": "block"
 						});
 					}
+				}
+				if(u.absY(this.div_demos)-50 < page.scrolled_y) {
+					u.scrollTo(window, {node: this.div_demos, offset_y: 50});
 				}
 			}
 			this.resized();

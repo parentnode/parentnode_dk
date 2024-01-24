@@ -134,6 +134,11 @@ Util.Modules["demos"] = new function() {
 
 					}
 				}
+
+				if(u.absY(this.div_demos)-50 < page.scrolled_y) {
+					u.scrollTo(window, {node: this.div_demos, offset_y: 50});
+				}
+
 			}
 
 			this.resized();

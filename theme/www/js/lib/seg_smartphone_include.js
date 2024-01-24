@@ -26,4 +26,4 @@ document.write('<script type="text/javascript" src="/assets/parentnode-skin-defa
 
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-front.js"></script>');
 document.write('<script type="text/javascript" src="/js/lib/smartphone/m-contact.js"></script>');
-document.write('<script type="text/javascript" src="/js/lib/desktop/m-demos.js"></script>');
+document.write('<script type="text/javascript" src="/js/lib/smartphone/m-demos.js"></script>');

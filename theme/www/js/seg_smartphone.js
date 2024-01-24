@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2008-2023, https://manipulator.parentnode.dk
-asset-builder @ 2024-01-24 11:47:04
+asset-builder @ 2024-01-24 12:01:51
 */
 
 /*seg_smartphone_include.js*/
@@ -6916,49 +6916,8 @@ Util.Modules["contact"] = new function() {
 Util.Modules["demos"] = new function() {
 	this.init = function(scene) {
 		scene.resized = function() {
-			if(this.div_filter) {
-				this.filter_top = u.absY(this.div_filter);
-			}
 		}
 		scene.scrolled = function() {
-			if(this.div_filter) {
-				u.t.resetTimer(this.t_scroll);
-				this.t_scroll = u.t.setTimer(this, this.scrollTimeout, 100);
-				if(this.filter_top - 50 < page.scrolled_y) {
-					if(!this.is_filter_faded) {
-						u.ass(this.div_filter, {
-							"transition": "opacity 0.3s linear",
-							"opacity": 0
-						});
-						this.is_filter_faded = true;
-					}
-				}
-				else {
-					u.ass(this.div_filter, {
-						"transform": "translate3d(0, 0, 0)",
-						"transition": "opacity 0.2s linear",
-						"opacity": 1
-					});
-					this.is_filter_faded = false;
-				}
-			}
-		}
-		scene.scrollTimeout = function() {
-			if(this.filter_top - 50 < page.scrolled_y) {
-				u.ass(this.div_filter, {
-					"transform": "translate3d(0, "+ (page.scrolled_y - (this.filter_top - 50)) +"px, 0)",
-				});
-			}
-			else {
-				u.ass(this.div_filter, {
-					"transform": "translate3d(0, 0, 0)",
-				});
-			}
-			u.ass(this.div_filter, {
-				"transition": "opacity 0.2s linear",
-				"opacity": 1
-			});
-			this.is_filter_faded = false;
 		}
 		scene.ready = function() {
 			this.div_demos = u.qs("div.demos", this);

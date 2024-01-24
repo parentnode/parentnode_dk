@@ -14,54 +14,20 @@ Util.Modules["demos"] = new function() {
 			// u.bug("scene.scrolled:", this);
 
 			if(this.div_filter) {
-
-				u.t.resetTimer(this.t_scroll);
-				this.t_scroll = u.t.setTimer(this, this.scrollTimeout, 100);
-
 				if(this.filter_top - 50 < page.scrolled_y) {
 
-					if(!this.is_filter_faded) {
-						u.ass(this.div_filter, {
-							"transition": "opacity 0.3s linear",
-							"opacity": 0
-						});
-						this.is_filter_faded = true;
-					}
+					u.ass(this.div_filter, {
+						"transform": "translate3d(0, "+ (page.scrolled_y - (this.filter_top - 50)) +"px, 0)",
+					});
 
 				}
 				else {
-
 					u.ass(this.div_filter, {
 						"transform": "translate3d(0, 0, 0)",
-						"transition": "opacity 0.2s linear",
-						"opacity": 1
 					});
-					this.is_filter_faded = false;
-
 				}
 
 			}
-
-		}
-
-		scene.scrollTimeout = function() {
-
-			if(this.filter_top - 50 < page.scrolled_y) {
-				u.ass(this.div_filter, {
-					"transform": "translate3d(0, "+ (page.scrolled_y - (this.filter_top - 50)) +"px, 0)",
-				});
-			}
-			else {
-				u.ass(this.div_filter, {
-					"transform": "translate3d(0, 0, 0)",
-				});
-			}
-
-			u.ass(this.div_filter, {
-				"transition": "opacity 0.2s linear",
-				"opacity": 1
-			});
-			this.is_filter_faded = false;
 
 		}
 

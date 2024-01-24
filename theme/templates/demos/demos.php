@@ -57,7 +57,7 @@ $demos = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 	<div class="demos">
 		<ul class="items demos">
 		<? foreach($demos as $demo):
-			$media = $IC->sliceMediae($demo, "single_media"); ?>
+			$media = $IC->sliceMediae($demo, "main_image"); ?>
 
 			<li class="demo item article i:article id:<?= $demo["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 				<h2 itemprop="headline"><?= $demo["name"] ?></h2>

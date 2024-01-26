@@ -96,8 +96,8 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 			<li class="greenspeak" title="GreenSpeak">GreenSpeak</li>
 			<li class="lsb" title="Lån & Spar Bank">Lån &amp; Spar Bank</li>
 			<li class="kbhff" title="Københavns Fødevarefællesskab">KBHFF</li>
-			<li class="tuborg" title="Tuborg">Tuborg</li>
-			<li class="urbangreen" title="Urban Green">Urban Green</li>
+			<li class="cphskills" title="Copenhagen Skills">Copenhagen Skills</li>
+			<li class="punkt1" title="Punkt1">Punkt1</li>
 		</ul>
 	</div>
 </div>

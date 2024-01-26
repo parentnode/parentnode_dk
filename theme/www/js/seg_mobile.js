@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2008-2023, https://manipulator.parentnode.dk
-asset-builder @ 2024-01-24 12:03:33
+asset-builder @ 2024-01-26 17:02:14
 */
 
 /*seg_mobile_include.js*/
@@ -4842,7 +4842,6 @@ u.showScene = function(scene) {
 			u.a.transition(node, "all 0.2s ease-in "+((i*100)+200)+"ms");
 			u.ass(node, {
 				"opacity":1,
-				"transform":"translate(0, 0)"
 			});
 		}
 	}

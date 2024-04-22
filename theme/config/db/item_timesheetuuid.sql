@@ -4,6 +4,7 @@ CREATE TABLE `SITE_DB`.`item_timesheetuuid` (
 
 
   `name` varchar(100) NOT NULL,
+  `friendly_name` varchar(100) NOT NULL,
 
   PRIMARY KEY  (`id`),
   KEY `item_id` (`item_id`),

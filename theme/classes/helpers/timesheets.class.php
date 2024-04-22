@@ -19,12 +19,11 @@ class TimesheetsGateway {
 
 		// timesheets API connection info
 		@include_once("config/connect_timesheets.php");
-			
+
 	}
 
 	function timesheets_connection($_settings) {
 
-		
 		$this->_settings = $_settings;
 
 	}
@@ -73,5 +72,4 @@ class TimesheetsGateway {
 		}
 	}
 
-	
 }

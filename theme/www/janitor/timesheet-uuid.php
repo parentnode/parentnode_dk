@@ -20,7 +20,7 @@ $page->pageTitle("Itemtype UUIDs");
 if(is_array($action) && count($action)) {
 
 	// LIST/EDIT ITEM
-	if(preg_match("/^(list|edit)$/", $action[0])) {
+	if(preg_match("/^(list|edit|new)$/", $action[0])) {
 
 		$page->page(array(
 			"type" => "janitor",

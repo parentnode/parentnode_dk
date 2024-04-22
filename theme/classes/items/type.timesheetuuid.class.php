@@ -5,7 +5,7 @@
 * This file contains itemtype functionality
 */
 
-class TypeTimesheetUuid extends Itemtype {
+class TypeTimesheetuuid extends Itemtype {
 
 
 	public $db;
@@ -30,7 +30,7 @@ class TypeTimesheetUuid extends Itemtype {
 
 
 		$IC = new Items();
-		$PC = $IC->typeObject("project");
+		$PC = $IC->typeObject("timesheetproject");
 		$projects = $PC->getProjects();
 
 		// uuid
@@ -40,6 +40,15 @@ class TypeTimesheetUuid extends Itemtype {
 			"required" => true,
 			"hint_message" => "Put the UUID here.", 
 			"error_message" => "UUID must be filled out."
+		));
+
+		// uuid
+		$this->addToModel("friendly_name", array(
+			"type" => "string",
+			"label" => "Friendly name",
+			"required" => true,
+			"hint_message" => "Just a more readable name for this UUID.", 
+			"error_message" => "Friendly name must be filled out."
 		));
 
 		// Project ID

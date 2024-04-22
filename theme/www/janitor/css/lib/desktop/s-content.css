@@ -17,3 +17,5 @@
 #content .scene.scene.defaultEdit ul.items > li ul.actions li {
     padding: 5px 0 5px 5px;
 }
+
+#content .scene.timesheetuuidEdit div.field.uuid label {display: block;}

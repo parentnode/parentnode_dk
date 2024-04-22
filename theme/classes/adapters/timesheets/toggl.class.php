@@ -6,62 +6,14 @@ class JanitorToggl {
 
 	private $toggl;
 	private $togglReport;
+	private $_settings;
 	
 	function __construct($_settings) {
-		
+
 		$this->toggl = new MorningTrain\TogglApi\TogglApi($_settings["api-key"]);
 		$this->togglReport = new MorningTrain\TogglApi\TogglReportsApi($_settings["api-key"]);
 		$this->_settings = $_settings;
 
-	}
-
-	function send($_options) {
-
-		$to = false;
-		$from = false;
-		$body = false;
-
-		if($_options !== false) {
-			foreach($_options as $_option => $_value) {
-				switch($_option) {
-
-					case "to"                    : $to                    = $_value; break;
-					case "from"                  : $from                  = $_value; break;
-					case "body"                  : $body                  = $_value; break;
-
-				}
-			}
-		}
-
-		$sms_options = [];
-		$sms_options["from"] = $from;
-		$sms_options["body"] = $body;
-
-		try {
-			return $this->client->messages->create($to, $sms_options);
-		}
-		catch(HttpClientException $e) {
-			return false;
-		}
-		// Catch general exception
-		catch(Exception $e) {
-			return false;
-		}
-
-	}
-
-	function fetchMessage($sid) {
-
-		try {
-			return $this->client->messages($sid)->fetch();
-		}
-		catch(HttpClientException $e) {
-			return false;
-		}
-		// Catch general exception
-		catch(Exception $e) {
-			return false;
-		}
 	}
 
 	function getReports($_options = false) {

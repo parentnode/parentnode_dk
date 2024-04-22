@@ -75,3 +75,9 @@
 #content .scene.contact ul.items.people li.item.person .image {margin: 0 -10px;}
 #content .scene.contact ul.items.people li.item.person .image img {margin: 0 0 10px; width: 100%; cursor: default;}
 #content .scene.contact ul.items.people li.item.person .image p {display: none;}
+
+
+/* TIMESHEET */
+#content .scene.timesheet div.pending {padding-bottom: 20px;} 
+#content .scene.timesheet ul.projects {border: none;}
+#content .scene.timesheet div.processed {border-top: 1px solid #dedede; padding-top: 20px;}

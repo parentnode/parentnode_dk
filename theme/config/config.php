@@ -8,7 +8,7 @@ header("Content-type: text/html; charset=UTF-8");
 error_reporting(E_ALL);
 
 define("VERSION", "0.7.9.2");
-define("UI_BUILD", "20240123-131028");
+define("UI_BUILD", "20240422-141821");
 
 define("SITE_UID", "PARE");
 define("SITE_NAME", "parentnode.dk");

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2024-01-23 13:10:28
+asset-builder @ 2024-04-22 14:18:21
 */
 
 /*seg_desktop_include.css*/
@@ -1227,3 +1227,5 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .scene.scene.defaultEdit ul.items > li ul.actions li {
     padding: 5px 0 5px 5px;
 }
+#content .scene.timesheetuuidEdit div.field.uuid label {display: block;}
+

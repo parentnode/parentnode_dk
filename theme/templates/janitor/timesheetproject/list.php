@@ -7,7 +7,7 @@ global $itemtype;
 $items = $IC->getItems(["itemtype" => $itemtype, "order" => "status DESC, client_name ASC, name ASC", "extend" => ["editors" => true]]);
 ?>
 <div class="scene i:scene defaultList <?= $itemtype ?>List">
-	<h1>Projects</h1>
+	<h1>Timesheet projects</h1>
 
 	<ul class="actions">
 		<?= $HTML->oneButtonForm("Sync projects", "syncProjects", ["class" => "primary", "success-location" => "list"]) ?>

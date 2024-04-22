@@ -1,4 +1,4 @@
-CREATE TABLE `SITE_DB`.`item_project` (
+CREATE TABLE `SITE_DB`.`item_timesheetproject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item_id` int(11) NOT NULL,
 

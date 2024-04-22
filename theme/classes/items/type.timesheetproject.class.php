@@ -4,7 +4,7 @@
 * This file contains itemtype functionality
 */
 
-class TypeProject extends Itemtype {
+class TypeTimesheetproject extends Itemtype {
 
 
 	public $db;
@@ -20,7 +20,7 @@ class TypeProject extends Itemtype {
 
 
 		// itemtype database
-		$this->db = SITE_DB.".item_project";
+		$this->db = SITE_DB.".item_timesheetproject";
 		
 		$query = new Query();
 		$query->checkDbExistence($this->db);
@@ -218,6 +218,7 @@ class TypeProject extends Itemtype {
 			$sql .= " AND it.name = '".$timesheetuuid."'";
 		}
 
+		// debug([$sql]);
 		if($query->sql($sql)) {
 
 			if($project_id) {

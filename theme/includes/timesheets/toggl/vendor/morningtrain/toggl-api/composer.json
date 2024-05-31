@@ -3,13 +3,13 @@
     "type": "library",
     "description": "A complete native php wrapper for the Toggl API",
     "keywords": ["toggl","api", "php"],
-    "homepage": "http://morningtrain.dk/",
+    "homepage": "https://morningtrain.dk/",
     "license": "GNU General Public License v3.0",
     "authors": [
         {
             "name": "Bjarne Bonde",
             "email": "bb@morningtain.dk",
-            "homepage": "http://morningtrain.dk/",
+            "homepage": "https://morningtrain.dk/",
             "role": "Developer"
         }
     ],
@@ -19,10 +19,23 @@
         }
     },
     "require": {
+        "php": "^7.4|^8.0",
         "guzzlehttp/guzzle": "^6.3|^7.0"
     },
 	"require-dev": {
 		"squizlabs/php_codesniffer": "2.*",
-		"escapestudios/symfony2-coding-standard": "2.*"
-	}
+		"escapestudios/symfony2-coding-standard": "2.*",
+		"pestphp/pest": "^1.23",
+		"vlucas/phpdotenv": "^5.5"
+	},
+	"config": {
+		"allow-plugins": {
+			"pestphp/pest-plugin": true
+		}
+	},
+    "scripts": {
+        "test": [
+            "lando php ./vendor/bin/pest"
+        ]
+    }
 }

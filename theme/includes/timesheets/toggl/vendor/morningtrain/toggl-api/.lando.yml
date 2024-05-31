@@ -1,0 +1,11 @@
+name: togglapi
+recipe: lamp
+config:
+  webroot: .
+services:
+  appserver:
+    type: php
+    xdebug: true
+    overrides:
+      environment:
+        XDEBUG_MODE: coverage

@@ -1,5 +1,6 @@
 {
     "require": {
-        "morningtrain/toggl-api": "^1.2"
-    }
+        "morningtrain/toggl-api": "^v2"
+    },
+	"minimum-stability": "alpha"
 }

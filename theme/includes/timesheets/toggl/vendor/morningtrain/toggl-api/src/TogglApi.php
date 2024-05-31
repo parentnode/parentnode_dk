@@ -2,71 +2,59 @@
 
 namespace MorningTrain\TogglApi;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-
 /**
  * Wrapper for the Toggl Api.
  *
  * @see https://github.com/toggl/toggl_api_docs/blob/master/toggl_api.md
  */
-class TogglApi
+class TogglApi extends BaseApiClass
 {
-    /**
-     * @var string
-     */
-    protected $apiToken = '';
 
     /**
-     * @var \GuzzleHttp\Client
+     * Get full endpoint
+     * @return string
      */
-    protected $client;
-
-    /**
-     * TogglApi constructor.
-     *
-     * @param string $apiToken
-     */
-    public function __construct($apiToken)
+    protected function generateFullEndpoint(string $endpoint): string
     {
-        $this->apiToken = $apiToken;
-        $this->client = new Client([
-           'base_uri' => 'https://api.track.toggl.com/api/v8/',
-           'auth' => [$this->apiToken, 'api_token'],
-       ]);
+        $fragments = ['api', 'v9', $endpoint];
+        return implode('/', array_filter($fragments));
+    }
+
+    public function me(): TogglTrackMeApi
+    {
+        return new TogglTrackMeApi($this->apiToken);
+    }
+
+    public function workspace($workspaceId): TogglTrackWorkspaceApi
+    {
+        return new TogglTrackWorkspaceApi($this->apiToken, $workspaceId);
     }
 
     /**
-     * Get available endpoints.
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackMeApi::getClients()
      */
-    public function getAvailableEndpoints()
+    public function getMyClients()
     {
-        return $this->get('');
+        return $this->me()->getClients();
     }
 
     /**
-     * Create client.
-     *
-     * @param array $client
-     *
-     * Client has the following properties
-     *
-     * - name: The name of the client (string, required, unique in workspace)
-     * - wid: workspace ID, where the client will be used (integer, required)
-     * - notes: Notes for the client (string, not required)
-     * - hrate: The hourly rate for this client (float, not required, available only for pro workspaces)
-     * - cur: The name of the client's currency (string, not required, available only for pro workspaces)
-     * - at: timestamp that is sent in the response, indicates the time client was last updated
+     * Reset API Token for current user.
      *
      * @return bool|mixed|object
-     *
-     * @see https://github.com/toggl/toggl_api_docs/blob/master/chapters/clients.md
      */
-    public function createClient($client)
+    public function resetApiToken()
     {
-        return $this->POST('clients', ['client' => $client]);
+        return $this->me()->resetApiToken();
+    }
+
+
+    /**
+     * @see TogglTrackWorkspaceApi::createClient()
+     */
+    public function createClient($workspaceId, $client)
+    {
+        return $this->workspace($workspaceId)->createClient($client);
     }
 
     /**
@@ -77,9 +65,9 @@ class TogglApi
      *
      * @return bool|mixed|object
      */
-    public function updateClient($clientId, $client)
+    public function updateClient($workspaceId, $clientId, $client)
     {
-        return $this->PUT('clients/'.$clientId, ['client' => $client]);
+        return $this->workspace($workspaceId)->updateClient($clientId, $client);
     }
 
     /**
@@ -89,9 +77,9 @@ class TogglApi
      *
      * @return bool|mixed|object
      */
-    public function deleteClient($clientId)
+    public function deleteClient($workspaceId, $clientId)
     {
-        return $this->DELETE('clients/'.$clientId);
+        return $this->workspace($workspaceId)->deleteClient($clientId);
     }
 
     /**
@@ -101,7 +89,7 @@ class TogglApi
      */
     public function getClients()
     {
-        return $this->GET('clients');
+        return $this->GET('me/clients');
     }
 
     /**
@@ -153,40 +141,19 @@ class TogglApi
     }
 
     /**
-     * Get client by ID.
-     *
-     * @param int $clientId
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::getClientById
      */
-    public function getClientById($clientId)
+    public function getClientById($workspaceId, $clientId)
     {
-        return $this->GET('clients/'.$clientId);
+        return $this->workspace($workspaceId)->getClientById($clientId);
     }
 
     /**
-     * Create project user relation.
-     *
-     * @param array $user
-     *
-     * Project user has the following properties
-     *
-     * - pid: project ID (integer, required)
-     * - uid: user ID, who is added to the project (integer, required)
-     * - wid: workspace ID, where the project belongs to (integer, not-required, project's workspace id is used)
-     * - manager: admin rights for this project (boolean, default false)
-     * - rate: hourly rate for the project user (float, not-required, only for pro workspaces) in the currency of the project's client or in workspace default currency.
-     * - at: timestamp that is sent in the response, indicates when the project user was last updated
-     *
-     * Workspace id (wid), project id (pid) and user id (uid) can't be changed on update.
-     *
-     * @return bool|mixed|object
-     *
-     * @see https://github.com/toggl/toggl_api_docs/blob/master/chapters/project_users.md
+     * @see TogglTrackWorkspaceApi::createProjectUser
      */
-    public function createProjectUser($user)
+    public function createProjectUser($workspaceId, $user)
     {
-        return $this->POST('project_users', ['project_user' => $user]);
+        return $this->workspace($workspaceId)->createProjectUser($user);
     }
 
     /**
@@ -348,22 +315,23 @@ class TogglApi
      *
      * @see https://github.com/toggl/toggl_api_docs/blob/master/chapters/projects.md
      */
-    public function createProject($project)
+    public function createProject($workspaceId, $project)
     {
-        return $this->POST('projects', ['project' => $project]);
+        return $this->workspace($workspaceId)->createProject($project);
     }
 
     /**
      * Update a project.
      *
+     * @param int   $workspaceId
      * @param int   $projectId
      * @param array $project
      *
      * @return bool|mixed|object
      */
-    public function updateProject($projectId, $project)
+    public function updateProject($workspaceId, $projectId, $project)
     {
-        return $this->PUT('projects/'.$projectId, ['project' => $project]);
+        return $this->workspace($workspaceId)->updateProject($projectId, $project);
     }
 
     /**
@@ -405,37 +373,53 @@ class TogglApi
     /**
      * Get project group relations.
      *
+     * @param int $workspaceId
      * @param int $projectId
      *
      * @return bool|mixed|object
      */
-    public function getProjectGroupRelations($projectId)
+    public function getProjectGroupRelations($workspaceId, $projectId)
     {
-        return $this->GET('projects/'.$projectId.'/project_groups');
+        return $this->workspace($workspaceId)->getProjectGroupRelations($projectId);
     }
 
     /**
      * Get project tasks.
      *
+     * @param int $workspaceId
      * @param int $projectId
      *
      * @return bool|mixed|object
      */
-    public function getProjectTasks($projectId)
+    public function getProjectTasks($workspaceId, $projectId)
     {
-        return $this->GET('projects/'.$projectId.'/tasks');
+        return $this->workspace($workspaceId)->getProjectTasks($projectId);
     }
 
     /**
      * Get project.
      *
+     * @param int $workspaceId
      * @param int $projectId
      *
      * @return bool|mixed|object
      */
-    public function getProject($projectId)
+    public function getProject($workspaceId, $projectId)
     {
-        return $this->GET('projects/'.$projectId);
+        return $this->workspace($workspaceId)->getProject($projectId);
+    }
+
+    /**
+     * Get project.
+     *
+     * @param int $workspaceId
+     * @param int $projectId
+     *
+     * @return bool|mixed|object
+     */
+    public function getProjects($workspaceId, $options = [])
+    {
+        return $this->workspace($workspaceId)->getProjects($options);
     }
 
     /**
@@ -504,7 +488,7 @@ class TogglApi
      */
     public function getMe($related = false)
     {
-        return $this->GET('me', ['with_related_data' => $related]);
+        return $this->me()->getMe($related);
     }
 
     /**
@@ -516,7 +500,7 @@ class TogglApi
      */
     public function updateMe($user)
     {
-        return $this->PUT('me', ['user' => $user]);
+        return $this->me()->updateMe($user);
     }
 
     /**
@@ -529,16 +513,6 @@ class TogglApi
     public function signup($user)
     {
         return $this->POST('signups', ['user' => $user]);
-    }
-
-    /**
-     * Reset API Token for current user.
-     *
-     * @return bool|mixed|object
-     */
-    public function resetApiToken()
-    {
-        return $this->POST('reset_token');
     }
 
     /**
@@ -597,22 +571,19 @@ class TogglApi
      * @param int $wid
      *
      * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::getUsers
      */
-    public function getWorkspaceUsers($wid)
+    public function getWorkspaceUsers($workspaceId)
     {
-        return $this->GET('workspaces/'.$wid.'/users');
+        return $this->workspace($workspaceId)->getUsers();
     }
 
     /**
-     * Get workspace clients.
-     *
-     * @param int $wid
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::getClients
      */
-    public function getWorkspaceClients($wid)
+    public function getWorkspaceClients($workspaceId)
     {
-        return $this->GET('workspaces/'.$wid.'/clients');
+        return $this->workspace($workspaceId)->getClients();
     }
 
     /**
@@ -764,182 +735,96 @@ class TogglApi
     */
 
     /**
-     * Get task.
-     *
-     * Tasks are available only for pro workspaces.
-     *
-     * @param int $taskId
-     *
-     * @return bool|mixed|object
-     * Task has the following properties:
-     * - name: The name of the task (string, required, unique in project)
-     * - pid: project ID for the task (integer, required)
-     * - wid: workspace ID, where the task will be saved (integer, project's workspace id is used when not supplied)
-     * - uid: user ID, to whom the task is assigned to (integer, not required)
-     * - estimated_seconds: estimated duration of task in seconds (integer, not required)
-     * - active: whether the task is done or not (boolean, by default true)
-     * - at: timestamp that is sent in the response for PUT, indicates the time task was last updated
-     * - tracked_seconds: total time tracked (in seconds) for the task
-     *
-     * Workspace id (wid) and project id (pid) can't be changed on update.
-     *
-     * @see https://github.com/toggl/toggl_api_docs/blob/master/chapters/tasks.md
+     * @see TogglTrackWorkspaceApi::getTask()
      */
-    public function getTask($taskId)
+    public function getTask($workspaceId, $projectId, $taskId)
     {
-        return $this->GET('tasks/'.$taskId);
+        return $this->workspace($workspaceId)->getTask($projectId, $taskId);
     }
 
     /**
-     * Create task.
-     *
-     * @param array $task
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::createTask()
      */
-    public function createTask($task)
+    public function createTask($workspaceId, $projectId, $task)
     {
-        return $this->POST('tasks', ['task' => $task]);
+        return $this->workspace($workspaceId)->createTask($projectId, $task);
     }
 
     /**
-     * Update task.
-     *
-     * @param int   $taskId
-     * @param array $task
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::updateTask()
      */
-    public function updateTask($taskId, $task)
+    public function updateTask($workspaceId, $projectId, $taskId, $task)
     {
-        return $this->PUT('tasks/'.$taskId, ['task' => $task]);
+        return $this->workspace($workspaceId)->updateTask($projectId, $taskId, $task);
     }
 
     /**
-     * Update multiple tasks.
-     *
-     * @param array $taskIds
-     * @param array $task
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::deleteTask()
      */
-    public function updateTasks($taskIds, $task)
+    public function deleteTask($workspaceId, $projectId, $taskId)
     {
-        return $this->PUT('tasks/'.implode(',', $taskIds), ['task' => $task]);
+        return $this->workspace($workspaceId)->deleteTask($projectId, $taskId);
     }
 
     /**
-     * Delete task.
-     *
-     * @param int $taskId
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::updateTasks()
      */
-    public function deleteTask($taskId)
+    public function updateTasks($workspaceId, $projectId, $taskIds, $task)
     {
-        return $this->DELETE('tasks/'.$taskId);
+        return $this->workspace($workspaceId)->updateTasks($projectId, $taskIds, $task);
+    }
+
+
+    /////////////////////////////
+    /// Time entries
+    /////////////////////////////
+
+    /**
+     * @see TogglTrackWorkspaceApi::createTimeEntry
+     */
+    public function createTimeEntry($workspaceId, $entry)
+    {
+        return $this->workspace($workspaceId)->createTimeEntry($entry);
     }
 
     /**
-     * Delete multiple tasks.
-     *
-     * @param int $taskIds
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::startTimeEntry
      */
-    public function deleteTasks($taskIds)
+    public function startTimeEntry($workspaceId, $entry)
     {
-        return $this->DELETE('tasks/'.implode(',', $taskIds));
-    }
-
-    /**     TIME ENTRIES ()
-
-
-     */
-
-    /**
-     * Create time entry.
-     *
-     * The requests are scoped with the user whose API token is used. Only his/her time entries are updated, retrieved and created.
-     *
-     * @param array $entry
-     * Time entry has the following properties
-     * - description: (string, strongly suggested to be used)
-     * - wid: workspace ID (integer, required if pid or tid not supplied)
-     * - pid: project ID (integer, not required)
-     * - tid: task ID (integer, not required)
-     * - billable: (boolean, not required, default false, available for pro workspaces)
-     * - start: time entry start time (string, required, ISO 8601 date and time)
-     * - stop: time entry stop time (string, not required, ISO 8601 date and time)
-     * - duration: time entry duration in seconds. If the time entry is currently running, the duration attribute contains a negative value, denoting the start of the time entry in seconds since epoch (Jan 1 1970). The correct duration can be calculated as current_time + duration, where current_time is the current time in seconds since epoch. (integer, required)
-     * - created_with: the name of your client app (string, required)
-     * - tags: a list of tag names (array of strings, not required)
-     * - duronly: should Toggl show the start and stop time of this time entry? (boolean, not required)
-     * - at: timestamp that is sent in the response, indicates the time item was last updated
-     *
-     * @return bool|mixed|object
-     *
-     * @see https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md
-     */
-    public function createTimeEntry($entry)
-    {
-        return $this->POST('time_entries', ['time_entry' => $entry]);
+        return $this->workspace($workspaceId)->createTimeEntry($entry);
     }
 
     /**
-     * Start time entry.
-     *
-     * @param array $entry
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::stopTimeEntry
      */
-    public function startTimeEntry($entry)
+    public function stopTimeEntry($workspaceId, $timeEntryId)
     {
-        return $this->POST('time_entries/start', ['time_entry' => $entry]);
+        return $this->workspace($workspaceId)->stopTimeEntry($timeEntryId);
     }
 
     /**
-     * Stop time entry.
-     *
-     * @param int $timeEntryId
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::getTimeEntry
      */
-    public function stopTimeEntry($timeEntryId)
+    public function getTimeEntry($workspaceId, $timeEntryId)
     {
-        return $this->PUT('time_entries/'.$timeEntryId.'/stop');
+        return $this->workspace($workspaceId)->getTimeEntry($timeEntryId);
     }
 
     /**
-     * Get time entry.
-     *
-     * @param int $timeEntryId
-     *
-     * @return bool|mixed|object
-     */
-    public function getTimeEntry($timeEntryId)
-    {
-        return $this->GET('time_entries/'.$timeEntryId);
-    }
-
-    /**
-     * Get running time entry.
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackMeApi::getRunningTimeEntry
      */
     public function getRunningTimeEntry()
     {
-        return $this->GET('time_entries/current');
+        return $this->me()->getRunningTimeEntry();
     }
 
     /**
-     * Get time entries.
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackMeApi::getTimeEntries
      */
     public function getTimeEntries()
     {
-        return $this->GET('time_entries');
+        return $this->me()->getTimeEntries();
     }
 
     /**
@@ -969,140 +854,28 @@ class TogglApi
     }
 
     /**
-     * Update time entry.
-     *
-     * @param int   $timeEntryId
-     * @param array $entry
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::updateTimeEntry
      */
-    public function updateTimeEntry($timeEntryId, $entry)
+    public function updateTimeEntry($workspaceId, $timeEntryId, $entry)
     {
-        return $this->PUT('time_entries/'.$timeEntryId, ['time_entry' => $entry]);
+        return $this->workspace($workspaceId)->updateTimeEntry($timeEntryId, $entry);
     }
 
     /**
-     * Delete time entry.
-     *
-     * @param int $timeEntryId
-     *
-     * @return bool|mixed|object
+     * @see TogglTrackWorkspaceApi::deleteTimeEntry
      */
-    public function deleteTimeEntry($timeEntryId)
+    public function deleteTimeEntry($workspaceId, $timeEntryId)
     {
-        return $this->DELETE('time_entries/'.$timeEntryId);
+        return $this->workspace($workspaceId)->deleteTimeEntry($timeEntryId);
     }
 
-    /**
-     * Helper for client get command.
-     *
-     * @param string $endpoint
-     * @param array $body
-     * @param array $query
-     *
-     * @return bool|mixed|object
-     */
-    private function GET($endpoint, $query = array())
-    {
-        try {
-            $response = $this->client->get($endpoint, ['query' => $query]);
+    /////////////////////////////
+    /// Organizations
+    /////////////////////////////
 
-            return $this->checkResponse($response);
-        } catch (ClientException $e) {
-            return (object) [
-                'success' => false,
-                'message' => $e->getResponse()->getBody()->getContents(),
-            ];
-        }
+    public function getOrganizationById($organizationId)
+    {
+        return $this->GET("organizations/$organizationId");
     }
 
-    /**
-     * Wrapper for client post command.
-     *
-     * @param string $endpoint
-     * @param array $body
-     * @param array $query
-     *
-     * @return bool|mixed|object
-     */
-    private function POST($endpoint, $body = array(), $query = array())
-    {
-        try {
-            $response = $this->client->post($endpoint, ['body' => json_encode($body), 'query' => $query]);
-
-            return $this->checkResponse($response);
-        } catch (ClientException $e) {
-            return (object) [
-                'success' => false,
-                'message' => $e->getResponse()->getBody()->getContents(),
-            ];
-        }
-    }
-
-    /**
-     * Helper for client put command.
-     *
-     * @param string $endpoint
-     * @param array $body
-     * @param array $query
-     *
-     * @return bool|mixed|object
-     */
-    private function PUT($endpoint, $body = array(), $query = array())
-    {
-        try {
-            $response = $this->client->put($endpoint, ['body' => json_encode($body), 'query' => $query]);
-
-            return $this->checkResponse($response);
-        } catch (ClientException $e) {
-            return (object) [
-                'success' => false,
-                'message' => $e->getResponse()->getBody()->getContents(),
-            ];
-        }
-    }
-
-    /**
-     * Helper for client delete command.
-     *
-     * @param $endpoint
-     * @param array $body
-     * @param array $query
-     *
-     * @return bool|mixed|object
-     */
-    private function DELETE($endpoint, $body = array(), $query = array())
-    {
-        try {
-            $response = $this->client->delete($endpoint, ['body' => json_encode($body), 'query' => $query]);
-
-            return $this->checkResponse($response);
-        } catch (ClientException $e) {
-            return (object) [
-                'success' => false,
-                'message' => $e->getResponse()->getBody()->getContents(),
-            ];
-        }
-    }
-
-    /**
-     * Helper for checking http response.
-     *
-     * @param \Psr\Http\Message\ResponseInterface $response
-     *
-     * @return bool|mixed
-     */
-    private function checkResponse($response)
-    {
-        if ($response->getStatusCode() == 200) {
-            $data = json_decode($response->getBody());
-            if (is_object($data) && isset($data->data)) {
-                $data = $data->data;
-            }
-
-            return $data;
-        }
-
-        return false;
-    }
 }

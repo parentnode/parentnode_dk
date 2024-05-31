@@ -75,7 +75,7 @@ class TypeTimesheetuuid extends Itemtype {
 			$project_id = $this->getProperty("project_id", "value");
 
 			$IC = new Items();
-			$PC = $IC->TypeObject("project");
+			$PC = $IC->TypeObject("timesheetproject");
 			$project = $PC->getProjects(["project_id" => $project_id]);
 			
 			if($PC->getProjects(["project_id" => $project_id, "timesheetuuid_id" => $timesheetuuid_id])) {

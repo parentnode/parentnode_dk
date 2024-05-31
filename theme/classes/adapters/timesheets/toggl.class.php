@@ -75,7 +75,7 @@ class JanitorToggl {
 		$page_counter = 1;
 	
 		$detailed_report = $this->togglReport->getDetailsReport($query . "&page=" . $page_counter++);
-		// debug(["detailed_report", $detailed_report]);
+		// debug(["detailed_report", $detailed_report, $query]);
 	
 		// Get more pages, as long as there is still entries (50 pr. page)
 		while(count($detailed_report)) {

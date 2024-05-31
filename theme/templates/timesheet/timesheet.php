@@ -39,12 +39,12 @@ if($projects) {
 		if($entry->tags) {
 			
 			// entry has been billed
-			if(array_search("Afregnet", $entry->tags) !== false) {
+			if(array_search("Afregnet", $entry->tags) !== false || array_search("afregnet", $entry->tags) !== false) {
 				
 				$projects[arrayKeyValue($projects, "project_id", $entry->pid)]["billed_entries"][] = $entry;
 			}
 			// entry is on the house
-			elseif(array_search("Afskrevet", $entry->tags) !== false) {
+			elseif(array_search("Afskrevet", $entry->tags) !== false || array_search("afskrevet", $entry->tags) !== false) {
 				
 				$projects[arrayKeyValue($projects, "project_id", $entry->pid)]["complimentary_entries"][] = $entry;
 			}

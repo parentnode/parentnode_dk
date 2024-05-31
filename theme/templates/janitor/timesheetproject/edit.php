@@ -19,6 +19,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => ["editors" => true]));
 		
 			<fieldset>
 				<?= $model->input("show_history", array("value" => $item["show_history"])) ?>
+				<?= $model->input("summary_method", array("value" => $item["summary_method"])) ?>
 			</fieldset>
 
 			<?= $JML->editActions($item) ?>

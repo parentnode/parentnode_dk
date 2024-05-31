@@ -7,6 +7,7 @@ CREATE TABLE `SITE_DB`.`item_timesheetproject` (
   `client_id` int(11) DEFAULT NULL,
   `client_name` varchar(100) DEFAULT '',
   `show_history` int(11) DEFAULT 1,
+  `summary_method` int(11) NOT NULL,
 
   PRIMARY KEY  (`id`),
   KEY `item_id` (`item_id`),

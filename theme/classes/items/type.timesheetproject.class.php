@@ -70,6 +70,16 @@ class TypeTimesheetproject extends Itemtype {
 			"hint_message" => "Select to show the project's billing history on the client timesheet page.",
 			"error_message" => "Error."
 		));
+
+		// Summary method
+		$this->addToModel("summary_method", array(
+			"type" => "select",
+			"options" => ["" => "Select hour summary method", 15 => "15 minutes increments", 60 => "60 minutes increments"],
+			"required" => true,
+			"label" => "Hour summary method",
+			"hint_message" => "Choose how to sum up the hours.",
+			"error_message" => "You should choose a summary method to show hour summary in the correct way."
+		));
 	}
 
 

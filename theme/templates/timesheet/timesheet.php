@@ -72,20 +72,23 @@ if($projects) {
 	<div class="pending">
 		<h2>Pending hours</h2>
 		<? 
-		$pending_total_rounded_hours = 0;
+		$pending_total_rounded_hours_15 = 0;
+		$pending_total_rounded_hours_60 = 0;
 		?>
 		<ul class="items projects">
 			<? foreach($projects as $project):
 				$project_pending_total = 0;
-				$project_pending_total_rounded = 0;
+				$project_pending_total_rounded_15 = 0;
 				if($project["pending_entries"]): ?>
 			<li class="item project">
 				<h3><?= $project["client_name"] ?>, <?= $project["name"] ?></h3>
 				<ul class="pending_entries">
 					<? foreach($project["pending_entries"] as $pending_entry):
-						$pending_entry_duration = round($pending_entry->dur/1000/60);					
+
+						$pending_entry_duration = round($pending_entry->dur/1000/60);
 						$project_pending_total = $project_pending_total + $pending_entry_duration;
-						$project_pending_total_rounded = $project_pending_total_rounded + ($pending_entry_duration%15 ? 15 - $pending_entry_duration%15 : 0) + $pending_entry_duration;
+						$project_pending_total_rounded_15 = $project_pending_total_rounded_15 + ($pending_entry_duration%15 ? 15 - $pending_entry_duration%15 : 0) + $pending_entry_duration;
+						$project_pending_total_rounded_60 = $project_pending_total_rounded_60 + ($pending_entry_duration%60 ? 60 - $pending_entry_duration%60 : 0) + $pending_entry_duration;
 						if($project["show_history"]): ?>
 					<li class="pending_entry">
 						<span class="date"><?= date("d/m/Y", strtotime($pending_entry->start)) ?></span> – 
@@ -95,16 +98,31 @@ if($projects) {
 					<? endif; 
 					endforeach;
 
-					$project_pending_total_rounded_hours = ceil($project_pending_total_rounded/60);
-					$pending_total_rounded_hours += $project_pending_total_rounded_hours; 
+					$project_pending_total_rounded_hours_15 = ceil($project_pending_total_rounded_15/60);
+					$pending_total_rounded_hours_15 += $project_pending_total_rounded_hours_15; 
+
+					$project_pending_total_rounded_hours_60 = ceil($project_pending_total_rounded_60/60);
+					$pending_total_rounded_hours_60 += $project_pending_total_rounded_hours_60; 
 					?>
 				</ul>
-				<h6 class="total">TOTAL: <!-- <span class="hours"><?= ceil($project_pending_total/60) ?></span> hours (<span class="minutes"><?= $project_pending_total ?></span> min.) / --><span class="hours15"><?= $project_pending_total_rounded_hours ?></span> hours (<span class="minutes15"><?= $project_pending_total_rounded ?></span> min.)</h6>
+				<h6 class="total">TOTAL: 
+					<!--<span class="hours"><?= ceil($project_pending_total/60) ?></span> hours (<span class="minutes"><?= $project_pending_total ?></span> min.) / -->
+					<? if($project["summary_method"] == 15): ?>
+					<span class="hours15"><?= $project_pending_total_rounded_hours_15 ?></span> hours (<span class="minutes15"><?= $project_pending_total_rounded_15 ?></span> min.)</h6>
+					<? else: ?>
+					<span class="hours60"><?= $project_pending_total_rounded_hours_60 ?></span> hours (<span class="minutes60"><?= $project_pending_total_rounded_60 ?></span> min.)</h6>
+					<? endif; ?>
 			</li>
 			<? endif;
 			endforeach; ?>
 		</ul>
-		<h5 class="total pending hours">PENDING HOURS, TOTAL: <span class="hours"><?= $pending_total_rounded_hours ?></span> hours</h5>
+		<h5 class="total pending hours">PENDING HOURS, TOTAL: 
+			<? if($project["summary_method"] == 15): ?>
+			<span class="hours"><?= $pending_total_rounded_hours_15 ?></span> hours
+			<? else: ?>
+			<span class="hours"><?= $pending_total_rounded_hours_60 ?></span> hours
+			<? endif; ?>
+		</h5>
 	</div>
 
 	<div class="processed">

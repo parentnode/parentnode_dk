@@ -74,7 +74,7 @@ class TypeTimesheetproject extends Itemtype {
 		// Summary method
 		$this->addToModel("summary_method", array(
 			"type" => "select",
-			"options" => ["" => "Select hour summary method", 15 => "15 minutes increments", 60 => "60 minutes increments"],
+			"options" => ["" => "Select hour summary method", 1 => "By the minute", 15 => "15 minute increments", 60 => "60 minute increments"],
 			"required" => true,
 			"label" => "Hour summary method",
 			"hint_message" => "Choose how to sum up the hours.",

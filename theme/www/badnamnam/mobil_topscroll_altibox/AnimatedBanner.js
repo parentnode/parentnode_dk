@@ -8,7 +8,7 @@ var AnimatedBanner = function() {
 		// bannerType: "Adform",
 //		bannerType: "DR",
 //		bannerType: "Adtech",
-		bannerType: "GoogleStudio",
+		bannerType: "Google",
 
 //		benyt bannerType google til Sizmek bannere
 

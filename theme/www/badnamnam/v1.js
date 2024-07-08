@@ -3,7 +3,7 @@ const banner_info = document.querySelector("var.badnamnam");
 console.log(banner_info.dataset);
 
 const topnavigation = window.top.document.querySelector(".topbar, #sitehead, .jp-header, .navmenu, .masthead, .globalHeader, #wrapHeader");
-const whitespace = topnavigation.offsetHeight || 185;
+const whitespace =  topnavigation ? (topnavigation.offsetHeight || 185) : 185;
 const creativeHeight = window.parent.innerHeight - whitespace;
 
 const frame = window.frameElement;
@@ -35,7 +35,22 @@ polPosition.style.cssText = `
 	max-height: ${creativeHeight}px;
 `;
 
+// function updateTrackingUrl() {
+// 	iframe.documentElement.clickTag = this.tracking_url + encodeURIComponent(iframe.documentElement.clickTag);
+// }
+
+
 const iframe = document.createElement("iframe");
+let tracking_url = banner_info.dataset.singleClick;
+// console.log(tracking_url);
+
+// document.addEventListener(iframe, "load", updateTrackingUrl);
+
+
+
+iframe.setAttribute('style', 'width:100%;height:100%;border:0;');
+iframe.setAttribute('allow', 'autoplay; fullscreen');
+iframe.setAttribute('scrolling', 'no');
 
 if(banner_info.dataset.bannerUrl) {
 	loadIframe(banner_info.dataset.bannerUrl);
@@ -44,10 +59,6 @@ else if(banner_info.dataset.bannerId) {
 	loadIframe("https://parentnode.dk/badnamnam/banner?id="+banner_info.dataset.bannerId);
 }
 
-
-iframe.setAttribute('style', 'width:100%;height:100%;border:0;');
-iframe.setAttribute('allow', 'autoplay; fullscreen');
-iframe.setAttribute('scrolling', 'no');
 
 const iframeDiv = document.createElement("div");
 iframeDiv.setAttribute(
@@ -116,7 +127,27 @@ polPlacement.appendChild(animation);
 polPlacement.appendChild(svgDiv);
 polPlacement.appendChild(scrolToDiv);
 
-function loadIframe(url) {
+async function loadIframe(url) {
+
 	console.log("loadIframe", url);
-	iframe.src = url;
+	const response = await fetch(url);
+	let response_text = await response.text();
+	console.log(response);
+	if(response.ok) {
+		let matches = response_text.match(/(clicktag[^=]+)/i);
+		let update_string = "";
+		if(matches) {
+			let i, match;
+			
+			for(i = 0; i < matches.length; i++) {
+				match = matches[i];
+				update_string += match + " = '" + tracking_url + "' + " + match + ";";
+			}
+		}
+		
+		response_text = response_text.replace(/\<\/head\>/, '<base href="'+response.url+'" /></head>');
+		iframe.srcdoc = response_text.replace(/\<\/body\>/, '<script>'+update_string+'</script></body>');
+	}
+
+	// iframe.src = url;
 }

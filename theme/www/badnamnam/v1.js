@@ -134,19 +134,29 @@ async function loadIframe(url) {
 	let response_text = await response.text();
 	console.log(response);
 	if(response.ok) {
-		let matches = response_text.match(/(clicktag[^=]+)/i);
+		let matches = response_text.match(/clicktag[^=]+/i);
 		let update_string = "";
 		if(matches) {
 			let i, match;
 			
 			for(i = 0; i < matches.length; i++) {
-				match = matches[i];
+				match = matches[i].trim();
 				update_string += match + " = '" + tracking_url + "' + " + match + ";";
 			}
 		}
+
+		// var response_url = "https://preview.animated.dk/altibox/2024/202405_altibox_1000mbit_v3/standard/desktop_topscroll_altibox/index.html";
+		// var base_url = response_url.lastIndexOf("/") <= response_url.length + 1 ? response_url.substring(0, response_url.lastIndexOf("/")) + "/" : response_url; //(/\/[^$\/]+/, "/");
+		// console.log(base_url, response_url.length, response_url.lastIndexOf("/"));
+		var base_url = response.url;
+
+		response_text = response_text.replace(/\<head\>/, '<head><base href="'+base_url+'" />');
+		var test_string = response_text.replace(/\<\/body\>/, '<script>'+update_string+'</script></body>');
+		console.log(test_string);
 		
-		response_text = response_text.replace(/\<\/head\>/, '<base href="'+response.url+'" /></head>');
-		iframe.srcdoc = response_text.replace(/\<\/body\>/, '<script>'+update_string+'</script></body>');
+		iframe.srcdoc = test_string;
+
+		console.log("after");
 	}
 
 	// iframe.src = url;

@@ -2,7 +2,7 @@ const banner_info = document.querySelector("var.badnamnam");
 
 console.log(banner_info.dataset);
 
-const topnavigation = window.top.document.querySelector(".topbar, #sitehead, .jp-header, .navmenu, .masthead, .globalHeader, #wrapHeader");
+const topnavigation = window.top.document.querySelector(".topbar, #sitehead, .jp-header, .navmenu, .masthead, .globalHeader, #wrapHeader, #siteHeader, #sdk-header");
 const whitespace =  topnavigation ? (topnavigation.offsetHeight || 185) : 185;
 const creativeHeight = window.parent.innerHeight - whitespace;
 
@@ -17,8 +17,8 @@ frame.style.cssText = `
 	border:0;
 `;
 
-const polPlacement = frame.parentElement.parentElement;
-polPlacement.style.cssText = `
+const placement = frame.parentElement.parentElement;
+placement.style.cssText = `
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -28,7 +28,7 @@ polPlacement.style.cssText = `
 	clip: rect(auto, auto, auto, auto);
 `;
 
-const polPosition = polPlacement.parentElement;
+const polPosition = placement.parentElement;
 polPosition.classList.add("interscrollerAd");
 polPosition.style.cssText = `
 	height: ${creativeHeight}px;
@@ -70,7 +70,7 @@ iframeDiv.setAttribute(
 iframeDiv.appendChild(iframe);
 
 
-polPlacement.appendChild(iframeDiv);
+placement.appendChild(iframeDiv);
 
 const svgDiv = document.createElement("div");
 svgDiv.innerHTML = `
@@ -123,9 +123,9 @@ scrolToDiv.style = `
 	position: absolute;
 	bottom: 0;
 `;
-polPlacement.appendChild(animation);
-polPlacement.appendChild(svgDiv);
-polPlacement.appendChild(scrolToDiv);
+placement.appendChild(animation);
+placement.appendChild(svgDiv);
+placement.appendChild(scrolToDiv);
 
 async function loadIframe(url) {
 

@@ -94,8 +94,8 @@ if($projects) {
 						$project_pending_total = $project_pending_total + $pending_entry_duration;
 
 						$project_pending_total_rounded = $project_pending_total;
-						$project_pending_total_rounded_15 = $project_pending_total_rounded_15 + ($pending_entry_duration%15 ? 15 - $pending_entry_duration%15 : 0) + $pending_entry_duration;
-						$project_pending_total_rounded_60 = $project_pending_total_rounded_60 + ($pending_entry_duration%60 ? 60 - $pending_entry_duration%60 : 0) + $pending_entry_duration;
+						$project_pending_total_rounded_15 = $project_pending_total_rounded_15 + $pending_entry_duration_15;
+						$project_pending_total_rounded_60 = $project_pending_total_rounded_60 + $pending_entry_duration_60;
 						if($project["show_history"]): ?>
 					<li class="pending_entry">
 						<span class="date"><?= date("d/m/Y", strtotime($pending_entry->start)) ?></span> – 

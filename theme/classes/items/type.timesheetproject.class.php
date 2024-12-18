@@ -93,8 +93,9 @@ class TypeTimesheetproject extends Itemtype {
 		usleep(1100000);
 		$toggl_clients = $TC->getClients();
 
-		$local_project_items = $IC->getItems(["itemtype" => "project", "extend" => true]) ?: [];
+		$local_project_items = $IC->getItems(["itemtype" => "timesheetproject", "extend" => true]) ?: [];
 
+		// debug(["toggl_projects", $toggl_projects]);
 		if($toggl_projects) {
 
 			foreach ($toggl_projects as $toggl_project) {
@@ -102,12 +103,12 @@ class TypeTimesheetproject extends Itemtype {
 				$toggl_clients_key = isset($toggl_project->cid) ? arrayKeyValue(json_decode(json_encode($toggl_clients), true), "id", $toggl_project->cid) : false;
 				$toggl_project_client = $toggl_clients_key !== false ? $toggl_clients[$toggl_clients_key] : false;
 				$toggl_project_status = $toggl_project->active ? "1" : "0";
-				
+
 				$local_projects_key = arrayKeyValue($local_project_items, "project_id", $toggl_project->id);
 
 				// project is already in db
 				if($local_projects_key !== false) {
-					
+
 					$item = $local_project_items[$local_projects_key];
 
 					// difference in status

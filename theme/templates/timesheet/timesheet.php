@@ -87,6 +87,10 @@ if($projects) {
 					<? foreach($project["pending_entries"] as $pending_entry):
 
 						$pending_entry_duration = round($pending_entry->dur/1000/60);
+
+						$pending_entry_duration_15 = ($pending_entry_duration%15 ? 15 - $pending_entry_duration%15 : 0) + $pending_entry_duration;
+						$pending_entry_duration_60 = ($pending_entry_duration%60 ? 60 - $pending_entry_duration%60 : 0) + $pending_entry_duration;
+
 						$project_pending_total = $project_pending_total + $pending_entry_duration;
 
 						$project_pending_total_rounded = $project_pending_total;
@@ -95,7 +99,15 @@ if($projects) {
 						if($project["show_history"]): ?>
 					<li class="pending_entry">
 						<span class="date"><?= date("d/m/Y", strtotime($pending_entry->start)) ?></span> – 
-						<span class="duration"><span class="minutes"><?= round($pending_entry->dur/1000/60) ?></span> min.</span> –
+
+						<? if($project["summary_method"] == 1): ?>
+						<span class="duration"><span class="minutes"><?= $pending_entry_duration ?></span> min.</span> –
+						<? elseif($project["summary_method"] == 15): ?>
+						<span class="duration"><span class="minutes"><?= $pending_entry_duration_15 ?></span> min.</span> –
+						<? else: ?>
+						<span class="duration"><span class="minutes"><?= $pending_entry_duration_60 ?></span> min.</span> –
+						<? endif; ?>
+
 						<span class="description"><?= $pending_entry->description ?></span>
 					</li>
 					<? endif; 

@@ -1,5 +1,4 @@
 <?php
-global $IC;
 global $action;
 
 $itemtype = "post";
@@ -25,10 +24,10 @@ $pagination_pattern = [
 ];
 
 // Get posts
-$pagination_items = $IC->paginate($pagination_pattern);
+$pagination_items = items()->paginate($pagination_pattern);
 
 
-// $item = $IC->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
+// $item = items()->getItem(array("sindex" => $sindex, "extend" => array("tags" => true, "user" => true, "mediae" => true, "comments" => true, "readstate" => true)));
 if($pagination_items && $pagination_items["range_items"]) {
 	$item = $pagination_items["range_items"][0];
 	$this->sharingMetaData($item);
@@ -53,10 +52,10 @@ $related_pattern["limit"] = 5;
 $related_pattern["extend"] = array("tags" => true, "readstate" => true, "user" => true, "mediae" => true);
 
 // get related items
-$related_items = $IC->getRelatedItems($related_pattern);
+$related_items = items()->getRelatedItems($related_pattern);
 
 // Get post tags for listing
-$categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
+$categories = items()->getTags(array("context" => $itemtype, "order" => "value"));
 
 ?>
 
@@ -64,7 +63,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 
 <? if($item):
-	$media = $IC->sliceMediae($item, "mediae"); ?>
+	$media = items()->sliceMediae($item, "mediae"); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/NewsArticle"
 		data-csrf-token="<?= session()->value("csrf") ?>"
@@ -102,7 +101,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 
 		<?
-		$mediae = $IC->filterMediae($item, "mediae");
+		$mediae = items()->filterMediae($item, "mediae");
 		if($mediae): ?>
 			<? foreach($mediae as $media): ?>
 		<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
@@ -143,7 +142,7 @@ $categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
 
 		<ul class="items articles articlePreviewList i:articlePreviewList">
 <?		foreach($related_items as $related_item): 
-			$media = $IC->sliceMediae($related_item, "mediae"); ?>
+			$media = items()->sliceMediae($related_item, "mediae"); ?>
 			<li class="item article item_id:<?= $related_item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $related_item["readstate"] ?>"
 				>

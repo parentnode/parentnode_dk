@@ -1,22 +1,21 @@
 <?
 global $action;
-global $IC;
 
 
-$page_item = $IC->getItem(array("tags" => "page:contact", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = items()->getItem(array("tags" => "page:contact", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
 $itemtype = "person";
-$items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
+$items = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
 
 
 ?>
 <div class="scene contact i:contact">
 
 <? if($page_item): 
-	$media = $IC->sliceMediae($page_item, "single_media"); ?>
+	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -58,7 +57,7 @@ $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 		<h2>We, the people</h2>
 		<ul class="items people">
 			<? foreach($items as $item): 
-				$media = $IC->sliceMediae($item, "single_media"); ?>
+				$media = items()->sliceMediae($item, "single_media"); ?>
 			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
 
 				<?	if($media): ?>

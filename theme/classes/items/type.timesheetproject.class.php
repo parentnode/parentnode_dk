@@ -87,13 +87,13 @@ class TypeTimesheetproject extends Itemtype {
 
 		include_once("classes/helpers/timesheets.class.php");
 		$TC = new TimesheetsGateway();
-		$IC = new Items();
+
 
 		$toggl_projects = $TC->getProjects(["active" => "both"]);
 		usleep(1100000);
 		$toggl_clients = $TC->getClients();
 
-		$local_project_items = $IC->getItems(["itemtype" => "timesheetproject", "extend" => true]) ?: [];
+		$local_project_items = items()->getItems(["itemtype" => "timesheetproject", "extend" => true]) ?: [];
 
 		// debug(["toggl_projects", $toggl_projects]);
 		if($toggl_projects) {

@@ -1,10 +1,9 @@
 <?php
 global $action;
-global $IC;
 global $model;
 global $itemtype;
 
-$items = $IC->getItems(["itemtype" => $itemtype, "order" => "status DESC, client_name ASC, name ASC", "extend" => ["editors" => true]]);
+$items = items()->getItems(["itemtype" => $itemtype, "order" => "status DESC, client_name ASC, name ASC", "extend" => ["editors" => true]]);
 ?>
 <div class="scene i:scene defaultList <?= $itemtype ?>List">
 	<h1>Timesheet projects</h1>

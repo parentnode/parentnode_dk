@@ -1,5 +1,4 @@
 <?php
-global $IC;
 global $action;
 global $itemtype;
 
@@ -14,7 +13,7 @@ if(count($action) === 4) {
 // Default list
 else {
 	$page = false;
-	$page_item = $IC->getItem([
+	$page_item = items()->getItem([
 		"itemtype" => "blog",
 		"tags" => "blog:".$selected_tag, 
 		"status" => 1, 
@@ -38,7 +37,7 @@ else {
 
 
 // get log tags for listing
-$categories = $IC->getTags(array("context" => $itemtype));
+$categories = items()->getTags(array("context" => $itemtype));
 
 
 $pagination_pattern = [
@@ -58,7 +57,7 @@ $pagination_pattern = [
 ];
 
 // Get posts
-$items = $IC->paginate($pagination_pattern);
+$items = items()->paginate($pagination_pattern);
 
 
 ?>
@@ -67,7 +66,7 @@ $items = $IC->paginate($pagination_pattern);
 <div class="scene posts tag i:columns">
 
 <? if($page_item): 
-	$media = $IC->sliceMediae($page_item, "single_media"); ?>
+	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -147,7 +146,7 @@ $items = $IC->paginate($pagination_pattern);
 
 		<ul class="items articles articlePreviewList i:articlePreviewList">
 			<? foreach($items["range_items"] as $item):
-				$media = $IC->sliceMediae($item, "mediae"); ?>
+				$media = items()->sliceMediae($item, "mediae"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>

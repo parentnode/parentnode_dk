@@ -1,7 +1,6 @@
 <?php
-$IC = new Items();
 
-$page_item = $IC->getItem(array("tags" => "page:manifest", "status" => 1, "extend" => array("user" => true, "mediae" => true, "comments" => true, "tags" => true)));
+$page_item = items()->getItem(array("tags" => "page:manifest", "status" => 1, "extend" => array("user" => true, "mediae" => true, "comments" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
@@ -10,7 +9,7 @@ if($page_item) {
 <div class="scene manifest i:scene">
 
 <? if($page_item): 
-	$media = $IC->sliceMediae($page_item, "single_media"); ?>
+	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>

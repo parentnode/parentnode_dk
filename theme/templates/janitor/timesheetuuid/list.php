@@ -1,10 +1,9 @@
 <?php
 global $action;
-global $IC;
 global $model;
 global $itemtype;
 
-$items = $IC->getItems(["itemtype" => $itemtype, "extend" => true]);
+$items = items()->getItems(["itemtype" => $itemtype, "extend" => true]);
 ?>
 <div class="scene i:scene defaultList <?= $itemtype ?>List">
 	<h1>Timesheet UUIDs</h1>

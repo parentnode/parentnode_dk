@@ -1,11 +1,10 @@
 <?php
 global $action;
-global $IC;
 global $model;
 global $itemtype;
 
 $item_id = $action[1];
-$item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
+$item = items()->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
 ?>
 <div class="scene i:scene defaultEdit <?= $itemtype ?>Edit">
 	<h1>Edit demo</h1>

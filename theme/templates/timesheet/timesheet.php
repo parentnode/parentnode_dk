@@ -3,7 +3,6 @@ global $itemtype;
 global $model;
 global $action;
 
-$IC = new Items();
 include_once("classes/helpers/timesheets.class.php");
 $TC = new TimesheetsGateway();
 

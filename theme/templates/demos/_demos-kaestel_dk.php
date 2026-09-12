@@ -1,6 +1,5 @@
 <?
 global $action;
-global $IC;
 global $model;
 ?>
 <div class="scene demos i:scene">

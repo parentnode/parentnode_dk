@@ -1,17 +1,16 @@
 <?php
-$IC = new Items();
 
-$page_item = $IC->getItem(array("tags" => "page:front", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = items()->getItem(array("tags" => "page:front", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
+$post_items = items()->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
 ?>
 <div class="scene front i:front">
 
 <? if($page_item): 
-	$media = $IC->sliceMediae($page_item, "single_media"); ?>
+	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -51,7 +50,7 @@ $post_items = $IC->getItems(array("itemtype" => "post", "tags" => "on:frontpage"
 		<h2>Latest news</h2>
 		<ul class="items articles i:articlePreviewList articlePreviewList">
 		<? foreach($post_items as $item): 
-			$media = $IC->sliceMediae($item, "mediae"); ?>
+			$media = items()->sliceMediae($item, "mediae"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>

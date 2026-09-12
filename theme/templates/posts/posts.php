@@ -1,6 +1,5 @@
 <?php
 global $action;
-global $IC;
 global $itemtype;
 
 
@@ -12,7 +11,7 @@ if(count($action) === 2) {
 // Default list
 else {
 	$page = false;
-	$page_item = $IC->getItem([
+	$page_item = items()->getItem([
 		"tags" => "page:Posts", 
 		"status" => 1, 
 		"extend" => [
@@ -43,18 +42,18 @@ $pagination_pattern = [
 	"limit" => 5
 ];
 
-$categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
+$categories = items()->getTags(array("context" => $itemtype, "order" => "value"));
 
 // Get posts
-$items = $IC->paginate($pagination_pattern);
+$items = items()->paginate($pagination_pattern);
 
-// $page_item = $IC->getItem(array("tags" => "page:blog", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+// $page_item = items()->getItem(array("tags" => "page:blog", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
 // if($page_item) {
 // 	$this->sharingMetaData($page_item);
 // }
 
 // get post tags for listing
-// $items = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true)));
+// $items = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true)));
 
 ?>
 
@@ -62,7 +61,7 @@ $items = $IC->paginate($pagination_pattern);
 
 
 <? if($page_item): 
-	$media = $IC->sliceMediae($page_item, "single_media"); ?>
+	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -141,7 +140,7 @@ $items = $IC->paginate($pagination_pattern);
 
 		<ul class="articles articlePreviewList i:articlePreviewList">
 			<? foreach($items["range_items"] as $item):
-				$media = $IC->sliceMediae($item, "mediae"); ?>
+				$media = items()->sliceMediae($item, "mediae"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
 				data-readstate="<?= $item["readstate"] ?>"
 				>

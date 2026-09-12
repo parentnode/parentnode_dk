@@ -6,7 +6,6 @@ if(isset($read_access) && $read_access) {
 
 include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 $query = new Query();
-$IC = new Items();
 
 print '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -14,7 +13,7 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <?
 // Front PAGE
-$item = $IC->getItem(array("tags" => "page:front"));
+$item = items()->getItem(array("tags" => "page:front"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/</loc>
@@ -24,7 +23,7 @@ $item = $IC->getItem(array("tags" => "page:front"));
 	</url>
 <?
 // Stevns PAGE
-$item = $IC->getItem(array("tags" => "page:stevns"));
+$item = items()->getItem(array("tags" => "page:stevns"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/programmering-hjemmeside-it-stevns</loc>
@@ -34,7 +33,7 @@ $item = $IC->getItem(array("tags" => "page:stevns"));
 	</url>
 <?
 // Blog PAGE
-$item = $IC->getItem(array("tags" => "page:blog"));
+$item = items()->getItem(array("tags" => "page:blog"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/blog</loc>
@@ -44,7 +43,7 @@ $item = $IC->getItem(array("tags" => "page:blog"));
 	</url>
 <?
 // POST ITEMS
-$items = $IC->getItems(array("itemtype" => "post", "status" => 1, "order" => "modified_at DESC")); 
+$items = items()->getItems(array("itemtype" => "post", "status" => 1, "order" => "modified_at DESC")); 
 foreach($items as $item):
 ?>
 	<url>
@@ -56,7 +55,7 @@ foreach($items as $item):
 <? endforeach; ?>
 <?
 // Tools PAGE
-$item = $IC->getItem(array("tags" => "page:tools"));
+$item = items()->getItem(array("tags" => "page:tools"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/tools</loc>
@@ -66,7 +65,7 @@ $item = $IC->getItem(array("tags" => "page:tools"));
 	</url>
 <?
 // Contact PAGE
-$item = $IC->getItem(array("tags" => "page:contact"));
+$item = items()->getItem(array("tags" => "page:contact"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/contact</loc>
@@ -76,7 +75,7 @@ $item = $IC->getItem(array("tags" => "page:contact"));
 	</url>
 <?
 // Manifest PAGE
-$item = $IC->getItem(array("tags" => "page:manifest"));
+$item = items()->getItem(array("tags" => "page:manifest"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/manifest</loc>
@@ -86,7 +85,7 @@ $item = $IC->getItem(array("tags" => "page:manifest"));
 	</url>
 <?
 // About PAGE
-$item = $IC->getItem(array("tags" => "page:about"));
+$item = items()->getItem(array("tags" => "page:about"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/about</loc>
@@ -96,7 +95,7 @@ $item = $IC->getItem(array("tags" => "page:about"));
 	</url>
 <?
 // Terms PAGE
-$item = $IC->getItem(array("tags" => "page:terms"));
+$item = items()->getItem(array("tags" => "page:terms"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/terms</loc>

@@ -1,13 +1,12 @@
 <?php
 global $action;
-global $IC;
 global $model;
 global $itemtype;
 
-$model_project = $IC->TypeObject("timesheetproject");
+$model_project = model("timesheetproject");
 
 $item_id = $action[1];
-$item = $IC->getItem(array("id" => $item_id, "extend" => ["editors" => true]));
+$item = items()->getItem(array("id" => $item_id, "extend" => ["editors" => true]));
 $item_projects = $model_project->getProjects(["timesheetuuid_id" => $item_id]);
 $project_count = $item_projects ? count($item_projects) : 0;
 

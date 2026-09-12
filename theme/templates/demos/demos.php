@@ -1,22 +1,21 @@
 <?
 global $action;
-global $IC;
 
 
 
-$page_item = $IC->getItem(array("tags" => "page:demos", "status" => 1, "extend" => array("user" => true, "mediae" => true)));
+$page_item = items()->getItem(array("tags" => "page:demos", "status" => 1, "extend" => array("user" => true, "mediae" => true)));
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
 $itemtype = "demo";
-$demos = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position ASC", "extend" => array("tags" => true, "mediae" => true)));
+$demos = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position ASC", "extend" => array("tags" => true, "mediae" => true)));
 
 ?>
 <div class="scene demos i:demos">
 
 <? if($page_item): 
-	$media = $IC->sliceMediae($page_item, "single_media"); ?>
+	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
 		<? if($media): ?>
@@ -57,7 +56,7 @@ $demos = $IC->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => 
 	<div class="demos">
 		<ul class="items demos">
 		<? foreach($demos as $demo):
-			$media = $IC->sliceMediae($demo, "main_image"); ?>
+			$media = items()->sliceMediae($demo, "main_image"); ?>
 
 			<li class="demo item article i:article id:<?= $demo["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 				<h2 itemprop="headline"><?= $demo["name"] ?></h2>

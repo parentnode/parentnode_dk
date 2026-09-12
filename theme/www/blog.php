@@ -8,7 +8,6 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 
 $action = $page->actions();
-$IC = new Items();
 $itemtype = "post";
 
 

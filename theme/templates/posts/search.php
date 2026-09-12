@@ -1,6 +1,5 @@
 <?php
 global $action;
-global $IC;
 
 $itemtype = "post";
 
@@ -27,11 +26,11 @@ else {
 
 
 // Get post tags for listing
-$categories = $IC->getTags(array("context" => $itemtype, "order" => "value"));
+$categories = items()->getTags(array("context" => $itemtype, "order" => "value"));
 
 // perf()->add("Before");
 
-$items = $IC->paginate(["pattern" => $pattern, "query" => $query, "tags" => $selected_tag]);
+$items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => $selected_tag]);
 // debug([$items]);
 
 // perf()->add("After");

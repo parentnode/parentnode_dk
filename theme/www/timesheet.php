@@ -9,9 +9,8 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 
 $action = $page->actions();
-$IC = new Items();
 $itemtype = "timesheetproject";
-$model = $IC->TypeObject($itemtype);
+$model = model($itemtype);
 
 
 $page->bodyClass("timesheet");

@@ -29,8 +29,7 @@ class TypeTimesheetuuid extends Itemtype {
 		$query->checkDbExistence($this->db_projects);
 
 
-		$IC = new Items();
-		$PC = $IC->typeObject("timesheetproject");
+		$PC = model("timesheetproject");
 		$projects = $PC->getProjects();
 
 		// uuid
@@ -74,8 +73,7 @@ class TypeTimesheetuuid extends Itemtype {
 			$this->getPostedEntities();
 			$project_id = $this->getProperty("project_id", "value");
 
-			$IC = new Items();
-			$PC = $IC->TypeObject("timesheetproject");
+			$PC = model("timesheetproject");
 			$project = $PC->getProjects(["project_id" => $project_id]);
 			
 			if($PC->getProjects(["project_id" => $project_id, "timesheetuuid_id" => $timesheetuuid_id])) {

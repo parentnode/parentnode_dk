@@ -1,18 +1,22 @@
 <?php
 global $action;
+global $itemtype;
 
 $itemtype = "post";
 
 
 // List extension (page > 1)
 if(count($action) === 3) {
+
 	$page = $action[2];
 	$query = session()->value("post-search-query");
 	$selected_tag = session()->value("post-search-tag");
 	$pattern = session()->value("post-search-pattern");
+
 }
 // Default list
 else {
+
 	$page = false;
 	$query = getPost("query");
 	session()->value("post-search-query", $query);
@@ -22,13 +26,17 @@ else {
 
 	$pattern = json_decode(stripslashes(getPost("pattern")), true);
 	session()->value("post-search-pattern", $pattern);
+
 }
 
 
+
 // Get post tags for listing
-$categories = items()->getTags(array("context" => $itemtype, "order" => "value"));
+// $categories = items()->getTags(array("context" => $itemtype, "order" => "value"));
 
 // perf()->add("Before");
+
+debug([$selected_tag]);
 
 $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => $selected_tag]);
 // debug([$items]);
@@ -47,12 +55,20 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 	</div>
 
 
-	<?= $HTML->searchBox("/blog/search", [
+	<?= HTML()->renderSnippet("snippets/search.php", [
+		"title" => "Search posts",
+		"pattern" => $pattern,
+		"query" => $query,
+		"tag" => $selected_tag,
+	]) ?>
+
+
+	<?/*= $HTML->searchBox("/blog/search", [
 		"headline" => "Search posts",
 		"pattern" => $pattern,
 		"query" => $query,
 		"tag" => $selected_tag
-	]) ?>
+	])*/ ?>
 
 
 	<div class="articles">
@@ -62,12 +78,21 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 
 		<h2>Matching posts</h2>
 
-		<?= $HTML->frontendPagination($items, [
+
+		<?= HTML()->renderSnippet("snippets/pagination.php", [
+			"items" => $items,
+			"direction" => "prev",
+			"base_path" => HTML()->path."/search", 
+			"show_total" => false,
+			"labels" => ["prev" => "Previous posts"]
+		]) ?>
+
+		<?/*= $HTML->frontendPagination($items, [
 			"base_url" => "/blog/search", 
 			"direction" => "prev",
 			"show_total" => false,
 			"labels" => ["prev" => "Previous posts"]
-		]) ?>
+		])*/ ?>
 
 
 		<ul class="items articles articlePreviewList i:articlePreviewList">
@@ -76,9 +101,13 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 
 				<h3 itemprop="headline"><a href="/blog/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
 
-				<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
-					"media" => false
+				<?= HTML()->renderSnippet("snippets/info.php", [
+					"item" => $item,
 				]) ?>
+
+				<?/*= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
+					"media" => false
+				])*/ ?>
 
 
 				<? if($item["searchable_string"]):
@@ -117,12 +146,21 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 			<? endforeach; ?>
 		</ul>
 
-		<?= $HTML->frontendPagination($items, [
+
+		<?= HTML()->renderSnippet("snippets/pagination.php", [
+			"items" => $items,
+			"direction" => "prev",
+			"base_path" => HTML()->path."/search", 
+			"show_total" => false,
+			"labels" => ["next" => "Next posts"]
+		]) ?>
+
+		<?/*= $HTML->frontendPagination($items, [
 			"base_url" => "/blog/search", 
 			"direction" => "next",
 			"show_total" => false,
 			"labels" => ["next" => "Next posts"]
-		]) ?>
+		])*/ ?>
 
 
 <? else: ?>
@@ -130,7 +168,13 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 <? endif; ?>
 	</div>
 
-<? if($categories): ?>
+
+	<?= HTML()->renderSnippet("snippets/categories.php", [
+		"itemtype" => $itemtype,
+		"tags" => [["value" => $selected_tag]],
+	]) ?>
+
+<? /* if($categories): ?>
 	<div class="categories">
 		<h2>Categories</h2>
 		<ul class="tags">
@@ -140,6 +184,6 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 			<li class="all"><a href="/blog">All postings</a></li>
 		</ul>
 	</div>
-<? endif; ?>
+<? endif; */ ?>
 
 </div>

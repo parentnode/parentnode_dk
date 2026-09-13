@@ -2,6 +2,7 @@
 global $action;
 global $itemtype;
 
+
 $selected_tag = urldecode($action[1]);
 
 
@@ -14,17 +15,15 @@ if(count($action) === 4) {
 else {
 	$page = false;
 	$page_item = items()->getItem([
-		"itemtype" => "blog",
-		"tags" => "blog:".$selected_tag, 
+		"itemtype" => "page",
+		"tags" => "page:".$selected_tag, 
 		"status" => 1, 
 		"extend" => [
 			"user" => true, 
 			"mediae" => true, 
-			"tags" => true
 		]
 	]);
 }
-
 
 if($page_item) {
 	$this->sharingMetaData($page_item);
@@ -32,12 +31,6 @@ if($page_item) {
 else {
 	$this->sharingMetaData(["description" => "Something about $selected_tag"]);
 }
-
-
-
-
-// get log tags for listing
-$categories = items()->getTags(array("context" => $itemtype));
 
 
 $pagination_pattern = [
@@ -62,25 +55,24 @@ $items = items()->paginate($pagination_pattern);
 
 ?>
 
-
 <div class="scene posts tag i:columns">
 
 <? if($page_item): 
 	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
-		<? if($media): ?>
-		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-		<? endif; ?>
+		<?= HTML()->renderSnippet("snippets/media.php", [
+			"item" => $page_item,
+			"media" => $media,
+		]) ?>
+
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page_item["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
-		<? endif; ?>
 
-
-		<?= $HTML->articleInfo($page_item, "/blog/tag/".urlencode($selected_tag), [
+		<?= HTML()->renderSnippet("snippets/info.php", [
+			"item" => $page_item,
+			"url" => HTML()->path."/tag/".urlencode($selected_tag),
 			"media" => $media,
 			"sharing" => true
 		]) ?>
@@ -91,44 +83,31 @@ $items = items()->paginate($pagination_pattern);
 			<?= $page_item["html"] ?>
 		</div>
 		<? endif; ?>
+
 	</div>
 
 <? else: ?>
 
 	<div class="article">
-		<h1>bLog</h1>
-
-	<? 
-	  // CUSTOM TAG HEADERS - SHOULD BE DYNAMIC AT SOME POINT
-	  if($selected_tag == "Detector"): ?>
-
-		<h2>Browsers, detection and segmentation.</h2>
-
-	<? elseif($selected_tag == "Segments"): ?>
-
-		<h2>Detector segments explained.</h2>
-
-	<? elseif($selected_tag == "Janitor"): ?>
-
-		<h2>Janitor tricks and tips.</h2>
-
-	<? elseif($selected_tag == "Browsers"): ?>
-
-		<h2>Browsers in detail.</h2>
-
-	<? elseif($selected_tag == "Git"): ?>
-
-		<h2>Git with it. My notes on how to use Git.</h2>
-
-	<? elseif($selected_tag == "Terminal"): ?>
-
-		<h2>Terminal power for the wicked.</h2>
-
-	<? endif; ?>
-
+		<h1><?= $selected_tag ?></h1>
 	</div>
 
 <? endif; ?>
+
+
+	<?= HTML()->renderSnippet("snippets/categories.php", [
+		"itemtype" => $itemtype,
+		"tags" => [["value" => $selected_tag]],
+	]) ?>
+
+
+	<?= HTML()->renderSnippet("snippets/search.php", [
+		"title" => "Search posts",
+		"pattern" => $pagination_pattern["pattern"],
+		"tag" => $itemtype.":".addslashes($selected_tag),
+		// "tags" => $itemtype.":".addslashes($selected_tag),
+			
+	]) ?>
 
 
 	<div class="articles">
@@ -137,38 +116,41 @@ $items = items()->paginate($pagination_pattern);
 
 		<h2><?= $items["total"] ?> Posts</h2>
 
-		<?= $HTML->frontendPagination($items, [
-			"base_url" => "/blog/tag/".urlencode($selected_tag), 
+
+		<?= HTML()->renderSnippet("snippets/pagination.php", [
+			"items" => $items,
 			"direction" => "prev",
+			"base_path" => HTML()->path."/tag/".urlencode($selected_tag), 
 			"show_total" => false,
 			"labels" => ["prev" => "Previous posts"]
 		]) ?>
 
+
 		<ul class="items articles articlePreviewList i:articlePreviewList">
 			<? foreach($items["range_items"] as $item):
 				$media = items()->sliceMediae($item, "mediae"); ?>
-			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
-				data-readstate="<?= $item["readstate"] ?>"
-				>
+			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"<?= HTML()->jsData(["readstate"]) ?>>
 
-
-				<? if($media): ?>
-				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-				<? endif; ?>
-
-
-				<?= $HTML->articleTags($item, [
-					"context" => [$itemtype],
-					"url" => "/blog/tag",
-					"default" => ["/blog", "Posts"]
+				<?= HTML()->renderSnippet("snippets/media.php", [
+					"item" => $item,
+					"media" => $media,
 				]) ?>
 
 
-				<h3 itemprop="headline"><a href="/blog/tag/<?= urlencode($selected_tag) ?>/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+				<?= HTML()->renderSnippet("snippets/tags.php", [
+					"item" => $item,
+					"context" => [$itemtype],
+					"default" => [HTML()->path, "Posts"]
+				]) ?>
 
 
-				<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
-					"media" => $media
+				<h3 itemprop="headline"><a href="<?= HTML()->path ?>/tag/<?= urlencode($selected_tag) ?>/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+
+
+				<?= HTML()->renderSnippet("snippets/info.php", [
+					"item" => $item,
+					"media" => $media,
+					"sharing" => true
 				]) ?>
 
 
@@ -182,40 +164,23 @@ $items = items()->paginate($pagination_pattern);
 			<? endforeach; ?>
 		</ul>
 
-		<?= $HTML->frontendPagination($items, [
-			"base_url" => "/blog/tag/".urlencode($selected_tag),
+
+		<?= HTML()->renderSnippet("snippets/pagination.php", [
+			"items" => $items,
 			"direction" => "next",
+			"base_path" => HTML()->path."/tag/".urlencode($selected_tag), 
 			"show_total" => false,
 			"labels" => ["next" => "Next posts"]
 		]) ?>
 
+
 	<? else: ?>
 
-		<h2>Technology needs humanity.</h2>
-		<p>We could not find any posts with the selected tag.</p>
+		<h2>Technology has limits.</h2>
+		<p>We could not find any posts with the selected category.</p>
 
 	<? endif; ?>
+
 	</div>
-
-
-
-	<?= $HTML->searchBox("/blog/search", [
-		"headline" => "Search posts",
-		"pattern" => $pagination_pattern["pattern"],
-		"tag" => $itemtype.":".$selected_tag
-	]) ?>
-
-
-<? if($categories): ?>
-	<div class="categories">
-		<h2>Categories</h2>
-		<ul class="tags">
-			<? foreach($categories as $tag): ?>
-			<li<?= $tag["value"] === $selected_tag ? ' class="selected"' : '' ?>><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
-			<? endforeach; ?>
-			<li class="all"><a href="/blog">All postings</a></li>
-		</ul>
-	</div>
-<? endif; ?>
 
 </div>

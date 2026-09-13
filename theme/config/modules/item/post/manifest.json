@@ -1,0 +1,108 @@
+{
+	"version": "0.1.5.1",
+	"files": [
+		{
+			"type": "class",
+			"src": "classes/type.post.class.php",
+			"dest": "classes/items/type.post.class.php",
+			"digest": "sha256:bde8f01b18cfd699aa1f7a9b537c16538602d760a1ae2b2987fa8eb85baa6a21"
+		},
+		{
+			"type": "backend-controller",
+			"src": "www/janitor/post.php",
+			"dest": "www/janitor/post.php",
+			"digest": "sha256:a36d870b6c8bdd7584accaf54f931a0ddc224c8d7a0b3f73e31bbc20c5d25003"
+		},
+		{
+			"type": "backend-template",
+			"src": "templates/janitor/post/list.php",
+			"dest": "templates/janitor/post/list.php",
+			"digest": "sha256:fb87e06d9fe697089f33a2e7b4426e6bb24bb1ad64e66e3b1562f0c5a6ffb89f"
+		},
+		{
+			"type": "backend-template",
+			"src": "templates/janitor/post/edit.php",
+			"dest": "templates/janitor/post/edit.php",
+			"digest": "sha256:2fc0fd7fb9339289d32064713f61486618e4e482042df4edd4a7a5b715d1bd41"
+		},
+		{
+			"type": "backend-template",
+			"src": "templates/janitor/post/new.php",
+			"dest": "templates/janitor/post/new.php",
+			"digest": "sha256:4c487a7e9e0f5456f94bcae8156ddd102435b47c2d0bf2787567e8e0cb22b57c"
+		},
+		{
+			"type": "settings-css",
+			"src": "www/settings/css/s-item-post.css",
+			"dest": "www/janitor/css/setup/modules/s-item-post.css",
+			"digest": "sha256:1cd7689a90f967c472d70f95907241dd9f21b205e9eec622a27ebeb27b69d753"
+		},
+		{
+			"type": "settings-js",
+			"src": "www/settings/js/m-item-post.js",
+			"dest": "www/janitor/js/setup/modules/m-item-post.js",
+			"digest": "sha256:c56fd80a17e62e945a1b3f9a1413bcd901d8bab1b1ac2b850b4ac394d47f6f0e"
+		},
+		{
+			"type": "settings-template",
+			"src": "templates/settings/index.php",
+			"dest": "templates/janitor/modules/item/post/index.php",
+			"digest": "sha256:4bfcdb0ed837cd822694ed3ccf4b5e44852369e1a6c0ba8476856c4c3a6278b6"
+		},
+		{
+			"type": "controller",
+			"src": "www/posts.php",
+			"dest": "www/posts.php",
+			"digest": "sha256:00672750189863809c81fee26b2490be5aa9eab361d0f7d35be80091a4f30f2d"
+		},
+		{
+			"type": "template",
+			"src": "templates/posts/post.php",
+			"dest": "templates/posts/post.php",
+			"digest": "sha256:6bffb7aaa22ffb6ecc064b7351558f7d4bac6ac5709e44ba4e7af4ce72a36f24"
+		},
+		{
+			"type": "template",
+			"src": "templates/posts/posts.php",
+			"dest": "templates/posts/posts.php",
+			"digest": "sha256:3682792d5602a8feacf2a3bd5b8cdcd1a01b293c4d07bab727928acc00c62c57"
+		},
+		{
+			"type": "template",
+			"src": "templates/posts/posts_tag.php",
+			"dest": "templates/posts/posts_tag.php",
+			"digest": "sha256:0da6f409a0dbd0085fdb5010a21b827ec907c4ac9482f641b6337b600cec0beb"
+		},
+		{
+			"type": "template",
+			"src": "templates/posts/post_tag.php",
+			"dest": "templates/posts/post_tag.php",
+			"digest": "sha256:a348733712d7de4ac7b75c4b90740145d590af5594b66e6268bab492f9648d95"
+		},
+		{
+			"type": "data-model",
+			"src": "config/db/item_post.sql",
+			"digest": "sha256:513fc9eb664e1bd4c86aea4359f2efff3c9778806732a9bee64f5934477ba8d9"
+		},
+		{
+			"type": "data-install",
+			"src": "config/db/data/navigation_nodes.sql",
+			"digest": "sha256:6fe2457baad9166767af5c12edab4112182f84d54d3f1760ed3994f615529427"
+		},
+		{
+			"type": "data-uninstall",
+			"src": "config/db/data/navigation_nodes_uninstall.sql",
+			"digest": "sha256:59d3e9ea8ce74aac3fe7112243b83bff980595f84854133f40f7a762fdef3aed"
+		},
+		{
+			"type": "data-uninstall-all",
+			"src": "config/db/data/item_post_data_uninstall.sql",
+			"digest": "sha256:a4946517ae42727ce60b1996c82bd04286cd8fa001181c31aee2abc84f0f101d"
+		},
+		{
+			"type": "data-uninstall-all",
+			"src": "config/db/item_post_uninstall.sql",
+			"digest": "sha256:b13205a89cf5a0069c4d866998192c97ee77855abf382e0346e9b88ffcca702b"
+		}
+	]
+}

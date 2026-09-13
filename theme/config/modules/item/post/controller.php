@@ -1,7 +1,7 @@
 <?php
 $controller_type = "item";
 $controller_itemtype = "post";
-$controller_favors = ["view" => "post", "list" => "List blog posts"];
+$controller_favors = ["view" => "post", "list" => "List posts"];
 
 $access_item = false;
 if(isset($read_access) && $read_access) {
@@ -18,21 +18,9 @@ $action = $page->actions();
 
 if(is_array($action) && count($action)) {
 
-
-	# Search
-	# /posts/search
-	if(count($action) >= 1 && $action[0] === "search") {
-
-		$page->page([
-			"templates" => "posts/search.php"
-		]);
-		exit();
-
-	}
-
 	# View specific post
 	# /posts/#sindex#
-	else if(count($action) === 1) {
+	if(count($action) === 1) {
 
 		$page->page([
 			"templates" => "posts/post.php"
@@ -71,8 +59,11 @@ if(is_array($action) && count($action)) {
 }
 
 
-$page->page([
+$page->page(array(
 	"templates" => "posts/posts.php"
-]);
+));
 exit();
+
+
+?>
  

@@ -3,6 +3,7 @@ global $action;
 global $itemtype;
 
 
+
 // List extension (page > 1)
 if(count($action) === 2) {
 	$page = $action[1];
@@ -12,12 +13,12 @@ if(count($action) === 2) {
 else {
 	$page = false;
 	$page_item = items()->getItem([
+		"itemtype" => "page",
 		"tags" => "page:Posts", 
 		"status" => 1, 
 		"extend" => [
 			"user" => true, 
 			"mediae" => true, 
-			"tags" => true
 		]
 	]);
 }
@@ -42,47 +43,31 @@ $pagination_pattern = [
 	"limit" => 5
 ];
 
-$categories = items()->getTags(array("context" => $itemtype, "order" => "value"));
-
 // Get posts
 $items = items()->paginate($pagination_pattern);
-
-// $page_item = items()->getItem(array("tags" => "page:blog", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
-// if($page_item) {
-// 	$this->sharingMetaData($page_item);
-// }
-
-// get post tags for listing
-// $items = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "extend" => array("tags" => true, "user" => true, "readstate" => true)));
 
 ?>
 
 <div class="scene posts i:columns">
 
-
 <? if($page_item): 
 	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
-		<? if($media): ?>
-		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-		<? endif; ?>
-
-
-		<?= $HTML->articleTags($page_item, [
-			"context" => false
+		<?= HTML()->renderSnippet("snippets/media.php", [
+			"item" => $page_item,
+			"media" => $media,
 		]) ?>
 
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page_item["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
-		<? endif; ?>
 
-
-		<?= $HTML->articleInfo($page_item, "/blog", [
+		<?= HTML()->renderSnippet("snippets/info.php", [
+			"item" => $page_item,
+			"url" => HTML()->path,
 			"media" => $media,
+			"sharing" => true
 		]) ?>
 
 
@@ -91,37 +76,26 @@ $items = items()->paginate($pagination_pattern);
 			<?= $page_item["html"] ?>
 		</div>
 		<? endif; ?>
+
 	</div>
 
 <? else: ?>
 
 	<div class="article">
-		<h1>bLog</h1>
-		<p>
-			Tech stuff all over. It's not really a (we)Blog. <br />
-			You'll figure it out, otherwise read the <a href="http://google.com/search?q=manual" target="_blank">manual</a>.
-		</p>
+		<h1>Posts</h1>
 	</div>
 
 <? endif; ?>
 
 
-<? if($categories): ?>
-	<div class="categories">
-		<h2>Categories</h2>
-		<ul class="tags">
-			<? foreach($categories as $tag): ?>
-			<li><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
-			<? endforeach; ?>
-			<li class="all selected"><a href="/details/posts">All postings</a></li>
-		</ul>
-	</div>
-<? endif; ?>
+	<?= HTML()->renderSnippet("snippets/categories.php", [
+		"itemtype" => $itemtype,
+	]) ?>
 
 
-	<?= $HTML->searchBox("/blog/search", [
-		"headline" => "Search posts",
-		"pattern" => $pagination_pattern["pattern"]
+	<?= HTML()->renderSnippet("snippets/search.php", [
+		"title" => "Search posts",
+		"pattern" => $pagination_pattern["pattern"],
 	]) ?>
 
 
@@ -131,36 +105,39 @@ $items = items()->paginate($pagination_pattern);
 
 		<h2>All posts</h2>
 
-		<?= $HTML->frontendPagination($items, [
-			"base_url" => "/blog", 
+
+		<?= HTML()->renderSnippet("snippets/pagination.php", [
+			"items" => $items,
 			"direction" => "prev",
 			"show_total" => false,
 			"labels" => ["prev" => "Previous posts"]
 		]) ?>
 
+
 		<ul class="articles articlePreviewList i:articlePreviewList">
-			<? foreach($items["range_items"] as $item):
+<?			foreach($items["range_items"] as $item):
 				$media = items()->sliceMediae($item, "mediae"); ?>
-			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
-				data-readstate="<?= $item["readstate"] ?>"
-				>
+			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"<?= HTML()->jsData(["readstate"]) ?>>
 
-				<? if($media): ?>
-				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-				<? endif; ?>
-
-				<?= $HTML->articleTags($item, [
-					"context" => [$itemtype],
-					"url" => "/blog/tag",
-					"default" => ["/blog", "Posts"]
+				<?= HTML()->renderSnippet("snippets/media.php", [
+					"item" => $item,
+					"media" => $media,
 				]) ?>
 
 
-				<h3 itemprop="headline"><a href="/blog/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+				<?= HTML()->renderSnippet("snippets/tags.php", [
+					"item" => $item,
+					"context" => [$itemtype],
+					"default" => [HTML()->path, "Posts"]
+				]) ?>
 
 
-				<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
-					"media" => $media, 
+				<h3 itemprop="headline"><a href="<?= HTML()->path ?>/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h3>
+
+
+				<?= HTML()->renderSnippet("snippets/info.php", [
+					"item" => $item,
+					"media" => $media,
 					"sharing" => true
 				]) ?>
 
@@ -175,15 +152,19 @@ $items = items()->paginate($pagination_pattern);
 			<? endforeach; ?>
 		</ul>
 
-		<?= $HTML->frontendPagination($items, [
-			"base_url" => "/blog",
+
+		<?= HTML()->renderSnippet("snippets/pagination.php", [
+			"items" => $items,
 			"direction" => "next",
 			"show_total" => false,
 			"labels" => ["next" => "Next posts"]
 		]) ?>
 
+
 <? else: ?>
+
 		<p>No posts</p>
+
 <? endif; ?>
 
 	</div>

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2024-04-22 14:18:17
+asset-builder @ 2026-09-14 13:38:13
 */
 
 /*seg_smartphone_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2024-04-22 14:18:17
 /*seg_smartphone.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2024-01-26 16:53:16
+asset-builder @ 2026-09-14 13:11:11
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -74,19 +74,19 @@ h2 {padding: 0 20px 24px; font-size: 26px; line-height: 1.1em;
 	font-family: "PT Serif", Times, serif;
 }
 h3 {padding: 0 20px 10px; font-size: 18px; line-height: 1.25em;}
-h4 {padding: 0 20px 5px; font-size: 13px; line-height: 1.25em; font-weight: bold;}
-h5 {padding: 0 20px 2px; font-size: 13px; line-height: 1.25em; font-weight: bold;}
-h6 {padding: 0 20px 2px; font-size: 13px; line-height: 1.25em; font-weight: bold;}
-p {padding: 0 20px 18px; font-size: 13px; line-height: 1.538em;} 
+h4 {padding: 0 20px 5px; font-size: 14px; line-height: 1.25em; font-weight: bold;}
+h5 {padding: 0 20px 2px; font-size: 14px; line-height: 1.25em; font-weight: bold;}
+h6 {padding: 0 20px 2px; font-size: 14px; line-height: 1.25em; font-weight: bold;}
+p {padding: 0 20px 18px; font-size: 14px; line-height: 1.538em;} 
 ul,
 ol {font-size: 0;}
-li {font-size: 13px; line-height: 1.25em;}
+li {font-size: 14px; line-height: 1.25em;}
 dl {font-size: 0;} 
 dt, 
-dd {display: block; vertical-align: top; font-size: 16px; line-height: 1.25em;}
+dd {display: block; vertical-align: top; font-size: 14px; line-height: 1.25em;}
 #page {position: relative;}
 .terms_notification {opacity: 0; padding: 15px 20px 20px; background: #888888;}
-.terms_notification h3 {padding: 0 0 15px; font-size: 13px; color: #ffffff;}
+.terms_notification h3 {padding: 0 0 15px; font-size: 14px; color: #ffffff;}
 .terms_notification .accept,
 .terms_notification .details {padding: 0; font-size: 16px; display: inline-block; vertical-align: bottom; padding: 0; color: #ffffff;}
 .terms_notification .details {float: right;}
@@ -198,6 +198,7 @@ dd {display: block; vertical-align: top; font-size: 16px; line-height: 1.25em;}
 #content .scene div.media.loaded p {display: block;}
 #content .scene div.image p a,
 #content .scene div.media p a {font-style: italic; line-height: 1.1em; font-size: 12px; display: block; color: #bbbbbb;}
+#content .scene div.media ul.metadata {display: none;}
 #content .scene div.vimeo,
 #content .scene div.youtube {position: relative; z-index: 1;}
 #content .scene div.vimeo iframe,
@@ -263,7 +264,7 @@ dd {display: block; vertical-align: top; font-size: 16px; line-height: 1.25em;}
 #content .scene div.company dl.info dd ul,
 #content .scene div.person dl.info dd ul {padding: 0;}
 #content .scene div.company dl.info dd li,
-#content .scene div.person dl.info dd li {font-size: 16px;}
+#content .scene div.person dl.info dd li {font-size: 14px;}
 #content .scene div.company dl.info dd li a,
 #content .scene div.person dl.info dd li a {padding-bottom: 10px; display: inline-block;}
 #content .scene div.company dl.info dd li:last-child a,
@@ -482,6 +483,7 @@ div.field.correct div.error {display: none;}
 #content .scene .pagination li.next a:active,
 #content .scene .pagination li.previous a:active {background-color: #313942; color: #ffffff;}
 #content .scene .pagination li.pages {line-height: 25px;}
+#content .scene .pagination-page {margin: -10px 0 10px; font-size: 18px;}
 body > div.pagination {position: fixed; top: 60px; left: 0; width: 100%;}
 body > div.pagination li h2 {display: none;}
 body > div.pagination li.next > svg.arrow {position: absolute; top: 18px; right: 20px;}
@@ -549,6 +551,7 @@ body {}
 #navigation ul li {color: #63add0;}
 #navigation ul li.admin,
 #navigation ul li.user {border-color: #034769}
+.front #header .logo,
 #navigation ul li.selected,
 #navigation ul li.path {color: #034769;}
 #content .scene a,

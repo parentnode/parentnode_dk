@@ -1,6 +1,6 @@
 /*
 parentNode, Copyright 2008-2023, https://manipulator.parentnode.dk
-asset-builder @ 2024-04-22 14:18:17
+asset-builder @ 2026-09-14 13:38:13
 */
 
 /*seg_desktop_include.js*/
@@ -4577,15 +4577,37 @@ u.fontsReady = function(node, fonts, _options) {
 		window["_man_fonts_"+loadkey].checkFontsFallback();
 	}
 }
-u.notifier = function(node) {
+u.notifier = function(node, _options) {
+	node._nt_hide_delay = 4500;
+	node._nt_hide_callback = "_hide";
+	node._nt_show_callback = "_show";
+	node._nt_scrape = false;
+	if(obj(_options)) {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "hide_delay"      : node._nt_hide_delay        = _options[argument]; break;
+				case "scrape"          : node._nt_scrape            = _options[argument]; break;
+			}
+		}
+	}
 	var notifications = u.qs("div.notifications", node);
 	if(!notifications) {
-		node.notifications = u.ae(node, "div", {"id":"notifications"});
+		notifications = u.ae(node, "div", {"id":"notifications"});
 	}
-	node.notifications.hide_delay = 4500;
-	node.notifications.hide = function(node) {
-		u.a.transition(this, "all 0.5s ease-in-out");
-		u.a.translate(this, 0, -this.offsetHeight);
+	node.notifications = notifications;
+	node.notifications._hide = function() {
+		u.ass(this, {
+			"transition": "all 0.5s ease-in-out",
+			"opacity": 0,
+			"transform":"translate(0, "+(-this.offsetHeight)+"px",
+		});
+	}
+	node.notifications._show = function() {
+		u.ass(this, {
+			"transition": "all 0.2s ease-in-out",
+			"opacity": 1,
+		});
 	}
 	node.notify = function(response, _options) {
 		var class_name = "message";
@@ -4593,40 +4615,37 @@ u.notifier = function(node) {
 			var argument;
 			for(argument in _options) {
 				switch(argument) {
-					case "class"	: class_name	= _options[argument]; break;
+					case "class"       : class_name            = _options[argument]; break;
 				}
 			}
 		}
 		var output = [];
-		if(obj(response) && response.isJSON) {
-			var message = response.cms_message;
+		if(obj(response) && response.isJSON && response.cms_message) {
+			var cms_message = response.cms_message;
 			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
-			if(obj(message)) {
-				for(type in message) {
-					if(str(message[type])) {
-						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
+			var message, i;
+			if(obj(cms_message)) {
+				for(type in cms_message) {
+					if(str(cms_message[type])) {
+						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":cms_message[type]}));
 					}
-					else if(obj(message[type]) && message[type].length) {
-						var node, i;
-						for(i = 0; i < message[type].length; i++) {
-							_message = message[type][i];
-							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
+					else if(obj(cms_message[type]) && cms_message[type].length) {
+						for(i = 0; i < cms_message[type].length; i++) {
+							message = cms_message[type][i];
+							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message}));
 						}
 					}
 				}
 			}
-			else if(str(message)) {
-				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
-			}
-			if(fun(this.notifications.show)) {
-				this.notifications.show();
+			else if(str(cms_message)) {
+				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":cms_message}));
 			}
 		}
 		else if(obj(response) && response.isHTML) {
 			var login = u.qs(".scene.login form", response);
 			var messages = u.qsa(".scene div.messages p", response);
 			if(login && !u.qs("#login_overlay")) {
-				this.autosave_disabled = true;
+				page.autosave_disabled = true;
 				if(page.t_autosave) {
 					u.t.resetTimer(page.t_autosave);
 				}
@@ -4643,8 +4662,8 @@ u.notifier = function(node) {
 					this.response = function(response) {
 						if(response.isJSON && response.cms_status == "success") {
 							var csrf_token = response.cms_object["csrf-token"];
-							var data_vars = u.qsa("[data-csrf-token]", page);
-							var input_vars = u.qsa("[name=csrf-token]", page);
+							var data_vars = u.qsa("[data-csrf-token]");
+							var input_vars = u.qsa("[name=csrf-token]");
 							var dom_vars = u.qsa("*", page);
 							var i, node;
 							for(i = 0; i < data_vars.length; i++) {
@@ -4670,9 +4689,9 @@ u.notifier = function(node) {
 								}
 							}
 							u.as(document.body, "overflow", "auto");
-							this.overlay.node.autosave_disabled = false;
-							if(this.overlay.node._autosave_node && this.overlay.node._autosave_interval) {
-								u.t.setTimer(this.overlay.node._autosave_node, "autosave", this.overlay.node._autosave_interval);
+							page.autosave_disabled = false;
+							if(page._autosave_node && page._autosave_interval) {
+								u.t.setTimer(page._autosave_node, "autosave", page._autosave_interval);
 							}
 						}
 						else {
@@ -4689,6 +4708,7 @@ u.notifier = function(node) {
 					}
 					u.request(this, this.action, {"method":this.method, "data":this.getData()});
 				}
+				return;
 			}
 			else if(messages) {
 				for(i = 0; i < messages.length; i++) {
@@ -4697,7 +4717,35 @@ u.notifier = function(node) {
 				}
 			}
 		}
-		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
+		else if(obj(response)) {
+			if(response.nodeName) {
+				var messages = u.qsa(".scene div.messages p", response);
+				for(i = 0; i < messages.length; i++) {
+					message = messages[i];
+					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
+				}
+			}
+			else if(response.length) {
+				for(i = 0; i < response.length; i++) {
+					message = response[i];
+					if(obj(message) && message.message) {
+						output.push(u.ae(this.notifications, "div", {"class":(message.type ? message.type : "message"), "html":message.message}));
+					}
+				}
+			}
+			else if(fun(response.toString) && response.toString() === "[object Object]" && response.type && response.message) {
+				output.push(u.ae(this.notifications, "div", {"class":response.type, "html":response.message}));
+			}
+		}
+		if(fun(this.notifications[this._nt_show_callback])) {
+			this.notifications[this._nt_show_callback]();
+		}
+		if(fun(this.notifications[this._nt_hide_callback])) {
+			this.t_notifier = u.t.setTimer(this.notifications, this.notifications[this._nt_hide_callback], this._nt_hide_delay, output);
+		}
+	}
+	if(node._nt_scrape) {
+		node.notify(document.body);
 	}
 }
 u.smartphoneSwitch = new function() {
@@ -6071,59 +6119,76 @@ Util.Modules["comments"] = new function() {
 		div.initComment = function(node) {
 			node.div = this;
 		}
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.add_comment_url = div.getAttribute("data-comment-add");
-		if(div.add_comment_url && div.csrf_token) {
-			div.actions = u.ae(div, "ul", {"class":"actions"});
-			div.bn_comment = u.ae(u.ae(div.actions, "li", {"class":"add"}), "a", {"html":u.txt["add_comment"], "class":"button primary comment"});
-			div.bn_comment.div = div;
-			u.ce(div.bn_comment);
-			div.bn_comment.clicked = function() {
-				var actions, bn_add, bn_cancel;
-				u.as(this.div.actions, "display", "none");
-				this.div.form = u.f.addForm(this.div, {"action":this.div.add_comment_url+"/"+this.div.item_id, "class":"add labelstyle:inject"});
-				this.div.form.div = div;
-				u.ae(this.div.form, "input", {"type":"hidden","name":"csrf-token", "value":this.div.csrf_token});
-				u.f.addField(this.div.form, {"type":"text", "name":"item_comment", "label":u.txt["comment"]});
-				actions = u.ae(this.div.form, "ul", {"class":"actions"});
-				bn_add = u.f.addAction(actions, {"value":u.txt["add_comment"], "class":"button primary update", "name":"add"});
-				bn_add.div = div;
-				bn_cancel = u.f.addAction(actions, {"value":u.txt["cancel"], "class":"button cancel", "type":"button", "name":"cancel"});
-				bn_cancel.div = div;
-				u.f.init(this.div.form);
-				this.div.form.submitted = function() {
-					this.response = function(response) {
-						if(response.cms_status == "success" && response.cms_object) {
-							if(!div.list) {
-								var p = u.qs("p", div);
-								if(p) {
-									p.parentNode.removeChild(p);
-								}
-								div.list = u.ie(div, "ul", {"class":"comments"});
-								div.insertBefore(div.list, div.actions);
+		div.form_comment = u.qs("form.add", div);
+		if(div.form_comment) {
+			div.form_comment.div = div;
+			u.f.init(div.form_comment);
+			div.form_comment.submitted = function() {
+				this.response = function(response) {
+					if(response.cms_status == "success" && response.cms_object) {
+						if(!this.div.list) {
+							var p = u.qs("p", this.div);
+							if(p) {
+								p.parentNode.removeChild(p);
 							}
-							var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
-							var info = u.ae(comment_li, "ul", {"class":"info"});
-							u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
-							u.ae(info, "li", {"class":"author", "html":response.cms_object["nickname"]});
-							u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
-							this.div.initComment(comment_li);
-							this.parentNode.removeChild(this);
-							u.as(this.div.actions, "display", "");
+							this.div.list = u.ie(this.div, "ul", {"class":"comments"});
+							this.div.insertBefore(this.div.list, this.div.actions);
 						}
+						var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
+						var info = u.ae(comment_li, "ul", {"class":"info"});
+						u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
+						u.ae(info, "li", {"class":"author", "html":response.cms_object["nickname"]});
+						u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
+						this.div.initComment(comment_li);
+						this.actions["cancel"].clicked();
 					}
-					u.request(this, this.action, {"method":"post", "data":this.getData()});
 				}
-				u.ce(bn_cancel);
-				bn_cancel.clicked = function(event) {
-					u.e.kill(event);
-					this.div.form.parentNode.removeChild(this.div.form);
-					u.as(this.div.actions, "display", "");
+				u.request(this, this.action, {"method":"post", "data":this.getData()});
+			}
+			div.field_comment = div.form_comment.inputs["item_comment"].field;
+			div.bn_comment = div.form_comment.actions["submit"];
+			if(div.bn_comment) {
+				div.bn_comment.div = div;
+				u.ce(div.bn_comment);
+				div.bn_comment.clicked = function(event) {
+					if(!this.div.is_active) {
+						u.e.kill(event);
+						this.div.is_active = true;
+						u.ass(this.div.field_comment, {
+							"display": this.div.field_comment.default_display,
+						});
+						u.ass(this.div.bn_cancel, {
+							"display": this.div.bn_cancel.default_display,
+						});
+					}
+					else {
+						this._form.submit();
+					}
 				}
 			}
-		}
-		else {
-			u.ae(div, "p", {"html": (u.txt["login_to_comment"] ? u.txt["login_to_comment"] : "Login or signup to comment")});
+			div.bn_cancel = div.form_comment.actions["cancel"];
+			if(div.bn_cancel) {
+				div.bn_cancel.div = div;
+				u.ce(div.bn_cancel);
+				div.bn_cancel.clicked = function() {
+					this.div.is_active = false;
+					this._form.reset();
+					u.ass(this.div.field_comment, {
+						"display": "none",
+					});
+					u.ass(this.div.bn_cancel, {
+						"display": "none",
+					});
+				}
+			}
+			div.field_comment.default_display = u.gcs(div.field_comment, "display");
+			div.bn_cancel.default_display = u.gcs(div.bn_cancel, "display");
+			u.ass(div.field_comment, {
+				"display": "none",
+			});
+			u.ass(div.bn_cancel, {
+				"display": "none",
+			});
 		}
 		var i, node;
 		for(i = 0; node = div.comments[i]; i++) {

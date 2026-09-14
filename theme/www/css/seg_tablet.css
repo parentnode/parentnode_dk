@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2024-04-22 14:18:17
+asset-builder @ 2026-09-14 13:38:13
 */
 
 /*seg_tablet_include.css*/
@@ -7,7 +7,7 @@ asset-builder @ 2024-04-22 14:18:17
 /*seg_tablet.css*/
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2024-01-26 16:53:16
+asset-builder @ 2026-09-14 13:11:11
 */
 @font-face {
 	font-family: 'OpenSans';
@@ -199,6 +199,7 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene div.media.fullsize {}
 #content .scene div.image.fullsize img,
 #content .scene div.media.fullsize img {cursor: zoom-out; margin: 0 0 30px; border-radius: 0;}
+#content .scene div.media ul.metadata {display: none;}
 #content .scene div.vimeo,
 #content .scene div.youtube {position: relative; z-index: 1;}
 #content .scene div.vimeo iframe,
@@ -492,6 +493,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene ul.articles.articlePreviewList li.article h3 {padding-bottom: 14px;
 	font-family: "PT Serif", Times, serif;
 }
+#content .scene ul.articles.articlePreviewList li.article h3:first-child {padding-top: 15px;}
 #content .scene ul.articles.articlePreviewList li.article ul.info {padding-bottom: 10px;}
 #content .scene ul.articles.articlePreviewList div.description p a.readmore {padding-top: 15px; display: inline-block;}
 #content .scene ul.articles.articlePreviewList div.image img,
@@ -515,6 +517,7 @@ body #selection_options ul.actions a.button:active {background-color: #313942;}
 #content .scene .pagination li.next a,
 #content .scene .pagination li.previous a {display: block; text-decoration: none; height: 16px; padding: 7px 12px; font-size: 14px; background-color: #dedede; color: #333333; border: none; cursor: pointer; border-radius: 3px;}
 #content .scene .pagination li.pages {line-height: 25px;}
+#content .scene .pagination-page {margin: -10px 0 10px; font-size: 18px;}
 body > div.pagination li.next > svg.arrow {position: absolute; top: 14px; right: 2px;}
 body > div.pagination li.next > svg.arrow line {stroke: #888888; stroke-width: 3px;}
 body > div.pagination li.previous > svg.arrow {position: absolute; top: 14px; left: 8px;}

@@ -1,6 +1,6 @@
 /*
 MIT license, 2019 parentNode.dk
-asset-builder @ 2024-01-26 16:53:16
+asset-builder @ 2026-09-14 13:11:11
 */
 
 /*seg_smartphone_include.js*/
@@ -4940,6 +4940,7 @@ u.fontsReady = function(node, fonts, _options) {
 		window["_man_fonts_"+loadkey].checkFontsFallback();
 	}
 }
+
 
 /*u-form-custom.js*/
 u.f.fixFieldHTML = function(field) {

@@ -9,3 +9,5 @@
 #content .scene .pagination .next a:active,
 #content .scene .pagination .previous a:active {background-color: #313942; color: #ffffff;}
 #content .scene .pagination li.pages {display: none;}
+
+#content .scene .pagination-page {margin: -10px 0 10px; font-size: 18px;}

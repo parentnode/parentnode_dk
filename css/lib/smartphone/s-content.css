@@ -99,6 +99,8 @@
 #content .scene div.image p a,
 #content .scene div.media p a {font-style: italic; line-height: 1.1em; font-size: 12px; display: block; color: #bbbbbb;}
 
+#content .scene div.media ul.metadata {display: none;}
+
 #content .scene div.vimeo,
 #content .scene div.youtube {position: relative; z-index: 1;}
 #content .scene div.vimeo iframe,
@@ -182,7 +184,7 @@
 #content .scene div.company dl.info dd ul,
 #content .scene div.person dl.info dd ul {padding: 0;}
 #content .scene div.company dl.info dd li,
-#content .scene div.person dl.info dd li {font-size: 16px;}
+#content .scene div.person dl.info dd li {font-size: 14px;}
 #content .scene div.company dl.info dd li a,
 #content .scene div.person dl.info dd li a {padding-bottom: 10px; display: inline-block;}
 #content .scene div.company dl.info dd li:last-child a,

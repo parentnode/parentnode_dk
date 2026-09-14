@@ -20,6 +20,7 @@
 #content .scene .pagination li.previous a:active {background-color: #313942; color: #ffffff;}
 #content .scene .pagination li.pages {line-height: 25px;}
 
+#content .scene .pagination-page {margin: -10px 0 10px; font-size: 18px;}
 
 /* SIDE-BOUND PAGINATION */
 body > div.pagination {position: fixed; top: 60px; left: 0; width: 100%;}

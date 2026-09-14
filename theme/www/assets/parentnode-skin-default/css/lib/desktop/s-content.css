@@ -100,6 +100,8 @@
 #content .scene div.image.fullsize img,
 #content .scene div.media.fullsize img {cursor: zoom-out; margin: 0 0 30px; border-radius: 0;}
 
+#content .scene div.media ul.metadata {display: none;}
+
 #content .scene div.vimeo,
 #content .scene div.youtube {position: relative; z-index: 1;}
 #content .scene div.vimeo iframe,

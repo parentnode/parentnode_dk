@@ -17,6 +17,8 @@
 #content .scene ul.articles.articlePreviewList li.article h3 {padding-bottom: 14px;
 	font-family: "PT Serif", Times, serif;
 }
+#content .scene ul.articles.articlePreviewList li.article h3:first-child {padding-top: 15px;}
+
 #content .scene ul.articles.articlePreviewList li.article ul.info {padding-bottom: 10px;}
 #content .scene ul.articles.articlePreviewList div.description p a.readmore {padding-top: 15px; display: inline-block;}
 #content .scene ul.articles.articlePreviewList div.image img,

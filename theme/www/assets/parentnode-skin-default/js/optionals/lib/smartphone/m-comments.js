@@ -17,90 +17,105 @@ Util.Modules["comments"] = new function() {
 		}
 
 
-		// CMS interaction urls
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.add_comment_url = div.getAttribute("data-comment-add");
+		// Add comment form
+		div.form_comment = u.qs("form.add", div);
+		if(div.form_comment) {
 
-		// if interaction data available
-		if(div.add_comment_url && div.csrf_token) {
+			div.form_comment.div = div;
 
-			// add initial add comment button
-			div.actions = u.ae(div, "ul", {"class":"actions"});
-			div.bn_comment = u.ae(u.ae(div.actions, "li", {"class":"add"}), "a", {"html":u.txt["add_comment"], "class":"button primary comment"});
-			div.bn_comment.div = div;
+			u.f.init(div.form_comment);
 
-			u.ce(div.bn_comment);
-			div.bn_comment.clicked = function() {
+			// handle form submit
+			div.form_comment.submitted = function() {
 
-				var actions, bn_add, bn_cancel;
+				this.response = function(response) {
 
-				// hide original add button
-				u.as(this.div.actions, "display", "none");
+					if(response.cms_status == "success" && response.cms_object) {
 
-				// add comment form
-				this.div.form = u.f.addForm(this.div, {"action":this.div.add_comment_url+"/"+this.div.item_id, "class":"add labelstyle:inject"});
-				this.div.form.div = div;
-
-				u.ae(this.div.form, "input", {"type":"hidden","name":"csrf-token", "value":this.div.csrf_token});
-				u.f.addField(this.div.form, {"type":"text", "name":"item_comment", "label":u.txt["comment"]});
-				actions = u.ae(this.div.form, "ul", {"class":"actions"});
-
-				bn_add = u.f.addAction(actions, {"value":u.txt["add_comment"], "class":"button primary update", "name":"add"});
-				bn_add.div = div;
-
-				bn_cancel = u.f.addAction(actions, {"value":u.txt["cancel"], "class":"button cancel", "type":"button", "name":"cancel"});
-				bn_cancel.div = div;
-
-				u.f.init(this.div.form);
-
-				// handle form submit
-				this.div.form.submitted = function() {
-
-					this.response = function(response) {
-
-						if(response.cms_status == "success" && response.cms_object) {
-
-							if(!div.list) {
-								var p = u.qs("p", div);
-								if(p) {
-									p.parentNode.removeChild(p);
-								}
-								div.list = u.ie(div, "ul", {"class":"comments"});
-								div.insertBefore(div.list, div.actions);
+						if(!this.div.list) {
+							var p = u.qs("p", this.div);
+							if(p) {
+								p.parentNode.removeChild(p);
 							}
-
-							var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
-							var info = u.ae(comment_li, "ul", {"class":"info"});
-							u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
-							u.ae(info, "li", {"class":"author", "html":response.cms_object["nickname"]});
-							u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
-
-							this.div.initComment(comment_li);
-
-							// remove add comment form
-							this.parentNode.removeChild(this);
-
-							// show original add button
-							u.as(this.div.actions, "display", "");
+							this.div.list = u.ie(this.div, "ul", {"class":"comments"});
+							this.div.insertBefore(this.div.list, this.div.actions);
 						}
+
+						var comment_li = u.ae(this.div.list, "li", {"class":"comment comment_id:"+response.cms_object["id"]});
+						var info = u.ae(comment_li, "ul", {"class":"info"});
+						u.ae(info, "li", {"class":"created_at", "html":response.cms_object["created_at"]});
+						u.ae(info, "li", {"class":"author", "html":response.cms_object["nickname"]});
+						u.ae(comment_li, "p", {"class":"comment", "html":response.cms_object["comment"]})
+
+						this.div.initComment(comment_li);
+
+						// return form to original state
+						this.actions["cancel"].clicked();
 					}
-					u.request(this, this.action, {"method":"post", "data":this.getData()});
-
 				}
+				u.request(this, this.action, {"method":"post", "data":this.getData()});
 
-				// handle cancel
-				u.ce(bn_cancel);
-				bn_cancel.clicked = function(event) {
-					u.e.kill(event);
-					this.div.form.parentNode.removeChild(this.div.form);
+			}
 
-					// show original add button
-					u.as(this.div.actions, "display", "");
+			div.field_comment = div.form_comment.inputs["item_comment"].field;
+
+			div.bn_comment = div.form_comment.actions["submit"];
+			if(div.bn_comment) {
+
+				div.bn_comment.div = div;
+
+				u.ce(div.bn_comment);
+				div.bn_comment.clicked = function(event) {
+					if(!this.div.is_active) {
+						u.e.kill(event);
+						this.div.is_active = true;
+
+						u.ass(this.div.field_comment, {
+							"display": this.div.field_comment.default_display,
+						});
+						u.ass(this.div.bn_cancel, {
+							"display": this.div.bn_cancel.default_display,
+						});
+
+					}
+					else {
+						this._form.submit();
+					}
+
 				}
 			}
-		}
-		else {
-			u.ae(div, "p", {"html": (u.txt["login_to_comment"] ? u.txt["login_to_comment"] : "Login or signup to comment")});
+
+
+			div.bn_cancel = div.form_comment.actions["cancel"];
+			if(div.bn_cancel) {
+
+				div.bn_cancel.div = div;
+
+				u.ce(div.bn_cancel);
+				div.bn_cancel.clicked = function() {
+					this.div.is_active = false;
+					this._form.reset();
+
+					u.ass(this.div.field_comment, {
+						"display": "none",
+					});
+					u.ass(this.div.bn_cancel, {
+						"display": "none",
+					});
+				}
+
+			}
+
+
+			div.field_comment.default_display = u.gcs(div.field_comment, "display");
+			div.bn_cancel.default_display = u.gcs(div.bn_cancel, "display");
+
+			u.ass(div.field_comment, {
+				"display": "none",
+			});
+			u.ass(div.bn_cancel, {
+				"display": "none",
+			});
 		}
 
 

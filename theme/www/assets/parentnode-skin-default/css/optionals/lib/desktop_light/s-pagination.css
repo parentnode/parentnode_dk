@@ -9,3 +9,5 @@
 	font-size: 14px; display: block;
 }
 #content .scene .pagination li.pages {display: none;}
+
+#content .scene .pagination-page {margin: -10px 0 10px; font-size: 18px;}

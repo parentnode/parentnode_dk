@@ -1,6 +1,6 @@
 /*
 MIT license, 2002-2019 parentNode.dk
-asset-builder @ 2024-01-26 16:53:16
+asset-builder @ 2026-09-14 13:11:11
 */
 
 /*seg_tablet_include.css*/
@@ -207,6 +207,7 @@ body > div.hint a {text-decoration: underline; display: inline-block; vertical-a
 #content .scene div.media.fullsize {}
 #content .scene div.image.fullsize img,
 #content .scene div.media.fullsize img {cursor: zoom-out; margin: 0 0 30px; border-radius: 0;}
+#content .scene div.media ul.metadata {display: none;}
 #content .scene div.vimeo,
 #content .scene div.youtube {position: relative; z-index: 1;}
 #content .scene div.vimeo iframe,

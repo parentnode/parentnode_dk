@@ -3,7 +3,11 @@ global $action;
 global $model;
 global $itemtype;
 
-$items = items()->getItems(array("itemtype" => $itemtype, "order" => "status DESC, position ASC, published_at DESC", "extend" => array("tags" => true, "mediae" => true)));
+$items = items()->getItems([
+	"itemtype" => $itemtype, 
+	"order" => "status DESC, position ASC, published_at DESC", 
+	"extend" => true
+]);
 ?>
 
 <div class="scene i:scene defaultList <?= $itemtype ?>List">
@@ -13,14 +17,12 @@ $items = items()->getItems(array("itemtype" => $itemtype, "order" => "status DES
 		<?= $JML->listNew(array("label" => "New service")) ?>
 	</ul>
 
-	<div class="all_items i:defaultList taggable sortable filters"<?= $HTML->jsData(["order", "tags", "search"], ["filter-tag-contexts" => $itemtype]) ?>>
+	<div class="all_items i:defaultList sortable filters"<?= $HTML->jsData(["order", "search"]) ?>>
 <?		if($items): ?>
 		<ul class="items">
 <?			foreach($items as $item): ?>
 			<li class="item item_id:<?= $item["id"] ?>">
 				<h3><?= strip_tags($item["name"]) ?></h3>
-
-				<?= $JML->tagList($item["tags"], ["context" => $itemtype]) ?>
 
 				<?= $JML->listActions($item) ?>
 			 </li>

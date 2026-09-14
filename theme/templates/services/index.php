@@ -23,10 +23,7 @@ $items = items()->getItems([
 	"status" => 1, 
 	"order" => "$itemtype.position ASC", 
 	"extend" => [
-		"tags" => true, 
-		"readstate" => true, 
 		"mediae" => true, 
-		"user" => true
 	]
 ]);
 
@@ -78,7 +75,7 @@ $items = items()->getItems([
 		<ul class="items services articles articlePreviewList i:articlePreviewList">
 <?			foreach($items as $item):
 				$media = items()->sliceMediae($item, "single_media"); ?>
-			<li class="item article service id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/Article">
+			<li class="item article service<?= $item["classname"] ? " ".$item["classname"] : "" ?>">
 
 				<?= HTML()->renderSnippet("snippets/media.php", [
 					"item" => $item,
@@ -86,24 +83,11 @@ $items = items()->getItems([
 				]) ?>
 
 
-				<?= HTML()->renderSnippet("snippets/tags.php", [
-					"item" => $item,
-					"context" => [$itemtype]
-				]) ?>
-
-
-				<h2 itemprop="headline"><a href="<?= HTML()->path ?>/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h2>
-
-
-				<?= HTML()->renderSnippet("snippets/info.php", [
-					"item" => $item,
-					"media" => $media,
-					"sharing" => true
-				]) ?>
+				<h2><a href="<?= HTML()->path ?>/<?= $item["sindex"] ?>"><?= $item["name"] ?></a></h2>
 
 
 				<? if($item["description"]): ?>
-				<div class="description" itemprop="description">
+				<div class="description">
 					<p><?= nl2br($item["description"]) ?></p>
 				</div>
 				<? endif; ?>

@@ -54,7 +54,6 @@ else {
 $related_pattern["limit"] = 5;
 $related_pattern["extend"] = [
 	"tags" => true, 
-	"readstate" => true, 
 	"user" => true, 
 	"mediae" => true
 ];
@@ -69,18 +68,11 @@ $related_items = items()->getRelatedItems($related_pattern);
 <? if($item):
 	$media = items()->sliceMediae($item, "single_media"); ?>
 
-	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article"<?= HTML()->jsData(["readstate"]) ?>>
+	<div class="article i:article id:<?= $item["item_id"] ?> service" itemscope itemtype="http://schema.org/Article">
 
 		<?= HTML()->renderSnippet("snippets/media.php", [
 			"item" => $item,
 			"media" => $media,
-		]) ?>
-
-
-		<?= HTML()->renderSnippet("snippets/tags.php", [
-			"item" => $item,
-			"context" => [$itemtype],
-			"default" => [HTML()->path, "Services"]
 		]) ?>
 
 

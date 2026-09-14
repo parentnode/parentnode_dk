@@ -7,7 +7,7 @@
 header("Content-type: text/html; charset=UTF-8");
 error_reporting(E_ALL);
 
-define("VERSION", "0.8");
+define("VERSION", "0.7.9.2");
 define("UI_BUILD", "20260914-153339");
 
 define("SITE_UID", "PARE");

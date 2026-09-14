@@ -18,19 +18,18 @@ $demos = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order"
 	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
-		<? if($media): ?>
-		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-		<? endif; ?>
+
+		<?= HTML()->renderSnippet("snippets/media.php", [
+			"item" => $page_item,
+			"media" => $media,
+		]) ?>
 
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page_item["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
-		<? endif; ?>
 
-
-		<?= $HTML->articleInfo($page_item, "/demos", [
+		<?= HTML()->renderSnippet("snippets/info.php", [
+			"item" => $page_item,
 			"media" => $media,
 		]) ?>
 
@@ -40,12 +39,14 @@ $demos = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order"
 			<?= $page_item["html"] ?>
 		</div>
 		<? endif; ?>
+
 	</div>
+
 <? else:?>
 
 	<div class="article">
 		<h1>Demos</h1>
-		<p>Take a look. And remember, I did all the stuff you can't really see, unless you look under the hood :-)</p>
+		<p>Take a look. And note that I did all the stuff you can't really see, unless you look under the hood :-)</p>
 	</div>
 
 <? endif; ?>
@@ -61,21 +62,29 @@ $demos = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order"
 			<li class="demo item article i:article id:<?= $demo["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 				<h2 itemprop="headline"><?= $demo["name"] ?></h2>
 
-				<? if($media): ?>
-				<div class="image item_id:<?= $demo["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-				<? endif; ?>
+
+				<?= HTML()->renderSnippet("snippets/media.php", [
+					"item" => $demo,
+					"media" => $media,
+				]) ?>
+
 
 				<ul class="link">
 					<li><a href="<?= $demo["link"] ?>" target="_blank" class="hardlink"><?= $demo["link"] ?></a></li>
 				</ul>
 
-				<?= $HTML->articleTags($demo, [
-					"context" => ["demo"]
+
+				<?= HTML()->renderSnippet("snippets/tags.php", [
+					"item" => $demo,
+					"context" => [$itemtype],
 				]) ?>
 
-				<?= $HTML->articleInfo($demo, "/demos", [
+
+				<?= HTML()->renderSnippet("snippets/info.php", [
+					"item" => $demo,
 					"media" => $media,
 				]) ?>
+
 
 				<div class="articlebody" itemprop="articleBody">
 
@@ -107,4 +116,3 @@ $demos = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order"
 	<? endif; ?>
 
 </div>
-

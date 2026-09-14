@@ -14,6 +14,7 @@ body {}
 #navigation ul li {color: #63add0;}
 #navigation ul li.admin,
 #navigation ul li.user {border-color: #034769}
+.front #header .logo,
 #navigation ul li.selected,
 #navigation ul li.path {color: #034769;}
 

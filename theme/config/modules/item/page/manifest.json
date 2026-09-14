@@ -1,0 +1,90 @@
+{
+	"version": "0.1.13",
+	"files": [
+		{
+			"type": "class",
+			"src": "classes/type.page.class.php",
+			"dest": "classes/items/type.page.class.php",
+			"digest": "sha256:4de464a75d43a32d2c4a4865685ad68d6bf65dfcaf1afdfa78f91579d37c6ad0"
+		},
+		{
+			"type": "backend-controller",
+			"src": "www/janitor/page.php",
+			"dest": "www/janitor/page.php",
+			"digest": "sha256:78dee567c7714ecae5b8c4b8f436b20543aa7bfb5f81868408aea50b5f0ee757"
+		},
+		{
+			"type": "backend-template",
+			"src": "templates/janitor/page/list.php",
+			"dest": "templates/janitor/page/list.php",
+			"digest": "sha256:c109231fd16f98ca221261d1817197dce3d934ec4a51b910c752cad05c8f64fd"
+		},
+		{
+			"type": "backend-template",
+			"src": "templates/janitor/page/edit.php",
+			"dest": "templates/janitor/page/edit.php",
+			"digest": "sha256:074b611033c040e8a97281e53d0d694e9fe4726fc0a1d2ea8eb1d2f25f29a604"
+		},
+		{
+			"type": "backend-template",
+			"src": "templates/janitor/page/new.php",
+			"dest": "templates/janitor/page/new.php",
+			"digest": "sha256:5bd7fcf207970f427501a75b361fc3ec66574b448779026d341771fef2c9a73e"
+		},
+		{
+			"type": "settings-css",
+			"src": "www/settings/css/s-item-page.css",
+			"dest": "www/janitor/css/setup/modules/s-item-page.css",
+			"digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+		},
+		{
+			"type": "settings-js",
+			"src": "www/settings/js/m-item-page.js",
+			"dest": "www/janitor/js/setup/modules/m-item-page.js",
+			"digest": "sha256:c8cfaa941d329842e749dd56c7d54bc54adbb5dd31ea44fd664c608cb771954b"
+		},
+		{
+			"type": "settings-template",
+			"src": "templates/settings/index.php",
+			"dest": "templates/janitor/modules/item/page/index.php",
+			"digest": "sha256:7955b25fa3baf4e6ff52668e1f059ae7b69a34a9af01732f5c1c81b2d3bde927"
+		},
+		{
+			"type": "controller",
+			"src": "www/pages.php",
+			"dest": "www/pages.php",
+			"digest": "sha256:e62097693c5b49212b845a6ad20557f9097345fd9552628f1a7a860c775eeb0f"
+		},
+		{
+			"type": "template",
+			"src": "templates/pages/view.php",
+			"dest": "templates/pages/view.php",
+			"digest": "sha256:59848ccaa3bfed4b3520eb5734c9504a12f74576db894b1128e43d7b4727e135"
+		},
+		{
+			"type": "data-model",
+			"src": "config/db/item_page.sql",
+			"digest": "sha256:d7d580ac1433689238fed6b26a0030f9304866cb1d202f332855a6cd311f1a4e"
+		},
+		{
+			"type": "data-install",
+			"src": "config/db/data/navigation_nodes.sql",
+			"digest": "sha256:89b0d1256b59455a976fa7fe99340f888dabfb90d43f212537271c2ebd915107"
+		},
+		{
+			"type": "data-uninstall",
+			"src": "config/db/data/navigation_nodes_uninstall.sql",
+			"digest": "sha256:be3752ef6f7daefe7ca0bfc5deeaad102d31ff378063b2fb88ca9e3c87fe4b6c"
+		},
+		{
+			"type": "data-uninstall-all",
+			"src": "config/db/data/item_page_data_uninstall.sql",
+			"digest": "sha256:26abddc868a198f150c5a1e0dcf5e17e124de86c15f7d90eb2c70497ef350873"
+		},
+		{
+			"type": "data-uninstall-all",
+			"src": "config/db/item_page_uninstall.sql",
+			"digest": "sha256:270d6a8d70dda602633326f41122fa59630e707e9fa813c4f147526d9cad7674"
+		}
+	]
+}

@@ -71,6 +71,7 @@ $related_items = items()->getRelatedItems($related_pattern);
 
 	<div class="article i:article id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/NewsArticle"<?= HTML()->jsData(["readstate"]) ?>>
 
+
 		<?= HTML()->renderSnippet("snippets/media.php", [
 			"item" => $item,
 			"media" => $media,

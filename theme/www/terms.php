@@ -1,4 +1,7 @@
 <?php
+$controller_type = "page";
+$controller_favors = ["name" => "Terms page"];
+
 $access_item = false;
 if(isset($read_access) && $read_access) {
 	return;
@@ -13,9 +16,7 @@ $page->bodyClass("terms");
 $page->pageTitle("Terms");
 
 
-$page->page(array(
+$page->page([
 	"templates" => "pages/terms.php"
-));
+]);
 exit();
-
-?>

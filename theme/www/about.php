@@ -1,4 +1,7 @@
 <?php
+$controller_type = "page";
+$controller_favors = ["name" => "About page"];
+
 $access_item = false;
 if(isset($read_access) && $read_access) {
 	return;
@@ -14,9 +17,7 @@ $page->bodyClass("about");
 $page->pageTitle("About parentNode");
 
 
-$page->page(array(
+$page->page([
 	"templates" => "pages/about.php"
-));
+]);
 exit();
-
-?>

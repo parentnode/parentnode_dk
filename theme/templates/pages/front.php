@@ -1,11 +1,29 @@
 <?php
 
-$page_item = items()->getItem(array("tags" => "page:front", "status" => 1, "extend" => array("user" => true, "mediae" => true, "tags" => true)));
+$page_item = items()->getItem([
+	"tags" => "page:front", 
+	"status" => 1, 
+	"extend" => [
+		"user" => true, 
+		"mediae" => true, 
+		"tags" => true
+	]
+]);
 if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$post_items = items()->getItems(array("itemtype" => "post", "tags" => "on:frontpage", "status" => 1, "extend" => array("tags" => true, "readstate" => true, "user" => true, "mediae" => true)));
+$post_items = items()->getItems([
+	"itemtype" => "post", 
+	"tags" => "on:frontpage", 
+	"status" => 1, 
+	"extend" => [
+		"tags" => true, 
+		"readstate" => true, 
+		"user" => true, 
+		"mediae" => true
+	]
+]);
 ?>
 <div class="scene front i:front">
 
@@ -13,26 +31,19 @@ $post_items = items()->getItems(array("itemtype" => "post", "tags" => "on:frontp
 	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article" itemscope itemtype="http://schema.org/Article">
 
-		<? if($media): ?>
-		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-		<? endif; ?>
 
-
-		<?= $HTML->articleTags($page_item, [
-			"context" => false
+		<?= HTML()->renderSnippet("snippets/media.php", [
+			"item" => $page_item,
+			"media" => $media,
 		]) ?>
 
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page_item["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
-		<? endif; ?>
 
-
-		<?= $HTML->articleInfo($page_item, "/", [
-			"media" => $media, 
-			"sharing" => true
+		<?= HTML()->renderSnippet("snippets/info.php", [
+			"item" => $page_item,
+			"media" => $media,
 		]) ?>
 
 
@@ -41,6 +52,7 @@ $post_items = items()->getItems(array("itemtype" => "post", "tags" => "on:frontp
 			<?= $page_item["html"] ?>
 		</div>
 		<? endif; ?>
+
 	</div>
 <? endif; ?>
 
@@ -51,18 +63,18 @@ $post_items = items()->getItems(array("itemtype" => "post", "tags" => "on:frontp
 		<ul class="items articles i:articlePreviewList articlePreviewList">
 		<? foreach($post_items as $item): 
 			$media = items()->sliceMediae($item, "mediae"); ?>
-			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"
-				data-readstate="<?= $item["readstate"] ?>"
-				>
+			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"<?= HTML()->jsData(["readstate"]) ?>>
 
-				<? if($media): ?>
-				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-				<? endif; ?>
+				<?= HTML()->renderSnippet("snippets/media.php", [
+					"item" => $item,
+					"media" => $media,
+				]) ?>
 
 
-				<?= $HTML->articleTags($item, [
-					"context" => ["post"],
-					"url" => "/blog/tag",
+				<?= HTML()->renderSnippet("snippets/tags.php", [
+					"item" => $item,
+					"context" => [$item["itemtype"]],
+					"base_path" => "/blog",
 					"default" => ["/blog", "Posts"]
 				]) ?>
 
@@ -70,8 +82,9 @@ $post_items = items()->getItems(array("itemtype" => "post", "tags" => "on:frontp
 				<h3 itemprop="headline"><a href="/blog/<?= $item["sindex"] ?>"><?= preg_replace("/<br>|<br \/>/", "", $item["name"]) ?></a></h3>
 
 
-				<?= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
-					"media" => $media
+				<?= HTML()->renderSnippet("snippets/info.php", [
+					"item" => $page_item,
+					"media" => $media,
 				]) ?>
 
 

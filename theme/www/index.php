@@ -1,4 +1,7 @@
 <?php
+$controller_type = "page";
+$controller_favors = ["name" => "Frontpage"];
+
 $access_item = false;
 if(isset($read_access) && $read_access) {
 	return;
@@ -14,9 +17,9 @@ $page->bodyClass("front");
 $page->pageTitle("You have to start somewhere");
 
 
-$page->page(array(
+$page->page([
 	"templates" => "pages/front.php"
-));
+]);
 exit();
 
 ?>

@@ -7,10 +7,6 @@ if($page_item) {
 	$this->sharingMetaData($page_item);
 }
 
-$itemtype = "person";
-$items = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order" => $itemtype.".position ASC", "extend" => array("tags" => true, "readstate" => true, "mediae" => true, "user" => true)));
-
-
 ?>
 <div class="scene contact i:contact">
 
@@ -18,26 +14,19 @@ $items = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order"
 	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
-		<? if($media): ?>
-		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-		<? endif; ?>
 
-
-		<?= $HTML->articleTags($page_item, [
-			"context" => false
+		<?= HTML()->renderSnippet("snippets/media.php", [
+			"item" => $page_item,
+			"media" => $media,
 		]) ?>
 
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page_item["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
-		<? endif; ?>
 
-
-		<?= $HTML->articleInfo($page_item, "/contact", [
+		<?= HTML()->renderSnippet("snippets/info.php", [
+			"item" => $page_item,
 			"media" => $media,
-			"sharing" => true
 		]) ?>
 
 
@@ -46,43 +35,12 @@ $items = items()->getItems(array("itemtype" => $itemtype, "status" => 1, "order"
 			<?= $page_item["html"] ?>
 		</div>
 		<? endif; ?>
+
 	</div>
 <? else:?>
+
 	<h1>Contact</h1>
-<? endif; ?>
 
-
-<? if($items): ?>
-	<div class="teams">
-		<h2>We, the people</h2>
-		<ul class="items people">
-			<? foreach($items as $item): 
-				$media = items()->sliceMediae($item, "single_media"); ?>
-			<li class="item person vcard id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/Person">
-
-				<?	if($media): ?>
-				<div class="image item_id:<?= $item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>">
-					<p>Image: <a href="/images/<?= $item["item_id"] ?>/<?= $media["variant"] ?>/500x.<?= $media["format"] ?>"><?= $media["name"] ?></a></p>
-				</div>
-				<?	endif; ?>
-
-				<h3 itemprop="name" class="fn name"><?= $item["name"] ?></h3>
-				<ul class="info">
-					<li itemprop="affiliation" class="affiliation">parentNode ApS</li>
-					<li itemprop="jobTitle" class="title"><?= $item["job_title"] ?></li>
-					<li itemprop="telephone" class="tel" content="<?= $item["tel"] ?>"><?= $item["tel"] ?></li>
-					<li><a href="mailto:<?= $item["email"] ?>" itemprop="email" class="email" content="<?= $item["email"] ?>"><?= $item["email"] ?></a></li>
-				</ul>
-				<? if($item["html"]): ?>
-				<div class="description" itemprop="description">
-					<?= $item["html"] ?>
-				</div>
-				<? endif; ?>
-
-			</li>
-			<? endforeach; ?>
-		</ul>
-	</div>
 <? endif; ?>
 
 

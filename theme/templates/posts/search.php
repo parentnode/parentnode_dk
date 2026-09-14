@@ -30,13 +30,7 @@ else {
 }
 
 
-
-// Get post tags for listing
-// $categories = items()->getTags(array("context" => $itemtype, "order" => "value"));
-
 // perf()->add("Before");
-
-debug([$selected_tag]);
 
 $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => $selected_tag]);
 // debug([$items]);
@@ -51,7 +45,7 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 
 	<div class="article">
 		<h1>Searching for:</h1>
-		<h2><span class="query"><?= $query ?></span><?= $selected_tag ? " in '".preg_replace("/^[^:]+:/", "", $selected_tag)."'" : "" ?></h2>
+		<h2><span class="query"><?= stripslashes($query) ?></span><?= $selected_tag ? " in '".preg_replace("/^[^:]+:/", "", $selected_tag)."'" : "" ?></h2>
 	</div>
 
 
@@ -61,14 +55,6 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 		"query" => $query,
 		"tag" => $selected_tag,
 	]) ?>
-
-
-	<?/*= $HTML->searchBox("/blog/search", [
-		"headline" => "Search posts",
-		"pattern" => $pattern,
-		"query" => $query,
-		"tag" => $selected_tag
-	])*/ ?>
 
 
 	<div class="articles">
@@ -87,27 +73,19 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 			"labels" => ["prev" => "Previous posts"]
 		]) ?>
 
-		<?/*= $HTML->frontendPagination($items, [
-			"base_url" => "/blog/search", 
-			"direction" => "prev",
-			"show_total" => false,
-			"labels" => ["prev" => "Previous posts"]
-		])*/ ?>
-
 
 		<ul class="items articles articlePreviewList i:articlePreviewList">
 			<? foreach($items["range_items"] as $item): ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle">
 
+
 				<h3 itemprop="headline"><a href="/blog/<?= $item["sindex"] ?>"><?= strip_tags($item["name"]) ?></a></h3>
+
 
 				<?= HTML()->renderSnippet("snippets/info.php", [
 					"item" => $item,
 				]) ?>
 
-				<?/*= $HTML->articleInfo($item, "/blog/".$item["sindex"], [
-					"media" => false
-				])*/ ?>
 
 
 				<? if($item["searchable_string"]):
@@ -155,12 +133,6 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 			"labels" => ["next" => "Next posts"]
 		]) ?>
 
-		<?/*= $HTML->frontendPagination($items, [
-			"base_url" => "/blog/search", 
-			"direction" => "next",
-			"show_total" => false,
-			"labels" => ["next" => "Next posts"]
-		])*/ ?>
 
 
 <? else: ?>
@@ -174,16 +146,5 @@ $items = items()->paginate(["pattern" => $pattern, "query" => $query, "tags" => 
 		"tags" => [["value" => $selected_tag]],
 	]) ?>
 
-<? /* if($categories): ?>
-	<div class="categories">
-		<h2>Categories</h2>
-		<ul class="tags">
-			<? foreach($categories as $tag): ?>
-			<li<?= ($tag["context"].":".$tag["value"]) === $selected_tag ? ' class="selected"' : '' ?>><a href="/blog/tag/<?= urlencode($tag["value"]) ?>"><?= $tag["value"] ?></a></li>
-		<? endforeach; ?>
-			<li class="all"><a href="/blog">All postings</a></li>
-		</ul>
-	</div>
-<? endif; */ ?>
 
 </div>

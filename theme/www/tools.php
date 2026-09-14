@@ -1,4 +1,7 @@
 <?php
+$controller_type = "page";
+$controller_favors = ["name" => "Tools page"];
+
 $access_item = false;
 if(isset($read_access) && $read_access) {
 	return;

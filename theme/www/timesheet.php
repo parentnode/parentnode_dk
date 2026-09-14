@@ -1,4 +1,7 @@
 <?php
+$controller_type = "page";
+$controller_favors = ["name" => "Timesheet page"];
+
 $access_item["/"] = true;
 $access_item["/uuid"] = false;
 if(isset($read_access) && $read_access) {
@@ -20,6 +23,4 @@ $page->pageTitle("Timesheet");
 $page->page(array(
 	"templates" => "timesheet/timesheet.php"
 ));
-
-?>
  

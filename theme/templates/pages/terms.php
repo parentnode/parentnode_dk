@@ -13,26 +13,19 @@ if($page_item) {
 	$media = items()->sliceMediae($page_item, "single_media"); ?>
 	<div class="article i:article id:<?= $page_item["item_id"] ?>" itemscope itemtype="http://schema.org/Article">
 
-		<? if($media): ?>
-		<div class="image item_id:<?= $page_item["item_id"] ?> format:<?= $media["format"] ?> variant:<?= $media["variant"] ?>"></div>
-		<? endif; ?>
-
-
-		<?= $HTML->articleTags($page_item, [
-			"context" => false
+'
+		<?= HTML()->renderSnippet("snippets/media.php", [
+			"item" => $page_item,
+			"media" => $media,
 		]) ?>
 
 
 		<h1 itemprop="headline"><?= $page_item["name"] ?></h1>
 
-		<? if($page_item["subheader"]): ?>
-		<h2 itemprop="alternativeHeadline"><?= $page_item["subheader"] ?></h2>
-		<? endif; ?>
 
-
-		<?= $HTML->articleInfo($page_item, "/terms", [
+		<?= HTML()->renderSnippet("snippets/info.php", [
+			"item" => $page_item,
 			"media" => $media,
-			"sharing" => false
 		]) ?>
 
 
@@ -43,7 +36,6 @@ if($page_item) {
 		<? endif; ?>
 
 	</div>
-
 
 
 <? else:?>

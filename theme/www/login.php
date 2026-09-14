@@ -1,4 +1,7 @@
 <?php
+$controller_type = "page";
+$controller_favors = ["name" => "Login page"];
+
 $access_item = false;
 if(isset($read_access) && $read_access) {
 	return;
@@ -55,5 +58,3 @@ if(is_array($action) && count($action)) {
 $page->page(array(
 	"templates" => "pages/login.php"
 ));
-
-?>

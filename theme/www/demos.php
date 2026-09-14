@@ -1,4 +1,7 @@
 <?php
+$controller_type = "page";
+$controller_favors = ["name" => "List demos"];
+
 $access_item = false;
 if(isset($read_access) && $read_access) {
 	return;
@@ -14,7 +17,7 @@ $page->bodyClass("demos");
 $page->pageTitle("Demos");
 
 
-$page->page(array(
+$page->page([
 	"templates" => "demos/demos.php"
-));
+]);
  

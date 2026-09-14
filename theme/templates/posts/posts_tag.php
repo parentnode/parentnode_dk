@@ -115,11 +115,15 @@ $items = items()->paginate($pagination_pattern);
 	<?	if($items): ?>
 
 		<h2><?= $items["total"] ?> Posts</h2>
+<?		if($page): ?>
+		<p class="pagination-page">Page <?= $page ?></p>
+<?		endif; ?>
 
 
 		<?= HTML()->renderSnippet("snippets/pagination.php", [
 			"items" => $items,
 			"direction" => "prev",
+			"class" => "pagination",
 			"base_path" => HTML()->path."/tag/".urlencode($selected_tag), 
 			"show_total" => false,
 			"labels" => ["prev" => "Previous posts"]
@@ -168,6 +172,7 @@ $items = items()->paginate($pagination_pattern);
 		<?= HTML()->renderSnippet("snippets/pagination.php", [
 			"items" => $items,
 			"direction" => "next",
+			"class" => "pagination",
 			"base_path" => HTML()->path."/tag/".urlencode($selected_tag), 
 			"show_total" => false,
 			"labels" => ["next" => "Next posts"]

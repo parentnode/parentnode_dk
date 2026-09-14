@@ -1,4 +1,7 @@
 <?php
+$controller_type = "verification";
+$controller_favors = false;
+
 $access_item = false;
 if(isset($read_access) && $read_access) {
 	return;

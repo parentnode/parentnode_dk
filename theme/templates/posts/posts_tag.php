@@ -16,7 +16,7 @@ else {
 	$page = false;
 	$page_item = items()->getItem([
 		"itemtype" => "page",
-		"tags" => "page:".$selected_tag, 
+		"tags" => "page:CAT-".$selected_tag, 
 		"status" => 1, 
 		"extend" => [
 			"user" => true, 

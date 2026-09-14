@@ -34,7 +34,7 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 $itemtype = $controller_itemtype;
 $action = $page->actions();
-$model = items()->typeObject($itemtype);
+$model = model($itemtype);
 
 
 $page->bodyClass($itemtype);

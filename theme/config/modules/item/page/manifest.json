@@ -1,5 +1,5 @@
 {
-	"version": "0.1.14",
+	"version": "0.1.15",
 	"files": [
 		{
 			"type": "class",
@@ -11,7 +11,7 @@
 			"type": "backend-controller",
 			"src": "www/janitor/page.php",
 			"dest": "www/janitor/page.php",
-			"digest": "sha256:78dee567c7714ecae5b8c4b8f436b20543aa7bfb5f81868408aea50b5f0ee757"
+			"digest": "sha256:0b25ad212c2b47a694c74a333f2589f1613826b3910968fbba4360e093955d7e"
 		},
 		{
 			"type": "backend-template",

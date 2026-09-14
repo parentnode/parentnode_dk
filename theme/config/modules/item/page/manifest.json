@@ -1,5 +1,5 @@
 {
-	"version": "0.1.13",
+	"version": "0.1.14",
 	"files": [
 		{
 			"type": "class",
@@ -23,7 +23,7 @@
 			"type": "backend-template",
 			"src": "templates/janitor/page/edit.php",
 			"dest": "templates/janitor/page/edit.php",
-			"digest": "sha256:074b611033c040e8a97281e53d0d694e9fe4726fc0a1d2ea8eb1d2f25f29a604"
+			"digest": "sha256:483d9cd27462db8efa544112b7f24fb3d0d3f9bb52e23d8efbfb60442eb08c59"
 		},
 		{
 			"type": "backend-template",
@@ -53,7 +53,7 @@
 			"type": "controller",
 			"src": "www/pages.php",
 			"dest": "www/pages.php",
-			"digest": "sha256:e62097693c5b49212b845a6ad20557f9097345fd9552628f1a7a860c775eeb0f"
+			"digest": "sha256:3173fc72c2db77b984ec4e339c3f02ba098196bed2b3d7090ba007a43e0b8c92"
 		},
 		{
 			"type": "template",
@@ -68,12 +68,12 @@
 		},
 		{
 			"type": "data-install",
-			"src": "config/db/data/navigation_nodes.sql",
+			"src": "config/db/data/item_page_navigation_nodes.sql",
 			"digest": "sha256:89b0d1256b59455a976fa7fe99340f888dabfb90d43f212537271c2ebd915107"
 		},
 		{
 			"type": "data-uninstall",
-			"src": "config/db/data/navigation_nodes_uninstall.sql",
+			"src": "config/db/data/item_page_navigation_nodes_uninstall.sql",
 			"digest": "sha256:be3752ef6f7daefe7ca0bfc5deeaad102d31ff378063b2fb88ca9e3c87fe4b6c"
 		},
 		{

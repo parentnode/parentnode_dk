@@ -19,14 +19,14 @@ $action = $page->actions();
 // /pages/#sindex#
 if(count($action) == 1) {
 
-	$page->page(array(
+	$page->page([
 		"templates" => "pages/view.php"
-	));
+	]);
 	exit();
 
 }
 
-$page->page(array(
+$page->page([
 	"templates" => "pages/404.php"
-));
+]);
 exit();

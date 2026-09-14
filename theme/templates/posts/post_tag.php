@@ -15,7 +15,6 @@ $pagination_pattern = [
 			"user" => true, 
 			"mediae" => true,
 			"readstate" => true,
-			"comments" => true,
 		]
 	],
 	"tags" => $itemtype.":".addslashes($selected_tag), 

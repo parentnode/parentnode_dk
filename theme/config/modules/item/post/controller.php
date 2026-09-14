@@ -59,11 +59,8 @@ if(is_array($action) && count($action)) {
 }
 
 
-$page->page(array(
+$page->page([
 	"templates" => "posts/posts.php"
-));
+]);
 exit();
-
-
-?>
  

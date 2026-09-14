@@ -1,5 +1,5 @@
 {
-	"version": "0.1.5.1",
+	"version": "0.1.6",
 	"files": [
 		{
 			"type": "class",
@@ -11,19 +11,19 @@
 			"type": "backend-controller",
 			"src": "www/janitor/post.php",
 			"dest": "www/janitor/post.php",
-			"digest": "sha256:a36d870b6c8bdd7584accaf54f931a0ddc224c8d7a0b3f73e31bbc20c5d25003"
+			"digest": "sha256:50a2248fa2d5ae5f8871750fe94a0bcfb13452a100a19b8d4df7664edc1a1569"
 		},
 		{
 			"type": "backend-template",
 			"src": "templates/janitor/post/list.php",
 			"dest": "templates/janitor/post/list.php",
-			"digest": "sha256:fb87e06d9fe697089f33a2e7b4426e6bb24bb1ad64e66e3b1562f0c5a6ffb89f"
+			"digest": "sha256:9537a4259e9847207a9ca2f1c1989d2cc9cbe431992ea925c068060f31002bcc"
 		},
 		{
 			"type": "backend-template",
 			"src": "templates/janitor/post/edit.php",
 			"dest": "templates/janitor/post/edit.php",
-			"digest": "sha256:2fc0fd7fb9339289d32064713f61486618e4e482042df4edd4a7a5b715d1bd41"
+			"digest": "sha256:68166c282ee6776a1076154797c5fa2a90ac322bd1d6ae0c3e00c3d579ace28e"
 		},
 		{
 			"type": "backend-template",
@@ -53,7 +53,7 @@
 			"type": "controller",
 			"src": "www/posts.php",
 			"dest": "www/posts.php",
-			"digest": "sha256:00672750189863809c81fee26b2490be5aa9eab361d0f7d35be80091a4f30f2d"
+			"digest": "sha256:c476a66004fa1f9f7f35bc4dcd854ce1e753a4a7b3f04127256441794a78c5c6"
 		},
 		{
 			"type": "template",
@@ -86,12 +86,12 @@
 		},
 		{
 			"type": "data-install",
-			"src": "config/db/data/navigation_nodes.sql",
+			"src": "config/db/data/item_post_navigation_nodes.sql",
 			"digest": "sha256:6fe2457baad9166767af5c12edab4112182f84d54d3f1760ed3994f615529427"
 		},
 		{
 			"type": "data-uninstall",
-			"src": "config/db/data/navigation_nodes_uninstall.sql",
+			"src": "config/db/data/item_post_navigation_nodes_uninstall.sql",
 			"digest": "sha256:59d3e9ea8ce74aac3fe7112243b83bff980595f84854133f40f7a762fdef3aed"
 		},
 		{

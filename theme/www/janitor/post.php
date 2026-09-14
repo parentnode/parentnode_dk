@@ -46,10 +46,10 @@ if(is_array($action) && count($action)) {
 	// LIST/EDIT/NEW ITEM
 	if(preg_match("/^(list|edit|new)$/", $action[0])) {
 
-		$page->page(array(
+		$page->page([
 			"type" => "janitor",
 			"templates" => "janitor/".$itemtype."/".$action[0].".php"
-		));
+		]);
 		exit();
 	}
 
@@ -60,6 +60,6 @@ if(is_array($action) && count($action)) {
 
 }
 
-$page->page(array(
+$page->page([
 	"templates" => "pages/404.php"
-));
+]);

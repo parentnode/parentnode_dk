@@ -12,7 +12,7 @@ $items = items()->getItems(array("itemtype" => $itemtype, "order" => "status DES
 		<?= $JML->listNew(array("label" => "New post")) ?>
 	</ul>
 
-	<div class="all_items i:defaultList taggable filters"<?= $HTML->jsData(["tags", "search"], ["filter-tag-contexts" => "$itemtype,on"]) ?>>
+	<div class="all_items i:defaultList taggable filters"<?= HTML()->jsData(["tags", "search"], ["filter-tag-contexts" => "$itemtype,on"]) ?>>
 <?		if($items): ?>
 		<ul class="items">
 <?			foreach($items as $item): ?>

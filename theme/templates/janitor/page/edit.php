@@ -37,7 +37,7 @@ $item = items()->getItem(array("id" => $item_id, "extend" => array("tags" => tru
 
 	<?= $JML->editTags($item, ["context" => $itemtype]) ?>
 
-	<?= $JML->editCannonicalUrl($item) ?>
+	<?= $JML->editCanonicalUrl($item) ?>
 
 	<?= $JML->editSindex($item) ?>
 

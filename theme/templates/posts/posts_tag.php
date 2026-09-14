@@ -105,8 +105,6 @@ $items = items()->paginate($pagination_pattern);
 		"title" => "Search posts",
 		"pattern" => $pagination_pattern["pattern"],
 		"tag" => $itemtype.":".addslashes($selected_tag),
-		// "tags" => $itemtype.":".addslashes($selected_tag),
-			
 	]) ?>
 
 

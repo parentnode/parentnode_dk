@@ -130,7 +130,7 @@ $items = items()->paginate($pagination_pattern);
 
 		<ul class="items articles articlePreviewList i:articlePreviewList">
 			<? foreach($items["range_items"] as $item):
-				$media = items()->sliceMediae($item, "mediae"); ?>
+				$media = items()->sliceMediae($item, "single_media"); ?>
 			<li class="item article id:<?= $item["item_id"] ?>" itemscope itemtype="http://schema.org/NewsArticle"<?= HTML()->jsData(["readstate"]) ?>>
 
 				<?= HTML()->renderSnippet("snippets/media.php", [

@@ -36,7 +36,7 @@ $item = items()->getItem(array("tags" => "page:stevns"));
 	</url>
 <?
 // Blog PAGE
-$item = items()->getItem(array("tags" => "page:blog"));
+$item = items()->getItem(array("tags" => "page:Posts"));
 ?>
 	<url>
 		<loc><?= SITE_URL ?>/blog</loc>

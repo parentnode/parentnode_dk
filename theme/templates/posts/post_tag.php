@@ -58,7 +58,7 @@ $related_items = items()->getRelatedItems($related_pattern);
 
 
 <? if($item):
-	$media = items()->sliceMediae($item, "mediae"); ?>
+	$media = items()->sliceMediae($item, "single_media"); ?>
 
 	<div class="article i:article id:<?= $item["item_id"] ?><?= $item["classname"] ? " ".$item["classname"] : "" ?>" itemscope itemtype="http://schema.org/NewsArticle"<?= HTML()->jsData(["readstate"]) ?>>
 
